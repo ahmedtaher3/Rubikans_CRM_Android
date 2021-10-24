@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type="com.devartlab.ui.main.MainViewModel" />
+
+
+    </data>
+
+    <LinearLayout
+        android:id="@+id/navigation_header_container"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/nav_header_height"
+        android:background="@drawable/side_nav_bar"
+        android:gravity="bottom"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/imageView"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:src="@drawable/profile_image" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="end"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:id="@+id/onlineButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:focusable="true">
+
+                    <com.google.android.material.switchmaterial.SwitchMaterial
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="@{viewModel.onlineBoolean}"
+                        android:clickable="false"
+                        android:text="@{viewModel.onlineText}" />
+
+                </RelativeLayout>
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{viewModel.versionName}" />
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/nav_header_vertical_spacing"
+            android:text="@{viewModel.userName}"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{viewModel.modifyMac}" />
+
+    </LinearLayout>
+</layout>

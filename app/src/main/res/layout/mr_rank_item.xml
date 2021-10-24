@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginBottom="15dp"
+        android:foreground="?selectableItemBackground"
+        app:cardBackgroundColor="@color/white"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="5dp">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/card_edge"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/view_list_main_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:foreground="?selectableItemBackground"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="5dp">
+
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/empImage"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/user_logo"
+                    app:civ_border_color="@color/colorPrimaryDark"
+                    app:civ_border_width="2dp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/empName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Ahmed taher"
+                        android:textColor="@color/black"
+                        android:textSize="18dp" />
+
+
+                    <TextView
+                        android:id="@+id/teritory"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Ahmed taher"
+                        android:textColor="@color/grey"
+                        android:textSize="16dp" />
+
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="1dp"
+                android:background="@drawable/bottom_curved_grey"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:paddingLeft="5dp"
+                android:paddingTop="5dp"
+                android:paddingRight="5dp"
+                android:weightSum="3">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:text="@string/confirmed_planned"
+                        android:textColor="@color/black"
+                        android:textSize="12dp" />
+
+                    <TextView
+                        android:id="@+id/CPText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:text="50/100"
+                        android:textColor="@color/black" />
+
+
+                    <TextView
+                        android:id="@+id/CPPercentage"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:textColor="@color/black" />
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:text="@string/planned_total_list"
+                        android:textColor="@color/black"
+                        android:textSize="12dp" />
+
+
+                    <TextView
+                        android:id="@+id/PTText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:text="50/100"
+                        android:textColor="@color/black" />
+
+                    <TextView
+                        android:id="@+id/PTPercentage"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:textColor="@color/black" />
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:text="@string/uncoverd_total_list"
+                        android:textColor="@color/black"
+                        android:textSize="12dp" />
+
+
+                    <TextView
+                        android:id="@+id/TTText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:text="50/100"
+                        android:textColor="@color/black" />
+
+
+                    <TextView
+                        android:id="@+id/TTPercentage"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:textColor="@color/black" />
+
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+
+            <TextView
+                android:id="@+id/approvedAt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="3dp"
+                android:visibility="gone" />
+
+
+        </LinearLayout>
+
+
+    </androidx.cardview.widget.CardView>
+</layout>

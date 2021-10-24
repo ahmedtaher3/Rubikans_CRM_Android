@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/spinner"
+        android:background="#ff00"
+        android:title="@string/actionbar_spinner"
+        app:actionViewClass="android.widget.Spinner"
+        app:showAsAction="always" />
+
+    <item
+        android:title="@string/change_cycle"
+        android:id="@+id/change_cycle"
+        android:background="#ff00"
+        android:icon="@drawable/ic_sync_black_24dp"
+        app:showAsAction="never" />
+
+
+    <item
+        android:title="@string/update_plan"
+        android:id="@+id/updatePlan"
+        android:background="#ff00"
+        android:icon="@drawable/ic_sync_black_24dp"
+        app:showAsAction="never" />
+
+
+    <item
+        android:title="@string/sync_plan"
+        android:id="@+id/sync"
+        android:background="#ff00"
+        android:icon="@drawable/ic_sync_black_24dp"
+        app:showAsAction="never" />
+
+
+</menu>

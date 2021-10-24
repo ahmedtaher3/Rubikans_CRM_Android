@@ -1,0 +1,98 @@
+{
+  "project_info": {
+    "project_number": "706656006947",
+    "firebase_url": "https://devart-2c09d.firebaseio.com",
+    "project_id": "devart-2c09d",
+    "storage_bucket": "devart-2c09d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:706656006947:android:d558f6b4a6478a1dcad296",
+        "android_client_info": {
+          "package_name": "com.devartlab"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "706656006947-oar50bpiao2ljgib2kpn1turv81jd0bn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDI2M43kDSO89zRFAp1ebY3LZyQkmDQ3CY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "706656006947-oar50bpiao2ljgib2kpn1turv81jd0bn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:706656006947:android:4cbac44e664d46dfcad296",
+        "android_client_info": {
+          "package_name": "com.devlabc"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "706656006947-oar50bpiao2ljgib2kpn1turv81jd0bn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDI2M43kDSO89zRFAp1ebY3LZyQkmDQ3CY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "706656006947-oar50bpiao2ljgib2kpn1turv81jd0bn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:706656006947:android:2a7240d01dd3a3c6cad296",
+        "android_client_info": {
+          "package_name": "devart.lab"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "706656006947-oar50bpiao2ljgib2kpn1turv81jd0bn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDI2M43kDSO89zRFAp1ebY3LZyQkmDQ3CY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "706656006947-oar50bpiao2ljgib2kpn1turv81jd0bn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

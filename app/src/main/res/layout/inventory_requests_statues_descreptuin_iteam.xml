@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/rowFG"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="10dp"
+    android:layout_marginTop="5dp"
+    android:layout_marginRight="10dp"
+    android:layout_marginBottom="5dp"
+    android:foreground="?attr/selectableItemBackground"
+    app:cardBackgroundColor="@color/white"
+    app:cardCornerRadius="10dp"
+    app:cardElevation="5dp">
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:foreground="?attr/selectableItemBackground"
+        android:orientation="vertical"
+        android:padding="0dp">
+
+
+
+        <LinearLayout
+            android:id="@+id/ttttlistcd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingLeft="10dp">
+
+
+            <TextView
+                android:id="@+id/inventoryStatuesDescriptionItemItemNameTxt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="product Name"
+                android:textColor="@color/black"
+                android:textSize="18dp" />
+
+
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="15dp"
+            android:gravity="center"
+            android:orientation="vertical">
+
+
+
+            <LinearLayout
+                android:id="@+id/inventoryStatuesDescriptionCountLay"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:clipChildren="false"
+                android:clipToPadding="false"
+                android:gravity="end|center"
+                android:orientation="horizontal">
+
+
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/StatuesdecreaseBt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:tint="@color/white"
+                    app:fabCustomSize="30dp"
+                    app:srcCompat="@drawable/ic_baseline_remove_24" />
+
+
+                <EditText
+                    android:id="@+id/Statuescoun"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:background="@color/transparent"
+                    android:inputType="number"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp"
+                    android:text="1"
+                    android:textColor="@color/black" />
+
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/StatuesincreaseBt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:tint="@color/white"
+                    app:fabCustomSize="30dp"
+
+                    app:srcCompat="@drawable/ic_baseline_add_24" />
+
+
+            </LinearLayout>
+
+
+            <TextView
+                android:id="@+id/inventoryStatuesDescriptionItemUnitTxt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="unit"
+                android:textColor="@color/black"
+                android:textSize="18dp" />
+
+
+        </LinearLayout>
+
+
+
+    </LinearLayout>
+</androidx.cardview.widget.CardView>
+

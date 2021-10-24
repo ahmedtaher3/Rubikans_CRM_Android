@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical"
+            tools:context=".ui.main.ui.employeeservices.workfromhome.WorkFromHomeFragment">
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/work_from_home_attendance"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="18dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="12/20/2020 "
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="18dp"
+                android:textStyle="bold" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:orientation="vertical">
+
+                <!--<com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+
+                    >
+
+                    <EditText
+                        android:id="@+id/notes_edittext"
+
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint=" Notes "
+
+                        android:minHeight="200dp" />
+                </com.google.android.material.textfield.TextInputLayout>-->
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="25dp"
+                    android:gravity="center_horizontal"
+                    android:orientation="horizontal">
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:id="@+id/startWorkFromHome"
+                            android:layout_width="match_parent"
+                            android:layout_height="150dp"
+                            android:layout_margin="10dp"
+                            android:background="@drawable/button_green"
+                            android:text="@string/start_n_work_from_home"
+                            android:textAlignment="center"
+                            android:textAllCaps="false"
+                            android:textColor="@color/white"
+                            android:textSize="25dp" />
+                    </RelativeLayout>
+
+
+                </RelativeLayout>
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="25dp"
+                    android:gravity="center_horizontal"
+                    android:orientation="horizontal">
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:id="@+id/startWorkFromHomeEnded"
+                            android:layout_width="match_parent"
+                            android:layout_height="150dp"
+                            android:layout_margin="10dp"
+                            android:background="@drawable/button_grey_dark"
+                            android:text="@string/end_n_work_from_home"
+                            android:textAlignment="center"
+                            android:textAllCaps="false"
+                            android:textColor="@color/white"
+                            android:textSize="25dp"
+                            android:visibility="gone" />
+                    </RelativeLayout>
+
+
+                </RelativeLayout>
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/getAll"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/button"
+                    android:text="@string/show_all_previous"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white" />
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+        <FrameLayout
+            android:id="@+id/Container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </RelativeLayout>
+
+</layout>

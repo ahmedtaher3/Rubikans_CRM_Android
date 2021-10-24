@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="10dp"
+        android:background="@color/white"
+        android:minWidth="500dp"
+        android:orientation="vertical"
+        android:tag="layout/add_experirnce_dialog_0">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:theme="@style/AppTheme.AppBarOverlay">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:id="@+id/closeImageView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:background="?attr/selectableItemBackground"
+                        android:padding="10dp"
+                        app:srcCompat="@drawable/close"
+                        app:tint="@color/white" />
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/ExpenseDialogTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:text="@string/new_experience"
+                    android:textColor="@color/white"
+                    android:textSize="20dp"
+                    android:textStyle="bold" />
+            </RelativeLayout>
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:orientation="horizontal">
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_centerHorizontal="true"
+                            android:paddingTop="@dimen/nav_header_vertical_spacing"
+                            android:src="@drawable/date" />
+                    </RelativeLayout>
+
+                    <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
+                        android:id="@+id/jobsSpinner"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:dropDownHeight="500dp"
+                        android:hint="@string/choose_job_title"
+                        app:met_floatingLabel="highlight"
+                        app:met_textColorHint="@color/filter_underline_color"
+                        app:met_underlineColor="@color/filter_underline_color" />
+
+
+                </LinearLayout>
+
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:padding="10dp">
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_centerHorizontal="true"
+                            android:paddingTop="@dimen/nav_header_vertical_spacing"
+                            android:src="@drawable/date" />
+                    </RelativeLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <androidx.appcompat.widget.AppCompatEditText
+                            android:id="@+id/companyExperience"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:drawablePadding="10dp"
+                            android:hint="@string/company_name"
+                            android:padding="10dp" />
+                    </com.google.android.material.textfield.TextInputLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:padding="10dp">
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_centerHorizontal="true"
+                            android:paddingTop="@dimen/nav_header_vertical_spacing"
+                            android:src="@drawable/date" />
+                    </RelativeLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <androidx.appcompat.widget.AppCompatEditText
+                            android:id="@+id/fromExperience"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:cursorVisible="false"
+                            android:drawablePadding="10dp"
+                            android:focusable="false"
+                            android:focusableInTouchMode="true"
+                            android:hint="@string/start_at"
+                            android:padding="10dp" />
+                    </com.google.android.material.textfield.TextInputLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:padding="10dp">
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_centerHorizontal="true"
+                            android:paddingTop="@dimen/nav_header_vertical_spacing"
+                            android:src="@drawable/date" />
+                    </RelativeLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <androidx.appcompat.widget.AppCompatEditText
+                            android:id="@+id/toExperience"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:cursorVisible="false"
+                            android:drawablePadding="10dp"
+                            android:focusable="false"
+                            android:focusableInTouchMode="true"
+                            android:hint="@string/end_at"
+                            android:padding="10dp" />
+                    </com.google.android.material.textfield.TextInputLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="10dp">
+
+                    <CheckBox
+                        android:id="@+id/trainingCheckBox"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/training" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:padding="10dp">
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <androidx.appcompat.widget.AppCompatEditText
+                            android:id="@+id/descExperience"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:drawablePadding="10dp"
+                            android:hint="@string/notes"
+                            android:minHeight="100dp"
+                            android:padding="10dp" />
+                    </com.google.android.material.textfield.TextInputLayout>
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:id="@+id/AddNewImage"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/add_image" />
+
+                    <ImageView
+                        android:id="@+id/expenseImage"
+                        android:layout_width="200dp"
+                        android:layout_height="200dp"
+                        android:layout_centerInParent="true"
+                        android:background="@color/white"
+                        android:visibility="gone" />
+                </RelativeLayout>
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/add"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/button"
+                    android:text="@string/add"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white" />
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
+</layout>

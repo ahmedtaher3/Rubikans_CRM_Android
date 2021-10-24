@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/previousMealsSwipeRefreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:fillViewport="true"
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                android:clickable="true"
+                android:focusable="true"
+                android:orientation="vertical">
+
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/rowFG"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="5dp"
+                    app:cardBackgroundColor="@color/white"
+                    app:cardCornerRadius="10dp"
+                    app:cardElevation="5dp">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="10dp"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:orientation="horizontal"
+                            android:visibility="visible">
+
+
+                            <de.hdodenhof.circleimageview.CircleImageView
+                                android:id="@+id/empImage"
+                                android:layout_width="80dp"
+                                android:layout_height="80dp"
+                                android:src="@drawable/user_logo"
+                                app:civ_border_color="@color/colorPrimaryDark"
+                                app:civ_border_width="2dp" />
+
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="10dp"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+
+                                <TextView
+                                    android:id="@+id/empName"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/emp_name"
+                                    android:textColor="@color/colorPrimaryDark"
+                                    android:textSize="18dp" />
+
+                                <TextView
+                                    android:id="@+id/empTitle"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/emp_title"
+                                    android:textColor="@color/colorPrimaryDark"
+                                    android:textSize="18dp" />
+
+                                <TextView
+                                    android:id="@+id/empId"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/emp_serial"
+                                    android:textColor="@color/colorPrimaryDark" />
+
+                            </LinearLayout>
+
+
+                        </LinearLayout>
+
+
+                    </RelativeLayout>
+
+
+                </androidx.cardview.widget.CardView>
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:tag="layout/fragment_market_request_types_0">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recyclerView"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:nestedScrollingEnabled="false"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+                    <RelativeLayout
+                        android:id="@+id/empty_list"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@color/white"
+                        android:visibility="gone">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/ic_empty" />
+                        </LinearLayout>
+                    </RelativeLayout>
+
+                    <FrameLayout
+                        android:id="@+id/fragmentContainer"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+                </RelativeLayout>
+
+
+            </LinearLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+
+
+</layout>

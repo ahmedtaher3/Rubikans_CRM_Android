@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/rowFG"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="5dp"
+        app:cardBackgroundColor="@color/white"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="5dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:orientation="vertical"
+            android:visibility="visible">
+
+            <TextView
+                android:id="@+id/requestType"
+                android:layout_width="wrap_content"
+                android:text="@string/special_request"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="18dp" />
+
+
+            <TextView
+                android:id="@+id/reqDescription"
+                android:layout_width="wrap_content"
+                android:text="المشاركه مع الدكتورره ايريني عيسي في مؤتمر gyna forum"
+                android:layout_height="wrap_content"
+                android:textSize="18dp" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="center|start"
+                android:orientation="horizontal">
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/request_date"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="18dp" />
+
+                <TextView
+                    android:id="@+id/requestDate"
+                    android:layout_width="wrap_content"
+                    android:text="2021-02-02"
+                    android:layout_height="wrap_content"
+                    android:textSize="18dp" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="center|start"
+                android:orientation="horizontal">
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/request_code"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="18dp" />
+
+                <TextView
+                    android:id="@+id/requestId"
+                    android:layout_width="wrap_content"
+                    android:text="#201111 -96-14-6766"
+                    android:layout_height="wrap_content"
+                    android:textSize="18dp" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="center|start"
+                android:orientation="horizontal">
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/total_cost"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="18dp" />
+
+                <TextView
+                    android:id="@+id/totalCost"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="18dp" />
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+    </androidx.cardview.widget.CardView>
+</layout>
+
+

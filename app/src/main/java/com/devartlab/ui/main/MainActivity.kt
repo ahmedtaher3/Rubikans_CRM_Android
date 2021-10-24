@@ -1,0 +1,622 @@
+package com.devartlab.ui.main
+
+import android.Manifest
+import android.app.job.JobScheduler
+import android.content.ActivityNotFoundException
+import android.content.Context
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.graphics.BitmapFactory
+import android.net.Uri
+import android.os.Bundle
+import android.util.Base64
+import android.view.Menu
+import android.view.View
+import android.view.WindowManager
+import android.widget.RelativeLayout
+import android.widget.Toast
+import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.core.app.ActivityCompat
+import androidx.core.view.GravityCompat
+import androidx.core.view.MenuItemCompat
+import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.devartlab.R
+import com.devartlab.UpdatePlan
+import com.devartlab.base.BaseActivity
+import com.devartlab.databinding.ActivityMainBinding
+import com.devartlab.databinding.NavHeaderMainBinding
+import com.devartlab.model.CardModel
+import com.devartlab.ui.main.ui.callmanagement.CallManagementActivity
+import com.devartlab.ui.main.ui.callmanagement.home.MenuListAdapter
+import com.devartlab.ui.main.ui.callmanagement.syncdata.SyncDataDialog
+import com.devartlab.ui.main.ui.contactlist.ui.main.ContactsActivity
+import com.devartlab.ui.main.ui.employeeservices.SelfServiceActivity
+import com.devartlab.ui.main.ui.employeeservices.approval.ApprovalRequestsFragment
+import com.devartlab.ui.main.ui.employeeservices.devartlink.DevartLinkActivity
+import com.devartlab.ui.main.ui.market.MarketRequestTypesActivity
+import com.devartlab.ui.main.ui.profile.ProfileActivity
+import com.devartlab.utils.MainSliderAdapter
+import com.devartlab.utils.PicassoImageLoadingService
+import com.devartlab.utils.ProgressLoading
+import io.reactivex.Completable
+import io.reactivex.Single
+import io.reactivex.SingleObserver
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
+import io.reactivex.functions.Action
+import io.reactivex.schedulers.Schedulers
+import qruz.t.qruzdriverapp.ui.main.fragments.profile.changelang.ChangeLanguage
+import ss.com.bannerslider.Slider
+import java.util.*
+import java.util.concurrent.TimeUnit
+
+private const val TAG = "MainActivity"
+
+class MainActivity : BaseActivity<ActivityMainBinding?>(), View.OnClickListener,
+    MenuListAdapter.OnHomeItemClick {
+    lateinit var binding: ActivityMainBinding
+    lateinit var viewModel: MainViewModel
+    lateinit var adapter: MenuListAdapter
+
+    private var toggle: ActionBarDrawerToggle? = null
+    private var slider: Slider? = null
+    var textCartItemCount: RelativeLayout? = null
+    var callManagementPermission = true
+    var marketRequestPermission = true
+    var tradePermission = true
+    lateinit var dialog: SyncDataDialog
+
+
+    override fun getLayoutId(): Int {
+        return R.layout.activity_main
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        binding = viewDataBinding!!
+        viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
+        binding.drawerLayout
+
+        Slider.init(PicassoImageLoadingService(this))
+        slider = findViewById(R.id.bannerSlider)
+        slider?.setAdapter(MainSliderAdapter())
+
+
+
+        Completable.fromAction(object : Action {
+            @Throws(Exception::class)
+            override fun run() {
+                run {
+                    if (!viewModel!!.authorityDao.getById("61").allowBrowseRecord &&
+                        !viewModel!!.authorityDao.getById("1125").allowBrowseRecord &&
+                        !viewModel!!.authorityDao.getById("1126").allowBrowseRecord
+                    ) {
+                        callManagementPermission = false
+                    } else {
+
+                        if (viewModel!!.dataManager.sFirstTime) {
+
+                            Single.timer(1, TimeUnit.SECONDS)
+                                .subscribeOn(Schedulers.io())
+                                .observeOn(AndroidSchedulers.mainThread())
+                                .subscribe(object : SingleObserver<Long?> {
+                                    override fun onSubscribe(d: Disposable) {}
+                                    override fun onSuccess(aLong: Long) {
+                                        if (!viewModel!!.dataManager.startShift) {
+                                            dialog = SyncDataDialog(
+                                                this@MainActivity,
+                                                this@MainActivity,
+                                                viewModel?.dataManager!!
+                                            );
+                                            dialog.setCanceledOnTouchOutside(false);
+                                            val window = dialog.getWindow();
+                                            window?.setLayout(
+                                                WindowManager.LayoutParams.MATCH_PARENT,
+                                                WindowManager.LayoutParams.MATCH_PARENT
+                                            );
+                                            dialog.getWindow()
+                                                ?.setBackgroundDrawableResource(android.R.color.transparent);
+                                            dialog.getWindow()
+                                                ?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+                                            dialog.show();
+                                        }
+
+
+                                    }
+
+                                    override fun onError(e: Throwable) {}
+                                })
+
+                        }
+
+                    }
+
+
+                    if (!viewModel!!.authorityDao.getById("1026").allowBrowseRecord) {
+                        marketRequestPermission = false
+                    }
+
+
+                    try {
+                        if (!viewModel!!.authorityDao.getById("1157").allowBrowseRecord) {
+                            tradePermission = false
+                        }
+                    } catch (e: java.lang.Exception) {
+                        tradePermission = false
+                    }
+
+
+                }
+            }
+        })
+            .subscribeOn(Schedulers.io())
+            .subscribe()
+        setSupportActionBar(binding!!.toolbar)
+
+
+        setLiseners()
+        setObservers()
+        setUpNavHeader()
+        setUpNavDrawer()
+        setUpRecycler()
+
+
+        viewModel!!.getAllPending("allPending", "")
+    }
+
+    private fun setUpRecycler() {
+        val list = ArrayList<CardModel>()
+        list.add(
+            CardModel(
+                1,
+                resources.getString(R.string.call_management),
+                R.drawable.call_managment_icon
+            )
+        )
+        list.add(CardModel(2, resources.getString(R.string.self_service), R.drawable.self_service))
+        list.add(CardModel(3, resources.getString(R.string.my_profile), R.drawable.employee))
+        list.add(CardModel(4, resources.getString(R.string.market_request), R.drawable.money))
+        list.add(CardModel(5, "DevartLink", R.drawable.devartlink))
+
+        adapter = MenuListAdapter(this, list, this)
+        val layoutManager = GridLayoutManager(this, 2)
+        layoutManager.orientation = LinearLayoutManager.VERTICAL
+        binding.recycler.layoutManager = layoutManager
+        binding.recycler.adapter = adapter
+
+    }
+
+    private fun setUpNavDrawer() {
+
+        toggle = object : ActionBarDrawerToggle(
+            this,
+            binding.drawerLayout,
+            binding!!.toolbar,
+            R.string.navigation_drawer_open, R.string.navigation_drawer_close
+        ) {
+            override fun onDrawerClosed(drawerView: View) {
+                super.onDrawerClosed(drawerView)
+            }
+
+            override fun onDrawerOpened(drawerView: View) {
+                super.onDrawerOpened(drawerView)
+            }
+        }
+        binding.drawerLayout.addDrawerListener(toggle!!)
+        toggle?.syncState()
+        binding.navView.setNavigationItemSelectedListener { menuItem ->
+            binding.drawerLayout.closeDrawer(GravityCompat.START)
+            val intent = Intent(this@MainActivity, CallManagementActivity::class.java)
+            val intent2 = Intent(this@MainActivity, SelfServiceActivity::class.java)
+            when (menuItem.itemId) {
+                R.id.List -> if (callManagementPermission) {
+                    intent.putExtra("CALL_MANAGEMENT_FLAG", 1)
+                    startActivity(intent)
+                } else {
+                    Toast.makeText(this@MainActivity, "You haven't permission", Toast.LENGTH_SHORT)
+                        .show()
+                }
+                R.id.Plan -> if (callManagementPermission) {
+                    intent.putExtra("CALL_MANAGEMENT_FLAG", 2)
+                    startActivity(intent)
+                } else {
+                    Toast.makeText(this@MainActivity, "You haven't permission", Toast.LENGTH_SHORT)
+                        .show()
+                }
+                R.id.Report -> if (callManagementPermission) {
+                    if (viewModel?.dataManager?.isSupervisor!!) {
+                        intent.putExtra("CALL_MANAGEMENT_FLAG", 4)
+                        startActivity(intent)
+                    } else {
+                        intent.putExtra("CALL_MANAGEMENT_FLAG", 3)
+                        startActivity(intent)
+                    }
+
+                } else {
+                    Toast.makeText(this@MainActivity, "You haven't permission", Toast.LENGTH_SHORT)
+                        .show()
+                }
+
+                R.id.DailyReport -> if (callManagementPermission) {
+                    intent.putExtra("CALL_MANAGEMENT_FLAG", 5)
+                    startActivity(intent)
+                } else {
+                    Toast.makeText(this@MainActivity, "You haven't permission", Toast.LENGTH_SHORT)
+                        .show()
+                }
+                R.id.selfService -> {
+                    startActivity(intent2)
+
+                    /*  airLocation = AirLocation(
+                              this@MainActivity,
+                              true,
+                              true,
+                              object : AirLocation.Callbacks {
+                                  override fun onSuccess(location: Location) {
+                                      Toast.makeText(this@MainActivity, "done", Toast.LENGTH_SHORT).show()
+
+                                  }
+
+                                  override fun onFailed(locationFailedEnum: AirLocation.LocationFailedEnum) {
+
+                                      Toast.makeText(this@MainActivity, "Field to get Location , please try again", Toast.LENGTH_SHORT).show()
+
+                                  }
+                              })*/
+
+
+                }
+
+
+                R.id.changeLang -> {
+
+
+                    val intent = Intent(this, ChangeLanguage::class.java)
+                    startActivity(intent)
+
+                }
+
+
+                R.id.updatePlan -> {
+
+
+                    val intent = Intent(this, UpdatePlan::class.java)
+                    startActivity(intent)
+
+                }
+
+                R.id.contactsList -> {
+
+
+                    val intent = Intent(this, ContactsActivity::class.java)
+                    startActivity(intent)
+
+                }
+
+
+                R.id.Logout -> {
+
+
+                    val scheduler = getSystemService(Context.JOB_SCHEDULER_SERVICE) as JobScheduler
+                    scheduler.cancel(123)
+
+                    viewModel?.deleteAllRoom(this)
+
+
+                }
+                R.id.rateUs -> {
+                    /*   try {
+                           startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=$packageName")))
+                       } catch (e: ActivityNotFoundException) {
+                           startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=$packageName")))
+                       }*/
+
+
+                    if (ActivityCompat.checkSelfPermission(
+                            this,
+                            Manifest.permission.ACCESS_FINE_LOCATION
+                        ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                            this,
+                            Manifest.permission.ACCESS_COARSE_LOCATION
+                        ) != PackageManager.PERMISSION_GRANTED
+                    ) {
+
+                        if (ActivityCompat.shouldShowRequestPermissionRationale(
+                                this,
+                                Manifest.permission.CAMERA
+                            )
+                        ) {
+                            android.app.AlertDialog.Builder(this)
+                                .setTitle("permission denied")
+                                .setMessage("ask for permission again")
+                                .setPositiveButton("ok") { dialog, which ->
+                                    ActivityCompat.requestPermissions(
+                                        this,
+                                        arrayOf(
+                                            Manifest.permission.ACCESS_FINE_LOCATION,
+                                            Manifest.permission.ACCESS_COARSE_LOCATION
+                                        ),
+                                        22
+                                    )
+                                }
+                                .setNegativeButton("cancel") { dialog, which -> dialog.dismiss() }
+                                .create().show()
+                        } else {
+                            ActivityCompat.requestPermissions(
+                                this,
+                                arrayOf(
+                                    Manifest.permission.ACCESS_FINE_LOCATION,
+                                    Manifest.permission.ACCESS_COARSE_LOCATION
+                                ),
+                                22
+                            )
+
+
+                        }
+
+                    } else {
+
+
+                    }
+
+
+                }
+                R.id.searchForUpdate -> {
+                    try {
+                        startActivity(
+                            Intent(
+                                Intent.ACTION_VIEW,
+                                Uri.parse("market://details?id=$packageName")
+                            )
+                        )
+                    } catch (e: ActivityNotFoundException) {
+                        startActivity(
+                            Intent(
+                                Intent.ACTION_VIEW,
+                                Uri.parse("https://play.google.com/store/apps/details?id=$packageName")
+                            )
+                        )
+                    }
+                }
+                R.id.shareApp -> {
+
+                    // startActivity(Intent(this@MainActivity , UpdatePlan::class.java))
+                    val intent = Intent(Intent.ACTION_SEND)
+                    val shareBody =
+                        "Download Devartlab CRM" + "\n" + "\n" + "https://play.google.com/store/apps/details?id=$packageName"
+                    intent.type = "text/plain"
+
+                    intent.putExtra(Intent.EXTRA_TEXT, shareBody)
+
+                    startActivity(Intent.createChooser(intent, getString(R.string.share_using)))
+
+                }
+
+            }
+            true
+        }
+
+    }
+
+    private fun setUpNavHeader() {
+        val headerMainBinding: NavHeaderMainBinding = DataBindingUtil.inflate(
+            layoutInflater,
+            R.layout.nav_header_main, binding!!.navView, false
+        )
+        if (viewModel!!.dataManager.user.image != null) {
+            val decodedString = Base64.decode(viewModel!!.dataManager.user.image, Base64.DEFAULT)
+            val decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.size)
+            headerMainBinding.imageView.setImageBitmap(decodedByte)
+        }
+        headerMainBinding.imageView.setOnClickListener {
+            val intent = Intent(this@MainActivity, ProfileActivity::class.java)
+            startActivity(intent)
+        }
+        headerMainBinding.onlineButton.setOnClickListener {
+
+            if (viewModel.dataManager.offlineMood) {
+
+
+                viewModel.dataManager.saveOfflineMood(false)
+                viewModel.onlineBoolean.set(true)
+                viewModel.onlineText.set("Online")
+
+            } else {
+                viewModel.syncOfflineData()
+
+            }
+
+        }
+        binding!!.navView.addHeaderView(headerMainBinding.root)
+        headerMainBinding.viewModel = viewModel
+
+    }
+
+    private fun setLiseners() {
+        binding!!.facebook.setOnClickListener(this)
+        binding!!.twitter.setOnClickListener(this)
+        binding!!.youtube.setOnClickListener(this)
+    }
+
+    override fun onClick(v: View?) {
+        when (v?.id) {
+            R.id.facebook -> {
+                try {
+                    packageManager.getPackageInfo("com.facebook.katana", 0)
+                    val intent =
+                        Intent(Intent.ACTION_VIEW, Uri.parse("fb://page/" + "112487374437269"))
+                    startActivity(intent)
+                } catch (e: Exception) {
+                    val intent = Intent(
+                        Intent.ACTION_VIEW,
+                        Uri.parse("https://www.facebook.com/devartlabofficial")
+                    )
+                    startActivity(intent)
+                }
+            }
+            R.id.twitter -> { /*        Intent intent = null;
+                try {
+                    // get the Twitter app if possible
+                    getPackageManager().getPackageInfo("com.twitter.android", 0);
+                    intent = new Intent(Intent.ACTION_VIEW, Uri.parse("twitter://user?user_id=" + "449323664"));
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                } catch (Exception e) {
+                    // no Twitter app, revert to browser
+                    intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://twitter.com/devartlabs"));
+                }
+                startActivity(intent);*/
+            }
+            R.id.youtube -> {
+                var intent: Intent? = null
+                try {
+                    intent = Intent(Intent.ACTION_VIEW)
+                    intent.setPackage("com.google.android.youtube")
+                    intent.data =
+                        Uri.parse("https://www.youtube.com/channel/UC7bij5Sn6vGCtxC3vPkSuwA")
+                    startActivity(intent)
+                } catch (e: ActivityNotFoundException) {
+                    intent = Intent(Intent.ACTION_VIEW)
+                    intent.data =
+                        Uri.parse("https://www.youtube.com/channel/UC7bij5Sn6vGCtxC3vPkSuwA")
+                    startActivity(intent)
+                }
+            }
+        }
+    }
+
+    private fun setObservers() {
+        viewModel.progress.observe(this, Observer { integer ->
+            when (integer) {
+                0 -> {
+
+                    ProgressLoading.dismiss()
+
+                }
+                1 -> {
+                    ProgressLoading.show(this)
+
+
+                }
+            }
+        })
+
+        viewModel!!.responseLiveRequests.observe(
+            this,
+            Observer { googleRequestResponse -> setupBadge(googleRequestResponse.hrRequests?.size!! + googleRequestResponse.penaltiesGoogle?.size!! + googleRequestResponse.workFromHomelist?.size!!) })
+
+        viewModel!!.randomLive.observe(this, Observer {
+            Toast.makeText(this@MainActivity, it.size.toString(), Toast.LENGTH_SHORT).show()
+
+        })
+
+
+        viewModel!!.syncOfflineData.observe(this, Observer {
+
+            if (it.isSuccesed) {
+
+            } else {
+                Toast.makeText(this, it.rerurnMessage, Toast.LENGTH_SHORT).show()
+            }
+
+        })
+
+    }
+
+
+    fun replace_fragment(fragment: Fragment?, tag: String?) {
+        supportFragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
+        supportFragmentManager
+            .beginTransaction()
+            .setCustomAnimations(
+                R.anim.slide_in_left,
+                R.anim.slide_out_left,
+                R.anim.slide_in_left,
+                R.anim.slide_out_left
+            )
+            .add(
+                R.id.main_container,
+                fragment!!
+            )
+            .addToBackStack(tag)
+            .commit()
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.main_menu, menu)
+        val menuItem = menu.findItem(R.id.action_cart)
+        val actionView = MenuItemCompat.getActionView(menuItem)
+        actionView.setOnClickListener {
+            replace_fragment(
+                ApprovalRequestsFragment(),
+                "ApprovalRequestsAdapter"
+            )
+        }
+        textCartItemCount = actionView.findViewById<View>(R.id.cart_badge) as RelativeLayout
+        return true
+    }
+
+    private fun setupBadge(size: Int) {
+        if (textCartItemCount != null) {
+            if (size > 0) {
+                if (textCartItemCount != null) {
+                    textCartItemCount!!.visibility = View.VISIBLE
+                }
+            } else {
+                textCartItemCount!!.visibility = View.GONE
+            }
+        }
+    }
+
+    override fun setOnHomeItemClick(model: CardModel) {
+        when (model.id) {
+            1 -> {
+
+
+                if (callManagementPermission) {
+                    val intent = Intent(this@MainActivity, CallManagementActivity::class.java)
+                    intent.putExtra("CALL_MANAGEMENT_FLAG", 0)
+                    startActivity(intent)
+                } else {
+                    Toast.makeText(this@MainActivity, "You haven't permission", Toast.LENGTH_SHORT)
+                        .show()
+                }
+            }
+            2 -> {
+                val intent = Intent(this@MainActivity, SelfServiceActivity::class.java)
+                startActivity(intent)
+            }
+            3 -> {
+                val intent = Intent(this@MainActivity, ProfileActivity::class.java)
+                startActivity(intent)
+            }
+            4 -> {
+                if (marketRequestPermission) {
+                    val intent = Intent(this@MainActivity, MarketRequestTypesActivity::class.java)
+                    startActivity(intent)
+                } else {
+                    Toast.makeText(this@MainActivity, "You haven't permission", Toast.LENGTH_SHORT)
+                        .show()
+                }
+            }
+            5 -> {
+
+                val intent = Intent(this@MainActivity, DevartLinkActivity::class.java)
+                startActivity(intent)
+
+            }
+        }
+    }
+
+
+}

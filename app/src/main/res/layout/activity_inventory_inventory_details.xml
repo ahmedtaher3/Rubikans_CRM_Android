@@ -1,0 +1,94 @@
+<layout
+xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+    >
+
+<data>
+
+</data>
+
+<androidx.constraintlayout.widget.ConstraintLayout
+
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:context=".ui.trade.ReceiveTransferActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:gravity="center"
+        android:minWidth="550dp"
+        android:orientation="vertical"
+        tools:ignore="MissingConstraints">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:theme="@style/AppTheme.AppBarOverlay">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent">
+
+                </RelativeLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:text="Inventory Details"
+                    android:textColor="@color/white"
+                    android:textSize="20dp"
+                    android:textStyle="bold" />
+
+            </RelativeLayout>
+
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.coordinatorlayout.widget.CoordinatorLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_above="@id/inventoryInventoryDetailsEditBtn">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerInventoryInventoryDetails"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:listitem="@layout/inventory_details_item" />
+
+
+            </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/inventoryInventoryDetailsEditBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="1dp"
+                android:background="@drawable/button"
+                android:text="تسوية"
+                android:textAllCaps="false"
+                android:textColor="@color/white" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+
+    />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

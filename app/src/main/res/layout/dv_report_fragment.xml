@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/rowFG"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="5dp"
+            app:cardBackgroundColor="@color/white"
+            app:cardCornerRadius="10dp"
+            app:cardElevation="5dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:orientation="horizontal"
+                android:visibility="visible">
+
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/empImage"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:src="@drawable/user_logo"
+                    app:civ_border_color="@color/colorPrimaryDark"
+                    app:civ_border_width="2dp" />
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+
+                    <TextView
+                        android:id="@+id/empName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:text="@string/emp_name"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textSize="18dp" />
+
+                    <TextView
+                        android:id="@+id/empTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/emp_title"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textSize="18dp" />
+
+                    <TextView
+                        android:id="@+id/empId"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/emp_serial"
+                        android:textColor="@color/colorPrimaryDark" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:id="@+id/cycles"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:text="@string/change_cycle"
+                            app:srcCompat="@drawable/close" />
+
+
+                        <LinearLayout
+                            android:id="@+id/filterLayout"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:orientation="horizontal">
+
+                            <ImageView
+                                android:id="@+id/requestsFilter"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="?selectableItemBackground"
+                                android:padding="10dp"
+                                app:srcCompat="@drawable/ic_baseline_swap_vert_24" />
+
+
+                        </LinearLayout>
+
+
+                    </RelativeLayout>
+
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:paddingTop="10dp">
+
+
+                <RelativeLayout
+                    android:id="@+id/searchLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:layout_alignEnd="@+id/filter"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/background_search_blank"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:padding="10dp">
+
+
+                    <EditText
+                        android:id="@+id/searchEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="30dp"
+                        android:background="@color/transparent"
+                        android:drawableStart="@drawable/ic_search"
+                        android:drawablePadding="10dp"
+                        android:drawableTint="@color/colorPrimary"
+                        android:hint="@string/search"
+                        android:textColorHint="@color/colorPrimary" />
+
+
+                    <ImageView
+                        android:id="@+id/closeSearch"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/close"
+                        android:visibility="gone" />
+
+                </RelativeLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:nestedScrollingEnabled="false"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+    </LinearLayout>
+
+</layout>

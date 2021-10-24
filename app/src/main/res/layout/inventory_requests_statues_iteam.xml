@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout
+xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:orientation="vertical">
+
+<LinearLayout
+    android:id="@+id/rowBG"
+    android:layout_width="wrap_content"
+    android:layout_height="100dp"
+    android:layout_alignParentRight="true"
+    android:layout_marginLeft="10dp"
+    android:layout_marginTop="5dp"
+    android:layout_marginRight="10dp"
+    android:layout_marginBottom="5dp"
+    android:gravity="right"
+
+    android:orientation="horizontal"
+    android:padding="10dp">
+
+    <RelativeLayout
+        android:id="@+id/edit_task"
+        android:layout_width="40dp"
+        android:layout_height="match_parent"
+        android:clickable="true"
+        android:focusable="true"
+        android:visibility="gone"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/img_edit"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center"
+                app:srcCompat="@drawable/ic_edit_black_24dp"
+                app:tint="#515151" />
+        </LinearLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/delete_task"
+        android:layout_width="40dp"
+        android:layout_height="match_parent"
+        android:clickable="true"
+        android:focusable="true"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/img_delete"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center"
+                app:srcCompat="@drawable/ic_baseline_delete_24"
+                app:tint="#515151" />
+        </LinearLayout>
+    </RelativeLayout>
+
+</LinearLayout>
+
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/rowFG"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="10dp"
+    android:layout_marginTop="5dp"
+    android:layout_marginRight="10dp"
+    android:layout_marginBottom="5dp"
+    android:foreground="?selectableItemBackground"
+    app:cardBackgroundColor="@color/white"
+    app:cardCornerRadius="10dp"
+    app:cardElevation="5dp">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/view_list_main_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:foreground="?selectableItemBackground"
+            android:gravity="center"
+            android:orientation="horizontal"
+
+            android:weightSum="11.5">
+
+
+            <RelativeLayout
+                android:id="@+id/inventoryMovesDetailsIteam"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:foreground="?attr/selectableItemBackground"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="10dp">
+
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="8"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/inventoryStatusMoveName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="move name "
+                        android:textColor="@color/black"
+                        android:textSize="18dp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/inventoryStatusStoreName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="store name"
+                        android:textSize="16dp" />
+
+                    <TextView
+                        android:id="@+id/inventoryStatusDate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="date"
+
+                        android:textSize="16dp" />
+
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/inventoryStatusStatues"
+                android:layout_width="20dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.5"
+                android:gravity="center"
+                android:orientation="vertical" />
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+</androidx.cardview.widget.CardView>
+
+</RelativeLayout>
+
+
+
+

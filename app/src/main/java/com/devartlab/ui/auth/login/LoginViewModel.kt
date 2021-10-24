@@ -1,0 +1,235 @@
+package com.devartlab.ui.auth.login
+
+import android.app.Application
+import android.util.Log
+import android.widget.Toast
+import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.MutableLiveData
+import com.devartlab.base.BaseApplication
+import com.devartlab.data.retrofit.ApiServices
+import com.devartlab.data.retrofit.ResponseModel
+import com.devartlab.data.retrofit.RetrofitClient
+import com.devartlab.data.room.DatabaseClient
+import com.devartlab.data.room.authority.AuthorityDao
+import com.devartlab.data.room.authority.AuthorityEntity
+import com.devartlab.data.shared.DataManager
+import com.devartlab.model.AuthorityDatum
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.messaging.FirebaseMessaging
+import io.reactivex.Completable
+import io.reactivex.Observer
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
+import io.reactivex.schedulers.Schedulers
+import retrofit2.Retrofit
+
+
+class LoginViewModel(application: Application) : AndroidViewModel(application) {
+
+    val dataManager: DataManager
+    val responseLive: MutableLiveData<ResponseModel>
+    val responseLiveData: MutableLiveData<ResponseModel>
+    val responseLiveUpdatePermission: MutableLiveData<ResponseModel>
+    val progress: MutableLiveData<Int>
+    val checkData: MutableLiveData<Boolean>
+    var authorityDao: AuthorityDao? = null
+    var myAPI: ApiServices? = null
+    var retrofit: Retrofit? = null
+
+    var databaseReference: DatabaseReference? = null
+
+    init {
+        dataManager = (getApplication() as BaseApplication).dataManager!!
+
+
+        retrofit = RetrofitClient.getInstance()
+        myAPI = retrofit!!.create(ApiServices::class.java)
+        responseLive = MutableLiveData<ResponseModel>()
+        responseLiveData = MutableLiveData<ResponseModel>()
+        responseLiveUpdatePermission = MutableLiveData<ResponseModel>()
+        progress = MutableLiveData()
+        checkData = MutableLiveData()
+        databaseReference = FirebaseDatabase.getInstance().reference
+        authorityDao = DatabaseClient.getInstance(application)?.appDatabase?.authorityDao()
+
+    }
+
+
+    fun checkDatabase() {
+        Completable.fromAction {
+            val list = authorityDao?.allList
+            checkData.postValue(list?.size!! > 0)
+        }.subscribeOn(Schedulers.io())
+            .subscribe()
+
+    }
+
+    public fun login(userEmail: String, userPass: String) {
+
+        progress.postValue(1)
+
+        val database = FirebaseDatabase.getInstance()
+        var reference: DatabaseReference = database.getReference().child("Tokens")
+        FirebaseMessaging.getInstance().token.addOnCompleteListener {
+            if (it.isComplete) {
+                val token = it.result.toString()
+                Log.d(" FirebaseMessaging ", token)
+
+
+                myAPI?.login(userEmail, userPass)!!
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(object : Observer<ResponseModel> {
+                        override fun onSubscribe(d: Disposable) {}
+                        override fun onNext(data: ResponseModel) {
+
+                            progress.postValue(0)
+                            responseLive.postValue(data)
+
+                            if (data.isSuccesed) {
+                                reference.child(data.data.loginData[0].userEmpId.toString())
+                                    .setValue(token)
+
+                                dataManager.saveToken(token)
+                            }
+
+                        }
+
+                        override fun onError(e: Throwable) {
+
+                            Toast.makeText(getApplication(), e.message, Toast.LENGTH_SHORT).show()
+                            progress.postValue(10)
+
+                        }
+
+                        override fun onComplete() {
+
+
+                        }
+                    })
+            }
+        }
+
+
+    }
+
+    public fun loginData(userEmail: String, userPass: String) {
+
+        progress.postValue(1)
+
+
+
+        myAPI?.loginData(userEmail, userPass)!!
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(object : Observer<ResponseModel> {
+                override fun onSubscribe(d: Disposable) {}
+                override fun onNext(data: ResponseModel) {
+
+                    progress.postValue(0)
+                    responseLiveData.postValue(data)
+
+                }
+
+                override fun onError(e: Throwable) {
+
+                    Toast.makeText(getApplication(), e.message, Toast.LENGTH_SHORT).show()
+                    progress.postValue(0)
+
+                }
+
+                override fun onComplete() {
+
+
+                }
+            })
+
+
+    }
+
+    public fun updatePermission() {
+
+
+        myAPI?.updatePermission(dataManager.user.accId)!!
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(object : Observer<ResponseModel> {
+                override fun onSubscribe(d: Disposable) {}
+                override fun onNext(data: ResponseModel) {
+
+
+                    progress.postValue(0)
+                    responseLiveUpdatePermission.postValue(data)
+
+                }
+
+                override fun onError(e: Throwable) {
+
+                    progress.postValue(0)
+
+                }
+
+                override fun onComplete() {
+
+
+                }
+            })
+
+
+    }
+
+    fun saveAuthority(list: ArrayList<AuthorityDatum>) {
+        Completable.fromAction {
+
+            authorityDao?.deleteTable()
+
+            var newList = ArrayList<AuthorityEntity>()
+            var i = 0
+            for (model in list) {
+
+                if (
+                    model.formId == 61 ||
+                    model.formId == 1125 ||
+                    model.formId == 1126 ||
+                    model.formId == 1060 ||
+                    model.formId == 1061 ||
+                    model.formId == 1084 ||
+                    model.formId == 1100 ||
+                    model.formId == 1026 ||
+                    model.formId == 1157 ||
+                    model.formId == 1003 ||
+                    model.formId == 1159 ||
+                    model.formId == 1138
+                ) {
+
+                    i++
+                    var authorityEntity = AuthorityEntity(
+                        model.authorityDetId,
+                        model.authorityId,
+                        model.formId,
+                        model.allowBrowseRecord,
+                        model.allowEdit,
+                        model.allowSave,
+                        model.allowDelete,
+                        model.allowExport,
+                        model.allowPreviewReport,
+                        model.allowPrintReport
+                    )
+                    newList.add(authorityEntity)
+
+                }
+
+
+            }
+
+            print("auth counter" + i.toString())
+            authorityDao?.insertAllEntities(newList)
+
+
+        }.subscribeOn(Schedulers.io())
+            .subscribe()
+
+    }
+
+}

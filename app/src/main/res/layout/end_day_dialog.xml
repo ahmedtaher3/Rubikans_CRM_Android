@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:gravity="center"
+    android:minWidth="550dp"
+    android:orientation="vertical">
+
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/close"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:background="?selectableItemBackground"
+                    android:padding="10dp"
+                    android:src="@drawable/close"
+                    android:tint="@color/white" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:text="@string/choose_customer"
+                    android:textColor="@color/white"
+                    android:textSize="20dp" />
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:clickable="true"
+
+                android:focusable="true">
+
+                <EditText
+                    android:id="@+id/firstQuestion"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    
+                    android:hint="@string/stock_start_of_the_day" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:clickable="true"
+                android:focusable="true">
+
+                <EditText
+                    android:id="@+id/secondQuestion"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    
+                    android:hint="@string/end_of_day_stock" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:clickable="true"
+                android:focusable="true">
+
+                <EditText
+                    android:id="@+id/thirdQuestion"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    
+                    android:hint="@string/sale_volume" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/endDay"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_margin="10dp"
+                android:background="@drawable/button"
+                android:text="@string/end_day"
+                android:textAllCaps="false"
+                android:textColor="@color/white" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+
+</LinearLayout>

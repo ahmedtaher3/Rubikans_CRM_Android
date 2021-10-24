@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            tools:context=".ui.main.ui.callmanagement.ranks.medicalriprank.MedicalRepReportActivity">
+
+            <com.google.android.material.appbar.AppBarLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:theme="@style/AppTheme.AppBarOverlay">
+
+                <androidx.appcompat.widget.Toolbar
+                    android:id="@+id/toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    android:gravity="center">
+
+
+                </androidx.appcompat.widget.Toolbar>
+
+            </com.google.android.material.appbar.AppBarLayout>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/rowFG"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="5dp"
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="10dp"
+                app:cardElevation="5dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="10dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:visibility="visible">
+
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/empImage"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/user_logo"
+                        app:civ_border_color="@color/colorPrimaryDark"
+                        app:civ_border_width="2dp" />
+
+
+                    <TextView
+                        android:id="@+id/dr_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/name"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textSize="18dp" />
+
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <org.eazegraph.lib.charts.BarChart
+                android:id="@+id/mBarChart"
+                android:layout_width="match_parent"
+                android:layout_height="256dp"
+                android:padding="10dp"
+                app:egBarWidth="20dp"
+                app:egFixedBarWidth="true"
+                app:egLegendHeight="40dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.6"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical"
+                    android:padding="@dimen/text_padding_top_5dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:text="@string/list"
+                        android:textSize="20dp" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <com.ramijemli.percentagechartview.PercentageChartView
+                            android:id="@+id/list"
+                            android:layout_width="match_parent"
+                            android:layout_height="150dp"
+                            android:layout_centerInParent="true"
+                            app:pcv_animDuration="1200"
+                            app:pcv_animInterpolator="anticipate_overshoot"
+                            app:pcv_backgroundColor="@color/colorPrimary"
+                            app:pcv_mode="ring"
+                            app:pcv_orientation="clockwise"
+                            app:pcv_progress="0"
+                            app:pcv_progressColor="@color/green"
+                            app:pcv_startAngle="90"
+                            app:pcv_textColor="@color/black" />
+
+                    </RelativeLayout>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/listRecyclerView"
+                        android:layout_width="wrap_content"
+
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp" />
+
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.6"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical"
+                    android:padding="@dimen/text_padding_top_5dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:text="@string/un_cover"
+                        android:textSize="20dp" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <com.ramijemli.percentagechartview.PercentageChartView
+                            android:id="@+id/unCover"
+                            android:layout_width="match_parent"
+                            android:layout_height="150dp"
+                            android:layout_centerInParent="true"
+                            app:pcv_animDuration="1200"
+                            app:pcv_animInterpolator="anticipate_overshoot"
+                            app:pcv_backgroundColor="@color/colorPrimary"
+                            app:pcv_mode="ring"
+                            app:pcv_orientation="clockwise"
+                            app:pcv_progress="0"
+                            app:pcv_progressColor="@color/green"
+                            app:pcv_startAngle="90"
+                            app:pcv_textColor="@color/black" />
+
+                    </RelativeLayout>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/unCoverRecyclerView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp" />
+
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+
+</layout>

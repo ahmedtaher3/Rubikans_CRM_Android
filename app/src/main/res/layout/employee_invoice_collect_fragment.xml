@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/AppTheme.AppBarOverlay">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize" />
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/rowFG"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="5dp"
+            app:cardBackgroundColor="@color/white"
+            app:cardCornerRadius="10dp"
+            app:cardElevation="5dp">
+
+
+            <LinearLayout
+                android:id="@+id/view_list_main_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="start"
+                android:orientation="horizontal"
+                android:padding="10dp">
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/image"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/profile_image" />
+
+                </RelativeLayout>
+
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:gravity="start"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:autoSizeMaxTextSize="100sp"
+                        android:autoSizeMinTextSize="12sp"
+                        android:autoSizeStepGranularity="2sp"
+                        android:autoSizeTextType="uniform"
+                        android:textColor="@color/black"
+                        android:textSize="16dp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/customerClass"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:autoSizeMaxTextSize="100sp"
+                        android:autoSizeMinTextSize="12sp"
+                        android:autoSizeStepGranularity="2sp"
+                        android:autoSizeTextType="uniform"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:text=""
+                        android:textColor="@color/black" />
+
+
+                    <TextView
+                        android:id="@+id/brick"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:autoSizeMaxTextSize="100sp"
+                        android:autoSizeMinTextSize="12sp"
+                        android:autoSizeStepGranularity="2sp"
+                        android:autoSizeTextType="uniform"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:text=""
+                        android:textColor="@color/black" />
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/total_reminder"
+                        android:textColor="@color/black" />
+
+                    <TextView
+                        android:id="@+id/totalReminder"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:textColor="@color/black"
+                        android:textSize="16dp"
+                        android:textStyle="bold" />
+
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/pay"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/rounded_primary"
+                        android:text="Pay"
+                        android:textColor="@color/white" />
+
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+        </androidx.cardview.widget.CardView>
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp"
+            android:nestedScrollingEnabled="false"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+
+    </LinearLayout>
+
+
+</layout>

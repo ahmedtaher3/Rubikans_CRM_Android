@@ -1,0 +1,85 @@
+package com.devartlab.ui.trade
+
+import java.util.*
+
+class InventoryTrxWarehouseTransActionModel(
+
+        val TrxId: Int ? = null,
+        val TrxSerial: String ? = null,
+        val TrxTypeId: Int    ? = null,
+        val SupplierId: Int    ? = null,
+        val CustomerId: Int    ? = null,
+        val Trxdate: String ?= null,
+        val ProductId: Int    ? = null,
+        val PatchSerial: String ? = null,
+        val StoreId: Int? = null,
+        val ToStoreId: Int? = null,
+        val TrxNote: String ? = null,
+        val TotalValue: Double ? = null,
+        val AddUserId: Int ? = null,
+        val AddMAc: String? = null,
+        val AddDateTime: String? = null,
+        val ModifyUserId: Int? = null,
+        val ModifyMac: String ? = null,
+        val ModifyDatetime: String? = null,
+        val ApprovedUserId: Int ? = null,
+        val ApprovedEmpId: Int ? = null,
+        val ApprovedMac:String ? = null,
+        val ApprovedDatetime:String ? = null,
+        val TransferIsRecived:Boolean? = null,
+        val QualityChekUserId: Int ? = null,
+        val QualityChekMac: String ? = null,
+        val QualityChekDateTime: Date ? = null,
+        val QualityChekEmpid: Int ? = null,
+        val Approved:Boolean ? = null,
+        val PurchaseOrderSerial:String ? = null,
+        val PurchaseOrderId:Int ? = null,
+        val JournalId:Int ? = null,
+        val ProductionStageIndex:Int ? = null,
+        val AddEmpId:Int ? = null,
+        val ContractId:Int ? = null,
+        val IndirectCostHasBeenDistributed: Boolean ? = null,
+        val TrxAutoSerial:Int? = null,
+        val QualityCheckPass:Boolean ? = null,
+        val ApprovalNotes: String ? = null,
+        val ManualTrxSerial: String ? = null,
+        val INventoryDetails: ArrayList<InventoryTrxWarehouseTransActionDetailsModel> ? = null
+)
+
+
+
+ class InventoryTrxWarehouseTransActionDetailsModel(
+
+         val TrxDetId: Int? = null,
+         val TrxId: Int? = null,
+         val StoreID: Int? = null,
+         val RowIndex: Int? = null,
+         val ItemId: Int? = null,
+         val UnitId: Int? = null,
+         val Qty: Double? = null,
+         val RefuesQty: Double? = null,
+         val AllQty: Double? = null,
+         val RefuesQtyPercent: Double? = null,
+         val Price: Double? = null,
+         val TotalValue: Double? = null,
+         val Notes:String? = null,
+         val CopyFromModuleId:Int? = null,
+         val CopyFromTrxTypeId:Int? = null,
+         val CopyFromTrxId:Int? = null,
+         val CopyFromLineId:Int? = null,
+         val RecivedQty: Double? = null,
+         val GlAccountId: Int? = null,
+         val PatchNumber:String? = null,
+         val PatchExpireDate:Date? = null,
+         val CopyFromQty: Double? = null,
+         val StoreAccountId: Double? = null,
+         val IsBouns: Boolean? = null,
+         val LandedCostUnitPrice:Double? = null,
+         val LandedCostTotalValue:Double? = null,
+         val BounsQty:Double? = null,
+         val OriginalCopyfromId:Int? = null,
+         val TOFromStoreId:Int? = null,
+         val StoreStorageLocationId:Int? = null,
+         val PatchProductionDate: Date? = null
+
+)

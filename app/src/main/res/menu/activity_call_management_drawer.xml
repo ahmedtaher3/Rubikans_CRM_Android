@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/Home"
+            android:icon="@drawable/ic_tablet_dashboard_grey600_24dp"
+            android:title="@string/call_management" />
+
+        <item
+            android:id="@+id/List"
+            android:icon="@drawable/ic_clipboard_list_grey600_24dp"
+            android:title="@string/list"
+            android:visible="true" />
+
+        <item
+            android:id="@+id/Plan"
+            android:icon="@drawable/ic_floor_plan_grey600_24dp"
+            android:title="@string/plan"
+            android:visible="true" />
+
+        <item
+            android:id="@+id/Report"
+            android:icon="@drawable/ic_file_chart_grey600_24dp"
+            android:title="@string/report"
+            android:visible="true" />
+
+        <item
+            android:id="@+id/DailyReport"
+            android:icon="@drawable/ic_file_chart_grey600_24dp"
+            android:title="@string/daily_report"
+            android:visible="true" />
+
+        <item
+            android:id="@+id/MRReport"
+            android:icon="@drawable/ic_file_chart_grey600_24dp"
+            android:title="@string/medical_rep_report"
+            android:visible="false" />
+
+        <item
+            android:id="@+id/PCReport"
+            android:icon="@drawable/ic_file_chart_grey600_24dp"
+            android:title="@string/plan_and_cover_report"
+            android:visible="false" />
+        <item
+            android:id="@+id/SVReport"
+            android:icon="@drawable/ic_file_chart_grey600_24dp"
+            android:title="@string/super_visor_report"
+            android:visible="false" />
+
+        <item
+            android:id="@+id/DVReport"
+            android:icon="@drawable/ic_file_chart_grey600_24dp"
+            android:title="@string/double_visit_report"
+            android:visible="false" />
+        <item
+            android:id="@+id/SPReport"
+            android:icon="@drawable/ic_file_chart_grey600_24dp"
+            android:title="@string/start_point_report"
+            android:visible="false" />
+        <item
+            android:id="@+id/listPermission"
+            android:icon="@drawable/ic_file_chart_grey600_24dp"
+            android:title="@string/list_permission"
+            android:visible="false" />
+        <item
+            android:id="@+id/planPermission"
+            android:icon="@drawable/ic_file_chart_grey600_24dp"
+            android:title="@string/plan_permission"
+            android:visible="false" />
+        <item
+            android:id="@+id/RolePlay"
+            android:icon="@drawable/account_voice"
+            android:title="@string/role_play" />
+
+        <item
+            android:id="@+id/Sync"
+            android:icon="@drawable/ic_sync_black_24dp"
+            android:title="@string/sync"
+            android:visible="true" />
+
+
+    </group>
+
+
+    <item android:title="">
+        <menu>
+
+
+            <item
+                android:id="@+id/exit"
+                android:icon="@drawable/home"
+                android:title="@string/main_home" />
+
+            <item
+                android:id="@+id/LogOut"
+                android:icon="@drawable/ic_logout"
+                android:title="@string/logout"
+                android:visible="false"/>
+
+        </menu>
+    </item>
+
+</menu>

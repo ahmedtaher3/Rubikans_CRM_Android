@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".ui.main.ui.callmanagement.plan.addplan.office.AddOfficeActivity">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/AppTheme.AppBarOverlay">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize" />
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.coordinatorlayout.widget.CoordinatorLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_above="@id/addExtras">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/tasksRecyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/addNewTask"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom|end"
+                    android:layout_margin="20dp"
+                    android:src="@drawable/ic_add" />
+
+
+            </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/addExtras"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="@drawable/button"
+                android:text="@string/add_to_plan"
+                android:layout_alignParentBottom="true"
+                android:textAllCaps="false"
+                android:textColor="@color/white" />
+        </RelativeLayout>
+
+
+    </LinearLayout>
+</layout>

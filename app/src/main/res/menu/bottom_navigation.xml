@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/Expenses"
+        android:icon="@drawable/expenses"
+        android:title="@string/expenses" />
+
+    <item
+        android:id="@+id/Penalties"
+        android:icon="@drawable/sanction"
+        android:title="@string/penalties" />
+
+
+    <item
+        android:id="@+id/Salary"
+        android:icon="@drawable/salary"
+        android:title="@string/salary" />
+    <item
+        android:id="@+id/Attendance"
+        android:icon="@drawable/calendar"
+        android:title="@string/attendance" />
+</menu>

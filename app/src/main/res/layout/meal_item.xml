@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/grey" />
+
+    <LinearLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="5dp"
+        android:weightSum="13">
+
+        <TextView
+            android:id="@+id/dayName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+
+            android:layout_weight="1"
+            android:text="@string/day_name"
+            android:textColor="@color/black"
+            android:textSize="13dp" />
+
+
+        <TextView
+            android:id="@+id/meal"
+            android:layout_width="0dp"
+            android:textAlignment="center"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_weight="4.5"
+            android:text="وجبه ساخنة"
+            android:textColor="@color/black"
+            android:textSize="15dp" />
+
+
+        <TextView
+            android:id="@+id/free"
+            android:layout_width="0dp"
+            android:textAlignment="center"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_weight="3.5"
+            android:text="وجبه بدون نشويات"
+            android:textColor="@color/black"
+            android:textSize="15dp" />
+
+        <TextView
+            android:id="@+id/diet"
+            android:layout_width="0dp"
+            android:textAlignment="center"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_weight="3.5"
+            android:text="وجبه دايت"
+            android:textColor="@color/black"
+            android:textSize="15dp" />
+
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/grey" />
+
+</LinearLayout>

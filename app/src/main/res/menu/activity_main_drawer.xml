@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/List"
+            android:icon="@drawable/ic_clipboard_list_grey600_24dp"
+            android:title="@string/list"
+            android:visible="true" />
+
+        <item
+            android:id="@+id/Plan"
+            android:icon="@drawable/ic_floor_plan_grey600_24dp"
+            android:title="@string/plan"
+            android:visible="true" />
+
+        <item
+            android:id="@+id/Report"
+            android:icon="@drawable/ic_file_chart_grey600_24dp"
+            android:title="@string/report"
+            android:visible="true" />
+
+
+        <item
+            android:id="@+id/DailyReport"
+            android:icon="@drawable/ic_file_chart_grey600_24dp"
+            android:title="@string/daily_report"
+            android:visible="true" />
+
+        <item
+            android:id="@+id/selfService"
+            android:icon="@drawable/ic_account_details_outline_grey600_24dp"
+            android:title="@string/self_service" />
+
+    </group>
+
+    <item
+        android:title="@string/employees_services"
+        android:visible="false">
+        <menu>
+
+            <item
+                android:id="@+id/Expenses"
+
+                android:icon="@drawable/account_voice"
+                android:title="@string/employees_self_services" />
+
+
+        </menu>
+    </item>
+
+
+
+    <item android:title="">
+        <menu>
+
+            <item
+                android:id="@+id/contactsList"
+                android:icon="@drawable/ic_search"
+                android:title="@string/contacts_list" />
+
+            <item
+                android:id="@+id/rateUs"
+                android:icon="@drawable/ic_star_grey600_24dp"
+                android:title="@string/rate_us" />
+
+            <item
+                android:id="@+id/searchForUpdate"
+                android:icon="@drawable/ic_update_grey600_24dp"
+                android:title="@string/search_for_update" />
+
+            <item
+                android:id="@+id/shareApp"
+                android:icon="@drawable/ic_share_variant_grey600_24dp"
+                android:title="@string/share_app" />
+
+
+        </menu>
+    </item>
+
+
+    <item android:title="">
+        <menu>
+
+            <item
+                android:id="@+id/changeLang"
+                android:icon="@drawable/ic_logout"
+                android:title="@string/change_language"
+                android:visible="false" />
+
+            <item
+                android:id="@+id/updatePlan"
+                android:icon="@drawable/ic_floor_plan_grey600_24dp"
+                android:title="@string/update_plan"
+                android:visible="true" />
+
+            <item
+                android:id="@+id/Logout"
+                android:icon="@drawable/ic_logout"
+                android:title="@string/logout" />
+
+        </menu>
+    </item>
+
+
+</menu>

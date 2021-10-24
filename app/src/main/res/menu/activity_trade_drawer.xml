@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/report"
+            android:icon="@drawable/ic_tablet_dashboard_grey600_24dp"
+            android:title="@string/report" />
+
+        <item
+            android:id="@+id/workDay"
+            android:icon="@drawable/ic_clipboard_list_grey600_24dp"
+            android:title="@string/start_work"
+            android:visible="true" />
+
+
+    </group>
+
+
+    <item android:title="">
+        <menu>
+
+
+            <item
+                android:id="@+id/exit"
+                android:icon="@drawable/home"
+                android:title="@string/main_home" />
+
+            <item
+                android:id="@+id/LogOut"
+                android:icon="@drawable/ic_logout"
+                android:title="@string/logout" />
+
+        </menu>
+    </item>
+
+</menu>

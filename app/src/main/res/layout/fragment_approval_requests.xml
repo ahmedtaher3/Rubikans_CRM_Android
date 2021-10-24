@@ -1,0 +1,304 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/approveRequestsSwipeRefreshLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:clickable="true"
+            android:focusable="true">
+
+            <androidx.core.widget.NestedScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fillViewport="true">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+
+                    android:tag="layout/fragment_market_request_types_0">
+
+
+                    <ScrollView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical">
+
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@color/colorPrimary"
+                                android:paddingBottom="10dp">
+
+
+                                <ImageView
+                                    android:id="@+id/closeRequests"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentEnd="true"
+                                    android:src="@drawable/ic_baseline_keyboard_arrow_down_24"
+                                    android:tint="@color/white" />
+
+                                <ImageView
+                                    android:id="@+id/openRequests"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentEnd="true"
+                                    android:src="@drawable/ic_baseline_keyboard_arrow_up_24"
+                                    android:tint="@color/white"
+                                    android:visibility="gone" />
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerVertical="true"
+                                    android:layout_marginStart="10dp"
+                                    android:text="@string/hr_requests"
+                                    android:textColor="@color/white"
+                                    android:textSize="18dp" />
+
+                            </RelativeLayout>
+
+
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/recyclerView"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:nestedScrollingEnabled="false"
+                                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@color/colorPrimary"
+                                android:paddingBottom="10dp">
+
+
+                                <ImageView
+                                    android:id="@+id/closePenalties"
+
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentEnd="true"
+                                    android:src="@drawable/ic_baseline_keyboard_arrow_down_24"
+                                    android:tint="@color/white" />
+
+                                <ImageView
+                                    android:id="@+id/openPenalties"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentEnd="true"
+                                    android:src="@drawable/ic_baseline_keyboard_arrow_up_24"
+                                    android:tint="@color/white"
+                                    android:visibility="gone" />
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerVertical="true"
+                                    android:layout_marginStart="10dp"
+                                    android:text="@string/penalties"
+                                    android:textColor="@color/white"
+                                    android:textSize="18dp" />
+
+                            </RelativeLayout>
+
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/recyclerViewPenalties"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:nestedScrollingEnabled="false"
+                                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@color/colorPrimary"
+                                android:paddingBottom="10dp">
+
+
+                                <ImageView
+                                    android:id="@+id/closeWork"
+
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentEnd="true"
+                                    android:src="@drawable/ic_baseline_keyboard_arrow_down_24"
+                                    android:tint="@color/white" />
+
+                                <ImageView
+                                    android:id="@+id/openWork"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentEnd="true"
+                                    android:src="@drawable/ic_baseline_keyboard_arrow_up_24"
+                                    android:tint="@color/white"
+                                    android:visibility="gone" />
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerVertical="true"
+                                    android:layout_marginStart="10dp"
+                                    android:text="@string/work_from_home"
+                                    android:textColor="@color/white"
+                                    android:textSize="18dp" />
+
+                            </RelativeLayout>
+
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/recyclerViewWorkFromHome"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginBottom="25dp"
+                                android:nestedScrollingEnabled="false"
+                                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+                        </LinearLayout>
+
+                    </ScrollView>
+
+                    <FrameLayout
+                        android:id="@+id/fragmentContainer"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+                </RelativeLayout>
+
+            </androidx.core.widget.NestedScrollView>
+
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/approveLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="5dp"
+            android:foreground="?selectableItemBackground"
+            android:visibility="gone"
+            app:cardBackgroundColor="#C3C3C3"
+            app:cardCornerRadius="10dp"
+            app:cardElevation="5dp">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp">
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:paddingLeft="25dp"
+                    android:paddingRight="25dp"
+                    android:weightSum="2.2">
+
+                    <LinearLayout
+                        android:id="@+id/approveRequest"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+
+                        android:layout_weight="1"
+                        android:background="@drawable/background2"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:padding="@dimen/text_padding_top_5dp">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_check_white_24dp" />
+
+                        <TextView
+                            android:id="@+id/approveAll"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="5dp"
+                            android:text="@string/approve_all"
+                            android:textAllCaps="false"
+                            android:textColor="@color/white"
+                            android:textStyle="bold" />
+
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="20dp"
+                        android:layout_height="1dp" />
+
+                    <LinearLayout
+                        android:id="@+id/rejectRequest"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@drawable/background1"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:padding="@dimen/text_padding_top_5dp">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_close_white_24dp" />
+
+                        <TextView
+                            android:id="@+id/rejectAll"
+
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="5dp"
+                            android:text="@string/reject_all"
+                            android:textAllCaps="false"
+                            android:textColor="@color/white"
+                            android:textStyle="bold" />
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+
+                <TextView
+                    android:id="@+id/approvedAt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="3dp"
+                    android:visibility="gone" />
+
+
+            </LinearLayout>
+
+
+        </androidx.cardview.widget.CardView>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+
+</layout>

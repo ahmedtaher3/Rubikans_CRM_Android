@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.main.MainActivity">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/AppTheme.AppBarOverlay">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="?attr/colorPrimary"
+                app:popupTheme="@style/AppTheme.PopupOverlay">
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="end|center_vertical">
+
+                    <RelativeLayout
+                        android:id="@+id/notification"
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:clickable="true"
+                        android:orientation="vertical"
+                        android:paddingEnd="10dp"
+                        android:visibility="gone">
+
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_marginEnd="10dp"
+                            app:srcCompat="@drawable/ic_bell_white_36dp" />
+
+
+                        <TextView
+                            android:id="@+id/notificationText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:background="@drawable/rounded_square"
+                            android:paddingStart="4dp"
+                            android:paddingTop="2dp"
+                            android:paddingEnd="4dp"
+                            android:paddingBottom="2dp"
+                            android:textColor="#ffffffff"
+                            android:visibility="gone" />
+
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:clickable="true"
+                        android:orientation="vertical"
+                        android:paddingEnd="10dp">
+
+
+                        <ProgressBar
+                            android:id="@+id/notificationProgressBar"
+                            android:layout_width="25dp"
+                            android:layout_height="25dp"
+                            android:layout_alignParentEnd="true"
+                            android:layout_marginEnd="10dp" />
+
+
+                    </RelativeLayout>
+
+
+                </RelativeLayout>
+
+            </androidx.appcompat.widget.Toolbar>
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <include layout="@layout/content_main2" />
+
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</layout>

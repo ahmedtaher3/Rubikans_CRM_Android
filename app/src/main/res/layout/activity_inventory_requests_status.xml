@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+
+    >
+    <data>
+
+    </data>
+<androidx.constraintlayout.widget.ConstraintLayout
+
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.trade.InventoryRequestsStatusActivity">
+
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:gravity="center"
+        android:minWidth="550dp"
+        android:orientation="vertical"
+        tools:ignore="MissingConstraints">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:theme="@style/AppTheme.AppBarOverlay">
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize" />
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <RelativeLayout
+                android:id="@+id/inventoryAllTab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5.0dip"
+                android:background="@drawable/rounded_primary">
+
+                <TextView
+                    android:id="@+id/allTabTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10.0dip"
+                    android:layout_marginTop="5.0dip"
+                    android:layout_marginRight="10.0dip"
+                    android:layout_marginBottom="5.0dip"
+                    android:text="@string/all"
+                    android:textColor="@color/white" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/inventoryPendingTab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5.0dip"
+                android:background="@drawable/rounded_grey">
+
+                <TextView
+                    android:id="@+id/pendingTabTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10.0dip"
+                    android:layout_marginTop="5.0dip"
+                    android:layout_marginRight="10.0dip"
+                    android:layout_marginBottom="5.0dip"
+                    android:text="@string/pending"
+                    android:textColor="@color/text_dark_grey" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/inventoryApprovedTab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5.0dip"
+                android:background="@drawable/rounded_grey">
+
+                <TextView
+                    android:id="@+id/approvedTabTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10.0dip"
+                    android:layout_marginTop="5.0dip"
+                    android:layout_marginRight="10.0dip"
+                    android:layout_marginBottom="5.0dip"
+                    android:text="@string/approved"
+                    android:textColor="@color/text_dark_grey" />
+            </RelativeLayout>
+
+
+
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerInventoryStatues"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:listitem="@layout/inventory_requests_statues_iteam" />
+
+    </LinearLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
