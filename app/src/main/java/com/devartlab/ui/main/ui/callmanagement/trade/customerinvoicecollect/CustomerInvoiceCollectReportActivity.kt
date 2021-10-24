@@ -12,11 +12,11 @@ import androidx.lifecycle.ViewModelProviders
 import com.amulyakhare.textdrawable.TextDrawable
 import com.devartlab.R
 import com.devartlab.base.BaseActivity
+import com.devartlab.data.room.collect.CollectEntity
 import com.devartlab.data.room.plan.PlanEntity
 import com.devartlab.databinding.EmployeeInvoiceCollectFragmentBinding
 import com.devartlab.model.CustomerInvoiceDetails
 import com.devartlab.model.DevartLabReportsFilterDTO
-import com.devartlab.model.InvTrxSalesPurchasePaymentDetailsModel
 import com.devartlab.ui.dialogs.chooseemployee.ChooseEmployee
 import com.devartlab.ui.main.ui.callmanagement.trade.TradeReportsViewModel
 import com.devartlab.ui.main.ui.callmanagement.trade.customerinvoice.CustomerInvoiceCollectReportAdapter
@@ -31,8 +31,7 @@ import kotlin.collections.ArrayList
 
 private const val TAG = "CustomerInvoiceCollectR"
 
-class CustomerInvoiceCollectReportActivity : BaseActivity<EmployeeInvoiceCollectFragmentBinding>(),
-    CustomerInvoiceCollectReportAdapter.OnPayClick {
+class CustomerInvoiceCollectReportActivity : BaseActivity<EmployeeInvoiceCollectFragmentBinding>(), CustomerInvoiceCollectReportAdapter.OnPayClick {
     private lateinit var viewModel: TradeReportsViewModel
     private lateinit var binding: EmployeeInvoiceCollectFragmentBinding
     private lateinit var adapter: CustomerInvoiceCollectReportAdapter
@@ -83,35 +82,33 @@ class CustomerInvoiceCollectReportActivity : BaseActivity<EmployeeInvoiceCollect
         binding.brick.text = customerModel.brick
 
 
-        filterModel = DevartLabReportsFilterDTO(
-            2,
-            1000,
-            1,
-            viewModel.dataManager.user.accId.toString(),
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            false,
-            null,
-            null,
-            null,
-            null,
-            false,
-            null,
-            customerModel.customerid,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null
-        )
+        filterModel = DevartLabReportsFilterDTO(2,
+                                                1000,
+                                                1,
+                                                viewModel.dataManager.user.accId.toString(),
+                                                null,
+                                                null,
+                                                null,
+                                                null,
+                                                null,
+                                                null,
+                                                false,
+                                                null,
+                                                null,
+                                                null,
+                                                null,
+                                                false,
+                                                null,
+                                                customerModel.customerid,
+                                                null,
+                                                null,
+                                                null,
+                                                null,
+                                                null,
+                                                null,
+                                                null,
+                                                null,
+                                                null)
 
 
 
@@ -143,21 +140,13 @@ class CustomerInvoiceCollectReportActivity : BaseActivity<EmployeeInvoiceCollect
         binding.pay.setOnClickListener {
 
 
-            val dialogBuilder = android.app.AlertDialog.Builder(this)
-            // ...Irrelevant code for customizing the buttons and title
+            val dialogBuilder = android.app.AlertDialog.Builder(this) // ...Irrelevant code for customizing the buttons and title
             val inflater = this.layoutInflater
             val dialogView = inflater.inflate(R.layout.choose_invoice_type, null)
             dialogBuilder.setView(dialogView)
             val paidET = dialogView.findViewById<View>(R.id.paid) as EditText
             val addButton = dialogView.findViewById<View>(R.id.addButton) as Button
-            paidET.setFilters(
-                arrayOf<InputFilter>(
-                    InputFilterMinMax(
-                        "0",
-                        total.toString()
-                    )
-                )
-            )
+            paidET.setFilters(arrayOf<InputFilter>(InputFilterMinMax("0", total.toString())))
             var isPaid = true
 
             val alertDialog = dialogBuilder.create()
@@ -166,12 +155,8 @@ class CustomerInvoiceCollectReportActivity : BaseActivity<EmployeeInvoiceCollect
 
                 val paidText = paidET.text.toString()
 
-                Toast.makeText(
-                    this@CustomerInvoiceCollectReportActivity,
-                    paidText,
-                    Toast.LENGTH_SHORT
-                ).show()
-                val list = ArrayList<InvTrxSalesPurchasePaymentDetailsModel>()
+                Toast.makeText(this@CustomerInvoiceCollectReportActivity, paidText, Toast.LENGTH_SHORT).show()
+                val list = ArrayList<CollectEntity>()
 
 
                 var paid = paidText.toDouble()
@@ -185,42 +170,33 @@ class CustomerInvoiceCollectReportActivity : BaseActivity<EmployeeInvoiceCollect
                         paid -= model.totalReminder!!
 
                         Log.d(TAG, "if" + paid.toString())
-                        Log.d(
-                            TAG,
-                            "totalReminder" + model.totalReminder!!.toString() + "paid" + paid.toString()
-                        )
+                        Log.d(TAG, "totalReminder" + model.totalReminder!!.toString() + "paid" + paid.toString())
 
-                    } else {
+                    }
+                    else {
                         singlePaid = paid
                         paid = 0.0
                         Log.d(TAG, "else" + paid.toString())
-                        Log.d(
-                            TAG,
-                            "totalReminder" + model.totalReminder!!.toString() + "paid" + paid.toString()
-                        )
+                        Log.d(TAG, "totalReminder" + model.totalReminder!!.toString() + "paid" + paid.toString())
 
                     }
 
 
-                    list.add(
-                        InvTrxSalesPurchasePaymentDetailsModel(
-                            null,
-                            model.invoiceId,
-                            model.invoiceTypeId,
-                            null,
-                            null,
-                            null,
-                            singlePaid,
-                            null,
-                            null,
-                            null,
-                            null,
-                            null,
-                            customerModel.customerid?.toInt(),
-                            null,
-                            null
-                        )
-                    )
+                    list.add(CollectEntity(null,
+                                           model.invoiceId,
+                                           model.invoiceTypeId,
+                                           null,
+                                           null,
+                                           null,
+                                           singlePaid,
+                                           null,
+                                           null,
+                                           null,
+                                           null,
+                                           null,
+                                           customerModel.customerid?.toInt(),
+                                           null,
+                                           null))
                 }
 
 
@@ -241,8 +217,7 @@ class CustomerInvoiceCollectReportActivity : BaseActivity<EmployeeInvoiceCollect
         if (title != null && !title.isEmpty()) {
             letter = title.substring(0, 1)
         }
-        mDrawableBuilder = TextDrawable.builder()
-            .buildRound(letter, color)
+        mDrawableBuilder = TextDrawable.builder().buildRound(letter, color)
         binding.image.setImageDrawable(mDrawableBuilder)
     }
 
@@ -264,7 +239,8 @@ class CustomerInvoiceCollectReportActivity : BaseActivity<EmployeeInvoiceCollect
                     adapter.setMyData(fullList)
                 }
 
-            } else {
+            }
+            else {
                 Toast.makeText(this, it.rerurnMessage, Toast.LENGTH_SHORT).show()
             }
 
@@ -274,7 +250,8 @@ class CustomerInvoiceCollectReportActivity : BaseActivity<EmployeeInvoiceCollect
             if (it.isSuccesed) {
                 Toast.makeText(this, "isSuccesed", Toast.LENGTH_SHORT).show()
 
-            } else {
+            }
+            else {
                 Toast.makeText(this, it.rerurnMessage, Toast.LENGTH_SHORT).show()
             }
 
@@ -298,8 +275,7 @@ class CustomerInvoiceCollectReportActivity : BaseActivity<EmployeeInvoiceCollect
     override fun setOnPayClick(model: CustomerInvoiceDetails) {
 
 
-        val dialogBuilder = android.app.AlertDialog.Builder(this)
-        // ...Irrelevant code for customizing the buttons and title
+        val dialogBuilder = android.app.AlertDialog.Builder(this) // ...Irrelevant code for customizing the buttons and title
         val inflater = this.layoutInflater
         val dialogView = inflater.inflate(R.layout.choose_invoice_type, null)
         dialogBuilder.setView(dialogView)
@@ -312,25 +288,22 @@ class CustomerInvoiceCollectReportActivity : BaseActivity<EmployeeInvoiceCollect
         addButton.setOnClickListener {
 
 
-            val list = ArrayList<InvTrxSalesPurchasePaymentDetailsModel>()
-            list.add(
-                InvTrxSalesPurchasePaymentDetailsModel(
-                    null,
-                    model.invoiceId,
-                    model.invoiceTypeId,
-                    null,
-                    null,
-                    null,
-                    paidET.text.toString().toDouble(),
-                    null,
-                    null,
-                    null,
-                    null,
-                    null,
-                    customerModel.customerid?.toInt(),
-                    null,
-                    null
-                )
+            val list = ArrayList<CollectEntity>()
+            list.add(CollectEntity(null,
+                                                            model.invoiceId,
+                                                            model.invoiceTypeId,
+                                                            null,
+                                                            null,
+                                                            null,
+                                                            paidET.text.toString().toDouble(),
+                                                            null,
+                                                            null,
+                                                            null,
+                                                            null,
+                                                            null,
+                                                            customerModel.customerid?.toInt(),
+                                                            null,
+                                                            null)
 
 
             )

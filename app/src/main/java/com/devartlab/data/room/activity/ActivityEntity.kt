@@ -10,7 +10,7 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 @Entity
-class ActivityEntity(
+data class ActivityEntity(
 
     @PrimaryKey(autoGenerate = true)
     var id: Int? = null,

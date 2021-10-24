@@ -4,34 +4,26 @@ import android.app.Application
 import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.devartlab.data.retrofit.ApiServices
 import com.devartlab.data.retrofit.RetrofitClient
 import com.devartlab.data.room.DatabaseClient
-import com.devartlab.data.room.authority.AuthorityDao
-import com.devartlab.data.room.authority.AuthorityEntity
 import com.devartlab.data.shared.DataManager
-import com.devartlab.model.GoogleRequestResponse
 import io.reactivex.Observer
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import com.devartlab.base.BaseApplication
 import com.devartlab.data.retrofit.ResponseModel
+import com.devartlab.data.room.collect.CollectEntity
 import com.devartlab.data.room.contract.ContractDao
 import com.devartlab.data.room.contract.ContractEntity
-import com.devartlab.data.room.plan.PlanEntity
 import com.devartlab.data.room.trademaster.TradeMasterDao
 import com.devartlab.data.room.trademaster.TradeMasterEntity
-import com.devartlab.data.room.values.ValuesDao
 import com.devartlab.model.DevartLabReportsFilterDTO
-import com.devartlab.model.InvTrxSalesPurchasePaymentDetailsModel
-import com.devartlab.ui.main.ui.callmanagement.inventory.ReportsFilterModel
+ import com.devartlab.ui.main.ui.callmanagement.inventory.ReportsFilterModel
 import com.google.gson.Gson
-import com.google.gson.JsonObject
 import io.reactivex.Completable
-import okhttp3.ResponseBody
 import retrofit2.Retrofit
 
 
@@ -106,8 +98,8 @@ class TradeReportsViewModel(application: Application) : AndroidViewModel(applica
 
     }
 
-    fun collectMoney(list: ArrayList<InvTrxSalesPurchasePaymentDetailsModel>) {
-        val newlist = ArrayList<InvTrxSalesPurchasePaymentDetailsModel>()
+    fun collectMoney(list: ArrayList<CollectEntity>) {
+        val newlist = ArrayList<CollectEntity>()
 
         for (m in list) {
             if (m.PaymentValue!! > 0.0) {
