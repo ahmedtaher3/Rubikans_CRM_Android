@@ -127,7 +127,9 @@ class DoubleActivity : BaseActivity<ActivityDoubleBinding>(), ChooseEmployeeInte
                         , CommonUtilities.randomColor
                         , activity?.typeId
                         , false
-                        , false
+                        , false,
+                        false,
+                        ""
                     )
 
                     System.out.println(planEntity.toString())

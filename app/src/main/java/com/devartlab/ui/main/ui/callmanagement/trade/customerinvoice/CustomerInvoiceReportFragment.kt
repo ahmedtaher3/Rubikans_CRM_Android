@@ -15,6 +15,7 @@ import com.devartlab.R
 import com.devartlab.base.BaseFragment
 import com.devartlab.data.retrofit.ApiServices
 import com.devartlab.data.room.filterdata.FilterDataEntity
+import com.devartlab.data.room.invoicedetailes.CustomerInvoiceEntity
 import com.devartlab.databinding.EmployeeInvoiceReportFragmentBinding
 import com.devartlab.model.*
 import com.devartlab.ui.dialogs.chooseemployee.ChooseEmployee
@@ -36,7 +37,7 @@ class CustomerInvoiceReportFragment : BaseFragment<EmployeeInvoiceReportFragment
     private lateinit var filterModel: DevartLabReportsFilterDTO
 
 
-    var fullList = ArrayList<CustomerInvoiceDetails>()
+    var fullList = ArrayList<CustomerInvoiceEntity>()
 
 
     var chooseEmployee: ChooseEmployee? = null
@@ -151,18 +152,13 @@ class CustomerInvoiceReportFragment : BaseFragment<EmployeeInvoiceReportFragment
 
 
     private fun setObservers() {
-        viewModel.responseLive.observe(viewLifecycleOwner, Observer {
+        viewModel.responseLiveDashboard.observe(viewLifecycleOwner, Observer {
             System.out.println(it.toString())
-            if (it.isSuccesed) {
-
-                if (!it.data.customerInvoiceDetails.isNullOrEmpty()) {
-                    System.out.println(it.toString())
-                    fullList.clear()
-                    fullList = it.data.customerInvoiceDetails
-                    adapter.setMyData(fullList)
 
 
-                    val customerInvoiceDashboard = it.data.customerInvoiceDashboard
+
+
+                    val customerInvoiceDashboard = it
 
                     binding.allSales.text = customerInvoiceDashboard[0].totalValue.toString()
                     binding.invoiceSales.text = customerInvoiceDashboard[0].numberofInvoice.toString()
@@ -177,11 +173,20 @@ class CustomerInvoiceReportFragment : BaseFragment<EmployeeInvoiceReportFragment
                     binding.customersReminder.text = customerInvoiceDashboard[0].reminderInvoiceCustomer.toString()
 
 
-                }
 
-            } else {
-                Toast.makeText(baseActivity, it.rerurnMessage, Toast.LENGTH_SHORT).show()
-            }
+
+
+
+        })
+        viewModel.responseLive.observe(viewLifecycleOwner, Observer {
+            System.out.println(it.toString())
+
+
+            System.out.println(it.toString())
+            fullList.clear()
+            fullList = it
+            adapter.setMyData(fullList)
+            
 
         })
         viewModel.progress.observe(viewLifecycleOwner, Observer {

@@ -70,8 +70,8 @@ class ConfirmProductsFragment : BaseFragment<FragmentConfirmProductsBinding>(), 
 
         binding.recyclerView?.adapter = adapter
 
-
-        adapter.setMyData(list)
+        val listt = list.distinctBy { it.id }
+        adapter.setMyData(list as ArrayList<ContractEntity>)
 
         setObservers()
 
@@ -83,7 +83,7 @@ class ConfirmProductsFragment : BaseFragment<FragmentConfirmProductsBinding>(), 
         viewModel.productLive.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
 
 
-            adapter.setMyData(it.data.contractList)
+            adapter.setMyData(it.data.contractList2)
         })
 
         viewModel.progress.observe(viewLifecycleOwner, androidx.lifecycle.Observer { progress ->

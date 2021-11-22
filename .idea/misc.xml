@@ -3,11 +3,48 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/DevartLabCRM/app/src/main/res/drawable/button.xml" value="0.2703125" />
         <entry key="..\:/DevartLabCRM/app/src/main/res/drawable/ic_message_outline.xml" value="0.19444444444444445" />
+        <entry key="..\:/DevartLabCRM/app/src/main/res/drawable/listview_line.xml" value="0.2703125" />
+        <entry key="..\:/DevartLabCRM/app/src/main/res/drawable/rounded_blue.xml" value="0.2703125" />
+        <entry key="..\:/DevartLabCRM/app/src/main/res/drawable/rounded_selected_item.xml" value="0.2703125" />
+        <entry key="..\:/DevartLabCRM/app/src/main/res/layout/activity_call_management.xml" value="0.13796296296296295" />
+        <entry key="..\:/DevartLabCRM/app/src/main/res/layout/activity_create_new_customer.xml" value="0.25416666666666665" />
         <entry key="..\:/DevartLabCRM/app/src/main/res/layout/activity_devart_link.xml" value="0.20742753623188406" />
+        <entry key="..\:/DevartLabCRM/app/src/main/res/layout/activity_emplotee_services.xml" value="0.25416666666666665" />
+        <entry key="..\:/DevartLabCRM/app/src/main/res/layout/activity_login.xml" value="0.22962962962962963" />
         <entry key="..\:/DevartLabCRM/app/src/main/res/layout/activity_main.xml" value="0.1793478260869565" />
+        <entry key="..\:/DevartLabCRM/app/src/main/res/layout/activity_printer_connect.xml" value="0.25416666666666665" />
+        <entry key="..\:/DevartLabCRM/app/src/main/res/layout/activity_select_products.xml" value="0.17527173913043478" />
+        <entry key="..\:/DevartLabCRM/app/src/main/res/layout/activity_trade.xml" value="0.25416666666666665" />
+        <entry key="..\:/DevartLabCRM/app/src/main/res/layout/add_new_address.xml" value="0.25416666666666665" />
+        <entry key="..\:/DevartLabCRM/app/src/main/res/layout/add_new_key_person.xml" value="0.25416666666666665" />
         <entry key="..\:/DevartLabCRM/app/src/main/res/layout/call_managment_home_item.xml" value="0.20742753623188406" />
+        <entry key="..\:/DevartLabCRM/app/src/main/res/layout/confirm_dialog.xml" value="0.25416666666666665" />
+        <entry key="..\:/DevartLabCRM/app/src/main/res/layout/edit_layout.xml" value="0.25416666666666665" />
+        <entry key="..\:/DevartLabCRM/app/src/main/res/layout/employee_invoice_collect_fragment.xml" value="0.17527173913043478" />
+        <entry key="..\:/DevartLabCRM/app/src/main/res/layout/employee_invoice_item.xml" value="0.23958333333333334" />
+        <entry key="..\:/DevartLabCRM/app/src/main/res/layout/fragment_home.xml" value="0.25416666666666665" />
+        <entry key="..\:/DevartLabCRM/app/src/main/res/layout/fragment_order_print.xml" value="0.2" />
+        <entry key="..\:/DevartLabCRM/app/src/main/res/layout/fragment_order_products.xml" value="0.24814814814814815" />
+        <entry key="..\:/DevartLabCRM/app/src/main/res/layout/fragment_report.xml" value="0.25416666666666665" />
+        <entry key="..\:/DevartLabCRM/app/src/main/res/layout/fragment_self_service_home.xml" value="0.25416666666666665" />
+        <entry key="..\:/DevartLabCRM/app/src/main/res/layout/header_item_attendance.xml" value="0.25416666666666665" />
+        <entry key="..\:/DevartLabCRM/app/src/main/res/layout/inventory_load_car_description_iteam.xml" value="0.21784420289855072" />
+        <entry key="..\:/DevartLabCRM/app/src/main/res/layout/inventory_load_car_item.xml" value="0.21784420289855072" />
         <entry key="..\:/DevartLabCRM/app/src/main/res/layout/nav_header_main.xml" value="0.20833333333333334" />
+        <entry key="..\:/DevartLabCRM/app/src/main/res/layout/order_print_item.xml" value="0.17527173913043478" />
+        <entry key="..\:/DevartLabCRM/app/src/main/res/layout/order_product_item.xml" value="0.23958333333333334" />
+        <entry key="..\:/DevartLabCRM/app/src/main/res/layout/plan_item.xml" value="0.25416666666666665" />
+        <entry key="..\:/DevartLabCRM/app/src/main/res/layout/plan_item_mobile.xml" value="0.25416666666666665" />
+        <entry key="..\:/DevartLabCRM/app/src/main/res/layout/progress_layout.xml" value="0.25416666666666665" />
+        <entry key="..\:/DevartLabCRM/app/src/main/res/layout/recycler_ad.xml" value="0.25416666666666665" />
+        <entry key="..\:/DevartLabCRM/app/src/main/res/layout/select_general_product_item.xml" value="0.2" />
+        <entry key="..\:/DevartLabCRM/app/src/main/res/layout/select_product_item.xml" value="0.264" />
+        <entry key="..\:/DevartLabCRM/app/src/main/res/layout/selected_items.xml" value="0.21784420289855072" />
+        <entry key="..\:/DevartLabCRM/app/src/main/res/layout/sync_data_dialog.xml" value="0.25416666666666665" />
+        <entry key="..\:/DevartLabCRM/app/src/main/res/menu/activity_main_drawer.xml" value="0.1" />
+        <entry key="..\:/DevartLabCRM/app/src/main/res/menu/call_menu.xml" value="0.25416666666666665" />
       </map>
     </option>
   </component>

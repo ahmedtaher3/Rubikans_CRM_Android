@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.util.Base64
 import android.view.View
 import android.view.WindowManager
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -17,7 +16,7 @@ import com.devartlab.data.retrofit.ApiServices
 import com.devartlab.data.room.filterdata.FilterDataEntity
 import com.devartlab.data.room.trademaster.TradeMasterEntity
 import com.devartlab.databinding.EmployeeInvoiceReportFragmentBinding
-import com.devartlab.model.*
+import com.devartlab.model.DevartLabReportsFilterDTO
 import com.devartlab.ui.dialogs.chooseemployee.ChooseEmployee
 import com.devartlab.ui.dialogs.chooseemployee.ChooseEmployeeInterFace
 import com.devartlab.ui.main.ui.callmanagement.trade.TradeReportsViewModel
@@ -82,8 +81,6 @@ class OfflineReportFragment : BaseFragment<EmployeeInvoiceReportFragmentBinding>
         binding.recycler.adapter = adapter
 
 
-
-
         binding.empImage.setOnClickListener {
 
             chooseEmployee = ChooseEmployee(baseActivity, this, viewModel.dataManager)
@@ -98,28 +95,6 @@ class OfflineReportFragment : BaseFragment<EmployeeInvoiceReportFragmentBinding>
             chooseEmployee?.show()
 
         }
-
-
-        /*binding.filter.setOnClickListener {
-
-            val bottomDialogFragment =
-                TradeBottomSheet(object : TradeBottomSheet.DialogListener {
-                    override fun applyFilter(model: DevartLabReportsFilterDTO) {
-                        filterModel = model
-                        filterModel.option = 1
-                        viewModel.getSalesPurchaseReport(filterModel)
-
-                    }
-
-                }, filterModel, viewModel.dataManager, viewModel.myAPI!!)
-
-            bottomDialogFragment.show(
-                baseActivity.supportFragmentManager,
-                "bottomDialogFragment"
-            )
-        }*/
-
-
 
 
         viewModel.getOfflineInvoices()
@@ -137,24 +112,29 @@ class OfflineReportFragment : BaseFragment<EmployeeInvoiceReportFragmentBinding>
 
         viewModel.responseLive.observe(viewLifecycleOwner, Observer {
             System.out.println(it.toString())
-            if (it.isSuccesed) {
-
-                if (!it.data.customerInvoiceDetails.isNullOrEmpty()) {
-                    System.out.println(it.toString())
-                    fullList.clear()
 
 
-                    val customerInvoiceDashboard = it.data.customerInvoiceDashboard
+            if (!it.isNullOrEmpty()) {
+                System.out.println(it.toString())
+                fullList.clear()
 
-                    binding.allSales.text = customerInvoiceDashboard[0].totalValue.toString()
-                    binding.invoiceSales.text =
-                        customerInvoiceDashboard[0].numberofInvoice.toString()
-                    binding.customersSales.text =
-                        customerInvoiceDashboard[0].numberofCustomer.toString()
 
-                    binding.allPaied.text = customerInvoiceDashboard[0].totalPaied.toString()
-                    binding.invoicePaied.text =
-                        customerInvoiceDashboard[0].paiedInvoiceNumber.toString()
+            }
+
+
+        })
+        viewModel.responseLiveDashboard.observe(viewLifecycleOwner, Observer {
+            System.out.println(it.toString())
+
+
+            val customerInvoiceDashboard = it
+
+            binding.allSales.text = customerInvoiceDashboard[0].totalValue.toString()
+            binding.invoiceSales.text = customerInvoiceDashboard[0].numberofInvoice.toString()
+            binding.customersSales.text = customerInvoiceDashboard[0].numberofCustomer.toString()
+
+            binding.allPaied.text = customerInvoiceDashboard[0].totalPaied.toString()
+            binding.invoicePaied.text = customerInvoiceDashboard[0].paiedInvoiceNumber.toString()
                     binding.customersPaied.text =
                         customerInvoiceDashboard[0].paiedInvoiceCustomer.toString()
 
@@ -164,12 +144,6 @@ class OfflineReportFragment : BaseFragment<EmployeeInvoiceReportFragmentBinding>
                     binding.customersReminder.text =
                         customerInvoiceDashboard[0].reminderInvoiceCustomer.toString()
 
-
-                }
-
-            } else {
-                Toast.makeText(baseActivity, it.rerurnMessage, Toast.LENGTH_SHORT).show()
-            }
 
         })
         viewModel.progress.observe(viewLifecycleOwner, Observer {

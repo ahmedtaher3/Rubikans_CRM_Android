@@ -122,7 +122,7 @@ interface ApiServices {
         @Query("AccountId") id: Int,
         @Query("TableName") tableName: String,
         @Query("ParentIdStr") whereCondition: String,
-        @Query("FilterText") filterText: String
+        @Query("FilterText") filterTSyncAllProductext: String
     ): Observable<ArrayList<JobsModel>>
 
     @GET("Product/MasterFile/SyncAllProduct")
@@ -651,6 +651,8 @@ interface ApiServices {
     ): Call<ResponseModel>
 
 
+ 
+
     @POST("InventoryTransaction/GetAllInvnetoryTrxByOption")
     fun getInventoryInventory(@Body objects: JsonObject): Call<ResponseModel>
 
@@ -664,6 +666,12 @@ interface ApiServices {
         @Query("AccountId") AccountId: Int,
         @Query("StoreId") StoreId: Int
     ): Observable<ResponseModel>
+
+
+
+
+    @GET("api/ads")
+    fun getAds(): Observable<ResponseModel>
 
     companion object {
 

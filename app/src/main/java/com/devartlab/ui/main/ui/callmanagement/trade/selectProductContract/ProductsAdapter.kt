@@ -34,8 +34,12 @@ class ProductsAdapter(private val context: Context, private var myData: ArrayLis
         return this.myData
     }
 
-    fun addItem(model: ContractEntity) {
-        this.myData.add(model)
+
+    fun addItem(contractEntity: ContractEntity) {
+
+        if (!myData.contains(contractEntity)) {
+            myData.add(contractEntity)
+        }
         notifyDataSetChanged()
     }
 
@@ -44,12 +48,11 @@ class ProductsAdapter(private val context: Context, private var myData: ArrayLis
 
 
 
-        holder.name?.text = model.itemEnName
+        holder.name?.text = model.itemArName
         holder.price?.text = model.price.toString()
         holder.discount?.text = model.cashDisc.toString() + "%"
         holder.priceAfterDiscount?.text = (model.price!! -((model.price!! * model.cashDisc!!) / 100)).toString()
 
-        Glide.with(context).load(model.image).into(holder.image!!)
 
         holder.itemView.setOnClickListener {
             onItemSelect.setOnItemSelect(model)

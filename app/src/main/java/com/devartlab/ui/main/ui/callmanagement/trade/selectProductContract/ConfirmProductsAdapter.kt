@@ -44,7 +44,7 @@ class ConfirmProductsAdapter(private val context: Context, private var myData: A
 
 
 
-        holder.name?.text = model.itemEnName
+        holder.name?.text = model.itemArName
         holder.price?.text = (model.price!! -((model.price!! * model.cashDisc!!) / 100)).toString()
         holder.count?.setText(model.count.toString())
 //        Glide.with(context).load(model.image).into(holder.image!!)

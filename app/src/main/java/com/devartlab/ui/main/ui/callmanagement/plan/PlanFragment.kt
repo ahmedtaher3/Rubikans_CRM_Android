@@ -19,9 +19,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.devartlab.R
 import com.devartlab.base.BaseFragment
+import com.devartlab.data.room.activity.ActivityEntity
 import com.devartlab.data.room.plan.PlanEntity
 import com.devartlab.databinding.FragmentPlanBinding
-import com.devartlab.data.room.activity.ActivityEntity
+import com.devartlab.model.AdModel
 import com.devartlab.model.Cycle
 import com.devartlab.model.StartPoint
 import com.devartlab.ui.main.ui.callmanagement.plan.activities.ActivitiesAdapter
@@ -32,10 +33,8 @@ import com.devartlab.ui.main.ui.callmanagement.plan.addplan.single.AddPlanSingle
 import com.devartlab.ui.main.ui.callmanagement.plan.choosestartpoint.ChooseStartPoint
 import com.devartlab.ui.main.ui.callmanagement.plan.choosestartpoint.ChooseStartPointInterFace
 import com.devartlab.ui.main.ui.callmanagement.plan.cycles.CyclesDialog
-import com.devartlab.utils.CommonUtilities
-import com.devartlab.utils.LocationUtils
-import com.devartlab.utils.ProgressLoading
-import com.devartlab.utils.RecyclerTouchListener
+import com.devartlab.utils.*
+import com.google.gson.Gson
 import devs.mulham.horizontalcalendar.HorizontalCalendar
 import devs.mulham.horizontalcalendar.utils.HorizontalCalendarListener
 import io.reactivex.Single
@@ -48,9 +47,11 @@ import java.util.*
 import java.util.concurrent.TimeUnit
 import kotlin.collections.ArrayList
 
-class PlanFragment : BaseFragment<FragmentPlanBinding?>(), ActivitiesAdapter.ChooseActivity,
-    DialogInterface.OnDismissListener
-    , AdapterView.OnItemSelectedListener, ChooseStartPointInterFace {
+
+private const val TAG = "PlanFragment"
+
+class PlanFragment : BaseFragment<FragmentPlanBinding?>(), ActivitiesAdapter.ChooseActivity, DialogInterface.OnDismissListener,
+    AdapterView.OnItemSelectedListener, ChooseStartPointInterFace {
 
     lateinit var binding: FragmentPlanBinding
     lateinit var viewModel: PlanViewModel
@@ -65,7 +66,7 @@ class PlanFragment : BaseFragment<FragmentPlanBinding?>(), ActivitiesAdapter.Cho
 
     private var Shift: String = "AM Shift"
     private var ShiftID: String = "0"
-    var fullList: List<PlanEntity?>? = null
+    var fullList: ArrayList<PlanEntity>? = null
     var fm: FragmentManager? = null
     var BUTTON_WIDTH: Int = 200 // delete button on items
     var positionToDelete: Int = 0 // delete button on items
@@ -73,6 +74,9 @@ class PlanFragment : BaseFragment<FragmentPlanBinding?>(), ActivitiesAdapter.Cho
     var horizontalCalendar: HorizontalCalendar? = null
     var startDate: Calendar? = null
     var endDate: Calendar? = null
+
+
+    var adList = ArrayList<AdModel>()
 
     override fun getLayoutId(): Int {
         return R.layout.fragment_plan
@@ -94,22 +98,23 @@ class PlanFragment : BaseFragment<FragmentPlanBinding?>(), ActivitiesAdapter.Cho
         binding = viewDataBinding!!
         viewModel.getDayPlan(DATE!!, Shift)
 
-
+        for (m in viewModel.dataManager.ads.ads!!) {
+            if (m.pageCode?.toInt() == Constants.PLAN_RECYCLER) {
+                adList?.add(m)
+            }
+        }
+        Log.d(TAG, "onViewCreated: $adList")
         viewModel.dataManager.isNewCycle(viewModel.dataManager.newOldCycle.currentCyclePlanId == 0)
 
-        viewModel.dataManager.saveCycle(
-            Cycle(
-                viewModel.dataManager.newOldCycle.currentCyclePlanId,
-                viewModel.dataManager.newOldCycle.currentCycleId,
-                "",
-                "",
-                0,
-                "",
-                true,
-                0,
-                0
-            )
-        )
+        viewModel.dataManager.saveCycle(Cycle(viewModel.dataManager.newOldCycle.currentCyclePlanId,
+                                              viewModel.dataManager.newOldCycle.currentCycleId,
+                                              "",
+                                              "",
+                                              0,
+                                              "",
+                                              true,
+                                              0,
+                                              0))
 
 
         setUpCalendar()
@@ -560,13 +565,38 @@ class PlanFragment : BaseFragment<FragmentPlanBinding?>(), ActivitiesAdapter.Cho
 
 
             adapter!!.setMyData(ArrayList())
-            adapter!!.setMyData(it as ArrayList)
-            fullList = it
+
+            fullList = it as ArrayList
+
+            for (m in adList!!) {
+
+                val model = PlanEntity()
+                model.isAd = true
+                model.adModel = Gson().toJson(m as Any?)
+                if (m.recyclerPosition?.toInt()!! > 0) {
+                    if (fullList?.size!! > m.recyclerPosition?.toInt()!!) {
+                        fullList?.add(m.recyclerPosition?.toInt()!!, model)
+                    }
+                    else
+                    {
+                        fullList?.add(fullList?.size!!, model)
+                    }
+                }
+                else {
+                    fullList?.add(m.recyclerPosition?.toInt()!!, model)
+                }
+
+
+            }
+
+            adapter!!.setMyData(fullList!!)
+
 
             try {
                 System.out.println(it[0].toString())
 
-            } catch (e: java.lang.Exception) {
+            }
+            catch (e: java.lang.Exception) {
             }
 
             /* save startPoint model in shard prefrance to use it when adding new plan
@@ -972,7 +1002,9 @@ class PlanFragment : BaseFragment<FragmentPlanBinding?>(), ActivitiesAdapter.Cho
                     model?.planColor,
                     model?.activityTypeID,
                     model?.deleted,
-                    false
+                    false,
+                    false,
+                    ""
 
 
                 )

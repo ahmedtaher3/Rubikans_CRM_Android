@@ -11,7 +11,11 @@ import com.devartlab.data.retrofit.ApiServicesGoogle
 import com.devartlab.data.retrofit.ResponseModel
 import com.devartlab.data.retrofit.RetrofitClient
 import com.devartlab.data.room.DatabaseClient
-import com.devartlab.data.room.random.RandomDao
+import com.devartlab.data.room.collect.CollectDao
+import com.devartlab.data.room.collect.CollectEntity
+import com.devartlab.data.room.invoicedetailes.CustomerInvoiceDao
+import com.devartlab.data.room.invoicedetailes.CustomerInvoiceEntity
+import com.devartlab.data.room.plan.PlanEntity
 import com.devartlab.data.room.tradedetails.TradeDetailsDao
 import com.devartlab.data.room.tradedetails.TradeDetailsEntity
 import com.devartlab.data.room.trademaster.TradeMasterDao
@@ -20,6 +24,7 @@ import com.devartlab.data.shared.DataManager
 import com.devartlab.model.DevartLabReportsFilterDTO
 import com.devartlab.model.GoogleRequestResponse
 import com.devartlab.ui.main.ui.callmanagement.inventory.ReportsFilterModel
+import com.devartlab.utils.CommonUtilities
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import io.reactivex.Completable
@@ -59,6 +64,8 @@ class TradeViewModel(application: Application) : AndroidViewModel(application) {
 
     var tradeMasterDao: TradeMasterDao? = null
     var tradeDetailsDao: TradeDetailsDao? = null
+    var collectDao: CollectDao? = null
+    var customerInvoiceDao: CustomerInvoiceDao? = null
 
     init {
         dataManager = (getApplication() as BaseApplication).dataManager!!
@@ -81,6 +88,8 @@ class TradeViewModel(application: Application) : AndroidViewModel(application) {
 
         tradeMasterDao = DatabaseClient.getInstance(application)?.appDatabase?.tradeMasterDao()
         tradeDetailsDao = DatabaseClient.getInstance(application)?.appDatabase?.tradeDetailsDao()
+        collectDao = DatabaseClient.getInstance(application)?.appDatabase?.collectDao()
+        customerInvoiceDao = DatabaseClient.getInstance(application)?.appDatabase?.customerInvoiceDao()
 
 
     }
@@ -302,44 +311,83 @@ class TradeViewModel(application: Application) : AndroidViewModel(application) {
     }
 
 
-    fun InsertAndUpdate(x: JsonObject) {
+    fun InsertAndUpdate(x: JsonObject, isFinanceTransaction: Boolean) {
 
         Log.d(TAG, "InsertAndUpdate: $x")
         progress.postValue(1)
-        myAPI?.insertAndUpdate(x)!!
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(object : Observer<ResponseBody> {
-                override fun onSubscribe(d: Disposable) {}
-                override fun onNext(data: ResponseBody) {
+        myAPI?.insertAndUpdate(x)!!.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(object : Observer<ResponseBody> {
+            override fun onSubscribe(d: Disposable) {}
+            override fun onNext(data: ResponseBody) {
+
+                if (isFinanceTransaction) {
                     progress.postValue(10)
-                    System.out.println(" InsertAndUpdate " + data.string())
-
+                }
+                else {
+                    progress.postValue(100)
                 }
 
-                override fun onError(e: Throwable) {
-                    progress.postValue(0)
-                    println(e.message)
-                    System.out.println(e.message)
-                }
+                System.out.println(" InsertAndUpdate " + data.string())
 
-                override fun onComplete() {}
-            })
+            }
+
+            override fun onError(e: Throwable) {
+                progress.postValue(0)
+                println(e.message)
+                System.out.println(e.message)
+            }
+
+            override fun onComplete() {}
+        })
 
     }
 
-    fun insertTradeOffline(x: TradeMasterEntity , list : ArrayList<TradeDetailsEntity>)  {
+    fun insertTradeOffline(x: TradeMasterEntity, list: ArrayList<TradeDetailsEntity>, customer: PlanEntity, isFinanceTransaction: Boolean) {
 
         Completable.fromAction {
 
+            x.name = customer.customerName!!
+            x.brick = customer.brick!!
+            x.specialty = customer.speciality!!
+            x._class = customer._class!!
+            x.AddDateTime = CommonUtilities.getCurrentDate()
 
-            for (m in list!!)
-            {
+            val id = tradeMasterDao?.insert(x)
+            for (m in list!!) {
+                m.InvoiceDetId = id?.toInt()
                 tradeDetailsDao?.insert(m)
             }
-            tradeMasterDao?.insert(x)
 
-            progress.postValue(9)
+            Log.d(TAG, "insertTradeOffline: $id")
+
+            if (isFinanceTransaction) {
+                customerInvoiceDao?.insert(CustomerInvoiceEntity(customer.customerid,
+                                                                 customer.speciality,
+                                                                 0.0,
+                                                                 false,
+                                                                 0.0,
+                                                                 0,
+                                                                 dataManager?.user?.nameAr,
+                                                                 0.0,
+                                                                 customer.brick,
+                                                                 x.InvoiceCreateDate,
+                                                                 "",
+                                                                 0,
+                                                                 0.0,
+                                                                 x.TotalInvoiceNet,
+                                                                 "",
+                                                                 x.TotalPaid,
+                                                                 customer._class,
+                                                                 customer.customerName,
+                                                                 customer.territoryId.toString(),
+                                                                 x.TotalReminder))
+
+                collectDao?.insert(CollectEntity(id?.toInt(), null, null, 0, 0, "", 0.0, "0", "", 0, "", 0.0, 0, 0, ""))
+                progress.postValue(90)
+            }
+            else {
+                progress.postValue(9)
+            }
+
 
         }.subscribeOn(Schedulers.io())
             .subscribe()

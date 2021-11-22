@@ -4,11 +4,14 @@ import android.app.Application
 import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
+import com.devartlab.base.BaseApplication
 import com.devartlab.data.retrofit.ApiServices
 import com.devartlab.data.retrofit.RetrofitClient
 import com.devartlab.data.room.DatabaseClient
 import com.devartlab.data.room.list.ListDao
+import com.devartlab.data.room.list.ListEntity
 import com.devartlab.data.room.listtypes.ListTypesDao
+import com.devartlab.data.room.listtypes.ListTypesEntity
 import com.devartlab.data.shared.DataManager
 import com.devartlab.model.CustomerList
 import io.reactivex.Completable
@@ -16,9 +19,6 @@ import io.reactivex.Observer
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
-import com.devartlab.base.BaseApplication
-import com.devartlab.data.room.list.ListEntity
-import com.devartlab.data.room.listtypes.ListTypesEntity
 import retrofit2.Retrofit
 
 class AddNewListViewModel(application: Application) : AndroidViewModel(application) {
@@ -173,7 +173,12 @@ class AddNewListViewModel(application: Application) : AndroidViewModel(applicati
             model.branchTel2,
             model.terriotryId,
             model.branchDesc,
-            false
+            false,
+        0
+            ,0
+            ,""
+            ,""
+            ,""
 
         )
 

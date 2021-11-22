@@ -6,7 +6,6 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import kotlinx.android.parcel.Parcelize
-import java.io.Serializable
 
 @Parcelize
 @Entity
@@ -182,18 +181,17 @@ data class PlanEntity(
     @ColumnInfo(defaultValue = "", name = "PlanDetID")
     var planDetID: Int? = null,
 
-    @ColumnInfo(defaultValue = "0", name = "PlanColor")
-    var planColor: Int? = null,
+    @ColumnInfo(defaultValue = "0", name = "PlanColor") var planColor: Int? = null,
 
-    @ColumnInfo(defaultValue = "0", name = "ActivityTypeID")
-    var activityTypeID: Int? = null,
+    @ColumnInfo(defaultValue = "0", name = "ActivityTypeID") var activityTypeID: Int? = null,
 
-    @ColumnInfo(defaultValue = "0", name = "deleted")
-    var deleted: Boolean? = null,
+    @ColumnInfo(defaultValue = "0", name = "deleted") var deleted: Boolean? = null,
 
-    @ColumnInfo(defaultValue = "0", name = "updated")
-    var updated: Boolean? = null
+    @ColumnInfo(defaultValue = "0", name = "updated") var updated: Boolean? = null,
 
+
+    @ColumnInfo(defaultValue = "0", name = "isAd") var isAd: Boolean? = null,
+    @ColumnInfo(defaultValue = "0", name = "adModel") var adModel: String? = null
 
 ) : Parcelable {
     constructor(
@@ -254,7 +252,9 @@ data class PlanEntity(
         planColor: Int?,
         activityTypeID: Int?,
         deleted: Boolean?,
-        updated: Boolean?
+        updated: Boolean?,
+        isAd: Boolean?,
+        adModel: String?
     ) : this() {
         this.planAccountId = planAccountId
         this.planCycleId = planCycleId
@@ -314,6 +314,8 @@ data class PlanEntity(
         this.activityTypeID = activityTypeID
         this.deleted = deleted
         this.updated = updated
+        this.isAd = isAd
+        this.adModel = adModel
     }
 }
 

@@ -9,8 +9,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import com.devartlab.R
 import com.devartlab.base.BaseFragment
-import com.devartlab.databinding.FragmentConfirmProductsBinding
 import com.devartlab.data.room.contract.ContractEntity
+import com.devartlab.databinding.FragmentConfirmProductsBinding
 import com.devartlab.ui.main.ui.trade.TradeViewModel
 import com.devartlab.utils.CommonUtilities
 import com.devartlab.utils.ProgressLoading
@@ -61,7 +61,7 @@ class GeneralConfirmProductsFragment : BaseFragment<FragmentConfirmProductsBindi
             val json = Gson().toJson(adapter.getMyData())
 
             val returnIntent = Intent()
-            returnIntent.putExtra("PRODUCTS",json )
+            returnIntent.putExtra("PRODUCTS", json)
             baseActivity.setResult(Activity.RESULT_OK, returnIntent)
             baseActivity.finish()
 
@@ -70,8 +70,8 @@ class GeneralConfirmProductsFragment : BaseFragment<FragmentConfirmProductsBindi
 
         binding.recyclerView?.adapter = adapter
 
-
-        adapter.setMyData(list)
+        val listt = list.distinctBy { it.id }
+        adapter.setMyData(listt as ArrayList<ContractEntity>)
 
         setObservers()
 
@@ -83,7 +83,7 @@ class GeneralConfirmProductsFragment : BaseFragment<FragmentConfirmProductsBindi
         viewModel.productLive.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
 
 
-            adapter.setMyData(it.data.contractList)
+            adapter.setMyData(it.data.contractList2)
         })
 
         viewModel.progress.observe(viewLifecycleOwner, androidx.lifecycle.Observer { progress ->

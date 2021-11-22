@@ -1,12 +1,15 @@
 package com.devartlab.data.room.purchasetype
 
+import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.Parcelize
 
 
 @Entity
+@Parcelize
 data class PurchaseTypeEntity(
 
     @PrimaryKey(autoGenerate = true)
@@ -167,7 +170,7 @@ data class PurchaseTypeEntity(
     @ColumnInfo(name = "addEmpId")
     @field:SerializedName("AddEmpId")
     var addEmpId: Int? = null
-){
+): Parcelable {
     constructor(
         paymentMethodId: Int?,
         isMultiVendorLandedcostDocument: Boolean?,

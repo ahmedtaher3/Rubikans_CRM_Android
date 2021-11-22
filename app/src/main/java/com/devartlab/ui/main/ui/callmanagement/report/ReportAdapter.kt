@@ -213,15 +213,14 @@ class ReportAdapter(context: Context, reportInterface: ReportInterface, dataMana
 
 
 
-                if (dataManager.startShift) {
+             /*   if (dataManager.startShift) {
                     if (model.activityTypeID == 1 || model.activityTypeID == 2) reportInterface.startVisit(model)
                     else reportInterface.startSocialVisit(model)
                 }
                 else Toast.makeText(context, "You have to start shift first", Toast.LENGTH_SHORT).show()
 
+*/
 
-
-/*
               val dialogBuilder = AlertDialog.Builder(context)
               val dialogView: View = appCompatActivity.layoutInflater.inflate(R.layout.edit_layout, null)
               dialogBuilder.setView(dialogView)
@@ -266,7 +265,7 @@ class ReportAdapter(context: Context, reportInterface: ReportInterface, dataMana
 
               cancel.setOnClickListener(View.OnClickListener { alertDialog?.dismiss() })
 
-              alertDialog.show()*/
+              alertDialog.show()
 
 
           }

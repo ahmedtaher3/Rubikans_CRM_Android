@@ -243,7 +243,9 @@ class SyncFragment : BaseFragment<SyncFragmentBinding>() {
                             0,
                             i.activityTypeID,
                             false,
-                            false
+                            false,
+                            false,
+                            ""
 
                         )
 

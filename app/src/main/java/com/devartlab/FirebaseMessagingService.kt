@@ -13,8 +13,7 @@ import android.util.Log
 import androidx.core.app.NotificationCompat
 import com.devartlab.base.BaseApplication
 import com.devartlab.data.shared.DataManager
-import com.devartlab.ui.main.MainActivity
-import com.devartlab.ui.main.ui.employeeservices.devartlink.DevartLinkWebView
+import com.devartlab.ui.main.ui.devartlink.DevartLinkWebView
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 

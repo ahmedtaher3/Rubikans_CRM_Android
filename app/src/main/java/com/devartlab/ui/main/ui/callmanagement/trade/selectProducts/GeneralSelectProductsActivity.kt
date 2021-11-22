@@ -1,6 +1,7 @@
 package com.devartlab.ui.main.ui.callmanagement.trade.selectProducts
 
 import android.os.Bundle
+import android.view.MenuItem
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.devartlab.R
@@ -12,6 +13,9 @@ class GeneralSelectProductsActivity : BaseActivity<ActivitySelectProductsBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = viewDataBinding
+        setSupportActionBar(binding!!.toolbar)
+        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+        supportActionBar!!.title = getString(R.string.select_products)
 
         replace_fragment(GeneralSelectProductsFragment(), "SelectProductsFragment")
 //        replace_fragment(ConfirmProductsFragment(), "ConfirmProductsFragment")
@@ -40,4 +44,22 @@ class GeneralSelectProductsActivity : BaseActivity<ActivitySelectProductsBinding
                 .commit()
     }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            android.R.id.home -> {
+                onBackPressed()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+
+    override fun onBackPressed() {
+        if (supportFragmentManager.backStackEntryCount == 1) {
+            finish()
+        } else {
+            super.onBackPressed()
+        }
+    }
 }

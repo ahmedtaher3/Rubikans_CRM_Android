@@ -6,8 +6,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.devartlab.data.room.trademaster.TradeMasterEntity
 import com.devartlab.databinding.EmployeeInvoiceItemBinding
-import com.devartlab.model.CustomerInvoiceDetails
-import java.util.*
 
 class OfflineReportAdapter(context: Context, private var myData: MutableList<TradeMasterEntity>) : RecyclerView.Adapter<OfflineReportAdapter.ViewHolder>() {
 
@@ -34,12 +32,13 @@ class OfflineReportAdapter(context: Context, private var myData: MutableList<Tra
         val model = myData[position]
 
 
-        holder._binding?.name?.text = model.InvoiceDescription.toString()
-        holder._binding?.specialistAndClass?.text = ""
+        holder._binding?.name?.text = model.name.toString()
+        holder._binding?.specialistAndClass?.text =model.specialty.toString() + " / " + model._class.toString()
         holder._binding?.discount?.text = model.TotalInvoiceDiscount.toString()
         holder._binding?.tax?.text = model.TotalInvoiceTax.toString()
-        holder._binding?.totalValue?.text = model.TotalInvoiceWithTax.toString()
-        holder._binding?.brick?.text = ""
+        holder._binding?.totalValue?.text = model.TotalInvoiceNet.toString()
+        holder._binding?.netValue?.text = model.TotalInvoiceNet.toString()
+        holder._binding?.brick?.text = model.brick.toString()
         holder._binding?.date?.text = model.AddDateTime.toString().take(10)
 
     }

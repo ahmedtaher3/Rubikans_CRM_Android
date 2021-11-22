@@ -21,6 +21,8 @@ import com.devartlab.data.room.arranged.ArrangedDao
 import com.devartlab.data.room.arranged.ArrangedEntity
 import com.devartlab.data.room.authority.AuthorityDao
 import com.devartlab.data.room.contract.ContractDao
+import com.devartlab.data.room.filterdata.FilterDataDao
+import com.devartlab.data.room.invoicedetailes.CustomerInvoiceDao
 import com.devartlab.data.room.list.ListDao
 import com.devartlab.data.room.listtypes.ListTypesDao
 import com.devartlab.data.room.massages.MassageEntity
@@ -88,6 +90,8 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     var listTypeDao: ListTypesDao
     var contractDao: ContractDao
     var myBallanceDao: MyBallanceDao
+    var customerInvoiceDao: CustomerInvoiceDao
+    var filterDataDao: FilterDataDao
 
 
     var valuesRepository: ValuesRepository? = null
@@ -136,6 +140,8 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         listTypeDao = DatabaseClient.getInstance(application)?.appDatabase?.listTypesDao()!!
         contractDao = DatabaseClient.getInstance(application)?.appDatabase?.contractDao()!!
         myBallanceDao = DatabaseClient.getInstance(application)?.appDatabase?.myBallanceDao()!!
+        customerInvoiceDao = DatabaseClient.getInstance(application)?.appDatabase?.customerInvoiceDao()!!
+        filterDataDao = DatabaseClient.getInstance(application)?.appDatabase?.filterDataDao()!!
 
 
 
@@ -145,7 +151,8 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         if (dataManager.offlineMood) {
             onlineText.set("Offline")
             onlineBoolean.set(false)
-        } else {
+        }
+        else {
             onlineText.set("Online")
             onlineBoolean.set(true)
         }
@@ -320,39 +327,48 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
                     progress.postValue(0)
                     syncOfflineData.postValue(body)
 
+                    if (body.isSuccesed) {
 
-                    Completable.fromAction {
-                        listDao.deleteTable()
-                        listDao?.insertAll(body.data.customerList)
-                        activityDao.deleteTable()
-                        activityDao?.insertAll(body.data.activityLIst)
-                        purchaseTypeDao.deleteTable()
-                        purchaseTypeDao?.insertAll(body.data.salePurchaseType)
-                        listTypeDao.deleteTable()
-                        listTypeDao?.insertAll(body.data.listTypesEntity)
-                        contractDao.deleteTable()
-                        contractDao?.insertAll(body.data.contractList2)
-                        myBallanceDao.deleteTable()
-                        myBallanceDao?.insertAll(body.data.storeBallance)
-                    }
-                        .subscribeOn(Schedulers.io())
-                        .subscribe()
+                        Completable.fromAction {
+                            listDao.deleteTable()
+                            listDao?.insertAll(body.data.customerList)
+                            activityDao.deleteTable()
+                            activityDao?.insertAll(body.data.activityLIst)
+                            purchaseTypeDao.deleteTable()
+                            purchaseTypeDao?.insertAll(body.data.salePurchaseType)
+                            listTypeDao.deleteTable()
+                            listTypeDao?.insertAll(body.data.listTypesEntity)
+                            contractDao.deleteTable()
+                            contractDao?.insertAll(body.data.contractList2)
+                            myBallanceDao.deleteTable()
+                            myBallanceDao?.insertAll(body.data.storeBallance)
+                            customerInvoiceDao.deleteTable()
+                            customerInvoiceDao?.insertAll(body.data.CustomerInvoice)
 
+                            filterDataDao.deleteTable()
+                            for (i in body.data.classList) {
+                                i.parentName = "class"
+                                filterDataDao.insert(i)
+                            }
+                            for (i in body.data.specialityLIst) {
+                                i.parentName = "speciality"
+                                filterDataDao.insert(i)
+                            }
+                            for (i in body.data.brickList) {
+                                i.parentName = "brick"
+                                filterDataDao.insert(i)
+                            }
+                            for (i in body.data.territoryList) {
+                                i.parentName = "territory"
+                                filterDataDao.insert(i)
+                            }
 
-                    /*           if (body.isSuccesed) {
-
-                                   Completable.fromAction {
-
-                                       listDao?.insertAll(body.data.customerList)
-
-                                   }
-                                       .subscribeOn(Schedulers.io())
-                                       .subscribe()
+                        }.subscribeOn(Schedulers.io()).subscribe()
 
                                } else {
                                    Toast.makeText(getApplication(), body.rerurnMessage, Toast.LENGTH_SHORT)
                                        .show()
-                               }*/
+                    }
 
 
                 }

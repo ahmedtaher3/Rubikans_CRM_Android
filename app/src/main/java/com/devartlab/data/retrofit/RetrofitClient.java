@@ -30,6 +30,7 @@ public class RetrofitClient {
 
     private static Retrofit ourInstance;
     private static Retrofit ourInstance2;
+    private static Retrofit ourInstance3;
 
     static final OkHttpClient okHttpClient = new OkHttpClient.Builder()
             .connectTimeout(20, TimeUnit.SECONDS)
@@ -91,7 +92,24 @@ public class RetrofitClient {
     }
 
 
+    public static Retrofit getInstanceDevartLink() {
 
+        Gson gson = new GsonBuilder()
+                .setLenient()
+                .create();
+
+
+        if (ourInstance3 == null)
+            ourInstance3 = new Retrofit.Builder()
+                    .baseUrl("https://devartlink.devartlab.com/")
+                    .client(getUnsafeOkHttpClient().build())
+                    .addConverterFactory(GsonConverterFactory.create(gson))
+                    .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                    .build();
+
+
+        return ourInstance3;
+    }
 
     public static OkHttpClient.Builder getUnsafeOkHttpClient() {
 

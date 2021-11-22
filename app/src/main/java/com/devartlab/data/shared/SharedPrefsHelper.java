@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 public class SharedPrefsHelper {
     public static final String CLevelName = "CLevelName";
     public static final String CYCLE = "CYCLE";
+    public static final String ADS = "ADS";
     public static final String GoogleService = "GoogleService";
     public static final String DEVICE_TYPE = "DEVICE_TYPE";
     public static final String DisplayName = "DisplayName";
@@ -227,6 +228,7 @@ public class SharedPrefsHelper {
     public String getShift() {
         return this.mSharedPreferences.getString(SHIFT, null);
     }
+    //////////////////////////////////////////////////////////////////////////////////////////////////
 
     public void putCycle(String cycle) {
         this.mSharedPreferences.edit().putString(CYCLE, cycle).apply();
@@ -235,6 +237,18 @@ public class SharedPrefsHelper {
     public String getCycle() {
         return this.mSharedPreferences.getString(CYCLE, null);
     }
+    //////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+    public void putAds(String cycle) {
+        this.mSharedPreferences.edit().putString(ADS, cycle).apply();
+    }
+
+    public String getAds() {
+        return this.mSharedPreferences.getString(ADS, null);
+    }
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////
 
     public void putStartPoint(String startPoint) {
         this.mSharedPreferences.edit().putString(START_POINT, startPoint).apply();

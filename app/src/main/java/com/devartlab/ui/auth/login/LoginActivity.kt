@@ -49,7 +49,6 @@ class LoginActivity : BaseActivity<ActivityLoginBinding?>(), View.OnClickListene
         binding?.login?.setOnClickListener(this)
         setObservers()
 
-
         database = FirebaseDatabase.getInstance()
         var reference: DatabaseReference = database.getReference().child("Setting")
         reference.get().addOnSuccessListener {

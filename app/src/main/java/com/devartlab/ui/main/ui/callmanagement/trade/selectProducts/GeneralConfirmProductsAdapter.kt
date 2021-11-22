@@ -43,7 +43,7 @@ class GeneralConfirmProductsAdapter(private val context: Context, private var my
 
 
 
-        holder.name?.text = model.itemEnName
+        holder.name?.text = model.itemArName
         holder.price?.text = model.price.toString()
         holder.count?.setText(model.count.toString())
 

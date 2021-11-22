@@ -1,8 +1,11 @@
 package com.devartlab.ui.main.ui.callmanagement.trade.customerinvoicecollect
 
 import android.os.Bundle
+import android.text.Editable
 import android.text.InputFilter
+import android.text.TextWatcher
 import android.util.Log
+import android.view.MenuItem
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
@@ -13,9 +16,9 @@ import com.amulyakhare.textdrawable.TextDrawable
 import com.devartlab.R
 import com.devartlab.base.BaseActivity
 import com.devartlab.data.room.collect.CollectEntity
+import com.devartlab.data.room.invoicedetailes.CustomerInvoiceEntity
 import com.devartlab.data.room.plan.PlanEntity
 import com.devartlab.databinding.EmployeeInvoiceCollectFragmentBinding
-import com.devartlab.model.CustomerInvoiceDetails
 import com.devartlab.model.DevartLabReportsFilterDTO
 import com.devartlab.ui.dialogs.chooseemployee.ChooseEmployee
 import com.devartlab.ui.main.ui.callmanagement.trade.TradeReportsViewModel
@@ -24,6 +27,7 @@ import com.devartlab.ui.main.ui.cycles.ChangeCycle
 import com.devartlab.utils.CommonUtilities
 import com.devartlab.utils.InputFilterMinMax
 import com.devartlab.utils.ProgressLoading
+import com.google.gson.Gson
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -39,7 +43,7 @@ class CustomerInvoiceCollectReportActivity : BaseActivity<EmployeeInvoiceCollect
 
     private var mDrawableBuilder: TextDrawable? = null
 
-    var fullList = ArrayList<CustomerInvoiceDetails>()
+    var fullList = ArrayList<CustomerInvoiceEntity>()
 
 
     var chooseEmployee: ChooseEmployee? = null
@@ -68,6 +72,11 @@ class CustomerInvoiceCollectReportActivity : BaseActivity<EmployeeInvoiceCollect
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = viewDataBinding
+        setSupportActionBar(binding!!.toolbar)
+        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+        supportActionBar!!.title = getString(R.string.collect_invoices)
+
+
         viewModel = ViewModelProviders.of(this).get(TradeReportsViewModel::class.java)
         adapter = CustomerInvoiceCollectReportAdapter(this, ArrayList(), this)
 
@@ -118,24 +127,7 @@ class CustomerInvoiceCollectReportActivity : BaseActivity<EmployeeInvoiceCollect
         viewModel.getSalesPurchaseReport(filterModel)
 
 
-        /* binding.filter.setOnClickListener {
 
-             val bottomDialogFragment =
-                     TradeBottomSheet(object : TradeBottomSheet.DialogListener {
-                         override fun applyFilter(model: DevartLabReportsFilterDTO) {
-                             filterModel = model
-                             filterModel.option = 1
-                             viewModel.getSalesPurchaseReport(filterModel)
-
-                         }
-
-                     }, filterModel, viewModel.dataManager, viewModel.myAPI!!)
-
-             bottomDialogFragment.show(
-                     supportFragmentManager,
-                     "bottomDialogFragment"
-             )
-         }*/
 
         binding.pay.setOnClickListener {
 
@@ -146,7 +138,23 @@ class CustomerInvoiceCollectReportActivity : BaseActivity<EmployeeInvoiceCollect
             dialogBuilder.setView(dialogView)
             val paidET = dialogView.findViewById<View>(R.id.paid) as EditText
             val addButton = dialogView.findViewById<View>(R.id.addButton) as Button
-            paidET.setFilters(arrayOf<InputFilter>(InputFilterMinMax("0", total.toString())))
+
+
+            paidET.addTextChangedListener(object : TextWatcher {
+                override fun beforeTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {}
+                override fun onTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {
+
+                    if (charSequence.toString().toDouble() > total)
+                    {
+                        paidET.setText(total.toString())
+                    }
+
+                }
+
+                override fun afterTextChanged(editable: Editable) {}
+            })
+
+
             var isPaid = true
 
             val alertDialog = dialogBuilder.create()
@@ -223,32 +231,32 @@ class CustomerInvoiceCollectReportActivity : BaseActivity<EmployeeInvoiceCollect
 
     private fun setObservers() {
         viewModel.responseLive.observe(this, Observer {
-            System.out.println(it.toString())
-            if (it.isSuccesed) {
 
+            Log.d(TAG, "setObservers: "+Gson().toJson(it))
 
-                for (model in it.data.customerInvoiceDetails) {
-                    total += model.totalReminder!!
-                }
-                binding.totalReminder.text = "$total L.E"
-
-                if (!it.data.customerInvoiceDetails.isNullOrEmpty()) {
-                    System.out.println(it.toString())
-                    fullList.clear()
-                    fullList = it.data.customerInvoiceDetails
-                    adapter.setMyData(fullList)
-                }
-
+            for (model in it) {
+                total += model.totalReminder!!
             }
-            else {
-                Toast.makeText(this, it.rerurnMessage, Toast.LENGTH_SHORT).show()
+            binding.totalReminder.text = "$total L.E"
+
+            if (!it.isNullOrEmpty()) {
+                System.out.println(it.toString())
+                fullList.clear()
+
+                for (i in it) {
+                    if (i.totalReminder!! > 0.0) {
+                        fullList.add(i)
+                    }
+                }
+                adapter.setMyData(fullList)
             }
+
 
         })
         viewModel.responseCollect.observe(this, Observer {
             System.out.println(it.toString())
             if (it.isSuccesed) {
-                Toast.makeText(this, "isSuccesed", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "isSucceed", Toast.LENGTH_SHORT).show()
 
             }
             else {
@@ -266,13 +274,19 @@ class CustomerInvoiceCollectReportActivity : BaseActivity<EmployeeInvoiceCollect
                 0 -> {
                     ProgressLoading.dismiss()
                 }
+
+                10 -> {
+                    ProgressLoading.dismiss()
+                    Toast.makeText(this, getString(R.string.collect_done), Toast.LENGTH_SHORT).show()
+                    finish()
+                }
             }
 
         })
     }
 
 
-    override fun setOnPayClick(model: CustomerInvoiceDetails) {
+    override fun setOnPayClick(model: CustomerInvoiceEntity) {
 
 
         val dialogBuilder = android.app.AlertDialog.Builder(this) // ...Irrelevant code for customizing the buttons and title
@@ -283,6 +297,21 @@ class CustomerInvoiceCollectReportActivity : BaseActivity<EmployeeInvoiceCollect
         val addButton = dialogView.findViewById<View>(R.id.addButton) as Button
 
         var isPaid = true
+
+        paidET.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {}
+            override fun onTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {
+
+                if (charSequence.toString().toDouble() > model.totalReminder!!)
+                {
+                    paidET.setText(model.totalReminder?.toString())
+                }
+
+            }
+
+            override fun afterTextChanged(editable: Editable) {}
+        })
+
 
         val alertDialog = dialogBuilder.create()
         addButton.setOnClickListener {
@@ -314,6 +343,19 @@ class CustomerInvoiceCollectReportActivity : BaseActivity<EmployeeInvoiceCollect
 
 
     }
+
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            android.R.id.home -> {
+                onBackPressed()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+
 
 
 }

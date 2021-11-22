@@ -4,19 +4,26 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.devartlab.R
 import com.devartlab.data.room.contract.ContractEntity
 
 
-class OrderPrintAdapter(private val context: Context, private var myData: ArrayList<ContractEntity>) : RecyclerView.Adapter<OrderPrintAdapter.ViewHolder>() {
+class OrderPrintAdapter(private val context: Context, private var myData: ArrayList<ContractEntity>, private var onRemoveItem: OnRemoveItem
+
+) : RecyclerView.Adapter<OrderPrintAdapter.ViewHolder>() {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view: View
         view = LayoutInflater.from(context).inflate(R.layout.order_print_item, parent, false)
         return ViewHolder(view)
+    }
+
+    interface OnRemoveItem {
+        fun setOnRemoveItem(model: ContractEntity)
     }
 
     fun setMyData(myData: ArrayList<ContractEntity>) {
@@ -43,6 +50,10 @@ class OrderPrintAdapter(private val context: Context, private var myData: ArrayL
         holder.unit?.text = model.count.toString()
         holder.amount?.text = (model.count!! * model.price!!).toString()
 
+        holder.delete?.setOnClickListener {
+            onRemoveItem.setOnRemoveItem(model)
+        }
+
 
     }
 
@@ -56,6 +67,7 @@ class OrderPrintAdapter(private val context: Context, private var myData: ArrayL
         var name: TextView? = null
         var unit: TextView? = null
         var price: TextView? = null
+        var delete: ImageView? = null
         var amount: TextView? = null
 
 
@@ -64,6 +76,7 @@ class OrderPrintAdapter(private val context: Context, private var myData: ArrayL
             name = view.findViewById(R.id.name)
             price = view.findViewById(R.id.price)
             amount = view.findViewById(R.id.amount)
+            delete = view.findViewById(R.id.delete)
 
 
         }

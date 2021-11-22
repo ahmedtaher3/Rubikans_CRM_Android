@@ -173,7 +173,9 @@ class PlanRepository private constructor
                                         CommonUtilities.randomColor,
                                         model.activityTypeID,
                                         false,
-                                        true
+                                        true,
+                                        false,
+                                        ""
                                     )
                                     list.add(planEntity)
                                 }

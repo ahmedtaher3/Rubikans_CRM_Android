@@ -27,7 +27,8 @@ import com.devartlab.data.room.startPoint.StartPointDao
 import com.devartlab.data.room.values.ValuesDao
 import com.devartlab.data.shared.DataManager
 import com.devartlab.data.source.values.ValuesRepository
-import com.devartlab.model.*
+import com.devartlab.model.CustomerList
+import com.devartlab.model.ProductTable
 import com.devartlab.utils.LocationUtils
 import com.devartlab.utils.PlanUtlis
 import com.devartlab.utils.ProgressLoading
@@ -77,6 +78,7 @@ class SyncDataDialog(
         valuesDao = DatabaseClient.getInstance(context)?.appDatabase?.valuesDao()!!
         valuesRepository = ValuesRepository.getInstance(valuesDao)
         startPointDao = DatabaseClient.getInstance(context)?.appDatabase?.startPointDao()
+
         syncProductsData.setOnClickListener(View.OnClickListener { syncProducts() })
         syncPlanData.setOnClickListener(View.OnClickListener {
 
@@ -105,8 +107,6 @@ class SyncDataDialog(
 
         })
         syncListData.setOnClickListener(View.OnClickListener { syncList() })
-
-
         dismiss.setOnClickListener(View.OnClickListener {
             dataManager.saveFirstTime(false)
             dismiss()
@@ -336,58 +336,59 @@ class SyncDataDialog(
                     for (model in data) {
 
 
-                        val customer = ListEntity(
-                            model.listSerial,
-                            model.customerTypeId,
-                            model.listDescription
-                            , model.empId
-                            , model.salAreaId
-                            , model.districtId
-                            , model.customerId
-                            , model.branchId
-                            , model.customerState
-                            , model.notes
-                            , model.placeName
-                            , model.brickEnName
-                            , model.bricId
-                            , model.branchtypeId
-                            , model.branchType
-                            , model.cusSerial
-                            , model.customerEnName
-                            , model.oldSpeciality
-                            , model.oldClass
-                            , model.oldClassId
-                            , model.oldSpecialityId
-                            , model.address
-                            , model.listId
-                            , model.listDetId
-                            , model.cusTypeEnName
-                            , model.cusClassEnName
-                            , model.cusTypeId
-                            , model.cusClassId
-                            , model.empArName
-                            , model.empEnName
-                            , model.deptId
-                            , model.secId
-                            , model.jobId
-                            , model.assigntId
-                            , model.accountId
-                            , model.addressNotes
-                            , model.branchPlaceId
-                            , model.branchTel1
-                            , model.branchTel2
-                            , model.terriotryId
-                            , model.branchDesc
-                            , true
-                        )
+                        val customer = ListEntity(model.listSerial,
+                                                  model.customerTypeId,
+                                                  model.listDescription,
+                                                  model.empId,
+                                                  model.salAreaId,
+                                                  model.districtId,
+                                                  model.customerId,
+                                                  model.branchId,
+                                                  model.customerState,
+                                                  model.notes,
+                                                  model.placeName,
+                                                  model.brickEnName,
+                                                  model.bricId,
+                                                  model.branchtypeId,
+                                                  model.branchType,
+                                                  model.cusSerial,
+                                                  model.customerEnName,
+                                                  model.oldSpeciality,
+                                                  model.oldClass,
+                                                  model.oldClassId,
+                                                  model.oldSpecialityId,
+                                                  model.address,
+                                                  model.listId,
+                                                  model.listDetId,
+                                                  model.cusTypeEnName,
+                                                  model.cusClassEnName,
+                                                  model.cusTypeId,
+                                                  model.cusClassId,
+                                                  model.empArName,
+                                                  model.empEnName,
+                                                  model.deptId,
+                                                  model.secId,
+                                                  model.jobId,
+                                                  model.assigntId,
+                                                  model.accountId,
+                                                  model.addressNotes,
+                                                  model.branchPlaceId,
+                                                  model.branchTel1,
+                                                  model.branchTel2,
+                                                  model.terriotryId,
+                                                  model.branchDesc,
+                                                  true,
+                                                  0,
+                                                  0,
+                                                  "",
+                                                  "",
+                                                  "")
 
 
                         Completable.fromAction {
 
                             listDao.insert(customer)
-                        }
-                            .subscribeOn(Schedulers.io())
-                            .subscribe()
+                        }.subscribeOn(Schedulers.io()).subscribe()
                     }
 
 

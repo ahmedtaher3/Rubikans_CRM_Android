@@ -9,7 +9,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
- import android.view.MotionEvent;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
@@ -20,7 +20,6 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
-import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,8 +36,8 @@ import java.util.Set;
 
 import jpos.JposException;
 
-public class PrinterConnectActivity extends AppCompatActivity
-        implements  AdapterView.OnItemClickListener, View.OnTouchListener, View.OnClickListener {
+
+public class PrinterConnectActivity extends AppCompatActivity implements AdapterView.OnItemClickListener, View.OnTouchListener, View.OnClickListener {
     private final int REQUEST_PERMISSION = 0;
     private final String DEVICE_ADDRESS_START = " (";
     private final String DEVICE_ADDRESS_END = ")";
@@ -47,13 +46,11 @@ public class PrinterConnectActivity extends AppCompatActivity
     private ArrayAdapter<CharSequence> arrayAdapter;
 
     private int portType = BXLConfigLoader.DEVICE_BUS_BLUETOOTH;
-    private String logicalName = "SPP-R310";
+    private String logicalName = "";
     private String address = "";
 
-    private LinearLayout layoutModel;
     private LinearLayout layoutIPAddress;
 
-    private RadioGroup radioGroupPortType;
     private TextView textViewBluetooth;
     private ListView listView;
     private EditText editTextIPAddress;
@@ -67,11 +64,10 @@ public class PrinterConnectActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_printer_connect);
-        
+
         layoutIPAddress = findViewById(R.id.LinearLayout3);
         layoutIPAddress.setVisibility(View.GONE);
-        
-      
+
 
         textViewBluetooth = findViewById(R.id.textViewBluetoothList);
         editTextIPAddress = findViewById(R.id.editTextIPAddr);
@@ -95,8 +91,7 @@ public class PrinterConnectActivity extends AppCompatActivity
         listView.setOnItemClickListener(this);
         listView.setOnTouchListener(this);
 
- 
-        
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                 if (!shouldShowRequestPermissionRationale(Manifest.permission.ACCESS_COARSE_LOCATION)) {
@@ -104,6 +99,16 @@ public class PrinterConnectActivity extends AppCompatActivity
                 }
             }
         }
+
+
+        portType = BXLConfigLoader.DEVICE_BUS_BLUETOOTH;
+        textViewBluetooth.setVisibility(View.VISIBLE);
+        listView.setVisibility(View.VISIBLE);
+        layoutIPAddress.setVisibility(View.GONE);
+
+        setPairedDevices();
+
+        logicalName = "SPP-R310";
     }
 
     private void setPairedDevices() {
@@ -218,8 +223,6 @@ public class PrinterConnectActivity extends AppCompatActivity
     }
 
 
-
-
     @Override
     public boolean onTouch(View view, MotionEvent motionEvent) {
         if (motionEvent.getAction() == MotionEvent.ACTION_UP)
@@ -231,12 +234,10 @@ public class PrinterConnectActivity extends AppCompatActivity
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         String device = ((TextView) view).getText().toString();
-        if(portType == BXLConfigLoader.DEVICE_BUS_WIFI)
-        {
+        if (portType == BXLConfigLoader.DEVICE_BUS_WIFI) {
             editTextIPAddress.setText(device);
             address = device;
-        }
-        else {
+        } else {
             address = device.substring(device.indexOf(DEVICE_ADDRESS_START) + DEVICE_ADDRESS_START.length(), device.indexOf(DEVICE_ADDRESS_END));
         }
     }
@@ -254,11 +255,11 @@ public class PrinterConnectActivity extends AppCompatActivity
                             address = editTextIPAddress.getText().toString();
                         }
 
-                        /*if (OrderPrintActivity.Companion.getBxlPrinter().printerOpen(portType, logicalName, address, checkBoxAsyncMode.isChecked())) {
+                        if (OrderPrintActivity.Companion.getBxlPrinter().printerOpen(portType, logicalName, address, checkBoxAsyncMode.isChecked())) {
                             finish();
                         } else {
                             mHandler.obtainMessage(1, 0, 0, "Fail to printer open!!").sendToTarget();
-                        }*/
+                        }
                     }
                 }).start();
 

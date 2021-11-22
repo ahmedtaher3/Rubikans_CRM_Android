@@ -9,7 +9,6 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.devartlab.R
 import com.devartlab.data.room.contract.ContractEntity
-import kotlin.collections.ArrayList
 
 class GeneralSelectedProductsAdapter(context: Context ) : RecyclerView.Adapter<GeneralSelectedProductsAdapter.MyViewHolder>() {
     private var myData: ArrayList<ContractEntity>
@@ -26,7 +25,7 @@ class GeneralSelectedProductsAdapter(context: Context ) : RecyclerView.Adapter<G
     // Replace the contents of a view (invoked by the layout manager)
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val model = myData[position]
-        holder.selectedName.text = model.itemEnName
+        holder.selectedName.text = model.itemArName
         holder.selectedDelete.setOnClickListener {
             myData.removeAt(position)
             notifyDataSetChanged()
@@ -39,7 +38,7 @@ class GeneralSelectedProductsAdapter(context: Context ) : RecyclerView.Adapter<G
     }
 
     fun setMyData(myData: ArrayList<ContractEntity>) {
-        this.myData = myData
+        this.myData = myData.distinctBy { it.id } as ArrayList<ContractEntity>
         notifyDataSetChanged()
     }
 
@@ -53,10 +52,12 @@ class GeneralSelectedProductsAdapter(context: Context ) : RecyclerView.Adapter<G
         }
     }
 
-    fun addItem(planEntity: ContractEntity) {
+    fun addItem(contractEntity: ContractEntity) {
 
-            myData.add(planEntity)
-            notifyDataSetChanged()
+        if (!myData.contains(contractEntity)) {
+            myData.add(contractEntity)
+        }
+        notifyDataSetChanged()
 
     }
 

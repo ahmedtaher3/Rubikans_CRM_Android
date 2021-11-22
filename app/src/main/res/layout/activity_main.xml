@@ -126,12 +126,36 @@
                             app:cardElevation="2dp"
                             app:cardUseCompatPadding="true">
 
-                            <ss.com.bannerslider.Slider
-                                android:id="@+id/bannerSlider"
+                            <RelativeLayout
                                 android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                app:slider_interval="5000"
-                                app:slider_loopSlides="true" />
+                                android:layout_height="match_parent">
+
+
+                                <com.jarvanmo.exoplayerview.ui.ExoVideoView
+                                    android:id="@+id/videoView"
+                                    android:visibility="gone"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"/>
+
+                                <ImageView
+                                    android:id="@+id/imageView"
+                                    android:visibility="gone"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"/>
+
+
+                                <ss.com.bannerslider.Slider
+                                    android:id="@+id/bannerSlider"
+                                    android:visibility="gone"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+
+                                    app:slider_loopSlides="true" />
+
+
+
+                            </RelativeLayout>
+
 
                         </androidx.cardview.widget.CardView>
 

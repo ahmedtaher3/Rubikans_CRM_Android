@@ -89,7 +89,7 @@
                 android:id="@+id/changeLang"
                 android:icon="@drawable/ic_logout"
                 android:title="@string/change_language"
-                android:visible="false" />
+                android:visible="true" />
 
             <item
                 android:id="@+id/updatePlan"

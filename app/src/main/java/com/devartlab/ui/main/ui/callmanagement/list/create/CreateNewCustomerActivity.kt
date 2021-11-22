@@ -1,32 +1,37 @@
 package com.devartlab.ui.main.ui.callmanagement.list.create
 
+import android.app.AlertDialog
 import android.os.Bundle
-import android.widget.ArrayAdapter
-import android.widget.AutoCompleteTextView
+import android.view.View
+import android.widget.*
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.devartlab.R
 import com.devartlab.base.BaseActivity
-import com.devartlab.data.room.list.ListEntity
-import com.devartlab.databinding.ActivityCreateNewCustomerBinding
-import com.devartlab.data.room.specialty.SpecialtyParentEntity
 import com.devartlab.data.room.filterdata.FilterDataEntity
+import com.devartlab.data.room.list.DefCustomerAddressModel
+import com.devartlab.data.room.list.DefSupplierKeyPersonModel
+import com.devartlab.data.room.list.ListEntity
+import com.devartlab.data.room.listtypes.ListTypesEntity
+import com.devartlab.databinding.ActivityCreateNewCustomerBinding
 import com.devartlab.utils.ProgressLoading
+import com.google.android.material.textfield.TextInputLayout
 
 class CreateNewCustomerActivity : BaseActivity<ActivityCreateNewCustomerBinding>() {
 
     lateinit var binding: ActivityCreateNewCustomerBinding
     lateinit var viewModel: CreateNewCustomerViewModel
 
-    var typeList = ArrayList<SpecialtyParentEntity>()
+    var typeList = ArrayList<ListTypesEntity>()
     var typeListNames = ArrayList<String>()
-    var typeListModel = SpecialtyParentEntity()
+    var typeListModel = ListTypesEntity()
     var typeId = 0
 
     var customerTypeList = ArrayList<FilterDataEntity>()
     var customerTypeNames = ArrayList<String>()
     var customerModel = FilterDataEntity()
     var customerTypeId = 0
+
 
     var territoryList = ArrayList<FilterDataEntity>()
     var territoryNames = ArrayList<String>()
@@ -42,6 +47,11 @@ class CreateNewCustomerActivity : BaseActivity<ActivityCreateNewCustomerBinding>
     var classNames = ArrayList<String>()
     var classModel = FilterDataEntity()
     var classId = 0
+
+
+    var addressList = ArrayList<DefCustomerAddressModel>()
+    var keyPersonList = ArrayList<DefSupplierKeyPersonModel>()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -84,52 +94,7 @@ class CreateNewCustomerActivity : BaseActivity<ActivityCreateNewCustomerBinding>
         }
 
 
-        (binding.territory.editText as? AutoCompleteTextView)?.setAdapter(
-            ArrayAdapter(
-                this,
-                R.layout.adapter_list_item,
-                territoryNames
-            )
-        )
-        (binding.territory.editText as? AutoCompleteTextView)?.setOnItemClickListener { adapterView, view, i, l ->
-            territoryId = territoryList[i].fieldId!!
-            territoryModel = territoryList[i]!!
-            viewModel.getFilterBrik(
-                viewModel?.dataManager?.user?.accId.toString(),
-                "TblDefBrick",
-                territoryId.toString(),
-                "0"
-            )
 
-
-        }
-
-
-        (binding.brick.editText as? AutoCompleteTextView)?.setAdapter(
-            ArrayAdapter(
-                this,
-                R.layout.adapter_list_item,
-                brickNames
-            )
-        )
-        (binding.brick.editText as? AutoCompleteTextView)?.setOnItemClickListener { adapterView, view, i, l ->
-            brickId = brickList[i].fieldId!!
-            brickModel = brickList[i]!!
-
-        }
-
-        (binding.classs.editText as? AutoCompleteTextView)?.setAdapter(
-            ArrayAdapter(
-                this,
-                R.layout.adapter_list_item,
-                classNames
-            )
-        )
-        (binding.classs.editText as? AutoCompleteTextView)?.setOnItemClickListener { adapterView, view, i, l ->
-            classId = classList[i].fieldId!!
-            classModel = classList[i]!!
-
-        }
 
         viewModel.getTypes()
         viewModel.getFilterTerriotry(
@@ -161,41 +126,238 @@ class CreateNewCustomerActivity : BaseActivity<ActivityCreateNewCustomerBinding>
                     , 0
                     , 0
                     , 0
-                    , binding.notes.text.toString()
-                    , ""
-                    , brickModel.fieldName
-                    , brickModel.fieldId
-                    , 0
-                    , ""
-                    , 0
-                    , binding.name.text.toString()
-                    , customerModel.fieldName
-                    , classModel.fieldName
-                    , classModel.fieldId
-                    , customerModel.fieldId
-                    , binding.address.text.toString()
-                    , typeListModel.listTypeId
-                    , 0
-                    , customerModel.fieldName
-                    , customerModel.fieldName
-                    , customerModel.fieldId
-                    , classModel.fieldId
-                    , viewModel.dataManager.user.nameAr
-                    , viewModel.dataManager.user.nameEn
-                    , 0
-                    , 0
-                    , 0
-                    , 0
-                    , viewModel.dataManager.user.accId
-                    , ""
-                    , 0
-                    , binding.phone1.text.toString()
-                    , binding.phone2.text.toString()
-                    , territoryId
-                    , ""
-                    , false
+                    , binding.notes.text.toString(),
+                    "",
+                    brickModel.fieldName,
+                    brickModel.fieldId,
+                    0,
+                    "",
+                    0,
+                    binding.name.text.toString(),
+                    customerModel.fieldName,
+                    classModel.fieldName,
+                    classModel.fieldId,
+                    customerModel.fieldId,
+                    binding.address.text.toString(),
+                    typeListModel.listTypeId,
+                    0,
+                    customerModel.fieldName,
+                    customerModel.fieldName,
+                    customerModel.fieldId,
+                    classModel.fieldId,
+                    viewModel.dataManager.user.nameAr,
+                    viewModel.dataManager.user.nameEn,
+                    0,
+                    0,
+                    0,
+                    0,
+                    viewModel.dataManager.user.accId,
+                    "",
+                    0,
+                    binding.phone1.text.toString(),
+                    binding.phone2.text.toString(),
+                    territoryId,
+                    "",
+                    false,
+                    0,
+                    0,
+                    "",
+                    "",
+                    ""))
+        }
+
+     //   R.drawable.rounded_blue
+
+
+        binding.addNewAddress.setOnClickListener {
+
+            val dialogBuilder = AlertDialog.Builder(this@CreateNewCustomerActivity) // ...Irrelevant code for customizing the buttons and title
+            val inflater = this.layoutInflater
+
+            val dialogView = inflater.inflate(R.layout.add_new_address, null)
+            dialogBuilder.setView(dialogView)
+            val addButton = dialogView.findViewById<View>(R.id.add) as Button
+            val skipButton = dialogView.findViewById<View>(R.id.close) as ImageView
+
+
+            val territory = dialogView.findViewById<View>(R.id.territory) as TextInputLayout
+            val brick = dialogView.findViewById<View>(R.id.brick) as TextInputLayout
+            val classs = dialogView.findViewById<View>(R.id.classs) as TextInputLayout
+
+
+            (territory.editText as? AutoCompleteTextView)?.setAdapter(
+                ArrayAdapter(
+                    this,
+                    R.layout.adapter_list_item,
+                    territoryNames
                 )
             )
+            (territory.editText as? AutoCompleteTextView)?.setOnItemClickListener { adapterView, view, i, l ->
+                territoryId = territoryList[i].fieldId!!
+                territoryModel = territoryList[i]!!
+                viewModel.getFilterBrik(
+                    viewModel?.dataManager?.user?.accId.toString(),
+                    "TblDefBrick",
+                    territoryId.toString(),
+                    "0"
+                )
+
+
+            }
+
+
+            (brick.editText as? AutoCompleteTextView)?.setAdapter(
+                ArrayAdapter(
+                    this,
+                    R.layout.adapter_list_item,
+                    brickNames
+                )
+            )
+            (brick.editText as? AutoCompleteTextView)?.setOnItemClickListener { adapterView, view, i, l ->
+                brickId = brickList[i].fieldId!!
+                brickModel = brickList[i]!!
+
+            }
+
+            (classs.editText as? AutoCompleteTextView)?.setAdapter(
+                ArrayAdapter(
+                    this,
+                    R.layout.adapter_list_item,
+                    classNames
+                )
+            )
+            (classs.editText as? AutoCompleteTextView)?.setOnItemClickListener { adapterView, view, i, l ->
+                classId = classList[i].fieldId!!
+                classModel = classList[i]!!
+
+            }
+
+
+            viewModel.filterTerriotryResponseLive.observe(this, Observer {
+                territoryList.clear()
+                territoryList = it as ArrayList<FilterDataEntity>
+
+                for (model in it) {
+                    territoryNames.add(model.fieldName!!)
+                }
+                (territory.editText as? AutoCompleteTextView)?.setAdapter(null)
+                (territory.editText as? AutoCompleteTextView)?.setAdapter(
+                    ArrayAdapter(
+                        this,
+                        R.layout.adapter_list_item,
+                        territoryNames
+                    )
+                )
+
+
+            })
+
+
+            viewModel.filterBrikResponseLive.observe(this, Observer {
+                brickList.clear()
+                brickList = it as ArrayList<FilterDataEntity>
+
+                for (model in it) {
+                    brickNames.add(model.fieldName!!)
+                }
+                (brick.editText as? AutoCompleteTextView)?.setAdapter(null)
+                (brick.editText as? AutoCompleteTextView)?.setAdapter(
+                    ArrayAdapter(
+                        this,
+                        R.layout.adapter_list_item,
+                        brickNames
+                    )
+                )
+
+
+            })
+
+            viewModel.filterClassResponseLive.observe(this, Observer {
+                classList.clear()
+                classList = it as ArrayList<FilterDataEntity>
+
+                for (model in it) {
+                    classNames.add(model.fieldName!!)
+                }
+
+                (classs.editText as? AutoCompleteTextView)?.setAdapter(null)
+
+                (classs.editText as? AutoCompleteTextView)?.setAdapter(
+                    ArrayAdapter(
+                        this,
+                        R.layout.adapter_list_item,
+                        classNames
+                    )
+                )
+
+            })
+
+
+
+
+
+            val phone1 = dialogView.findViewById<View>(R.id.phone1) as EditText
+            val phone2 = dialogView.findViewById<View>(R.id.phone2) as EditText
+            val address = dialogView.findViewById<View>(R.id.address) as EditText
+            val notes = dialogView.findViewById<View>(R.id.notes) as EditText
+
+            val alertDialog = dialogBuilder.create()
+            addButton.setOnClickListener {
+
+
+            }
+            skipButton.setOnClickListener {
+                alertDialog.dismiss()
+
+            }
+
+            alertDialog.show()
+
+
+        }
+
+
+        binding.addNewKeyPerson.setOnClickListener {
+
+            val dialogBuilder = AlertDialog.Builder(this@CreateNewCustomerActivity) // ...Irrelevant code for customizing the buttons and title
+            val inflater = this.layoutInflater
+
+            val dialogView = inflater.inflate(R.layout.add_new_key_person, null)
+            dialogBuilder.setView(dialogView)
+            val addButton = dialogView.findViewById<View>(R.id.add) as Button
+            val skipButton = dialogView.findViewById<View>(R.id.close) as ImageView
+
+            val name = dialogView.findViewById<View>(R.id.name) as EditText
+            val department = dialogView.findViewById<View>(R.id.department) as EditText
+            val job = dialogView.findViewById<View>(R.id.job) as EditText
+            val phone1 = dialogView.findViewById<View>(R.id.phone1) as EditText
+            val phone2 = dialogView.findViewById<View>(R.id.phone2) as EditText
+            val branch = dialogView.findViewById<View>(R.id.branch) as EditText
+            val notes = dialogView.findViewById<View>(R.id.notes) as EditText
+
+
+            val alertDialog = dialogBuilder.create()
+            addButton.setOnClickListener {
+
+                keyPersonList.add(DefSupplierKeyPersonModel(0,
+                                                            0,
+                                                            name.text.toString(),
+                                                            department.text.toString(),
+                                                            job.text.toString(),
+                                                            phone1.text.toString(),
+                                                            phone2.text.toString(),
+                                                            branch.text.toString(),
+                                                            notes.text.toString()))
+                alertDialog.dismiss()
+            }
+            skipButton.setOnClickListener {
+                alertDialog.dismiss()
+
+            }
+
+            alertDialog.show()
+
+
         }
 
         setObservers()
@@ -206,7 +368,7 @@ class CreateNewCustomerActivity : BaseActivity<ActivityCreateNewCustomerBinding>
 
         viewModel.responseLiveTypes.observe(this, Observer {
             typeList.clear()
-            typeList = it as ArrayList<SpecialtyParentEntity>
+            typeList = it as ArrayList<ListTypesEntity>
 
             for (model in it) {
                 typeListNames.add(model.listType!!)
@@ -240,45 +402,9 @@ class CreateNewCustomerActivity : BaseActivity<ActivityCreateNewCustomerBinding>
 
         })
 
-        viewModel.filterTerriotryResponseLive.observe(this, Observer {
-            territoryList.clear()
-            territoryList = it as ArrayList<FilterDataEntity>
-
-            for (model in it) {
-                territoryNames.add(model.fieldName!!)
-            }
-            (binding.territory.editText as? AutoCompleteTextView)?.setAdapter(null)
-            (binding.territory.editText as? AutoCompleteTextView)?.setAdapter(
-                ArrayAdapter(
-                    this,
-                    R.layout.adapter_list_item,
-                    territoryNames
-                )
-            )
 
 
-        })
-
-
-        viewModel.filterBrikResponseLive.observe(this, Observer {
-            brickList.clear()
-            brickList = it as ArrayList<FilterDataEntity>
-
-            for (model in it) {
-                brickNames.add(model.fieldName!!)
-            }
-            (binding.brick.editText as? AutoCompleteTextView)?.setAdapter(null)
-            (binding.brick.editText as? AutoCompleteTextView)?.setAdapter(
-                ArrayAdapter(
-                    this,
-                    R.layout.adapter_list_item,
-                    brickNames
-                )
-            )
-
-
-        })
-
+ /*
         viewModel.filterClassResponseLive.observe(this, Observer {
             classList.clear()
             classList = it as ArrayList<FilterDataEntity>
@@ -297,7 +423,7 @@ class CreateNewCustomerActivity : BaseActivity<ActivityCreateNewCustomerBinding>
                 )
             )
 
-        })
+        })*/
 
 
         viewModel.progress.observe(this, Observer { progress ->

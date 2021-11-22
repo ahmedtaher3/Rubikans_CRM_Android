@@ -124,7 +124,9 @@ class AddOfficeActivity : BaseActivity<ActivityAddExtraBinding>() {
                                 , 0
                                 , CommonUtilities.randomColor
                                 , activity?.typeId,
-                                false ,false
+                                false ,false,
+                                false,
+                                ""
                         )
 
                         System.out.println(planEntity.toString())
@@ -193,7 +195,9 @@ class AddOfficeActivity : BaseActivity<ActivityAddExtraBinding>() {
                                 , 0
                                 , CommonUtilities.randomColor
                                 , activity?.typeId,
-                                false ,false
+                                false ,false,
+                                false,
+                                ""
                         )
 
                         System.out.println(planEntity.toString())

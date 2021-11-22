@@ -179,6 +179,11 @@ class TypesViewModel(application: Application) : AndroidViewModel(application) {
                             , model.terriotryId
                             , model.branchDesc
                             , true
+                        ,0
+                        ,0
+                        ,""
+                        ,""
+                        ,""
                         )
 
 

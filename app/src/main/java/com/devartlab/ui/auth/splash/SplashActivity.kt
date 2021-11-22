@@ -57,16 +57,13 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
         viewModel = ViewModelProviders.of(this).get(LoginViewModel::class.java)
 
 
-
-
-
-
         viewModel.dataManager.saveGoogleService(CommonUtilities.isGooglePlayServicesAvailable(this))
 
 
         versionCode = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
             packageManager.getPackageInfo(packageName, 0).longVersionCode.toInt()
-        } else {
+        }
+        else {
             packageManager.getPackageInfo(packageName, 0).versionCode
         }
 

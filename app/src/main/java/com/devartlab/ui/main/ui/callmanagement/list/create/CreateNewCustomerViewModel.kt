@@ -13,6 +13,7 @@ import com.devartlab.data.room.filterdata.FilterDataEntity
 import com.devartlab.data.room.list.ListDao
 import com.devartlab.data.room.list.ListEntity
 import com.devartlab.data.room.listtypes.ListTypesDao
+import com.devartlab.data.room.listtypes.ListTypesEntity
 import com.devartlab.data.room.specialty.SpecialtyDao
 import com.devartlab.data.room.specialty.SpecialtyParentEntity
 import com.devartlab.data.shared.DataManager
@@ -35,11 +36,11 @@ class CreateNewCustomerViewModel(application: Application) : AndroidViewModel(ap
     lateinit var specialtyDao: SpecialtyDao
     lateinit var filterDataDao: FilterDataDao
 
-    val responseLiveTypes: MutableLiveData<List<SpecialtyParentEntity>>
+    val responseLiveTypes: MutableLiveData<List<ListTypesEntity>>
     val filterSpecialityResponseLiveChild: MutableLiveData<List<FilterDataEntity>>
-    val filterTerriotryResponseLive: MutableLiveData<ArrayList<FilterDataEntity>>
-    val filterBrikResponseLive: MutableLiveData<ArrayList<FilterDataEntity>>
-    val filterClassResponseLive: MutableLiveData<ArrayList<FilterDataEntity>>
+    val filterTerriotryResponseLive: MutableLiveData<List<FilterDataEntity>>
+    val filterBrikResponseLive: MutableLiveData<List<FilterDataEntity>>
+    val filterClassResponseLive: MutableLiveData<List<FilterDataEntity>>
     val progress: MutableLiveData<Int>
 
 
@@ -56,6 +57,7 @@ class CreateNewCustomerViewModel(application: Application) : AndroidViewModel(ap
         progress = MutableLiveData<Int>()
 
         listDao = DatabaseClient.getInstance(application)?.appDatabase?.listDao()!!
+        listTypesDao = DatabaseClient.getInstance(application)?.appDatabase?.listTypesDao()!!
         specialtyDao = DatabaseClient.getInstance(application)?.appDatabase?.specialtyDao()!!
         filterDataDao = DatabaseClient.getInstance(application)?.appDatabase?.filterDataDao()!!
 
@@ -66,7 +68,7 @@ class CreateNewCustomerViewModel(application: Application) : AndroidViewModel(ap
 
         if (dataManager.offlineMood) {
             Completable.fromAction {
-                responseLiveTypes.postValue(specialtyDao.all)
+                responseLiveTypes.postValue(listTypesDao.all)
             }.subscribeOn(Schedulers.io())
                 .subscribe()
         } else {
@@ -78,12 +80,11 @@ class CreateNewCustomerViewModel(application: Application) : AndroidViewModel(ap
                     override fun onSubscribe(d: Disposable) {}
                     override fun onNext(data: ArrayList<SpecialtyParentEntity>) {
                         progress.postValue(0)
-                        responseLiveTypes.postValue(data)
-
-                        Completable.fromAction {
-                            specialtyDao.insertAll(data)
-                        }.subscribeOn(Schedulers.io())
-                            .subscribe()
+                        val list = ArrayList<ListTypesEntity>()
+                        for (m in data) {
+                            list.add(ListTypesEntity(m.lIstId, 0, 0, 0, m.listTypeId, "", m.listDescription, m.totalCustomer, ""))
+                        }
+                        responseLiveTypes.postValue(list)
 
                     }
 
@@ -114,7 +115,7 @@ class CreateNewCustomerViewModel(application: Application) : AndroidViewModel(ap
 
         if (dataManager.offlineMood) {
             Completable.fromAction {
-                filterSpecialityResponseLiveChild.postValue(filterDataDao.getAll("Speciality",typeId))
+                filterSpecialityResponseLiveChild.postValue(filterDataDao.getAll("speciality"))
             }.subscribeOn(Schedulers.io())
                 .subscribe()
         } else {
@@ -129,19 +130,6 @@ class CreateNewCustomerViewModel(application: Application) : AndroidViewModel(ap
 
                         progress.postValue(0)
                         filterSpecialityResponseLiveChild.postValue(data)
-
-
-                        Completable.fromAction {
-
-                            for (m in data)
-                            {
-                                m.parentName = "Speciality"
-                                m.parentId = typeId
-                                filterDataDao.insert(m)
-                            }
-
-                        }.subscribeOn(Schedulers.io())
-                            .subscribe()
 
 
                     }
@@ -165,24 +153,29 @@ class CreateNewCustomerViewModel(application: Application) : AndroidViewModel(ap
         filterText: String
     ) {
 
-        progress.postValue(1)
-        myAPI?.getFilterData(id.toInt(), tableName, "", whereCondition, filterText)!!
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(object : Observer<ArrayList<FilterDataEntity>> {
-                override fun onSubscribe(d: Disposable) {}
-                override fun onNext(data: ArrayList<FilterDataEntity>) {
+        if (dataManager.offlineMood) {
+            Completable.fromAction {
+                filterTerriotryResponseLive.postValue(filterDataDao.getAll("territory"))
+            }.subscribeOn(Schedulers.io())
+                .subscribe()
+        } else {
+            progress.postValue(1)
+            myAPI?.getFilterData(id.toInt(), tableName, "", whereCondition, filterText)!!.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread()).subscribe(object : Observer<ArrayList<FilterDataEntity>> {
+                    override fun onSubscribe(d: Disposable) {}
+                    override fun onNext(data: ArrayList<FilterDataEntity>) {
 
-                    progress.postValue(0)
-                    filterTerriotryResponseLive.postValue(data)
-                }
+                        progress.postValue(0)
+                        filterTerriotryResponseLive.postValue(data)
+                    }
 
-                override fun onError(e: Throwable) {
-                    progress.postValue(0)
-                }
+                    override fun onError(e: Throwable) {
+                        progress.postValue(0)
+                    }
 
-                override fun onComplete() {}
-            })
+                    override fun onComplete() {}
+                })
+        }
     }
 
     public fun getFilterBrik(
@@ -192,24 +185,32 @@ class CreateNewCustomerViewModel(application: Application) : AndroidViewModel(ap
         filterText: String
     ) {
 
-        progress.postValue(1)
-        myAPI?.getFilterData(id.toInt(), tableName, whereCondition, "", filterText)!!
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(object : Observer<ArrayList<FilterDataEntity>> {
-                override fun onSubscribe(d: Disposable) {}
-                override fun onNext(data: ArrayList<FilterDataEntity>) {
 
-                    progress.postValue(0)
-                    filterBrikResponseLive.postValue(data)
-                }
+        if (dataManager.offlineMood) {
+            Completable.fromAction {
+                //filterBrikResponseLive.postValue(filterDataDao.getAll("brick" , whereCondition.toInt()))
+                filterBrikResponseLive.postValue(filterDataDao.getAll("brick"))
+            }.subscribeOn(Schedulers.io())
+                .subscribe()
+        } else {
 
-                override fun onError(e: Throwable) {
-                    progress.postValue(0)
-                }
+            progress.postValue(1)
+            myAPI?.getFilterData(id.toInt(), tableName, whereCondition, "", filterText)!!.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread()).subscribe(object : Observer<ArrayList<FilterDataEntity>> {
+                    override fun onSubscribe(d: Disposable) {}
+                    override fun onNext(data: ArrayList<FilterDataEntity>) {
 
-                override fun onComplete() {}
-            })
+                        progress.postValue(0)
+                        filterBrikResponseLive.postValue(data)
+                    }
+
+                    override fun onError(e: Throwable) {
+                        progress.postValue(0)
+                    }
+
+                    override fun onComplete() {}
+                })
+        }
     }
 
     public fun getFilterClass(
@@ -219,24 +220,30 @@ class CreateNewCustomerViewModel(application: Application) : AndroidViewModel(ap
         filterText: String
     ) {
 
-        progress.postValue(1)
-        myAPI?.getFilterData(id.toInt(), tableName, "", whereCondition, filterText)!!
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(object : Observer<ArrayList<FilterDataEntity>> {
-                override fun onSubscribe(d: Disposable) {}
-                override fun onNext(data: ArrayList<FilterDataEntity>) {
+        if (dataManager.offlineMood) {
+            Completable.fromAction {
+                filterClassResponseLive.postValue(filterDataDao.getAll("class"))
+            }.subscribeOn(Schedulers.io())
+                .subscribe()
+        } else {
 
-                    progress.postValue(0)
-                    filterClassResponseLive.postValue(data)
-                }
+            progress.postValue(1)
+            myAPI?.getFilterData(id.toInt(), tableName, "", whereCondition, filterText)!!.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread()).subscribe(object : Observer<ArrayList<FilterDataEntity>> {
+                    override fun onSubscribe(d: Disposable) {}
+                    override fun onNext(data: ArrayList<FilterDataEntity>) {
 
-                override fun onError(e: Throwable) {
-                    progress.postValue(0)
-                }
+                        progress.postValue(0)
+                        filterClassResponseLive.postValue(data)
+                    }
 
-                override fun onComplete() {}
-            })
+                    override fun onError(e: Throwable) {
+                        progress.postValue(0)
+                    }
+
+                    override fun onComplete() {}
+                })
+        }
     }
 
 

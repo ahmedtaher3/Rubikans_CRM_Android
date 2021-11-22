@@ -70,7 +70,7 @@ class ReportFragment : BaseFragment<FragmentReportBinding>(), InvoiceTypsAdapter
     lateinit var dialog: ChooseStartPoint
     private var model: PlanEntity? = null
     private var modelOrder: PlanEntity? = null
-    private var invoiceTypeId: Int? = null
+    private var purchaseTypeEntity: PurchaseTypeEntity? = null
     private var paymentMethodId: Int? = null
     private var modelWithStartPoint: PlanEntity? = null
     lateinit var planEntity: PlanEntity
@@ -440,14 +440,14 @@ class ReportFragment : BaseFragment<FragmentReportBinding>(), InvoiceTypsAdapter
 
 
                     val builder = AlertDialog.Builder(baseActivity)
-                    builder.setTitle("End Shift and upload report")
-                    builder.setMessage("Are you sure?")
+                    builder.setTitle(getString(R.string.end_shift_and_upload_report))
+                    builder.setMessage(getString(R.string.are_u_sure))
                     builder.setIcon(R.drawable.ic_warning)
-                    builder.setPositiveButton("YES") { dialog, which ->
+                    builder.setPositiveButton(getString(R.string.yes)) { dialog, which ->
 
                         dialog.dismiss()
                         if (LocationUtils.checkPermission(baseActivity)) {
-                            ProgressLoading.showWithText(baseActivity, "Fetching your location")
+                            ProgressLoading.showWithText(baseActivity, getString(R.string.fetching_your_location))
                             val myLocation = MyLocation(baseActivity  , true)
                             myLocation.getLocation(
                                 baseActivity,
@@ -479,9 +479,9 @@ class ReportFragment : BaseFragment<FragmentReportBinding>(), InvoiceTypsAdapter
                                         } else {
 
                                             baseActivity.runOnUiThread {
-                                                Toast.makeText(
+                                               Toast.makeText(
                                                     baseActivity,
-                                                    "Field to get Location , please try again",
+                                                    getString(R.string.error_location_try_again),
                                                     Toast.LENGTH_LONG
                                                 ).show()
                                             }
@@ -494,7 +494,7 @@ class ReportFragment : BaseFragment<FragmentReportBinding>(), InvoiceTypsAdapter
 
 
                     }
-                    builder.setNegativeButton("NO") { dialog, which ->
+                    builder.setNegativeButton(getString(R.string.no)) { dialog, which ->
 
                         dialog.dismiss()
                     }
@@ -505,14 +505,14 @@ class ReportFragment : BaseFragment<FragmentReportBinding>(), InvoiceTypsAdapter
 
 
                     val builder = AlertDialog.Builder(baseActivity)
-                    builder.setTitle("Start Shift")
-                    builder.setMessage("Are you sure?")
-                    builder.setPositiveButton("YES") { dialog, which ->
+                    builder.setTitle(getString(R.string.start_shift))
+                    builder.setMessage(getString(R.string.are_u_sure))
+                    builder.setPositiveButton(getString(R.string.yes)) { dialog, which ->
 
                         dialog.dismiss()
 
                         if (LocationUtils.checkPermission(baseActivity)) {
-                            ProgressLoading.showWithText(baseActivity, "Fetching your location")
+                            ProgressLoading.showWithText(baseActivity, getString(R.string.fetching_location))
                             val myLocation = MyLocation(baseActivity, true)
                             myLocation.getLocation(
                                 baseActivity,
@@ -570,9 +570,9 @@ class ReportFragment : BaseFragment<FragmentReportBinding>(), InvoiceTypsAdapter
 
                                         } else {
                                             baseActivity.runOnUiThread {
-                                                Toast.makeText(
+                                               Toast.makeText(
                                                     baseActivity,
-                                                    "Field to get Location , please try again",
+                                                    getString(R.string.error_location_try_again),
                                                     Toast.LENGTH_LONG
                                                 ).show()
                                             }
@@ -584,7 +584,7 @@ class ReportFragment : BaseFragment<FragmentReportBinding>(), InvoiceTypsAdapter
                         }
 
                     }
-                    builder.setNegativeButton("NO") { dialog, which ->
+                    builder.setNegativeButton(getString(R.string.no)) { dialog, which ->
 
                         dialog.dismiss()
                     }
@@ -758,14 +758,14 @@ class ReportFragment : BaseFragment<FragmentReportBinding>(), InvoiceTypsAdapter
 
 
         val builder = AlertDialog.Builder(baseActivity)
-        builder.setTitle("Delete Extra")
-        builder.setMessage("Are you sure?")
-        builder.setPositiveButton("YES") { dialog, which ->
+        builder.setTitle(getString(R.string.delete_extra))
+        builder.setMessage(getString(R.string.are_u_sure))
+        builder.setPositiveButton(getString(R.string.yes)) { dialog, which ->
 
             viewModel.delete(planEntity, DATE, shift)
             dialog.dismiss()
         }
-        builder.setNegativeButton("NO") { dialog, which ->
+        builder.setNegativeButton(getString(R.string.no)) { dialog, which ->
             // Do nothing
             dialog.dismiss()
         }
@@ -855,12 +855,13 @@ class ReportFragment : BaseFragment<FragmentReportBinding>(), InvoiceTypsAdapter
 
     override fun setChooseInvoiceType(model: PurchaseTypeEntity?) {
 
-
+        alertDialog?.dismiss()
         Log.d(TAG, "setChooseInvoiceType: " + model.toString())
-        invoiceTypeId = model?.invoiceTypeId
-        paymentMethodId = model?.paymentMethodId
+
+        purchaseTypeEntity = model
         val intent = Intent(baseActivity, SelectProductsActivity::class.java)
         intent.putExtra("CUSTOMER_ID", modelOrder?.customerid)
+        intent.putExtra("PurchaseTypeEntity", purchaseTypeEntity)
         startActivityForResult(intent, 1)
     }
 
@@ -879,14 +880,14 @@ class ReportFragment : BaseFragment<FragmentReportBinding>(), InvoiceTypsAdapter
         } else {
 
             val builder = AlertDialog.Builder(baseActivity)
-            builder.setTitle("Confirm")
-            builder.setMessage("Are you sure?")
-            builder.setPositiveButton("YES") { dialog, which ->
+            builder.setTitle(getString(R.string.confirm))
+            builder.setMessage(getString(R.string.are_u_sure))
+            builder.setPositiveButton(getString(R.string.yes)) { dialog, which ->
 
                 dialog.dismiss()
 
                 if (LocationUtils.checkPermission(baseActivity)) {
-                    ProgressLoading.showWithText(baseActivity, "Fetching your location")
+                    ProgressLoading.showWithText(baseActivity, getString(R.string.fetching_location))
                     val myLocation = MyLocation(baseActivity, false)
                     myLocation.getLocation(baseActivity, object : MyLocation.LocationResult() {
                         override fun gotLocation(location: Location?, type: String? , msg: String?) {
@@ -939,7 +940,7 @@ class ReportFragment : BaseFragment<FragmentReportBinding>(), InvoiceTypsAdapter
 
 
             }
-            builder.setNegativeButton("NO") { dialog, which ->
+            builder.setNegativeButton(getString(R.string.no)) { dialog, which ->
                 // Do nothing
                 dialog.dismiss()
             }
@@ -1006,7 +1007,7 @@ class ReportFragment : BaseFragment<FragmentReportBinding>(), InvoiceTypsAdapter
     override fun onAttach(context: Context) {
         super.onAttach(context)
         try {
-            (activity as AppCompatActivity?)!!.supportActionBar!!.title = "Report"
+            (activity as AppCompatActivity?)!!.supportActionBar!!.title = getString(R.string.report)
 
         } catch (e: Exception) {
         }
@@ -1219,21 +1220,21 @@ class ReportFragment : BaseFragment<FragmentReportBinding>(), InvoiceTypsAdapter
 
     fun setButtonStarted() {
         binding.startShift.setBackgroundResource(R.drawable.button_green)
-        binding.startShift.text = "End Shift"
+        binding.startShift.text = getString(R.string.end_shift)
         binding.startShift.setEnabled(true)
 
     }
 
     fun setButtonReported() {
         binding.startShift.setBackgroundResource(R.drawable.button_grey)
-        binding.startShift.text = "Reported"
+        binding.startShift.text = getString(R.string.reported)
         binding.startShift.setEnabled(false)
     }
 
     fun setButtonReady() {
 
         binding.startShift.setBackgroundResource(R.drawable.button)
-        binding.startShift.text = "Start Shift"
+        binding.startShift.text = getString(R.string.start_shift)
         binding.startShift.setEnabled(true)
 
     }
@@ -1250,8 +1251,7 @@ class ReportFragment : BaseFragment<FragmentReportBinding>(), InvoiceTypsAdapter
                     val intent = Intent(baseActivity, OrderPrintActivity::class.java)
                     intent.putExtra("PRODUCTS", list)
                     intent.putExtra("CUSTOMER_MODEL", modelOrder)
-                    intent.putExtra("INVOICE_TYPE_ID", invoiceTypeId)
-                    intent.putExtra("PaymentMethodId", paymentMethodId)
+                    intent.putExtra("PurchaseTypeEntity", purchaseTypeEntity)
 
                     baseActivity.startActivity(intent)
 

@@ -898,17 +898,6 @@ public class BixolonPrinter implements ErrorListener, OutputCompleteListener, St
         return cs;
     }
 
-    public boolean setFarsiOption(int opt) {
-        try {
-            posPrinter.setOptReorderForFarsi(opt);
-        } catch (JposException e) {
-            e.printStackTrace();
-
-            return false;
-        }
-
-        return true;
-    }
 
     public String posPrinterCheckHealth() {
         try {

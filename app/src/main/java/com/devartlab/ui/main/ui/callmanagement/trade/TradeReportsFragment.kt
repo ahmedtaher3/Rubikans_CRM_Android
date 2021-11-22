@@ -34,8 +34,8 @@ class TradeReportsFragment : BaseFragment<FragmentTradeReportsBinding>(), TradeR
         binding = viewDataBinding
 
         val list = ArrayList<CardModel>()
-        list.add(CardModel(1, "Customer Invoice Report", R.drawable.report_general))
-        list.add(CardModel(2, "Offline Invoice Report", R.drawable.report_general))
+        list.add(CardModel(1, getString(R.string.customer_invoice_report), R.drawable.report_general))
+        list.add(CardModel(2, getString(R.string.offline_invoice_report), R.drawable.report_general))
 
         adapter = TradeReportsAdapter(baseActivity, list, this)
         val layoutManager = GridLayoutManager(baseActivity, 2)

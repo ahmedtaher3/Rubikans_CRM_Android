@@ -139,9 +139,16 @@ data class TradeMasterEntity (
     @ColumnInfo(name = "DLInvTrxSalesPurchaseCostCenter")
     var DLInvTrxSalesPurchaseCostCenter: String? = null,
     @ColumnInfo(name = "IsDraft")
-    var IsDraft: Boolean = false
+    var IsDraft: Boolean = false,
 
- 
+    @ColumnInfo(name = "name")
+    var name: String = "",
+    @ColumnInfo(name = "brick")
+    var brick: String = "",
+    @ColumnInfo(name = "specialty")
+    var specialty: String = "",
+    @ColumnInfo(name = "_class")
+    var _class: String = ""
 
  
 

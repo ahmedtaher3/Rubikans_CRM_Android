@@ -13,97 +13,64 @@ import kotlinx.android.parcel.Parcelize
 data class MyBallanceEntity(
 
 
-    @PrimaryKey(autoGenerate = true)
-    var id: Int? = null,
+    @PrimaryKey(autoGenerate = true) var id: Int? = null,
 
-    @ColumnInfo(name = "itemGroupId")
-    @field:SerializedName("ItemGroupId")
-    var itemGroupId: Int? = null,
+    @ColumnInfo(name = "StoreId") @field:SerializedName("StoreId") var storeId: Int? = null,
 
-    @ColumnInfo(name = "publicPrice")
-    @field:SerializedName("PublicPrice")
-    var publicPrice: Int? = null,
+    @ColumnInfo(name = "ContractId") @field:SerializedName("ContractId") var contractId: Int? = null,
 
-    @ColumnInfo(name = "itemEnName")
-    @field:SerializedName("ItemEnName")
-    var itemEnName: String? = null,
+    @ColumnInfo(name = "CashDisc") @field:SerializedName("CashDisc") var cashDisc: Int? = null,
 
-    @ColumnInfo(name = "price")
-    @field:SerializedName("Price")
-    var price: Double? = null,
+    @ColumnInfo(name = "BatchNumber") @field:SerializedName("BatchNumber") var batchNumber: String? = null,
 
-    @ColumnInfo(name = "itemArName")
-    @field:SerializedName("ItemArName")
-    var itemArName: String? = null,
+    @ColumnInfo(name = "Qty") @field:SerializedName("Qty") var qty: Int? = null,
 
-    @ColumnInfo(name = "itemId")
-    @field:SerializedName("ItemId")
-    var itemId: Int? = null,
+    @ColumnInfo(name = "ItemArName") @field:SerializedName("ItemArName") var itemArName: String? = null,
 
-    @ColumnInfo(name = "itemPrincipalUnitId")
-    @field:SerializedName("ItemPrincipalUnitId")
-    var itemPrincipalUnitId: Int? = null,
+    @ColumnInfo(name = "PatchExpireDate") @field:SerializedName("PatchExpireDate") var patchExpireDate: String? = null,
 
-    @ColumnInfo(name = "unitArName")
-    @field:SerializedName("UnitArName")
-    var unitArName: String? = null,
+    @ColumnInfo(name = "ItemPrincipalUnitId") @field:SerializedName("ItemPrincipalUnitId") var itemPrincipalUnitId: Int? = null,
 
-    @ColumnInfo(name = "itemSerial")
-    @field:SerializedName("ItemSerial")
-    var itemSerial: String? = null,
+    @ColumnInfo(name = "Itemid") @field:SerializedName("_ItemId") var itemId: Int? = null,
 
-    @ColumnInfo(name = "image")
-    var image: String? = null,
+    @ColumnInfo(name = "UnitArName") @field:SerializedName("UnitArName") var unitArName: String? = null,
 
-    @ColumnInfo(name = "count")
+    @ColumnInfo(name = "Pending") @field:SerializedName("Pending") var pending: Int? = null,
+
+    @ColumnInfo(name = "price") @field:SerializedName("price") var price: Double? = null,
+
+    @ColumnInfo(name = "Reserved") @field:SerializedName("Reserved") var reserved: Int? = null,
+
     var count: Int? = 1,
+    var maxCount: Int? = 0
 
-    @ColumnInfo(name = "maxCount")
-    var maxCount: Int? = null,
-
-    @ColumnInfo(name = "contractDescription")
-    @field:SerializedName("ContractDescription")
-    var contractDescription: String? = null,
-
-    @ColumnInfo(name = "cashDisc")
-    @field:SerializedName("CashDisc")
-    var cashDisc: Double? = null,
-
-    @ColumnInfo(name = "contractId")
-    @field:SerializedName("ContractId")
-    var contractId: Int? = null
 ) : Parcelable {
-    constructor(
-        itemGroupId: Int?,
-        publicPrice: Int?,
-        itemEnName: String?,
-        price: Double?,
-        itemArName: String?,
-        itemId: Int?,
-        itemPrincipalUnitId: Int?,
-        unitArName: String?,
-        itemSerial: String?,
-        image: String?,
-        count: Int?,
-        maxCount: Int?,
-        contractDescription: String?,
-        cashDisc: Double?,
-        contractId: Int?
-    ) : this() {
-        this.itemGroupId = itemGroupId
-        this.publicPrice = publicPrice
-        this.itemEnName = itemEnName
-        this.price = price
-        this.itemArName = itemArName
-        this.itemId = itemId
-        this.itemPrincipalUnitId = itemPrincipalUnitId
-        this.unitArName = unitArName
-        this.itemSerial = itemSerial
-        this.image = image
-        this.count = count
-        this.maxCount = maxCount
-        this.contractDescription = contractDescription
-        this.cashDisc = cashDisc
+
+    constructor(storeId: Int?,
+                contractId: Int?,
+                cashDisc: Int?,
+                batchNumber: String?,
+                qty: Int?,
+                itemArName: String?,
+                patchExpireDate: String?,
+                itemPrincipalUnitId: Int?,
+                itemId: Int?,
+                unitArName: String?,
+                pending: Int?,
+                price: Double?,
+                reserved: Int?) : this() {
+        this.storeId = storeId
         this.contractId = contractId
+        this.cashDisc = cashDisc
+        this.batchNumber = batchNumber
+        this.qty = qty
+        this.itemArName = itemArName
+        this.patchExpireDate = patchExpireDate
+        this.itemPrincipalUnitId = itemPrincipalUnitId
+        this.itemId = itemId
+        this.unitArName = unitArName
+        this.pending = pending
+        this.price = price
+        this.reserved = reserved
     }
 }

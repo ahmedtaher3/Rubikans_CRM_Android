@@ -110,7 +110,9 @@ object PlanUtlis {
                             CommonUtilities.randomColor,
                             model.activityTypeID,
                             false,
-                            true
+                            true,
+                            false,
+                            ""
                         )
                         list.add(planEntity)
                     }
@@ -203,7 +205,9 @@ object PlanUtlis {
                                            i.planColor,
                                            i.activityTypeID,
                                            false,
-                                           false
+                                           false,
+                                           false,
+                                           ""
                                        )
                                        i.id = 0
                                        Log.d(TAG, "onNext: extraVisit == " + n.toString())
@@ -465,7 +469,9 @@ object PlanUtlis {
                                         CommonUtilities.randomColor,
                                         model.activityTypeID,
                                         false,
-                                        true
+                                        true,
+                                        false,
+                                        ""
                                     )
 
                                     list.add(planEntity)

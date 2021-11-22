@@ -10,6 +10,7 @@ import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
 import android.util.Base64
+import android.util.Log
 import android.view.Menu
 import android.view.View
 import android.view.WindowManager
@@ -26,11 +27,13 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
 import com.devartlab.R
 import com.devartlab.UpdatePlan
 import com.devartlab.base.BaseActivity
 import com.devartlab.databinding.ActivityMainBinding
 import com.devartlab.databinding.NavHeaderMainBinding
+import com.devartlab.model.AdModel
 import com.devartlab.model.CardModel
 import com.devartlab.ui.main.ui.callmanagement.CallManagementActivity
 import com.devartlab.ui.main.ui.callmanagement.home.MenuListAdapter
@@ -38,12 +41,15 @@ import com.devartlab.ui.main.ui.callmanagement.syncdata.SyncDataDialog
 import com.devartlab.ui.main.ui.contactlist.ui.main.ContactsActivity
 import com.devartlab.ui.main.ui.employeeservices.SelfServiceActivity
 import com.devartlab.ui.main.ui.employeeservices.approval.ApprovalRequestsFragment
-import com.devartlab.ui.main.ui.employeeservices.devartlink.DevartLinkActivity
+import com.devartlab.ui.main.ui.devartlink.DevartLinkActivity
 import com.devartlab.ui.main.ui.market.MarketRequestTypesActivity
 import com.devartlab.ui.main.ui.profile.ProfileActivity
+import com.devartlab.utils.Constants
 import com.devartlab.utils.MainSliderAdapter
 import com.devartlab.utils.PicassoImageLoadingService
 import com.devartlab.utils.ProgressLoading
+import com.google.gson.Gson
+import com.jarvanmo.exoplayerview.media.SimpleMediaSource
 import io.reactivex.Completable
 import io.reactivex.Single
 import io.reactivex.SingleObserver
@@ -55,17 +61,17 @@ import qruz.t.qruzdriverapp.ui.main.fragments.profile.changelang.ChangeLanguage
 import ss.com.bannerslider.Slider
 import java.util.*
 import java.util.concurrent.TimeUnit
+import kotlin.collections.ArrayList
+
 
 private const val TAG = "MainActivity"
 
-class MainActivity : BaseActivity<ActivityMainBinding?>(), View.OnClickListener,
-    MenuListAdapter.OnHomeItemClick {
+class MainActivity : BaseActivity<ActivityMainBinding?>(), View.OnClickListener, MenuListAdapter.OnHomeItemClick {
     lateinit var binding: ActivityMainBinding
     lateinit var viewModel: MainViewModel
     lateinit var adapter: MenuListAdapter
 
     private var toggle: ActionBarDrawerToggle? = null
-    private var slider: Slider? = null
     var textCartItemCount: RelativeLayout? = null
     var callManagementPermission = true
     var marketRequestPermission = true
@@ -83,10 +89,48 @@ class MainActivity : BaseActivity<ActivityMainBinding?>(), View.OnClickListener,
         binding = viewDataBinding!!
         viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
         binding.drawerLayout
+        setSupportActionBar(binding!!.toolbar)
 
-        Slider.init(PicassoImageLoadingService(this))
-        slider = findViewById(R.id.bannerSlider)
-        slider?.setAdapter(MainSliderAdapter())
+
+
+        Log.d(TAG, "onCreate: " + Gson().toJson(viewModel.dataManager.ads.ads!! as Any?))
+
+        var model = AdModel()
+        for (m in viewModel.dataManager.ads.ads!!) {
+            if (m.pageCode?.toInt() == Constants.HOME_PAGE) {
+                model = m
+                break
+            }
+        }
+        when (model.type) {
+            "Video" -> {
+                binding.videoView.visibility = View.VISIBLE
+                val mediaSource = SimpleMediaSource(model.resourceLink)
+                binding.videoView.play(mediaSource);
+            }
+            "Image" -> {
+
+                binding.imageView.visibility = View.VISIBLE
+                Glide.with(this).load(model.resourceLink).centerCrop().placeholder(R.drawable.devart_logo).into(binding.imageView)
+            }
+            "GIF" -> {
+                binding.imageView.visibility = View.VISIBLE
+                Glide.with(this).asGif().load(model.resourceLink).centerCrop().placeholder(R.drawable.devart_logo).into(binding.imageView);
+
+
+            }
+            "Slider" -> {
+                binding.bannerSlider.visibility = View.VISIBLE
+                Slider.init(PicassoImageLoadingService(this))
+                binding.bannerSlider?.setInterval(5000)
+
+                val list = ArrayList<String>()
+                for (i in model.slideImages!!) {
+                    list.add(i?.link!!)
+                }
+                binding.bannerSlider?.setAdapter(MainSliderAdapter(list))
+            }
+        }
 
 
 
@@ -94,24 +138,21 @@ class MainActivity : BaseActivity<ActivityMainBinding?>(), View.OnClickListener,
             @Throws(Exception::class)
             override fun run() {
                 run {
-                    if (!viewModel!!.authorityDao.getById("61").allowBrowseRecord &&
-                        !viewModel!!.authorityDao.getById("1125").allowBrowseRecord &&
-                        !viewModel!!.authorityDao.getById("1126").allowBrowseRecord
+                    if (!viewModel!!.authorityDao.getById("61").allowBrowseRecord && !viewModel!!.authorityDao.getById("1125").allowBrowseRecord && !viewModel!!.authorityDao.getById(
+                            "1126").allowBrowseRecord
                     ) {
                         callManagementPermission = false
-                    } else {
+                    }
+                    else {
 
                         if (viewModel!!.dataManager.sFirstTime) {
 
-                            Single.timer(1, TimeUnit.SECONDS)
-                                .subscribeOn(Schedulers.io())
-                                .observeOn(AndroidSchedulers.mainThread())
+                            Single.timer(1, TimeUnit.SECONDS).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
                                 .subscribe(object : SingleObserver<Long?> {
                                     override fun onSubscribe(d: Disposable) {}
                                     override fun onSuccess(aLong: Long) {
                                         if (!viewModel!!.dataManager.startShift) {
-                                            dialog = SyncDataDialog(
-                                                this@MainActivity,
+                                            dialog = SyncDataDialog(this@MainActivity,
                                                 this@MainActivity,
                                                 viewModel?.dataManager!!
                                             );
@@ -158,7 +199,7 @@ class MainActivity : BaseActivity<ActivityMainBinding?>(), View.OnClickListener,
         })
             .subscribeOn(Schedulers.io())
             .subscribe()
-        setSupportActionBar(binding!!.toolbar)
+
 
 
         setLiseners()
@@ -171,15 +212,63 @@ class MainActivity : BaseActivity<ActivityMainBinding?>(), View.OnClickListener,
         viewModel!!.getAllPending("allPending", "")
     }
 
+
+    private fun setObservers() {
+        viewModel.progress.observe(this, Observer { integer ->
+            when (integer) {
+                0 -> {
+                    try {
+                        ProgressLoading.dismiss()
+                    }
+                    catch (e: Exception) {
+
+                    }
+
+                }
+                1 -> {
+                    ProgressLoading.show(this)
+
+
+                }
+            }
+        })
+
+        viewModel!!.responseLiveRequests.observe(this,
+                                                 Observer { googleRequestResponse -> setupBadge(googleRequestResponse.hrRequests?.size!! + googleRequestResponse.penaltiesGoogle?.size!! + googleRequestResponse.workFromHomelist?.size!!) })
+
+        viewModel!!.randomLive.observe(this, Observer {
+            Toast.makeText(this@MainActivity, it.size.toString(), Toast.LENGTH_SHORT).show()
+
+        })
+
+
+        viewModel!!.syncOfflineData.observe(this, Observer {
+
+            if (it.isSuccesed) {
+
+                viewModel.dataManager.saveOfflineMood(true)
+                viewModel.onlineBoolean.set(false)
+                viewModel.onlineText.set("Offline")
+
+                try {
+                    ProgressLoading.dismiss()
+                }
+                catch (e: Exception) {
+
+                }
+
+            }
+            else {
+                Toast.makeText(this, it.rerurnMessage, Toast.LENGTH_SHORT).show()
+            }
+
+        })
+
+    }
+
     private fun setUpRecycler() {
         val list = ArrayList<CardModel>()
-        list.add(
-            CardModel(
-                1,
-                resources.getString(R.string.call_management),
-                R.drawable.call_managment_icon
-            )
-        )
+        list.add(CardModel(1, resources.getString(R.string.call_management), R.drawable.call_managment_icon))
         list.add(CardModel(2, resources.getString(R.string.self_service), R.drawable.self_service))
         list.add(CardModel(3, resources.getString(R.string.my_profile), R.drawable.employee))
         list.add(CardModel(4, resources.getString(R.string.market_request), R.drawable.money))
@@ -491,43 +580,7 @@ class MainActivity : BaseActivity<ActivityMainBinding?>(), View.OnClickListener,
         }
     }
 
-    private fun setObservers() {
-        viewModel.progress.observe(this, Observer { integer ->
-            when (integer) {
-                0 -> {
 
-                    ProgressLoading.dismiss()
-
-                }
-                1 -> {
-                    ProgressLoading.show(this)
-
-
-                }
-            }
-        })
-
-        viewModel!!.responseLiveRequests.observe(
-            this,
-            Observer { googleRequestResponse -> setupBadge(googleRequestResponse.hrRequests?.size!! + googleRequestResponse.penaltiesGoogle?.size!! + googleRequestResponse.workFromHomelist?.size!!) })
-
-        viewModel!!.randomLive.observe(this, Observer {
-            Toast.makeText(this@MainActivity, it.size.toString(), Toast.LENGTH_SHORT).show()
-
-        })
-
-
-        viewModel!!.syncOfflineData.observe(this, Observer {
-
-            if (it.isSuccesed) {
-
-            } else {
-                Toast.makeText(this, it.rerurnMessage, Toast.LENGTH_SHORT).show()
-            }
-
-        })
-
-    }
 
 
     fun replace_fragment(fragment: Fragment?, tag: String?) {

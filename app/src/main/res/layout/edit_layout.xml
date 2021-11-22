@@ -32,7 +32,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Make Call"
+                    android:text="@string/make_call"
                     android:textColor="@color/colorPrimary"
                     android:textSize="20dp" />
             </LinearLayout>
@@ -54,7 +54,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Order"
+                    android:text="@string/order"
                     android:textColor="@color/colorPrimary"
                     android:textSize="20dp" />
             </LinearLayout>
@@ -76,7 +76,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="In Cash"
+                    android:text="@string/in_cash"
                     android:textColor="@color/colorPrimary"
                     android:textSize="20dp" />
             </LinearLayout>
@@ -111,7 +111,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Cancel"
+                    android:text="@string/cancel"
                     android:textColor="@color/colorPrimary"
                     android:textSize="20dp"
                     android:textStyle="bold" />

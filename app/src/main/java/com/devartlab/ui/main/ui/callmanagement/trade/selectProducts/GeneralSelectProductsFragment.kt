@@ -95,6 +95,9 @@ class GeneralSelectProductsFragment : BaseFragment<FragmentOrderProductsBinding>
 
     fun replace_fragment(fragment: Fragment?, tag: String?) {
 
+
+
+
         val bundle = Bundle()
         bundle.putParcelableArrayList("PRODUCTS", selectedAdapter.getMyData())
         //    bundle.putParcelable("CustomerTrade", arguments?.getParcelable("CustomerTrade"))

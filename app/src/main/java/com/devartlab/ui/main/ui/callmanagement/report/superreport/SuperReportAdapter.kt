@@ -7,9 +7,12 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import android.widget.CheckBox
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
@@ -164,59 +167,53 @@ class SuperReportAdapter(context: Context, private val appCompatActivity: AppCom
 
             call.setOnClickListener {
 
+                /*
+                               if (model.activityTypeID == 1 || model.activityTypeID == 2) reportInterface.startVisit(model)
+                               else reportInterface.startSocialVisit(model)
+                */
 
-                if (model.activityTypeID == 1 || model.activityTypeID == 2) reportInterface.startVisit(model)
-                else reportInterface.startSocialVisit(model)
-
-
-                /*          val dialogBuilder = AlertDialog.Builder(context)
-                          val dialogView: View = appCompatActivity.layoutInflater.inflate(R.layout.edit_layout, null)
-                          dialogBuilder.setView(dialogView)
-
-
-                          val call = dialogView.findViewById<LinearLayout>(R.id.call)
-                          val order = dialogView.findViewById<LinearLayout>(R.id.order)
-                          val cancel = dialogView.findViewById<LinearLayout>(R.id.cancel)
-                          val collect = dialogView.findViewById<LinearLayout>(R.id.collect)
-
-                          val alertDialog = dialogBuilder.create()
-
-                          alertDialog.getWindow()?.setBackgroundDrawableResource(android.R.color.transparent);
-                          alertDialog.getWindow()?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
-
-                          call.setOnClickListener(View.OnClickListener {
-
-                              if (model.activityTypeID == 1 || model.activityTypeID == 2)
-                                  reportInterface.startVisit(model)
-                              else
-                                  reportInterface.startSocialVisit(model)
-
-                              alertDialog.dismiss()
-                          })
-
-                          order.setOnClickListener(View.OnClickListener {
-
-                              reportInterface.order(model)
-
-                              alertDialog.dismiss()
-                          })
-
-                          collect.setOnClickListener(View.OnClickListener {
-
-                              reportInterface.collect(model)
-
-                              alertDialog.dismiss()
-                          })
+                val dialogBuilder = AlertDialog.Builder(context)
+                val dialogView: View = appCompatActivity.layoutInflater.inflate(R.layout.edit_layout, null)
+                dialogBuilder.setView(dialogView)
 
 
-                          cancel.setOnClickListener(
-                              View.OnClickListener { alertDialog?.dismiss() }
-                          )
+                val call = dialogView.findViewById<LinearLayout>(R.id.call)
+                val order = dialogView.findViewById<LinearLayout>(R.id.order)
+                val cancel = dialogView.findViewById<LinearLayout>(R.id.cancel)
+                val collect = dialogView.findViewById<LinearLayout>(R.id.collect)
 
-                          alertDialog.show()
+                val alertDialog = dialogBuilder.create()
+
+                alertDialog.getWindow()?.setBackgroundDrawableResource(android.R.color.transparent);
+                alertDialog.getWindow()?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+
+                call.setOnClickListener(View.OnClickListener {
+
+                    if (model.activityTypeID == 1 || model.activityTypeID == 2) reportInterface.startVisit(model)
+                    else reportInterface.startSocialVisit(model)
+
+                    alertDialog.dismiss()
+                })
+
+                order.setOnClickListener(View.OnClickListener {
+
+                    reportInterface.order(model)
+
+                    alertDialog.dismiss()
+                })
+
+                collect.setOnClickListener(View.OnClickListener {
+
+                    reportInterface.collect(model)
+
+                    alertDialog.dismiss()
+                })
 
 
-          */
+                cancel.setOnClickListener(View.OnClickListener { alertDialog?.dismiss() })
+
+                alertDialog.show()
+
 
             }
 

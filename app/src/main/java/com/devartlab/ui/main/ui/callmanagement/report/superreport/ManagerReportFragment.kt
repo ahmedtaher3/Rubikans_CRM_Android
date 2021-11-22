@@ -536,9 +536,9 @@ class ManagerReportFragment : BaseFragment<FragmentSuperReportBinding>()
 
 
                 val builder = AlertDialog.Builder(baseActivity)
-                builder.setTitle("Start Shift")
-                builder.setMessage("Are you sure?")
-                builder.setPositiveButton("YES") { dialog, which ->
+                builder.setTitle(getString(R.string.start_shift))
+                builder.setMessage(getString(R.string.are_u_sure))
+                builder.setPositiveButton(getString(R.string.yes)) { dialog, which ->
 
                     dialog.dismiss()
 
@@ -548,14 +548,14 @@ class ManagerReportFragment : BaseFragment<FragmentSuperReportBinding>()
                         baseActivity.runOnUiThread {
                             Toast.makeText(
                                 baseActivity,
-                                "cant start empty shift",
+                                getString(R.string.cant_start_empty_shift),
                                 Toast.LENGTH_LONG
                             ).show()
                         }
 
                     } else {
                         if (LocationUtils.checkPermission(baseActivity)) {
-                            ProgressLoading.showWithText(baseActivity, "Fetching your location")
+                           ProgressLoading.showWithText(baseActivity, getString(R.string.fetching_location))
                             val myLocation = MyLocation(baseActivity, true)
                             myLocation.getLocation(
                                 baseActivity,
@@ -599,9 +599,9 @@ class ManagerReportFragment : BaseFragment<FragmentSuperReportBinding>()
 
                                         } else {
                                             baseActivity.runOnUiThread {
-                                                Toast.makeText(
+                                               Toast.makeText(
                                                     baseActivity,
-                                                    "Field to get Location , please try again",
+                                                    getString(R.string.error_location_try_again),
                                                     Toast.LENGTH_LONG
                                                 ).show()
                                             }
@@ -615,7 +615,7 @@ class ManagerReportFragment : BaseFragment<FragmentSuperReportBinding>()
 
                 }
 
-                builder.setNegativeButton("NO") { dialog, which ->
+                builder.setNegativeButton(getString(R.string.no)) { dialog, which ->
 
                     dialog.dismiss()
                 }
@@ -627,16 +627,16 @@ class ManagerReportFragment : BaseFragment<FragmentSuperReportBinding>()
 
             R.id.endShift -> {
                 val builder = AlertDialog.Builder(baseActivity)
-                builder.setTitle("End Shift")
-                builder.setMessage("Are you sure?")
+                builder.setTitle(getString(R.string.end_shift))
+                builder.setMessage(getString(R.string.are_u_sure))
                 builder.setIcon(R.drawable.ic_warning)
-                builder.setPositiveButton("YES") { dialog, which ->
+                builder.setPositiveButton(getString(R.string.yes)) { dialog, which ->
 
                     dialog.dismiss()
 
 
                     if (LocationUtils.checkPermission(baseActivity)) {
-                        ProgressLoading.showWithText(baseActivity, "Fetching your location")
+                        ProgressLoading.showWithText(baseActivity, getString(R.string.fetching_location))
                         val myLocation = MyLocation(baseActivity, true)
                         myLocation.getLocation(baseActivity, object : MyLocation.LocationResult() {
                             override fun gotLocation(
@@ -654,7 +654,7 @@ class ManagerReportFragment : BaseFragment<FragmentSuperReportBinding>()
                                         baseActivity.runOnUiThread {
                                             Toast.makeText(
                                                 baseActivity,
-                                                "cant start empty shift",
+                                                getString(R.string.cant_start_empty_shift),
                                                 Toast.LENGTH_LONG
                                             ).show()
                                         }
@@ -695,7 +695,7 @@ class ManagerReportFragment : BaseFragment<FragmentSuperReportBinding>()
                                     baseActivity.runOnUiThread {
                                         Toast.makeText(
                                             baseActivity,
-                                            "Field to get Location , please try again",
+                                            getString(R.string.error_location_try_again),
                                             Toast.LENGTH_LONG
                                         ).show()
                                     }
@@ -708,7 +708,7 @@ class ManagerReportFragment : BaseFragment<FragmentSuperReportBinding>()
 
 
                 }
-                builder.setNegativeButton("NO") { dialog, which ->
+                builder.setNegativeButton(getString(R.string.no)) { dialog, which ->
 
                     dialog.dismiss()
                 }
@@ -748,7 +748,7 @@ class ManagerReportFragment : BaseFragment<FragmentSuperReportBinding>()
 
                 }
                 if (shift.equals("All Day")) {
-                    Toast.makeText(baseActivity, "Choose Shift First", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(baseActivity, getString(R.string.choose_shift_first), Toast.LENGTH_SHORT).show()
                 } else {
                     chooseActivity()
                 }
@@ -767,13 +767,13 @@ class ManagerReportFragment : BaseFragment<FragmentSuperReportBinding>()
         } else {
 
             val builder = AlertDialog.Builder(baseActivity)
-            builder.setTitle("Confirm")
-            builder.setMessage("Are you sure?")
-            builder.setPositiveButton("YES") { dialog, which ->
+            builder.setTitle(getString(R.string.confirm))
+            builder.setMessage(getString(R.string.are_u_sure))
+            builder.setPositiveButton(getString(R.string.yes)) { dialog, which ->
 
 
                 if (LocationUtils.checkPermission(baseActivity)) {
-                    ProgressLoading.showWithText(baseActivity, "Fetching your location")
+                    ProgressLoading.showWithText(baseActivity, getString(R.string.fetching_location))
                     val myLocation = MyLocation(baseActivity, false)
                     myLocation.getLocation(baseActivity, object : MyLocation.LocationResult() {
                         override fun gotLocation(location: Location?, type: String?, msg: String?) {
@@ -825,7 +825,7 @@ class ManagerReportFragment : BaseFragment<FragmentSuperReportBinding>()
                 }
 
             }
-            builder.setNegativeButton("NO") { dialog, which ->
+            builder.setNegativeButton(getString(R.string.no)) { dialog, which ->
                 // Do nothing
                 dialog.dismiss()
             }
@@ -847,14 +847,14 @@ class ManagerReportFragment : BaseFragment<FragmentSuperReportBinding>()
 
 
         val builder = AlertDialog.Builder(baseActivity)
-        builder.setTitle("Delete Extra")
-        builder.setMessage("Are you sure?")
-        builder.setPositiveButton("YES") { dialog, which ->
+        builder.setTitle(getString(R.string.delete_extra))
+        builder.setMessage(getString(R.string.are_u_sure))
+        builder.setPositiveButton(getString(R.string.yes)) { dialog, which ->
 
             viewModel.delete(planEntity, DATE, shift)
             dialog.dismiss()
         }
-        builder.setNegativeButton("NO") { dialog, which ->
+        builder.setNegativeButton(getString(R.string.no)) { dialog, which ->
             // Do nothing
             dialog.dismiss()
         }
@@ -1138,7 +1138,7 @@ class ManagerReportFragment : BaseFragment<FragmentSuperReportBinding>()
     override fun onAttach(context: Context) {
         super.onAttach(context)
         try {
-            (activity as AppCompatActivity?)!!.supportActionBar!!.title = "Manager Report"
+            (activity as AppCompatActivity?)!!.supportActionBar!!.title = getString(R.string.report)
 
         } catch (e: Exception) {
         }

@@ -3,6 +3,7 @@ package com.devartlab.data.room.listtypes
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
 @Entity
@@ -13,38 +14,47 @@ data class ListTypesEntity(
 
     @JvmField
     @ColumnInfo(name = "lIstId")
+    @SerializedName("LIstId")
     var lIstId: Int? = null,
 
     @JvmField
     @ColumnInfo(name = "AccountId")
+    @SerializedName("AccountId")
     var accountId: Int? = null,
 
     @JvmField
     @ColumnInfo(name = "AssigntId")
+    @SerializedName("AssigntId")
     var assigntId: Int? = null,
 
     @JvmField
     @ColumnInfo(name = "ISReadOnly")
+    @SerializedName("ISReadOnly")
     var iSReadOnly: Int? = null,
 
     @JvmField
     @ColumnInfo(name = "ListTypeId")
+    @SerializedName("ListTypeId")
     var listTypeId: Int? = null,
 
     @JvmField
     @ColumnInfo(name = "ListType")
+    @SerializedName("ListType")
     var listType: String? = null,
 
     @JvmField
     @ColumnInfo(name = "ListDescription")
+    @SerializedName("ListDescription")
     var listDescription: String? = null,
 
     @JvmField
     @ColumnInfo(name = "TotalCustomer")
+    @SerializedName("TotalCustomer")
     var totalCustomer: Int? = null,
 
     @JvmField
     @ColumnInfo(name = "IconImageUrl")
+    @SerializedName("IconImageUrl")
     var iconImageUrl: String? = null
 
 

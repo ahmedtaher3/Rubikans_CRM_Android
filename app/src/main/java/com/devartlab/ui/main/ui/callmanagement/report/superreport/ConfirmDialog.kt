@@ -67,7 +67,7 @@ class ConfirmDialog(private val activity: AppCompatActivity, context: Context, p
         submitRating.setOnClickListener(View.OnClickListener {
 
             if (dataManager.startShift) {
-                Toast.makeText(context, "you have to end shift first", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, context.getString(R.string.you_have_to_start_shift), Toast.LENGTH_SHORT).show()
             } else {
 
 
@@ -188,7 +188,7 @@ class ConfirmDialog(private val activity: AppCompatActivity, context: Context, p
             for (model in adapter.itemList) {
 
                 if (model.correctiveActionsID.toInt() == 0) {
-                    activity.runOnUiThread { Toast.makeText(activity, "please complete rating first", Toast.LENGTH_SHORT).show() }
+                    activity.runOnUiThread { Toast.makeText(activity, context.getString(R.string.complete_rate), Toast.LENGTH_SHORT).show() }
                     ProgressLoading.dismiss()
                     return@fromAction
                 }
@@ -197,7 +197,7 @@ class ConfirmDialog(private val activity: AppCompatActivity, context: Context, p
 
                     if (model2.rate.toInt() == 0) {
                         activity.runOnUiThread {
-                            Toast.makeText(context, "please complete rating first", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(context, context.getString(R.string.complete_rate), Toast.LENGTH_SHORT).show()
 
                         }
                         ProgressLoading.dismiss()
@@ -247,7 +247,7 @@ class ConfirmDialog(private val activity: AppCompatActivity, context: Context, p
 
                             ProgressLoading.dismiss()
                             dismiss()
-                            Toast.makeText(activity, "Saved Successfully", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(activity, context.getString(R.string.saved_successfully), Toast.LENGTH_SHORT).show()
                             managerReportListener.updateData()
                         }
 

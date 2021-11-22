@@ -258,7 +258,7 @@ class InventoryDetails : BaseActivity<ActivityInventoryDetailsBinding>() {
                         var iteam = InventoryTrxWarehouseTransActionDetailsModel(
 
                             TrxDetId = 0,
-                            TrxId = i.itemSerial!!.toInt(),
+                            TrxId = 0,
                             StoreID = da.data!!.storesTBl!![storePosetion].storID,
                             RowIndex = theList.indexOf(i),
                             ItemId = i.itemId,

@@ -2,6 +2,7 @@ package com.devartlab.data.shared
 
 import com.devartlab.model.*
 import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 
 class DataManager(var mSharedPrefsHelper: SharedPrefsHelper) {
     fun clear() {
@@ -122,12 +123,17 @@ class DataManager(var mSharedPrefsHelper: SharedPrefsHelper) {
     val startShift: Boolean
         get() = mSharedPrefsHelper.startShift
 
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////
+
     fun saveFirstTime(b: Boolean) {
         mSharedPrefsHelper.putFirstTime(b)
     }
 
     val sFirstTime: Boolean
         get() = mSharedPrefsHelper.firstTime
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////
 
     fun saveShift(s: Shift?) {
         mSharedPrefsHelper.putShift(Gson().toJson(s as Any?))
@@ -136,12 +142,28 @@ class DataManager(var mSharedPrefsHelper: SharedPrefsHelper) {
     val shift: Shift
         get() = Gson().fromJson(mSharedPrefsHelper.shift, Shift::class.java) as Shift
 
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////
+
     fun saveCycle(s: Cycle?) {
         mSharedPrefsHelper.putCycle(Gson().toJson(s as Any?))
     }
 
     val cycle: Cycle
         get() = Gson().fromJson(mSharedPrefsHelper.cycle, Cycle::class.java) as Cycle
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////
+
+    fun saveAds(s: AdModelList) {
+        mSharedPrefsHelper.putAds(Gson().toJson(s as Any?))
+    }
+
+    val ads: AdModelList
+        get() = Gson().fromJson(mSharedPrefsHelper.ads, AdModelList::class.java) as AdModelList
+
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////
+
 
     fun saveStartPoint(s: StartPoint?) {
         mSharedPrefsHelper.putStartPoint(Gson().toJson(s as Any?))

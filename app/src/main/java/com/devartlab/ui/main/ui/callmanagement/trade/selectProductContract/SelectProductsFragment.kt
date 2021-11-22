@@ -3,18 +3,16 @@ package com.devartlab.ui.main.ui.callmanagement.trade.selectProductContract
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.devartlab.R
 import com.devartlab.base.BaseFragment
-import com.devartlab.data.retrofit.VanStoctaking
+import com.devartlab.data.room.contract.ContractEntity
+ import com.devartlab.data.room.myballance.MyBallanceEntity
 import com.devartlab.databinding.FragmentOrderProductsBinding
 import com.devartlab.model.DevartLabReportsFilterDTO
-import com.devartlab.data.room.contract.ContractEntity
-import com.devartlab.ui.main.ui.trade.TradeViewModel
 import com.devartlab.ui.main.ui.callmanagement.inventory.ReportsFilterModel
 import com.devartlab.ui.main.ui.callmanagement.trade.TradeReportsViewModel
 import com.devartlab.utils.CommonUtilities
@@ -30,7 +28,7 @@ class SelectProductsFragment : BaseFragment<FragmentOrderProductsBinding>(),
     lateinit var adapter: ProductsAdapter
     lateinit var selectedAdapter: SelectedProductsAdapter
 
-    var list = ArrayList<VanStoctaking>()
+    var list = ArrayList<MyBallanceEntity>()
 
     override fun getLayoutId(): Int {
         return R.layout.fragment_order_products
@@ -110,8 +108,7 @@ class SelectProductsFragment : BaseFragment<FragmentOrderProductsBinding>(),
             )
 
 
-        if (!viewModel.dataManager.offlineMood)
-            viewModel.getMyProducts(requestObject)
+        viewModel.getMyProducts(requestObject)
 
 
         binding.order.setOnClickListener {
@@ -155,11 +152,9 @@ class SelectProductsFragment : BaseFragment<FragmentOrderProductsBinding>(),
 
         viewModel.myProductLive.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
 
-            if (it.isSuccesed) {
 
-                list = it.data?.vanStoctaking as ArrayList<VanStoctaking>
+            list = it
 
-            }
         })
 
 
@@ -188,7 +183,7 @@ class SelectProductsFragment : BaseFragment<FragmentOrderProductsBinding>(),
 
 
             for (m in list) {
-                if (m.itemID == model.itemId) {
+                if (m.itemId == model.itemId) {
 
                     Log.d(TAG, m.toString())
                     model.maxCount = m.qty
@@ -196,7 +191,8 @@ class SelectProductsFragment : BaseFragment<FragmentOrderProductsBinding>(),
                     try {
                         binding?.recyclerViewSelected?.scrollToPosition(selectedAdapter?.getMyData()?.size!! - 1);
 
-                    } catch (e: Exception) {
+                    }
+                    catch (e: Exception) {
                     }
 
 

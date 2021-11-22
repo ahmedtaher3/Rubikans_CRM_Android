@@ -174,7 +174,9 @@ class AddMeetingActivity : BaseActivity<ActivityAddMeetingBinding>(),   MeetingA
                 , 0
                 , CommonUtilities.randomColor
                 , activity?.typeId!!+0,
-                false ,false
+                false ,false,
+                false,
+                ""
         )
         selectedPlanAdapter?.addItem(planEntity)
 

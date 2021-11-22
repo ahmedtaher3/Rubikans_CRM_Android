@@ -6,8 +6,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
-import com.google.gson.Gson
-import com.google.gson.JsonArray
+import com.devartlab.base.BaseApplication
 import com.devartlab.data.retrofit.ApiServices
 import com.devartlab.data.retrofit.ResponseModel
 import com.devartlab.data.retrofit.RetrofitClient
@@ -26,21 +25,24 @@ import com.devartlab.data.room.slides.SlideDao
 import com.devartlab.data.room.slides.SlideEntity
 import com.devartlab.data.room.slides.SlideRepository
 import com.devartlab.data.room.slidetimer.SlideTimerRepository
-import com.devartlab.data.shared.DataManager
-import com.devartlab.model.*
-import io.reactivex.Completable
-import io.reactivex.Observer
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.Disposable
-import io.reactivex.schedulers.Schedulers
-import com.devartlab.base.BaseApplication
 import com.devartlab.data.room.specialty.SpecialtyParentEntity
 import com.devartlab.data.room.startPoint.StartPointDao
 import com.devartlab.data.room.values.ValuesDao
+import com.devartlab.data.shared.DataManager
 import com.devartlab.data.source.values.ValuesRepository
+import com.devartlab.model.CustomerList
+import com.devartlab.model.ProductTable
+import com.devartlab.model.SyncReport
 import com.devartlab.utils.PlanUtlis
+import com.google.gson.Gson
+import com.google.gson.JsonArray
+import io.reactivex.Completable
+import io.reactivex.Observer
 import io.reactivex.Single
 import io.reactivex.SingleObserver
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
+import io.reactivex.schedulers.Schedulers
 import retrofit2.Retrofit
 import java.util.concurrent.TimeUnit
 
@@ -336,19 +338,23 @@ class SyncViewModel(application: Application) : AndroidViewModel(application) {
                             , model.cusClassId
                             , model.empArName
                             , model.empEnName
-                            , model.deptId
-                            , model.secId
-                            , model.jobId
-                            , model.assigntId
-                            , model.accountId
-                            , model.addressNotes
-                            , model.branchPlaceId
-                            , model.branchTel1
-                            , model.branchTel2
-                            , model.terriotryId
-                            , model.branchDesc
-                            , true
-                        )
+                            , model.deptId,
+                            model.secId,
+                            model.jobId,
+                            model.assigntId,
+                            model.accountId,
+                            model.addressNotes,
+                            model.branchPlaceId,
+                            model.branchTel1,
+                            model.branchTel2,
+                            model.terriotryId,
+                            model.branchDesc,
+                            true,
+                            0,
+                            0,
+                            "",
+                            "",
+                            "")
 
 
                         Completable.fromAction {

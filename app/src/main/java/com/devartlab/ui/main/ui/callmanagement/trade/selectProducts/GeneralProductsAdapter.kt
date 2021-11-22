@@ -44,10 +44,9 @@ class GeneralProductsAdapter(private val context: Context, private var myData: A
 
 
 
-        holder.name?.text = model.itemEnName
+        holder.name?.text = model.itemArName
         holder.price?.text = model.price.toString()
 
-        Glide.with(context).load(model.image).into(holder.image!!)
 
         holder.itemView.setOnClickListener {
             onItemSelect.setOnItemSelect(model)

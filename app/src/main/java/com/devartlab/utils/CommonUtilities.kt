@@ -23,7 +23,8 @@ import android.util.Log
 import android.widget.Toast
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.devartlab.data.room.plan.PlanEntity
-import com.devartlab.model.Detail
+import com.devartlab.data.shared.DataManager
+import com.devartlab.model.*
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException
@@ -37,6 +38,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
 import javax.net.ssl.SSLContext
+import kotlin.collections.ArrayList
 
 
 private const val TAG = "CommonUtilities"
@@ -91,7 +93,8 @@ object CommonUtilities {
         var isMock = false
         isMock = if (Build.VERSION.SDK_INT >= 18) {
             location?.isFromMockProvider!!
-        } else {
+        }
+        else {
             Settings.Secure.getString(ctx.contentResolver, Settings.Secure.ALLOW_MOCK_LOCATION) !== "0"
         }
         return isMock
@@ -101,25 +104,27 @@ object CommonUtilities {
         return Thread.currentThread().stackTrace[2].lineNumber
     }
 
+
+
     fun saveToInternalStorage(context: Context, bitmapImage: Bitmap, position: Int): String? {
 
         val name = position.toString() + "_" + System.currentTimeMillis().toString()
-        val cw = ContextWrapper(context)
-        // path to /data/data/yourapp/app_data/imageDir
-        val directory: File = cw.getDir("imageDir", Context.MODE_PRIVATE)
-        // Create imageDir
+        val cw = ContextWrapper(context) // path to /data/data/yourapp/app_data/imageDir
+        val directory: File = cw.getDir("imageDir", Context.MODE_PRIVATE) // Create imageDir
         val mypath = File(directory, name)
         var fos: FileOutputStream? = null
         try {
-            fos = FileOutputStream(mypath)
-            // Use the compress method on the BitMap object to write image to the OutputStream
+            fos = FileOutputStream(mypath) // Use the compress method on the BitMap object to write image to the OutputStream
             bitmapImage.compress(Bitmap.CompressFormat.PNG, 100, fos)
-        } catch (e: Exception) {
+        }
+        catch (e: Exception) {
             e.printStackTrace()
-        } finally {
+        }
+        finally {
             try {
                 fos?.close()
-            } catch (e: IOException) {
+            }
+            catch (e: IOException) {
                 e.printStackTrace()
             }
         }

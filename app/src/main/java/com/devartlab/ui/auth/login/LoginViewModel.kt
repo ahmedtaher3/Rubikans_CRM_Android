@@ -13,7 +13,9 @@ import com.devartlab.data.room.DatabaseClient
 import com.devartlab.data.room.authority.AuthorityDao
 import com.devartlab.data.room.authority.AuthorityEntity
 import com.devartlab.data.shared.DataManager
+import com.devartlab.model.AdModelList
 import com.devartlab.model.AuthorityDatum
+import com.devartlab.utils.CommonUtilities
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.messaging.FirebaseMessaging
@@ -37,6 +39,9 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
     var myAPI: ApiServices? = null
     var retrofit: Retrofit? = null
 
+    var myAPIDevartLink: ApiServices? = null
+    var retrofitDevartLink: Retrofit? = null
+
     var databaseReference: DatabaseReference? = null
 
     init {
@@ -45,6 +50,11 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
 
         retrofit = RetrofitClient.getInstance()
         myAPI = retrofit!!.create(ApiServices::class.java)
+
+
+        retrofitDevartLink = RetrofitClient.getInstanceDevartLink()
+        myAPIDevartLink = retrofitDevartLink!!.create(ApiServices::class.java)
+
         responseLive = MutableLiveData<ResponseModel>()
         responseLiveData = MutableLiveData<ResponseModel>()
         responseLiveUpdatePermission = MutableLiveData<ResponseModel>()
@@ -69,47 +79,78 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
 
         progress.postValue(1)
 
-        val database = FirebaseDatabase.getInstance()
-        var reference: DatabaseReference = database.getReference().child("Tokens")
-        FirebaseMessaging.getInstance().token.addOnCompleteListener {
-            if (it.isComplete) {
-                val token = it.result.toString()
-                Log.d(" FirebaseMessaging ", token)
+
+        myAPIDevartLink?.getAds()!!
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(object : Observer<ResponseModel> {
+                override fun onSubscribe(d: Disposable) {}
+                override fun onNext(data: ResponseModel) {
+
+                    val ads = AdModelList(data.data.ads)
+                    dataManager.saveAds(ads)
 
 
-                myAPI?.login(userEmail, userPass)!!
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(object : Observer<ResponseModel> {
-                        override fun onSubscribe(d: Disposable) {}
-                        override fun onNext(data: ResponseModel) {
+                    val database = FirebaseDatabase.getInstance()
+                    var reference: DatabaseReference = database.getReference().child("Tokens")
+                    FirebaseMessaging.getInstance().token.addOnCompleteListener {
+                        if (it.isComplete) {
+                            val token = it.result.toString()
+                            Log.d(" FirebaseMessaging ", token)
 
-                            progress.postValue(0)
-                            responseLive.postValue(data)
 
-                            if (data.isSuccesed) {
-                                reference.child(data.data.loginData[0].userEmpId.toString())
-                                    .setValue(token)
+                            myAPI?.login(userEmail, userPass)!!
+                                .subscribeOn(Schedulers.io())
+                                .observeOn(AndroidSchedulers.mainThread())
+                                .subscribe(object : Observer<ResponseModel> {
+                                    override fun onSubscribe(d: Disposable) {}
+                                    override fun onNext(data: ResponseModel) {
 
-                                dataManager.saveToken(token)
-                            }
+                                        progress.postValue(0)
+                                        responseLive.postValue(data)
 
+                                        if (data.isSuccesed) {
+                                            reference.child(data.data.loginData[0].userEmpId.toString())
+                                                .setValue(token)
+
+                                            dataManager.saveToken(token)
+                                        }
+
+                                    }
+
+                                    override fun onError(e: Throwable) {
+
+                                        Toast.makeText(getApplication(), e.message, Toast.LENGTH_SHORT).show()
+                                        progress.postValue(10)
+
+                                    }
+
+                                    override fun onComplete() {
+
+
+                                    }
+                                })
                         }
+                    }
 
-                        override fun onError(e: Throwable) {
+                }
 
-                            Toast.makeText(getApplication(), e.message, Toast.LENGTH_SHORT).show()
-                            progress.postValue(10)
+                override fun onError(e: Throwable) {
 
-                        }
+                    Toast.makeText(getApplication(), e.message, Toast.LENGTH_SHORT).show()
+                    progress.postValue(0)
 
-                        override fun onComplete() {
+                }
+
+                override fun onComplete() {
 
 
-                        }
-                    })
-            }
-        }
+                }
+            })
+
+
+
+
 
 
     }

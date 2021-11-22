@@ -6,13 +6,13 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.devartlab.R
 import com.devartlab.databinding.EmployeeInvoiceItemBinding
-import com.devartlab.model.CustomerInvoiceDetails
+import com.devartlab.data.room.invoicedetailes.CustomerInvoiceEntity
 import java.util.*
 
-class CustomerInvoiceReportAdapter(context: Context, private var myData: ArrayList<CustomerInvoiceDetails>) : RecyclerView.Adapter<CustomerInvoiceReportAdapter.ViewHolder>() {
+class CustomerInvoiceReportAdapter(context: Context, private var myData: ArrayList<CustomerInvoiceEntity>) : RecyclerView.Adapter<CustomerInvoiceReportAdapter.ViewHolder>() {
 
 
-    fun setMyData(data: ArrayList<CustomerInvoiceDetails>) {
+    fun setMyData(data: ArrayList<CustomerInvoiceEntity>) {
         myData.clear()
         myData.addAll(data)
         notifyDataSetChanged()

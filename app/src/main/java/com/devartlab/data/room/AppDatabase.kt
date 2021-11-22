@@ -1,6 +1,7 @@
 package com.devartlab.data.room
 
-import androidx.room.*
+import androidx.room.Database
+import androidx.room.RoomDatabase
 import com.devartlab.data.room.activity.ActivityDao
 import com.devartlab.data.room.activity.ActivityEntity
 import com.devartlab.data.room.arranged.ArrangedDao
@@ -11,14 +12,19 @@ import com.devartlab.data.room.authority.AuthorityDao
 import com.devartlab.data.room.authority.AuthorityEntity
 import com.devartlab.data.room.callslide.CallSlideDao
 import com.devartlab.data.room.callslide.CallSlideEntity
+import com.devartlab.data.room.collect.CollectDao
+import com.devartlab.data.room.collect.CollectEntity
 import com.devartlab.data.room.contract.ContractDao
 import com.devartlab.data.room.contract.ContractEntity
-import com.devartlab.data.room.filterdata.FilterDataEntity
 import com.devartlab.data.room.filterdata.FilterDataDao
+import com.devartlab.data.room.filterdata.FilterDataEntity
+import com.devartlab.data.room.invoicedetailes.CustomerInvoiceDao
+import com.devartlab.data.room.invoicedetailes.CustomerInvoiceEntity
 import com.devartlab.data.room.list.ListDao
 import com.devartlab.data.room.list.ListEntity
 import com.devartlab.data.room.listtypes.ListTypesDao
 import com.devartlab.data.room.listtypes.ListTypesEntity
+import com.devartlab.data.room.locations.LocationsDao
 import com.devartlab.data.room.massages.MassageEntity
 import com.devartlab.data.room.massages.MassagesDao
 import com.devartlab.data.room.myballance.MyBallanceDao
@@ -49,33 +55,32 @@ import com.devartlab.data.room.visit.VisitDao
 import com.devartlab.data.room.visit.VisitEntity
 
 
-@Database(
-    entities = [ProductEntity::class
-        , SlideEntity::class
-        , SlideTimerEntity::class
-        , PlanEntity::class
-        , VisitEntity::class
-        , CallSlideEntity::class
-        , ArrangedEntity::class
-        , ArrangedSlidesEntity::class
-        , MassageEntity::class
-        , ListTypesEntity::class
-        , ListEntity::class
-        , ValuesEntity::class
-        , AuthorityEntity::class
-        , StartPointEntity::class
-        , RandomEntity::class
-        , TradeDetailsEntity::class
-        , TradeMasterEntity::class
-        , ActivityEntity::class
-        , PurchaseTypeEntity::class
-        , ContractEntity::class
-        , SpecialtyParentEntity::class
-        , FilterDataEntity::class
-        , MyBallanceEntity::class
-     ],
-    version = 9
-)
+@Database(entities = [ProductEntity::class
+    , SlideEntity::class
+    , SlideTimerEntity::class
+    , PlanEntity::class
+    , VisitEntity::class
+    , CallSlideEntity::class
+    , ArrangedEntity::class
+    , ArrangedSlidesEntity::class
+    , MassageEntity::class
+    , ListTypesEntity::class
+    , ListEntity::class
+    , ValuesEntity::class
+    , AuthorityEntity::class
+    , StartPointEntity::class
+    , RandomEntity::class
+    , TradeDetailsEntity::class
+    , TradeMasterEntity::class
+    , ActivityEntity::class
+    , PurchaseTypeEntity::class
+    , ContractEntity::class
+    , SpecialtyParentEntity::class
+    , FilterDataEntity::class
+    , MyBallanceEntity::class
+    , CollectEntity::class
+    , CustomerInvoiceEntity::class],
+          version = 9)
 abstract class AppDatabase : RoomDatabase() {
 
 
@@ -102,6 +107,8 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun specialtyDao(): SpecialtyDao
     abstract fun filterDataDao(): FilterDataDao
     abstract fun myBallanceDao(): MyBallanceDao
+    abstract fun collectDao(): CollectDao
+    abstract fun customerInvoiceDao(): CustomerInvoiceDao
 
 }
 

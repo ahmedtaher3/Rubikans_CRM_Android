@@ -10,15 +10,15 @@ import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
 import androidx.databinding.DataBindingUtil
-import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.devartlab.R
 import com.devartlab.base.BaseActivity
+import com.devartlab.data.room.filterdata.FilterDataEntity
 import com.devartlab.databinding.ActivityCallManagementBinding
 import com.devartlab.databinding.NavHeaderMainBinding
-import com.devartlab.data.room.filterdata.FilterDataEntity
 import com.devartlab.ui.auth.login.LoginActivity
 import com.devartlab.ui.dialogs.chooseemployee.ChooseEmployee
 import com.devartlab.ui.dialogs.chooseemployee.ChooseEmployeeInterFace
@@ -38,13 +38,13 @@ import com.devartlab.ui.main.ui.callmanagement.report.ReportFragment
 import com.devartlab.ui.main.ui.callmanagement.report.superreport.ManagerReportFragment
 import com.devartlab.ui.main.ui.callmanagement.sync.SyncFragment
 import com.devartlab.ui.main.ui.profile.ProfileActivity
-import com.google.android.material.navigation.NavigationView
+import com.devartlab.utils.ProgressLoading
 import io.reactivex.Completable
 import io.reactivex.functions.Action
 import io.reactivex.schedulers.Schedulers
 
 class CallManagementActivity : BaseActivity<ActivityCallManagementBinding?>(), ChooseEmployeeInterFace {
-    private var binding: ActivityCallManagementBinding? = null
+    lateinit var binding: ActivityCallManagementBinding
     private var toggle: ActionBarDrawerToggle? = null
     private var activeFragment: String? = null
     lateinit var viewModel: MainViewModel
@@ -64,7 +64,7 @@ class CallManagementActivity : BaseActivity<ActivityCallManagementBinding?>(), C
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = viewDataBinding
+        binding = viewDataBinding!!
         viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
 
 
@@ -165,28 +165,61 @@ class CallManagementActivity : BaseActivity<ActivityCallManagementBinding?>(), C
         }
 
 
-        val drawer = findViewById<DrawerLayout>(R.id.drawer_layout)
-        val navigationView = findViewById<NavigationView>(R.id.nav_view)
 
-        // setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-        toggle = object : ActionBarDrawerToggle(
-                this,
-                drawer,
-                binding!!.toolbar,
-                R.string.navigation_drawer_open, R.string.navigation_drawer_close) {
-            override fun onDrawerClosed(drawerView: View) {
-                super.onDrawerClosed(drawerView)
+        setUpNavDrawer()
+        setUpNavHeader()
+        setObservers()
+    }
+
+    private fun setObservers() {
+        viewModel.progress.observe(this, Observer { integer ->
+            when (integer) {
+                0 -> {
+                    try {
+                        ProgressLoading.dismiss()
+                    }
+                    catch (e: Exception) {
+
+                    }
+
+                }
+                1 -> {
+                    ProgressLoading.show(this)
+
+
+                }
+            }
+        })
+
+
+
+        viewModel!!.syncOfflineData.observe(this, Observer {
+
+            if (it.isSuccesed) {
+
+                viewModel.dataManager.saveOfflineMood(true)
+                viewModel.onlineBoolean.set(false)
+                viewModel.onlineText.set("Offline")
+
+                try {
+                    ProgressLoading.dismiss()
+                }
+                catch (e: Exception) {
+
+                }
+
+            }
+            else {
+                Toast.makeText(this, it.rerurnMessage, Toast.LENGTH_SHORT).show()
             }
 
-            override fun onDrawerOpened(drawerView: View) {
-                super.onDrawerOpened(drawerView)
-            }
-        }
-        drawer.addDrawerListener(toggle!!)
-        toggle!!.syncState()
+        })
 
-        val headerMainBinding: NavHeaderMainBinding = DataBindingUtil.inflate(layoutInflater,
-                R.layout.nav_header_main, binding!!.navView, false)
+    }
+
+
+    private fun setUpNavHeader() {
+        val headerMainBinding: NavHeaderMainBinding = DataBindingUtil.inflate(layoutInflater, R.layout.nav_header_main, binding!!.navView, false)
 
         if (!viewModel!!.dataManager.user.image.isNullOrEmpty()) {
             val decodedString: ByteArray = Base64.decode(viewModel!!.dataManager.user.image, Base64.DEFAULT)
@@ -203,12 +236,11 @@ class CallManagementActivity : BaseActivity<ActivityCallManagementBinding?>(), C
 
         headerMainBinding.onlineButton.setOnClickListener {
             viewModel.dataManager.saveOfflineMood(!viewModel.dataManager.offlineMood)
-            if (viewModel.dataManager.offlineMood)
-            {
+            if (viewModel.dataManager.offlineMood) {
                 viewModel.onlineBoolean.set(false)
                 viewModel.onlineText.set("Offline")
             }
-            else{
+            else {
                 viewModel.onlineBoolean.set(true)
                 viewModel.onlineText.set("Online")
             }
@@ -216,12 +248,43 @@ class CallManagementActivity : BaseActivity<ActivityCallManagementBinding?>(), C
         }
 
 
+        headerMainBinding.onlineButton.setOnClickListener {
 
+            if (viewModel.dataManager.offlineMood) {
+
+
+                viewModel.dataManager.saveOfflineMood(false)
+                viewModel.onlineBoolean.set(true)
+                viewModel.onlineText.set("Online")
+
+            }
+            else {
+                viewModel.syncOfflineData()
+
+            }
+
+        }
         binding!!.navView.addHeaderView(headerMainBinding.getRoot())
         headerMainBinding.setViewModel(viewModel)
+    }
 
-        navigationView.setNavigationItemSelectedListener { menuItem ->
-            drawer.closeDrawer(GravityCompat.START)
+    private fun setUpNavDrawer() { // setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+        toggle = object :
+            ActionBarDrawerToggle(this, binding.drawerLayout, binding!!.toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close) {
+            override fun onDrawerClosed(drawerView: View) {
+                super.onDrawerClosed(drawerView)
+            }
+
+            override fun onDrawerOpened(drawerView: View) {
+                super.onDrawerOpened(drawerView)
+            }
+        }
+        binding.drawerLayout.addDrawerListener(toggle!!)
+        toggle!!.syncState()
+
+
+        binding.navView.setNavigationItemSelectedListener { menuItem ->
+            binding.drawerLayout.closeDrawer(GravityCompat.START)
             when (menuItem.itemId) {
                 R.id.RolePlay -> {
                     val intent = Intent(this, CallsActivity::class.java);
@@ -231,7 +294,8 @@ class CallManagementActivity : BaseActivity<ActivityCallManagementBinding?>(), C
                 R.id.Home -> if (activeFragment != "HomeFragment") {
                     replace_fragment(HomeFragment(), "HomeFragment")
                     activeFragment = "HomeFragment"
-                } else {
+                }
+                else {
                     val test = supportFragmentManager.findFragmentByTag("HomeFragment") as HomeFragment?
                     if (test != null && test.isVisible) {
                     } else {

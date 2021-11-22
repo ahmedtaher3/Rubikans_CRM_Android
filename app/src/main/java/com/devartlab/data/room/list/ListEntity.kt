@@ -7,7 +7,6 @@ import androidx.room.PrimaryKey
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
-import java.io.Serializable
 
 @Parcelize
 @Entity
@@ -220,48 +219,36 @@ data class ListEntity(
 
     @ColumnInfo(name = "accountId")
     @Expose
-    @SerializedName("AccountId")
-    var accountId: Int? = null,
+    @SerializedName("AccountId") var accountId: Int? = null,
 
 
-    @ColumnInfo(name = "addressNotes")
-    @Expose
-    @SerializedName("Address Notes")
-    var addressNotes: String? = null,
+    @ColumnInfo(name = "addressNotes") @Expose @SerializedName("Address Notes") var addressNotes: String? = null,
 
 
-    @ColumnInfo(name = "branchPlaceId")
-    @Expose
-    @SerializedName("BranchPlaceId")
-    var branchPlaceId: Int? = null,
+    @ColumnInfo(name = "branchPlaceId") @Expose @SerializedName("BranchPlaceId") var branchPlaceId: Int? = null,
 
 
-    @ColumnInfo(name = "branchTel1")
-    @Expose
-    @SerializedName("BranchTel1")
-    var branchTel1: String? = null,
+    @ColumnInfo(name = "branchTel1") @Expose @SerializedName("BranchTel1") var branchTel1: String? = null,
 
 
-    @ColumnInfo(name = "branchTel2")
-    @Expose
-    @SerializedName("BranchTel2")
-    var branchTel2: String? = null,
+    @ColumnInfo(name = "branchTel2") @Expose @SerializedName("BranchTel2") var branchTel2: String? = null,
 
 
-    @ColumnInfo(name = "terriotryId")
-    @Expose
-    @SerializedName("TerriotryId")
-    var terriotryId: Int? = null,
+    @ColumnInfo(name = "terriotryId") @Expose @SerializedName("TerriotryId") var terriotryId: Int? = null,
 
 
-    @ColumnInfo(name = "branchDesc")
-    @Expose
-    @SerializedName("BranchDesc")
-    var branchDesc: String? = null,
+    @ColumnInfo(name = "branchDesc") @Expose @SerializedName("BranchDesc") var branchDesc: String? = null,
 
-    @ColumnInfo(name = "isSynced")
-    var isSynced: Boolean? = null
+    @ColumnInfo(name = "isSynced") var isSynced: Boolean? = null,
 
+    @ColumnInfo(name = "specialityDefaultContractId") var specialityDefaultContractId: Int? = null,
+
+
+    @ColumnInfo(name = "ReferenceID") var referenceID: Int? = null,
+
+    @ColumnInfo(name = "AddressList") var addressList: String? = null,
+    @ColumnInfo(name = "GlAccountsList") var glAccountsList: String? = null,
+    @ColumnInfo(name = "KeyPersonList") var keyPersonList: String? = null
 ) : Parcelable {
     constructor(
         listSerial: Int?,
@@ -305,7 +292,12 @@ data class ListEntity(
         branchTel2: String?,
         terriotryId: Int?,
         branchDesc: String,
-        isSynced: Boolean
+        isSynced: Boolean,
+        specialityDefaultContractId: Int,
+        referenceID: Int,
+        addressList: String,
+        glAccountsList: String,
+        keyPersonList: String
 
     ) :this(){
         this.listSerial = listSerial
@@ -350,6 +342,56 @@ data class ListEntity(
         this.terriotryId = terriotryId
         this.branchDesc = branchDesc
         this.isSynced = isSynced
+        this.specialityDefaultContractId = specialityDefaultContractId
+        this.referenceID = referenceID
+        this.addressList = addressList
+        this.glAccountsList = glAccountsList
+        this.keyPersonList = keyPersonList
     }
 
 }
+
+
+data class DefCustomerAddressModel(var listSerial: Int? = null,
+                                   var CusAddDetId: Int? = null,
+                                   var CustomerId: Int? = null,
+                                   var BranchtypeId: Int? = null,
+                                   var BranchPlaceId: Int? = null,
+                                   var BranchRef: Int? = null,
+                                   var CityId: Int? = null,
+                                   var AreaId: Int? = null,
+                                   var BricId: Int? = null,
+                                   var Description: String? = null,
+                                   var Address: String? = null,
+                                   var BranchTel1: String? = null,
+                                   var BranchTel2: String? = null,
+                                   var WorkingDays: String? = null,
+                                   var WorkingTimeFrom: String? = null,
+                                   var WorkingTimeTo: String? = null,
+                                   var Notes: String? = null,
+                                   var BranchCode: String? = null,
+                                   var Notes2: String? = null,
+                                   var BranchStatus: Int? = null,
+                                   var BranchClassId: Int? = null)
+
+
+data class DefCustomerGlAccountsModel(var lAccountDetId: Int? = null,
+                                      var CustomerId: Int? = null,
+                                      var AccountId: Int? = null,
+                                      var ParentAccountId: Int? = null,
+                                      var AccountTypeId: Int? = null,
+                                      var Notes: String? = null)
+
+
+data class DefSupplierKeyPersonModel(
+
+    var RespDetId: Int? = null,
+    var SuppId: Int? = null,
+    var KeyPersonName: String? = null,
+    var Department: String? = null,
+    var JobName: String? = null,
+    var Tel1: String? = null,
+    var Tel2: String? = null,
+    var Branch: String? = null,
+    var Notes: String? = null
+)

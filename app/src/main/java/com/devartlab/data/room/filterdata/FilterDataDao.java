@@ -13,6 +13,8 @@ import java.util.List;
 
 @Dao
 public interface FilterDataDao {
+    @Query("SELECT * FROM FilterDataEntity WHERE parentName=:name")
+    List<FilterDataEntity> getAll(String name);
 
     @Query("SELECT * FROM FilterDataEntity WHERE parentName=:name AND parentId =:id")
     List<FilterDataEntity> getAll(String name , int id);

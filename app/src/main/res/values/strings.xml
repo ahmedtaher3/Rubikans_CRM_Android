@@ -210,7 +210,6 @@
     <string name="start_day_at">Start Day At :</string>
     <string name="start_break_at">Start Break At :</string>
     <string name="en_break_at">En Break At :</string>
-    <string name="end_day_at">End Day At :</string>
     <string name="dues">Dues</string>
     <string name="deduction">Deduction</string>
     <string name="net">Net</string>
@@ -270,7 +269,7 @@
     <string name="start_n_work_from_home">Start \n work from home</string>
     <string name="end_n_work_from_home">End \n work from home</string>
     <string name="show_all_previous">Show All Previous</string>
-    <string name="department_text">department text</string>
+    <string name="department_text">department</string>
     <string name="choose_image">Choose Image</string>
     <string name="item_title">Item Title</string>
     <string name="corrective_action">Corrective Action</string>
@@ -409,6 +408,36 @@
     <string name="approve_all">Approve All</string>
     <string name="reject_all">Reject All</string>
     <string name="lets_talk">Lets talk</string>
+    <string name="select_products">Select Products</string>
+    <string name="collect_invoices">Collect Invoices</string>
+    <string name="success">Success</string>
+    <string name="collect_done">تم التحصيل بنجاح</string>
+    <string name="customer_invoice_report">Customer Invoice Report</string>
+    <string name="offline_invoice_report">Offline Invoice Report</string>
+    <string name="reported">Reported</string>
+    <string name="delete_extra">Delete Extra</string>
+    <string name="are_u_sure">Are you sure?</string>
+    <string name="yes">YES</string>
+    <string name="no">NO</string>
+    <string name="end_shift_and_upload_report">End Shift and upload report</string>
+    <string name="fetching_your_location">Fetching your location</string>
+    <string name="confirm">Confirm</string>
+    <string name="choose_shift_first">Choose Shift First</string>
+    <string name="error_location_try_again">Field to get Location , please try again</string>
+    <string name="cant_start_empty_shift">cant start empty shift</string>
+    <string name="fetching_location">Fetching your location</string>
+    <string name="you_have_to_start_shift">you have to end shift first</string>
+    <string name="complete_rate">please complete rating first</string>
+    <string name="saved_successfully">Saved Successfully</string>
+    <string name="end_day_at">End Day At :</string>
+    <string name="add_new_address">Add New Address</string>
+    <string name="add_new_key_person">Add New Key Person</string>
+    <string name="branch">Branch</string>
+    <string name="make_call">Make Call</string>
+    <string name="in_cash">In Cash</string>
+    <string name="price_product">Price :</string>
+    <string name="discount_product">Discount :</string>
+    <string name="price_after_discount">Price After Discount :</string>
 
 
 </resources>

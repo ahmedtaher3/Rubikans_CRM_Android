@@ -61,7 +61,7 @@ data class FilterDataEntity(
     var fieldName: String = "",
 
     @ColumnInfo(name = "parentId")
-    @SerializedName("parentId")
+    @SerializedName("TerriotryID")
     @Expose
     var parentId: Int? = null,
 

@@ -6,21 +6,20 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.devartlab.R
 import com.devartlab.databinding.CustomerCollectCashBinding
-import com.devartlab.databinding.EmployeeInvoiceItemBinding
-import com.devartlab.model.CustomerInvoiceDetails
+import com.devartlab.data.room.invoicedetailes.CustomerInvoiceEntity
 import java.util.*
 
-class CustomerInvoiceCollectReportAdapter(private var context: Context, private var myData: ArrayList<CustomerInvoiceDetails>, private var onPayClick: OnPayClick) : RecyclerView.Adapter<CustomerInvoiceCollectReportAdapter.ViewHolder>() {
+class CustomerInvoiceCollectReportAdapter(private var context: Context, private var myData: ArrayList<CustomerInvoiceEntity>, private var onPayClick: OnPayClick) : RecyclerView.Adapter<CustomerInvoiceCollectReportAdapter.ViewHolder>() {
 
 
-    fun setMyData(data: ArrayList<CustomerInvoiceDetails>) {
+    fun setMyData(data: ArrayList<CustomerInvoiceEntity>) {
         myData.clear()
         myData.addAll(data)
         notifyDataSetChanged()
     }
 
     interface OnPayClick {
-        fun setOnPayClick(model: CustomerInvoiceDetails)
+        fun setOnPayClick(model: CustomerInvoiceEntity)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {

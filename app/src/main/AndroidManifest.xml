@@ -34,7 +34,7 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".ui.main.ui.employeeservices.devartlink.DevartLinkActivity"
+            android:name="com.devartlab.ui.main.ui.devartlink.DevartLinkActivity"
             android:exported="false" />
         <activity android:name=".ui.main.ui.callmanagement.list.create.CreateNewCustomerActivity" />
         <activity android:name=".ui.main.ui.callmanagement.inventory.balance.InventoryBalanceDetailsLayout" />
@@ -119,7 +119,7 @@
         <activity android:name=".ui.main.ui.employeeservices.leavework.LeaveWorkActivity" />
         <activity android:name=".ui.main.ui.employeeservices.businessCard.BusinessCardActivity" />
         <activity android:name=".ui.trade.InventoryTransferDetailsActivity" />
-        <activity android:name=".ui.main.ui.employeeservices.devartlink.DevartLinkWebView" />
+        <activity android:name="com.devartlab.ui.main.ui.devartlink.DevartLinkWebView" />
 
         <provider
             android:name="androidx.core.content.FileProvider"

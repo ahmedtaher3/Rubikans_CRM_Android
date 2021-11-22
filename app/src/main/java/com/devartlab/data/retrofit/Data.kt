@@ -3,6 +3,9 @@ package com.devartlab.data.retrofit
 import android.os.Parcelable
 import com.devartlab.data.room.activity.ActivityEntity
 import com.devartlab.data.room.contract.ContractEntity
+import com.devartlab.data.room.contract.ContractList
+import com.devartlab.data.room.filterdata.FilterDataEntity
+import com.devartlab.data.room.invoicedetailes.CustomerInvoiceEntity
 import com.devartlab.data.room.list.ListEntity
 import com.devartlab.data.room.listtypes.ListTypesEntity
 import com.devartlab.data.room.myballance.MyBallanceEntity
@@ -15,6 +18,11 @@ import kotlinx.android.parcel.Parcelize
 import java.util.*
 
 data class Data(
+
+
+    @SerializedName("ads")
+    @Expose
+    var ads: ArrayList<AdModel>,
 
     @SerializedName("UsersStores")
     @Expose
@@ -29,7 +37,7 @@ data class Data(
     @Expose
     var activityLIst: ArrayList<ActivityEntity>,
 
-    @SerializedName("UserActivityType")
+    @SerializedName("ListType")
     @Expose
     var listTypesEntity: ArrayList<ListTypesEntity>,
 
@@ -254,7 +262,7 @@ data class Data(
 
     @SerializedName("ContractList")
     @Expose
-    var contractList: ArrayList<ContractEntity>,
+    var contractList: ArrayList<ContractList>,
 
     @SerializedName("COntractList")
     @Expose
@@ -268,7 +276,7 @@ data class Data(
 
     @SerializedName("ItemTable")
     @Expose
-    var itemList: ArrayList<ContractEntity>,
+    var itemList: ArrayList<ContractList>,
 
     @SerializedName("InvDefSalesPurchaseType")
     @Expose
@@ -288,12 +296,32 @@ data class Data(
 
     @SerializedName("CustomerInvoiceDetails")
     @Expose
-    var customerInvoiceDetails: ArrayList<CustomerInvoiceDetails>,
+    var customerInvoiceDetails: ArrayList<CustomerInvoiceEntity>,
 
+    @SerializedName("CustomerInvoice")
+    @Expose
+    var CustomerInvoice: ArrayList<CustomerInvoiceEntity>,
 
     @SerializedName("InventoryType")
     @Expose
     var inventoryTrxType: ArrayList<InventoryTrxType>,
+
+
+    @SerializedName("ClassList")
+    @Expose
+    var classList: ArrayList<FilterDataEntity>,
+
+    @SerializedName("SpecilaityLIst")
+    @Expose
+    var specialityLIst: ArrayList<FilterDataEntity>,
+
+    @SerializedName("TerriotryList")
+    @Expose
+    var territoryList: ArrayList<FilterDataEntity>,
+
+    @SerializedName("BrickList")
+    @Expose
+    var brickList: ArrayList<FilterDataEntity>,
 
     @field:SerializedName("VanStoctaking")
     val vanStoctaking: ArrayList<VanStoctaking>? = null,

@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
 import com.devartlab.R
 import com.devartlab.base.BaseFragment
 import com.devartlab.data.room.DatabaseClient
@@ -20,6 +21,7 @@ import com.devartlab.data.room.authority.AuthorityDao
 import com.devartlab.databinding.FragmentSelfServiceHomeBinding
 import com.devartlab.model.CardModel
 import com.devartlab.data.room.filterdata.FilterDataEntity
+import com.devartlab.model.AdModel
 import com.devartlab.ui.dialogs.chooseemployee.ChooseEmployee
 import com.devartlab.ui.dialogs.chooseemployee.ChooseEmployeeInterFace
 import com.devartlab.ui.main.ui.callmanagement.syncdata.SyncDataDialog
@@ -34,9 +36,15 @@ import com.devartlab.ui.main.ui.employeeservices.leavework.LeaveWorkActivity
 import com.devartlab.ui.main.ui.employeeservices.businessCard.BusinessCardActivity
 import com.devartlab.ui.main.ui.employeeservices.workfromhome.WorkFromHomeFragment
 import com.devartlab.utils.CommonUtilities
+import com.devartlab.utils.Constants
+import com.devartlab.utils.MainSliderAdapter
+import com.devartlab.utils.PicassoImageLoadingService
+import com.google.gson.Gson
+import com.jarvanmo.exoplayerview.media.SimpleMediaSource
 import io.reactivex.Completable
 import io.reactivex.functions.Action
 import io.reactivex.schedulers.Schedulers
+import ss.com.bannerslider.Slider
 
 
 private const val TAG = "SelfServiceHomeFragment"
@@ -80,6 +88,48 @@ class SelfServiceHomeFragment : BaseFragment<FragmentSelfServiceHomeBinding>(),
         super.onViewCreated(view, savedInstanceState)
         binding = viewDataBinding
         setHasOptionsMenu(true);
+
+
+
+        Log.d(TAG, "onCreate: " + Gson().toJson(viewModel.dataManager.ads.ads!! as Any?))
+
+        var model = AdModel()
+        for (m in viewModel.dataManager.ads.ads!!) {
+            if (m.pageCode?.toInt() == Constants.SELF_SERVICES_PAGE) {
+                model = m
+                break
+            }
+        }
+        when (model.type) {
+            "Video" -> {
+                binding.videoView.visibility = View.VISIBLE
+                val mediaSource = SimpleMediaSource(model.resourceLink)
+                binding.videoView.play(mediaSource);
+            }
+            "Image" -> {
+
+                binding.imageView.visibility = View.VISIBLE
+                Glide.with(this).load(model.resourceLink).centerCrop().placeholder(R.drawable.devart_logo).into(binding.imageView)
+            }
+            "GIF" -> {
+                binding.imageView.visibility = View.VISIBLE
+                Glide.with(this).asGif().load(model.resourceLink).centerCrop().placeholder(R.drawable.devart_logo).into(binding.imageView);
+
+
+            }
+            "Slider" -> {
+                binding.bannerSlider.visibility = View.VISIBLE
+                Slider.init(PicassoImageLoadingService(baseActivity))
+                binding.bannerSlider?.setInterval(5000)
+
+                val list = ArrayList<String>()
+                for (i in model.slideImages!!) {
+                    list.add(i?.link!!)
+                }
+                binding.bannerSlider?.setAdapter(MainSliderAdapter(list))
+            }
+        }
+
 
 
         Completable.fromAction(object : Action {

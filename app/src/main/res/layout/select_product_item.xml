@@ -21,21 +21,22 @@
         <RelativeLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_weight="0.8"
             android:padding="5dp">
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginEnd="15dp"
-                android:background="@drawable/item_image_background"
+                 android:background="@drawable/item_image_background"
                 android:padding="5dp" />
 
             <ImageView
                 android:id="@+id/image"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginStart="15dp" />
+                android:layout_width="46dp"
+                android:layout_height="46dp"
+                android:layout_centerInParent="true"
+                android:layout_marginStart="15dp"
+                android:src="@drawable/ic_pill" />
 
 
         </RelativeLayout>
@@ -43,7 +44,8 @@
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="2"
+            android:layout_weight="2.2"
+            android:layout_marginStart="10dp"
             android:gravity="center_vertical"
             android:orientation="vertical">
 
@@ -65,7 +67,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Price : "
+                    android:text="@string/price_product"
                     android:textSize="16dp"
                     android:textStyle="bold" />
 
@@ -74,8 +76,7 @@
                     android:id="@+id/price"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/price"
-                    android:textSize="16dp"
+                     android:textSize="16dp"
                     android:textStyle="bold" />
 
 
@@ -90,7 +91,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Discount : "
+                    android:text="@string/discount_product"
                     android:textSize="16dp"
                     android:textStyle="bold" />
 
@@ -99,8 +100,7 @@
                     android:id="@+id/discount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/price"
-                    android:textSize="16dp"
+                     android:textSize="16dp"
                     android:textStyle="bold" />
 
 
@@ -115,7 +115,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Price After Discount : "
+                    android:text="@string/price_after_discount"
                     android:textSize="16dp"
                     android:textStyle="bold" />
 
@@ -124,8 +124,7 @@
                     android:id="@+id/priceAfterDiscount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/price"
-                    android:textSize="16dp"
+                     android:textSize="16dp"
                     android:textStyle="bold" />
 
 

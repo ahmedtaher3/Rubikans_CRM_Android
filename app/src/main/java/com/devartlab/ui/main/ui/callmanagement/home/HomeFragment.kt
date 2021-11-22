@@ -3,6 +3,7 @@ package com.devartlab.ui.main.ui.callmanagement.home
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.WindowManager
 import android.widget.Button
@@ -12,12 +13,14 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
 import com.devartlab.R
 import com.devartlab.base.BaseFragment
 import com.devartlab.data.room.DatabaseClient
 import com.devartlab.data.room.authority.AuthorityDao
 import com.devartlab.data.room.filterdata.FilterDataEntity
 import com.devartlab.databinding.FragmentHomeBinding
+import com.devartlab.model.AdModel
 import com.devartlab.model.CardModel
 import com.devartlab.ui.dialogs.chooseemployee.ChooseEmployee
 import com.devartlab.ui.dialogs.chooseemployee.ChooseEmployeeInterFace
@@ -39,9 +42,16 @@ import com.devartlab.ui.main.ui.callmanagement.sync.SyncFragment
 import com.devartlab.ui.main.ui.callmanagement.syncdata.SyncDataDialog
 import com.devartlab.ui.main.ui.callmanagement.trade.TradeReportsFragment
 import com.devartlab.utils.CommonUtilities
+import com.devartlab.utils.Constants
+import com.devartlab.utils.MainSliderAdapter
+import com.devartlab.utils.PicassoImageLoadingService
+import com.google.gson.Gson
+import com.jarvanmo.exoplayerview.media.SimpleMediaSource
 import io.reactivex.Completable
 import io.reactivex.schedulers.Schedulers
+import ss.com.bannerslider.Slider
 
+private const val TAG = "HomeFragment"
 class HomeFragment : BaseFragment<FragmentHomeBinding>(), ChooseEmployeeInterFace, View.OnClickListener, MenuListAdapter.OnHomeItemClick {
     lateinit var viewModel: HomeViewModel
     lateinit var binding: FragmentHomeBinding
@@ -81,6 +91,44 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ChooseEmployeeInterFac
         binding = viewDataBinding
         setHasOptionsMenu(true)
 
+        Log.d(TAG, "onCreate: " + Gson().toJson(viewModel.dataManager.ads.ads!! as Any?))
+
+        var model = AdModel()
+        for (m in viewModel.dataManager.ads.ads!!) {
+            if (m.pageCode?.toInt() == Constants.SELF_SERVICES_PAGE) {
+                model = m
+                break
+            }
+        }
+        when (model.type) {
+            "Video" -> {
+                binding.videoView.visibility = View.VISIBLE
+                val mediaSource = SimpleMediaSource(model.resourceLink)
+                binding.videoView.play(mediaSource);
+            }
+            "Image" -> {
+
+                binding.imageView.visibility = View.VISIBLE
+                Glide.with(this).load(model.resourceLink).centerCrop().placeholder(R.drawable.devart_logo).into(binding.imageView)
+            }
+            "GIF" -> {
+                binding.imageView.visibility = View.VISIBLE
+                Glide.with(this).asGif().load(model.resourceLink).centerCrop().placeholder(R.drawable.devart_logo).into(binding.imageView);
+
+
+            }
+            "Slider" -> {
+                binding.bannerSlider.visibility = View.VISIBLE
+                Slider.init(PicassoImageLoadingService(baseActivity))
+                binding.bannerSlider?.setInterval(5000)
+
+                val list = ArrayList<String>()
+                for (i in model.slideImages!!) {
+                    list.add(i?.link!!)
+                }
+                binding.bannerSlider?.setAdapter(MainSliderAdapter(list))
+            }
+        }
 
 
         Completable.fromAction(object : io.reactivex.functions.Action {
@@ -151,8 +199,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ChooseEmployeeInterFac
         list.add(CardModel(11, baseActivity.resources.getString(R.string.super_visor_report), R.drawable.report_general))
         list.add(CardModel(12, baseActivity.resources.getString(R.string.double_visit_report), R.drawable.report_general))
         list.add(CardModel(13, baseActivity.resources.getString(R.string.start_point_report), R.drawable.report_general))
-        //list.add(CardModel(14, baseActivity.resources.getString(R.string.trade_reports), R.drawable.report_general))
-        //list.add(CardModel(15, baseActivity.resources.getString(R.string.inventory), R.drawable.report_general))
+        list.add(CardModel(14, baseActivity.resources.getString(R.string.trade_reports), R.drawable.report_general))
+        list.add(CardModel(15, baseActivity.resources.getString(R.string.inventory), R.drawable.report_general))
 
         adapter = MenuListAdapter(baseActivity, list, this)
         val layoutManager = GridLayoutManager(baseActivity, 2)

@@ -247,7 +247,9 @@ class AddPlanSingleActivity : BaseActivity<ActivityAddPlanSingleBinding>(),
             , 0
             , CommonUtilities.randomColor
             , activity?.typeId,
-            false, false
+            false, false,
+            false,
+            ""
         )
 
 

@@ -151,20 +151,17 @@ class EmployeeInvoiceReportFragment : BaseFragment<EmployeeInvoiceReportFragment
 
 
     private fun setObservers() {
-        viewModel.responseLive.observe(viewLifecycleOwner, Observer {
+        viewModel.responseLiveStoreInvoice.observe(viewLifecycleOwner, Observer {
 
-            if (it.isSuccesed) {
 
 
                 System.out.println(it.toString())
                 fullList.clear()
-                fullList = it.data.storeInvoice
+                fullList = it
                 adapter.setMyData(fullList)
 
 
-            } else {
-                Toast.makeText(baseActivity, it.rerurnMessage, Toast.LENGTH_SHORT).show()
-            }
+
 
         })
         viewModel.progress.observe(viewLifecycleOwner, Observer {
