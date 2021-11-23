@@ -360,5 +360,9 @@ class SelfServiceHomeFragment : BaseFragment<FragmentSelfServiceHomeBinding>(),
 
     }
 
+    override fun onStop() {
+        super.onStop()
+        binding.videoView.stop()
+    }
 
 }
