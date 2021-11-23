@@ -61,6 +61,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ChooseEmployeeInterFac
     var isBack: Boolean = true
     var notifCount: Button? = null
     var mNotifCount = 0
+    lateinit var mediaSource: SimpleMediaSource
 
 
     var salary: Boolean = false
@@ -103,7 +104,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ChooseEmployeeInterFac
         when (model.type) {
             "Video" -> {
                 binding.videoView.visibility = View.VISIBLE
-                val mediaSource = SimpleMediaSource(model.resourceLink)
+                mediaSource = SimpleMediaSource(model.resourceLink)
                 binding.videoView.play(mediaSource);
             }
             "Image" -> {
@@ -462,6 +463,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ChooseEmployeeInterFac
          button?.text = count.toString()
 
      }*/
+
+
+    override fun onStop() {
+        super.onStop()
+        binding.videoView.stop()
+    }
 
 
 }

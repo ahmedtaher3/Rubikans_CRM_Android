@@ -61,7 +61,7 @@ public class RetrofitClient {
 
         if (ourInstance == null)
             ourInstance = new Retrofit.Builder()
-                    .baseUrl(ApiServices.BaseURL)
+                    .baseUrl(ApiServices.BaseURL)//alaa
                     .client(getUnsafeOkHttpClient().build())
                     .addConverterFactory(GsonConverterFactory.create())
                     .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
@@ -81,7 +81,7 @@ public class RetrofitClient {
 
         if (ourInstance2 == null)
             ourInstance2 = new Retrofit.Builder()
-                    .baseUrl("https://script.google.com/macros/s/")
+                    .baseUrl("https://script.google.com/macros/s/")//taher
                     .client(getUnsafeOkHttpClient().build())
                     .addConverterFactory(GsonConverterFactory.create(gson))
                     .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
@@ -101,7 +101,7 @@ public class RetrofitClient {
 
         if (ourInstance3 == null)
             ourInstance3 = new Retrofit.Builder()
-                    .baseUrl("https://devartlink.devartlab.com/")
+                    .baseUrl("https://devartlink.devartlab.com/")// eslam
                     .client(getUnsafeOkHttpClient().build())
                     .addConverterFactory(GsonConverterFactory.create(gson))
                     .addCallAdapterFactory(RxJava2CallAdapterFactory.create())

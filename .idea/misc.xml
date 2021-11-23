@@ -45,6 +45,12 @@
         <entry key="..\:/DevartLabCRM/app/src/main/res/layout/sync_data_dialog.xml" value="0.25416666666666665" />
         <entry key="..\:/DevartLabCRM/app/src/main/res/menu/activity_main_drawer.xml" value="0.1" />
         <entry key="..\:/DevartLabCRM/app/src/main/res/menu/call_menu.xml" value="0.25416666666666665" />
+        <entry key="..\:/work/DevartLab/DevartLabCRM/app/src/main/res/layout/activity_call_management.xml" value="0.2421875" />
+        <entry key="..\:/work/DevartLab/DevartLabCRM/app/src/main/res/layout/activity_devart_link.xml" value="0.2421875" />
+        <entry key="..\:/work/DevartLab/DevartLabCRM/app/src/main/res/layout/activity_emplotee_services.xml" value="0.23846153846153847" />
+        <entry key="..\:/work/DevartLab/DevartLabCRM/app/src/main/res/layout/activity_main.xml" value="0.23846153846153847" />
+        <entry key="..\:/work/DevartLab/DevartLabCRM/app/src/main/res/layout/fragment_filter_list.xml" value="0.23846153846153847" />
+        <entry key="..\:/work/DevartLab/DevartLabCRM/app/src/main/res/layout/fragment_home.xml" value="0.2421875" />
       </map>
     </option>
   </component>

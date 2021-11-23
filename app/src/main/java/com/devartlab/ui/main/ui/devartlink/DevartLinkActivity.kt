@@ -18,17 +18,19 @@ import com.devartlab.ui.main.ui.callmanagement.home.MenuListAdapter
 import com.devartlab.utils.Constants
 import com.devartlab.utils.MainSliderAdapter
 import com.devartlab.utils.PicassoImageLoadingService
+import com.google.android.exoplayer2.source.MediaSource
 import com.google.gson.Gson
 import com.jarvanmo.exoplayerview.media.SimpleMediaSource
 import ss.com.bannerslider.Slider
 
 private const val TAG = "DevartLinkActivity"
+
 class DevartLinkActivity : BaseActivity<ActivityDevartLinkBinding>(),
     MenuListAdapter.OnHomeItemClick {
     lateinit var binding: ActivityDevartLinkBinding
     lateinit var adapter: MenuListAdapter
     lateinit var viewModel: DevartLinkViewModel
-
+    lateinit var mediaSource: SimpleMediaSource
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,17 +53,19 @@ class DevartLinkActivity : BaseActivity<ActivityDevartLinkBinding>(),
         when (model.type) {
             "Video" -> {
                 binding.videoView.visibility = View.VISIBLE
-                val mediaSource = SimpleMediaSource(model.resourceLink)
+                mediaSource = SimpleMediaSource(model.resourceLink)
                 binding.videoView.play(mediaSource);
             }
             "Image" -> {
 
                 binding.imageView.visibility = View.VISIBLE
-                Glide.with(this).load(model.resourceLink).centerCrop().placeholder(R.drawable.devart_logo).into(binding.imageView)
+                Glide.with(this).load(model.resourceLink).centerCrop()
+                    .placeholder(R.drawable.devart_logo).into(binding.imageView)
             }
             "GIF" -> {
                 binding.imageView.visibility = View.VISIBLE
-                Glide.with(this).asGif().load(model.resourceLink).centerCrop().placeholder(R.drawable.devart_logo).into(binding.imageView);
+                Glide.with(this).asGif().load(model.resourceLink).centerCrop()
+                    .placeholder(R.drawable.devart_logo).into(binding.imageView);
 
 
             }
@@ -113,4 +117,15 @@ class DevartLinkActivity : BaseActivity<ActivityDevartLinkBinding>(),
             else -> super.onOptionsItemSelected(item)
         }
     }
+
+    override fun onStop() {
+        super.onStop()
+        binding.videoView.stop()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        binding.videoView.play(mediaSource);
+    }
+
 }

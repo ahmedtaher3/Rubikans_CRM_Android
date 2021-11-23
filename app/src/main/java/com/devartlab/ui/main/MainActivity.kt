@@ -70,6 +70,7 @@ class MainActivity : BaseActivity<ActivityMainBinding?>(), View.OnClickListener,
     lateinit var binding: ActivityMainBinding
     lateinit var viewModel: MainViewModel
     lateinit var adapter: MenuListAdapter
+    lateinit var mediaSource: SimpleMediaSource
 
     private var toggle: ActionBarDrawerToggle? = null
     var textCartItemCount: RelativeLayout? = null
@@ -105,17 +106,19 @@ class MainActivity : BaseActivity<ActivityMainBinding?>(), View.OnClickListener,
         when (model.type) {
             "Video" -> {
                 binding.videoView.visibility = View.VISIBLE
-                val mediaSource = SimpleMediaSource(model.resourceLink)
+                mediaSource = SimpleMediaSource(model.resourceLink)
                 binding.videoView.play(mediaSource);
             }
             "Image" -> {
 
                 binding.imageView.visibility = View.VISIBLE
-                Glide.with(this).load(model.resourceLink).centerCrop().placeholder(R.drawable.devart_logo).into(binding.imageView)
+                Glide.with(this).load(model.resourceLink)
+                    .centerCrop().placeholder(R.drawable.devart_logo).into(binding.imageView)
             }
             "GIF" -> {
                 binding.imageView.visibility = View.VISIBLE
-                Glide.with(this).asGif().load(model.resourceLink).centerCrop().placeholder(R.drawable.devart_logo).into(binding.imageView);
+                Glide.with(this).asGif().load(model.resourceLink)
+                    .centerCrop().placeholder(R.drawable.devart_logo).into(binding.imageView);
 
 
             }
@@ -138,7 +141,9 @@ class MainActivity : BaseActivity<ActivityMainBinding?>(), View.OnClickListener,
             @Throws(Exception::class)
             override fun run() {
                 run {
-                    if (!viewModel!!.authorityDao.getById("61").allowBrowseRecord && !viewModel!!.authorityDao.getById("1125").allowBrowseRecord && !viewModel!!.authorityDao.getById(
+                    if (!viewModel!!.authorityDao.getById("61")
+                            .allowBrowseRecord && !viewModel!!.authorityDao.getById("1125")
+                            .allowBrowseRecord && !viewModel!!.authorityDao.getById(
                             "1126").allowBrowseRecord
                     ) {
                         callManagementPermission = false
@@ -670,6 +675,7 @@ class MainActivity : BaseActivity<ActivityMainBinding?>(), View.OnClickListener,
             }
         }
     }
+
 
 
 }
