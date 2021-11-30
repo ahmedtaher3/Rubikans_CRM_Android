@@ -7,123 +7,120 @@
 
     </data>
 
-    <LinearLayout
+
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/devart_background"
-        android:orientation="vertical"
-        tools:context=".ui.auth.login.LoginFragment">
+        android:fillViewport="true">
 
-
-        <ScrollView
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:fillViewport="true">
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            tools:context=".ui.auth.login.LoginFragment">
 
-            <RelativeLayout
+            <ImageView
+                android:id="@+id/iv_login_logo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/devart_logo_blue"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constr_username_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@drawable/rounded_alpha"
                 android:orientation="vertical"
-                android:padding="20dp">
+                android:paddingStart="20dp"
+                android:paddingTop="80dp"
+                android:paddingEnd="20dp"
+                android:layout_marginBottom="20dp"
+                android:paddingBottom="40dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/iv_login_logo">
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="250dp"
-                    android:src="@drawable/devart_logo_blue" />
 
-                <RelativeLayout
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tf_userName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_centerInParent="true">
+                    android:layout_marginTop="10dp"
+                    app:hintEnabled="false"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
 
-
-                    <LinearLayout
+                    <androidx.appcompat.widget.AppCompatEditText
+                        android:id="@+id/userName"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="40dp"
-                        android:background="@drawable/rounded_alpha"
-                        android:orientation="vertical"
-                        android:paddingStart="20dp"
-                        android:paddingTop="80dp"
-                        android:paddingEnd="20dp"
-                        android:paddingBottom="40dp">
+                        android:background="@drawable/rounded_grey"
+                        android:drawableStart="@drawable/ic_account_grey600_24dp"
+                        android:drawablePadding="10dp"
+                        android:hint="@string/user_name"
+                        android:inputType="text"
+                        android:padding="10dp" />
+
+                </com.google.android.material.textfield.TextInputLayout>
 
 
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tf_password"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    app:hintEnabled="false"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tf_userName"
+                    app:passwordToggleEnabled="true">
 
-                        <com.google.android.material.textfield.TextInputLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
-                            app:hintEnabled="false" >
+                    <androidx.appcompat.widget.AppCompatEditText
+                        android:id="@+id/password"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/rounded_grey"
+                        android:drawableStart="@drawable/ic_lock_grey600_24dp"
+                        android:drawablePadding="10dp"
+                        android:hint="@string/password"
+                        android:inputType="textPassword"
+                        android:padding="10dp" />
 
-                            <androidx.appcompat.widget.AppCompatEditText
-                                android:id="@+id/userName"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:background="@drawable/rounded_grey"
-                                android:drawableStart="@drawable/ic_account_grey600_24dp"
-                                android:drawablePadding="10dp"
-                                android:hint="@string/user_name"
-                                android:inputType="text"
-                                android:padding="10dp" />
-
-                        </com.google.android.material.textfield.TextInputLayout>
-
-
-                        <com.google.android.material.textfield.TextInputLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
-                            app:hintEnabled="false"
-                            app:passwordToggleEnabled="true">
-
-                            <androidx.appcompat.widget.AppCompatEditText
-                                android:id="@+id/password"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:background="@drawable/rounded_grey"
-                                android:drawableStart="@drawable/ic_lock_grey600_24dp"
-                                android:drawablePadding="10dp"
-                                android:hint="@string/password"
-                                android:inputType="textPassword"
-                                android:padding="10dp" />
-
-                        </com.google.android.material.textfield.TextInputLayout>
+                </com.google.android.material.textfield.TextInputLayout>
 
 
-                        <RelativeLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content">
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/login"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/rounded_blue"
+                    android:maxWidth="20dp"
+                    android:onClick="login"
+                    android:text="@string/login"
+                    android:textColor="@color/white"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tf_password" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-                            <androidx.appcompat.widget.AppCompatButton
-                                android:id="@+id/login"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="10dp"
-                                android:background="@drawable/rounded_blue"
-                                android:maxWidth="20dp"
-                                android:onClick="login"
-                                android:text="@string/login"
-                                android:textColor="@color/white" />
-
-                        </RelativeLayout>
-
-                    </LinearLayout>
-
-
-                    <de.hdodenhof.circleimageview.CircleImageView
-                        android:id="@+id/imageView"
-                        android:layout_width="80dp"
-                        android:layout_height="80dp"
-                        android:layout_centerHorizontal="true"
-                        android:paddingTop="@dimen/nav_header_vertical_spacing"
-                        android:src="@drawable/user_outline" />
-                </RelativeLayout>
-
-
-            </RelativeLayout>
-        </ScrollView>
-
-
-    </LinearLayout>
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/imageView"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_centerHorizontal="true"
+                android:paddingTop="@dimen/nav_header_vertical_spacing"
+                android:src="@drawable/user_outline"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/constr_username_password" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 </layout>

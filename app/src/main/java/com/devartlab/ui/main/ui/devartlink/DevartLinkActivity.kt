@@ -122,10 +122,10 @@ class DevartLinkActivity : BaseActivity<ActivityDevartLinkBinding>(),
         super.onStop()
         binding.videoView.stop()
     }
-
-    override fun onResume() {
-        super.onResume()
-        binding.videoView.play(mediaSource);
-    }
+//
+//    override fun onResume() {
+//        super.onResume()
+//        binding.videoView.play(mediaSource);
+//    }
 
 }
