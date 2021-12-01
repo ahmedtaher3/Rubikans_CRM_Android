@@ -20,6 +20,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.devartlab.R
 import com.devartlab.base.BaseFragment
 import com.devartlab.data.room.activity.ActivityEntity
@@ -44,10 +45,12 @@ import com.devartlab.ui.main.ui.callmanagement.trade.customerinvoicecollect.Cust
 import com.devartlab.ui.main.ui.callmanagement.trade.printer.OrderPrintActivity
 import com.devartlab.ui.main.ui.callmanagement.trade.selectProductContract.SelectProductsActivity
 import com.devartlab.utils.*
+import com.jarvanmo.exoplayerview.media.SimpleMediaSource
 import devs.mulham.horizontalcalendar.HorizontalCalendar
 import devs.mulham.horizontalcalendar.utils.HorizontalCalendarListener
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
+import ss.com.bannerslider.Slider
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
@@ -75,6 +78,7 @@ class ReportFragment : BaseFragment<FragmentReportBinding>(), InvoiceTypsAdapter
     private var modelWithStartPoint: PlanEntity? = null
     lateinit var planEntity: PlanEntity
     private var alertDialog: android.app.AlertDialog? = null
+    lateinit var mediaSource: SimpleMediaSource
 
     var spinner: Spinner? = null
     var horizontalCalendar: HorizontalCalendar? = null
@@ -106,7 +110,44 @@ class ReportFragment : BaseFragment<FragmentReportBinding>(), InvoiceTypsAdapter
         super.onViewCreated(view, savedInstanceState)
         binding = viewDataBinding
         setHasOptionsMenu(true);
+        var model = AdModel()
+        for (m in viewModel.dataManager.ads.ads!!) {
+            if (m.pageCode?.toInt() == Constants.REPORT_RECYCLER) {
+                model = m
+                break
+            }
+        }
+        when (model.type) {
+            "Video" -> {
+                binding.videoView.visibility = View.VISIBLE
+                mediaSource = SimpleMediaSource(model.resourceLink)
+                binding.videoView.play(mediaSource);
+            }
+            "Image" -> {
 
+                binding.imageView.visibility = View.VISIBLE
+                Glide.with(this).load(model.resourceLink).centerCrop()
+                    .placeholder(R.drawable.devart_logo).into(binding.imageView)
+            }
+            "GIF" -> {
+                binding.imageView.visibility = View.VISIBLE
+                Glide.with(this).asGif().load(model.resourceLink).centerCrop()
+                    .placeholder(R.drawable.devart_logo).into(binding.imageView);
+
+
+            }
+            "Slider" -> {
+                binding.bannerSlider.visibility = View.VISIBLE
+                Slider.init(PicassoImageLoadingService(context))
+                binding.bannerSlider?.setInterval(5000)
+
+                val list = ArrayList<String>()
+                for (i in model.slideImages!!) {
+                    list.add(i?.link!!)
+                }
+                binding.bannerSlider?.setAdapter(MainSliderAdapter(list))
+            }
+        }
 
         setRecyclerView()
         setHorizontalCalendar()
