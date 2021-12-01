@@ -882,7 +882,7 @@ class PlanFragment : BaseFragment<FragmentPlanBinding?>(), ActivitiesAdapter.Cho
 
         var model = AdModel()
         for (m in viewModel.dataManager.ads.ads!!) {
-            if (m.pageCode?.toInt() == Constants.DEVART_LINK) {
+            if (m.pageCode?.toInt() == Constants.CREATE_PLAN) {
                 model = m
                 break
             }
