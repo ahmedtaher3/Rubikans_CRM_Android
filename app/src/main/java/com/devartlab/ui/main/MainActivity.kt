@@ -8,6 +8,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.BitmapFactory
 import android.net.Uri
+import android.opengl.Visibility
 import android.os.Bundle
 import android.util.Base64
 import android.util.Log
@@ -57,6 +58,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.functions.Action
 import io.reactivex.schedulers.Schedulers
+import kotlinx.android.synthetic.main.activity_new_customer.*
 import qruz.t.qruzdriverapp.ui.main.fragments.profile.changelang.ChangeLanguage
 import ss.com.bannerslider.Slider
 import java.util.*
@@ -66,7 +68,8 @@ import kotlin.collections.ArrayList
 
 private const val TAG = "MainActivity"
 
-class MainActivity : BaseActivity<ActivityMainBinding?>(), View.OnClickListener, MenuListAdapter.OnHomeItemClick {
+class MainActivity : BaseActivity<ActivityMainBinding?>(), View.OnClickListener,
+    MenuListAdapter.OnHomeItemClick {
     lateinit var binding: ActivityMainBinding
     lateinit var viewModel: MainViewModel
     lateinit var adapter: MenuListAdapter
@@ -134,7 +137,15 @@ class MainActivity : BaseActivity<ActivityMainBinding?>(), View.OnClickListener,
                 binding.bannerSlider?.setAdapter(MainSliderAdapter(list))
             }
         }
-
+        binding.btnHideShowAds.setOnClickListener {
+            if(binding.constrAds.visibility == View.VISIBLE) {
+                binding.constrAds.setVisibility(View.GONE)
+                binding.btnHideShowAds.setImageResource( R.drawable.ic_show_hide_ads)
+            }else{
+                binding.constrAds.setVisibility(View.VISIBLE)
+                binding.btnHideShowAds.setImageResource(R.drawable.ic_hide_show_ads)
+            }
+        }
 
 
         Completable.fromAction(object : Action {
@@ -144,20 +155,22 @@ class MainActivity : BaseActivity<ActivityMainBinding?>(), View.OnClickListener,
                     if (!viewModel!!.authorityDao.getById("61")
                             .allowBrowseRecord && !viewModel!!.authorityDao.getById("1125")
                             .allowBrowseRecord && !viewModel!!.authorityDao.getById(
-                            "1126").allowBrowseRecord
+                            "1126"
+                        ).allowBrowseRecord
                     ) {
                         callManagementPermission = false
-                    }
-                    else {
+                    } else {
 
                         if (viewModel!!.dataManager.sFirstTime) {
 
-                            Single.timer(1, TimeUnit.SECONDS).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+                            Single.timer(1, TimeUnit.SECONDS).subscribeOn(Schedulers.io())
+                                .observeOn(AndroidSchedulers.mainThread())
                                 .subscribe(object : SingleObserver<Long?> {
                                     override fun onSubscribe(d: Disposable) {}
                                     override fun onSuccess(aLong: Long) {
                                         if (!viewModel!!.dataManager.startShift) {
-                                            dialog = SyncDataDialog(this@MainActivity,
+                                            dialog = SyncDataDialog(
+                                                this@MainActivity,
                                                 this@MainActivity,
                                                 viewModel?.dataManager!!
                                             );
@@ -224,8 +237,7 @@ class MainActivity : BaseActivity<ActivityMainBinding?>(), View.OnClickListener,
                 0 -> {
                     try {
                         ProgressLoading.dismiss()
-                    }
-                    catch (e: Exception) {
+                    } catch (e: Exception) {
 
                     }
 
@@ -239,7 +251,7 @@ class MainActivity : BaseActivity<ActivityMainBinding?>(), View.OnClickListener,
         })
 
         viewModel!!.responseLiveRequests.observe(this,
-                                                 Observer { googleRequestResponse -> setupBadge(googleRequestResponse.hrRequests?.size!! + googleRequestResponse.penaltiesGoogle?.size!! + googleRequestResponse.workFromHomelist?.size!!) })
+            Observer { googleRequestResponse -> setupBadge(googleRequestResponse.hrRequests?.size!! + googleRequestResponse.penaltiesGoogle?.size!! + googleRequestResponse.workFromHomelist?.size!!) })
 
         viewModel!!.randomLive.observe(this, Observer {
             Toast.makeText(this@MainActivity, it.size.toString(), Toast.LENGTH_SHORT).show()
@@ -257,13 +269,11 @@ class MainActivity : BaseActivity<ActivityMainBinding?>(), View.OnClickListener,
 
                 try {
                     ProgressLoading.dismiss()
-                }
-                catch (e: Exception) {
+                } catch (e: Exception) {
 
                 }
 
-            }
-            else {
+            } else {
                 Toast.makeText(this, it.rerurnMessage, Toast.LENGTH_SHORT).show()
             }
 
@@ -273,7 +283,13 @@ class MainActivity : BaseActivity<ActivityMainBinding?>(), View.OnClickListener,
 
     private fun setUpRecycler() {
         val list = ArrayList<CardModel>()
-        list.add(CardModel(1, resources.getString(R.string.call_management), R.drawable.call_managment_icon))
+        list.add(
+            CardModel(
+                1,
+                resources.getString(R.string.call_management),
+                R.drawable.call_managment_icon
+            )
+        )
         list.add(CardModel(2, resources.getString(R.string.self_service), R.drawable.self_service))
         list.add(CardModel(3, resources.getString(R.string.my_profile), R.drawable.employee))
         list.add(CardModel(4, resources.getString(R.string.market_request), R.drawable.money))
@@ -586,8 +602,6 @@ class MainActivity : BaseActivity<ActivityMainBinding?>(), View.OnClickListener,
     }
 
 
-
-
     fun replace_fragment(fragment: Fragment?, tag: String?) {
         supportFragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
         supportFragmentManager
@@ -675,7 +689,6 @@ class MainActivity : BaseActivity<ActivityMainBinding?>(), View.OnClickListener,
             }
         }
     }
-
 
 
 }
