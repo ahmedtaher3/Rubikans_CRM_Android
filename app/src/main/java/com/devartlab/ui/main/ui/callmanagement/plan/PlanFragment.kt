@@ -17,6 +17,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.devartlab.R
 import com.devartlab.base.BaseFragment
 import com.devartlab.data.room.activity.ActivityEntity
@@ -35,6 +36,8 @@ import com.devartlab.ui.main.ui.callmanagement.plan.choosestartpoint.ChooseStart
 import com.devartlab.ui.main.ui.callmanagement.plan.cycles.CyclesDialog
 import com.devartlab.utils.*
 import com.google.gson.Gson
+import com.jarvanmo.exoplayerview.media.SimpleMediaSource
+import com.jarvanmo.exoplayerview.ui.ExoVideoView
 import devs.mulham.horizontalcalendar.HorizontalCalendar
 import devs.mulham.horizontalcalendar.utils.HorizontalCalendarListener
 import io.reactivex.Single
@@ -42,6 +45,7 @@ import io.reactivex.SingleObserver
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
+import ss.com.bannerslider.Slider
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
@@ -60,6 +64,7 @@ class PlanFragment : BaseFragment<FragmentPlanBinding?>(), ActivitiesAdapter.Cho
     var spinner: Spinner? = null
     var startPointModel: StartPoint? = null
     lateinit var dialog: ChooseStartPoint
+    lateinit var mediaSource: SimpleMediaSource
 
     private var DATE: String? = null
     var fmt: SimpleDateFormat? = null
@@ -97,24 +102,56 @@ class PlanFragment : BaseFragment<FragmentPlanBinding?>(), ActivitiesAdapter.Cho
         setHasOptionsMenu(true);
         binding = viewDataBinding!!
         viewModel.getDayPlan(DATE!!, Shift)
-
+        var model = AdModel()
         for (m in viewModel.dataManager.ads.ads!!) {
             if (m.pageCode?.toInt() == Constants.PLAN_RECYCLER) {
-                adList?.add(m)
+                model = m
+                break
+            }
+        }
+        when (model.type) {
+            "Video" -> {
+                binding.videoView.visibility = View.VISIBLE
+                mediaSource = SimpleMediaSource(model.resourceLink)
+                binding.videoView.play(mediaSource);
+            }
+            "Image" -> {
+
+                binding.imageView.visibility = View.VISIBLE
+                Glide.with(this).load(model.resourceLink).centerCrop()
+                    .placeholder(R.drawable.devart_logo).into(binding.imageView)
+            }
+            "GIF" -> {
+                binding.imageView.visibility = View.VISIBLE
+                Glide.with(this).asGif().load(model.resourceLink).centerCrop()
+                    .placeholder(R.drawable.devart_logo).into(binding.imageView);
+
+
+            }
+            "Slider" -> {
+                binding.bannerSlider.visibility = View.VISIBLE
+                Slider.init(PicassoImageLoadingService(context))
+                binding.bannerSlider?.setInterval(5000)
+
+                val list = ArrayList<String>()
+                for (i in model.slideImages!!) {
+                    list.add(i?.link!!)
+                }
+                binding.bannerSlider?.setAdapter(MainSliderAdapter(list))
             }
         }
         Log.d(TAG, "onViewCreated: $adList")
         viewModel.dataManager.isNewCycle(viewModel.dataManager.newOldCycle.currentCyclePlanId == 0)
 
         viewModel.dataManager.saveCycle(Cycle(viewModel.dataManager.newOldCycle.currentCyclePlanId,
-                                              viewModel.dataManager.newOldCycle.currentCycleId,
-                                              "",
-                                              "",
-                                              0,
-                                              "",
-                                              true,
-                                              0,
-                                              0))
+            viewModel.dataManager.newOldCycle.currentCycleId,
+            "",
+            "",
+            0,
+            "",
+            true,
+            0,
+            0))
 
 
         setUpCalendar()
@@ -798,6 +835,7 @@ class PlanFragment : BaseFragment<FragmentPlanBinding?>(), ActivitiesAdapter.Cho
         val factory = LayoutInflater.from(baseActivity)
         val choose_activity_type: View = factory.inflate(R.layout.choose_activity_type, null)
 
+        lateinit var mediaSource: SimpleMediaSource
         if (activityTypeDialog != null && activityTypeDialog?.isShowing!!) {
             return//close chooseActivityType method
         }
@@ -810,6 +848,9 @@ class PlanFragment : BaseFragment<FragmentPlanBinding?>(), ActivitiesAdapter.Cho
         var activitiesRecyclerView: RecyclerView =
             choose_activity_type.findViewById(R.id.activitiesRecyclerView)
         var progressBar: ProgressBar = choose_activity_type.findViewById(R.id.ProgressBar)
+        var videoView: ExoVideoView = choose_activity_type.findViewById(R.id.videoView)
+        var imageView:ImageView = choose_activity_type.findViewById(R.id.imageView)
+        var bannerslider:Slider = choose_activity_type.findViewById(R.id.bannerSlider)
         var close: ImageView = choose_activity_type.findViewById(R.id.close)
         var activitiesAdapter: ActivitiesAdapter = ActivitiesAdapter(baseActivity, this)
         activitiesRecyclerView.layoutManager = LinearLayoutManager(baseActivity)
@@ -839,6 +880,44 @@ class PlanFragment : BaseFragment<FragmentPlanBinding?>(), ActivitiesAdapter.Cho
 
         })
 
+        var model = AdModel()
+        for (m in viewModel.dataManager.ads.ads!!) {
+            if (m.pageCode?.toInt() == Constants.DEVART_LINK) {
+                model = m
+                break
+            }
+        }
+        when (model.type) {
+            "Video" -> {
+                videoView.visibility = View.VISIBLE
+                mediaSource = SimpleMediaSource(model.resourceLink)
+                videoView.play(mediaSource);
+            }
+            "Image" -> {
+
+                imageView.visibility = View.VISIBLE
+                Glide.with(this).load(model.resourceLink).centerCrop()
+                    .placeholder(R.drawable.devart_logo).into(imageView)
+            }
+            "GIF" -> {
+                imageView.visibility = View.VISIBLE
+                Glide.with(this).asGif().load(model.resourceLink).centerCrop()
+                    .placeholder(R.drawable.devart_logo).into(imageView);
+
+
+            }
+            "Slider" -> {
+                bannerslider.visibility = View.VISIBLE
+                Slider.init(PicassoImageLoadingService(context))
+                bannerslider?.setInterval(5000)
+
+                val list = ArrayList<String>()
+                for (i in model.slideImages!!) {
+                    list.add(i?.link!!)
+                }
+                bannerslider?.setAdapter(MainSliderAdapter(list))
+            }
+        }
 
     }
 

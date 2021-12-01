@@ -24,17 +24,19 @@ import com.devartlab.databinding.ActivityEmployeeReportBinding
 import com.devartlab.model.Cycle
 import com.devartlab.model.EmployeeReport
 import com.devartlab.data.room.filterdata.FilterDataEntity
+import com.devartlab.model.AdModel
 import com.devartlab.model.StartEndPoint
 import com.devartlab.ui.dialogs.chooseemployee.ChooseEmployee
 import com.devartlab.ui.dialogs.chooseemployee.ChooseEmployeeInterFace
 import com.devartlab.ui.main.ui.callmanagement.employee.temp.TempReportFragment
 import com.devartlab.ui.main.ui.cycles.ChangeCycle
 import com.devartlab.ui.main.ui.cycles.ChangeCycleInterface
-import com.devartlab.utils.CommonUtilities
-import com.devartlab.utils.ProgressLoading
+import com.devartlab.utils.*
+import com.jarvanmo.exoplayerview.media.SimpleMediaSource
 import com.ramijemli.percentagechartview.PercentageChartView
 import devs.mulham.horizontalcalendar.HorizontalCalendar
 import devs.mulham.horizontalcalendar.utils.HorizontalCalendarListener
+import ss.com.bannerslider.Slider
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -45,6 +47,7 @@ class EmployeeReportActivity : BaseActivity<ActivityEmployeeReportBinding>(), Ch
     lateinit var viewModel: EmployeeReportViewModel
     lateinit var adapter: EmployeeReportAdapter
     lateinit var chooseEmployee: ChooseEmployee
+    lateinit var mediaSource: SimpleMediaSource
     var horizontalCalendar: HorizontalCalendar? = null
     var startDate: Calendar? = null
     var endDate: Calendar? = null
@@ -76,8 +79,44 @@ class EmployeeReportActivity : BaseActivity<ActivityEmployeeReportBinding>(), Ch
         fmt = SimpleDateFormat("yyyy-MM-dd", Locale.US)
         DATE = fmt?.format(CommonUtilities.currentToMillis)
 
+        var model = AdModel()
+        for (m in viewModel.dataManager.ads.ads!!) {
+            if (m.pageCode?.toInt() == Constants.DAILY_REPORT) {
+                model = m
+                break
+            }
+        }
+        when (model.type) {
+            "Video" -> {
+                binding.videoView.visibility = View.VISIBLE
+                mediaSource = SimpleMediaSource(model.resourceLink)
+                binding.videoView.play(mediaSource);
+            }
+            "Image" -> {
+
+                binding.imageView.visibility = View.VISIBLE
+                Glide.with(this).load(model.resourceLink).centerCrop()
+                    .placeholder(R.drawable.devart_logo).into(binding.imageView)
+            }
+            "GIF" -> {
+                binding.imageView.visibility = View.VISIBLE
+                Glide.with(this).asGif().load(model.resourceLink).centerCrop()
+                    .placeholder(R.drawable.devart_logo).into(binding.imageView);
 
 
+            }
+            "Slider" -> {
+                binding.bannerSlider.visibility = View.VISIBLE
+                Slider.init(PicassoImageLoadingService(this))
+                binding.bannerSlider?.setInterval(5000)
+
+                val list = ArrayList<String>()
+                for (i in model.slideImages!!) {
+                    list.add(i?.link!!)
+                }
+                binding.bannerSlider?.setAdapter(MainSliderAdapter(list))
+            }
+        }
         filterDatamodel = FilterDataEntity(
             viewModel!!.dataManager.user.empId,
             viewModel!!.dataManager.user.nameAr,

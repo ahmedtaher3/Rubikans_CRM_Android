@@ -96,7 +96,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ChooseEmployeeInterFac
 
         var model = AdModel()
         for (m in viewModel.dataManager.ads.ads!!) {
-            if (m.pageCode?.toInt() == Constants.SELF_SERVICES_PAGE) {
+            if (m.pageCode?.toInt() == Constants.CALL_MANAGEMENT_PAGE) {
                 model = m
                 break
             }
