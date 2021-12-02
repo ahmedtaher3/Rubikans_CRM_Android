@@ -176,7 +176,8 @@
                             android:layout_gravity="end"
                             android:gravity="center"
                             android:padding="@dimen/text_padding_top_5dp"
-                            android:background="@color/grey"
+                            android:layout_marginEnd="5dp"
+                            android:background="@color/red"
                             android:src="@drawable/ic_hide_show_ads"/>
                         <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/recycler"
