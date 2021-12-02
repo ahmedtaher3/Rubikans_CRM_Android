@@ -38,47 +38,66 @@
                 app:layout_behavior="@string/appbar_scrolling_view_behavior"
                 tools:showIn="@layout/app_bar_main">
 
-
-                <androidx.cardview.widget.CardView
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/constr_ads"
                     android:layout_width="match_parent"
-                    android:layout_height="270dp"
-                    app:cardBackgroundColor="@android:color/white"
-                    app:cardCornerRadius="5dp"
-                    app:cardElevation="2dp"
-                    app:cardUseCompatPadding="true">
+                    android:layout_height="wrap_content">
 
-                    <RelativeLayout
+                    <androidx.cardview.widget.CardView
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent">
+                        android:layout_height="270dp"
+                        app:cardBackgroundColor="@android:color/white"
+                        app:cardCornerRadius="5dp"
+                        app:cardElevation="2dp"
+                        app:cardUseCompatPadding="true"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
 
-
-                        <com.jarvanmo.exoplayerview.ui.ExoVideoView
-                            android:id="@+id/videoView"
+                        <RelativeLayout
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:visibility="gone" />
-
-                        <ImageView
-                            android:id="@+id/imageView"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:visibility="gone" />
+                            android:layout_height="match_parent">
 
 
-                        <ss.com.bannerslider.Slider
-                            android:id="@+id/bannerSlider"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:visibility="gone"
+                            <com.jarvanmo.exoplayerview.ui.ExoVideoView
+                                android:id="@+id/videoView"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:visibility="gone" />
 
-                            app:slider_loopSlides="true" />
+                            <ImageView
+                                android:id="@+id/imageView"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:visibility="gone" />
 
 
-                    </RelativeLayout>
+                            <ss.com.bannerslider.Slider
+                                android:id="@+id/bannerSlider"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:visibility="gone"
+
+                                app:slider_loopSlides="true" />
 
 
-                </androidx.cardview.widget.CardView>
+                        </RelativeLayout>
 
+
+                    </androidx.cardview.widget.CardView>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <ImageView
+                    android:id="@+id/btn_hide_show_ads"
+                    android:layout_width="wrap_content"
+                    android:layout_height="26dp"
+                    android:layout_gravity="end"
+                    android:layout_marginEnd="5dp"
+                    android:background="@drawable/custom_bg_btn_blue"
+                    android:gravity="center"
+                    android:src="@drawable/ic_hide_show_ads" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recycler"

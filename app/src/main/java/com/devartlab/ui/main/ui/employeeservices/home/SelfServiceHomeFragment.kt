@@ -129,6 +129,19 @@ class SelfServiceHomeFragment : BaseFragment<FragmentSelfServiceHomeBinding>(),
                 binding.bannerSlider?.setAdapter(MainSliderAdapter(list))
             }
         }
+        binding.btnHideShowAds.setOnClickListener {
+            if(binding.constrAds.visibility == View.VISIBLE) {
+                binding.constrAds.setVisibility(View.GONE)
+                binding.btnHideShowAds.setImageResource( R.drawable.ic_show_hide_ads)
+//                binding.btnHideShowAds.setBackgroundColor(binding.btnHideShowAds.
+//                getContext().getResources().getColor(R.color.colorPrimary))
+            }else{
+                binding.constrAds.setVisibility(View.VISIBLE)
+                binding.btnHideShowAds.setImageResource(R.drawable.ic_hide_show_ads)
+//                binding.btnHideShowAds.setBackgroundColor(binding.btnHideShowAds.
+//                getContext().getResources().getColor(R.color.red))
+            }
+        }
 
 
 

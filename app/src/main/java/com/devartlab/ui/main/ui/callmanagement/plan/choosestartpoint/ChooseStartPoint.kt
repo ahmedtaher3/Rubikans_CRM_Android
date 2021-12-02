@@ -6,10 +6,12 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.View
+import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -55,6 +57,8 @@ class ChooseStartPoint(
     lateinit var imageView: ImageView
     lateinit var bannerslider: Slider
     lateinit var close: ImageView
+    lateinit var btnHideShowAds:ImageView
+    lateinit var constrAds: ConstraintLayout
     lateinit var startPointAdapter: StartPointAdapter
     lateinit var mediaSource: SimpleMediaSource
     var myAPI: ApiServices? = null
@@ -82,6 +86,8 @@ class ChooseStartPoint(
         imageView = findViewById(R.id.imageView)
         bannerslider = findViewById(R.id.bannerSlider)
         recyclerView = findViewById(R.id.startPointRecyclerView)
+        btnHideShowAds=findViewById(R.id.btn_hide_show_ads)
+        constrAds=findViewById(R.id.constr_ads)
         close = findViewById(R.id.close)
         editText = findViewById(R.id.editText_search)
         recyclerView.layoutManager = LinearLayoutManager(context)
@@ -123,6 +129,20 @@ class ChooseStartPoint(
                     list.add(i?.link!!)
                 }
                 bannerslider?.setAdapter(MainSliderAdapter(list))
+            }
+        }
+
+        btnHideShowAds.setOnClickListener {
+            if(constrAds.visibility == View.VISIBLE) {
+                constrAds.setVisibility(View.GONE)
+                btnHideShowAds.setImageResource( R.drawable.ic_show_hide_ads)
+//                binding.btnHideShowAds.setBackgroundColor(binding.btnHideShowAds.
+//                getContext().getResources().getColor(R.color.colorPrimary))
+            }else{
+                constrAds.setVisibility(View.VISIBLE)
+                btnHideShowAds.setImageResource(R.drawable.ic_hide_show_ads)
+//                binding.btnHideShowAds.setBackgroundColor(binding.btnHideShowAds.
+//                getContext().getResources().getColor(R.color.red))
             }
         }
         editText?.addTextChangedListener(object : TextWatcher {

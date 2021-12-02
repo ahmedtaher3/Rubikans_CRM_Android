@@ -105,7 +105,6 @@
                 android:layout_height="match_parent">
 
 
-
                 <ScrollView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -169,16 +168,17 @@
                             </androidx.cardview.widget.CardView>
 
                         </androidx.constraintlayout.widget.ConstraintLayout>
+
                         <ImageView
                             android:id="@+id/btn_hide_show_ads"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_height="26dp"
                             android:layout_gravity="end"
-                            android:gravity="center"
-                            android:padding="@dimen/text_padding_top_5dp"
                             android:layout_marginEnd="5dp"
-                            android:background="@color/red"
-                            android:src="@drawable/ic_hide_show_ads"/>
+                            android:background="@drawable/custom_bg_btn_blue"
+                            android:gravity="center"
+                            android:src="@drawable/ic_hide_show_ads" />
+
                         <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/recycler"
                             android:layout_width="match_parent"
