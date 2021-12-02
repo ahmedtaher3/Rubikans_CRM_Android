@@ -9,20 +9,23 @@
         <entry key="..\:/DevartLabCRM/app/src/main/res/layout/call_managment_home_item.xml" value="0.20742753623188406" />
         <entry key="..\:/DevartLabCRM/app/src/main/res/layout/nav_header_main.xml" value="0.20833333333333334" />
         <entry key="..\:/work/DevartLab/DevartLabCRMproject/app/src/main/res/drawable/custom_bg_btn_blue.xml" value="0.21" />
+        <entry key="..\:/work/DevartLab/DevartLabCRMproject/app/src/main/res/drawable/ic_calendar.xml" value="0.2203125" />
         <entry key="..\:/work/DevartLab/DevartLabCRMproject/app/src/main/res/drawable/ic_hide_show_ads.xml" value="0.2203125" />
         <entry key="..\:/work/DevartLab/DevartLabCRMproject/app/src/main/res/drawable/ic_show_hide_ads.xml" value="0.2203125" />
         <entry key="..\:/work/DevartLab/DevartLabCRMproject/app/src/main/res/layout/activity_call_management.xml" value="0.20416666666666666" />
         <entry key="..\:/work/DevartLab/DevartLabCRMproject/app/src/main/res/layout/activity_choose_start_point.xml" value="0.20416666666666666" />
-        <entry key="..\:/work/DevartLab/DevartLabCRMproject/app/src/main/res/layout/activity_devart_link.xml" value="0.37592592592592594" />
+        <entry key="..\:/work/DevartLab/DevartLabCRMproject/app/src/main/res/layout/activity_devart_link.xml" value="0.25" />
         <entry key="..\:/work/DevartLab/DevartLabCRMproject/app/src/main/res/layout/activity_employee_report.xml" value="0.20416666666666666" />
         <entry key="..\:/work/DevartLab/DevartLabCRMproject/app/src/main/res/layout/activity_images_slider.xml" value="0.20416666666666666" />
         <entry key="..\:/work/DevartLab/DevartLabCRMproject/app/src/main/res/layout/activity_item.xml" value="0.20416666666666666" />
         <entry key="..\:/work/DevartLab/DevartLabCRMproject/app/src/main/res/layout/activity_login.xml" value="0.22" />
         <entry key="..\:/work/DevartLab/DevartLabCRMproject/app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="..\:/work/DevartLab/DevartLabCRMproject/app/src/main/res/layout/activity_more_details_ads.xml" value="0.33" />
         <entry key="..\:/work/DevartLab/DevartLabCRMproject/app/src/main/res/layout/activity_report_daily.xml" value="0.20416666666666666" />
         <entry key="..\:/work/DevartLab/DevartLabCRMproject/app/src/main/res/layout/activity_show_plan.xml" value="0.1" />
         <entry key="..\:/work/DevartLab/DevartLabCRMproject/app/src/main/res/layout/activity_update_plan.xml" value="0.20416666666666666" />
         <entry key="..\:/work/DevartLab/DevartLabCRMproject/app/src/main/res/layout/approve_penalties_item.xml" value="0.20416666666666666" />
+        <entry key="..\:/work/DevartLab/DevartLabCRMproject/app/src/main/res/layout/call_managment_home_item.xml" value="0.20416666666666666" />
         <entry key="..\:/work/DevartLab/DevartLabCRMproject/app/src/main/res/layout/choose_activity_type.xml" value="0.20416666666666666" />
         <entry key="..\:/work/DevartLab/DevartLabCRMproject/app/src/main/res/layout/confirm_dialog.xml" value="0.20416666666666666" />
         <entry key="..\:/work/DevartLab/DevartLabCRMproject/app/src/main/res/layout/fragment_all_requests.xml" value="0.20416666666666666" />
