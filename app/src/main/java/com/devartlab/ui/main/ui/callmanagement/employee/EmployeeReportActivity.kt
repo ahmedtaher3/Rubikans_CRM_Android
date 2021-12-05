@@ -84,6 +84,9 @@ class EmployeeReportActivity : BaseActivity<ActivityEmployeeReportBinding>(), Ch
             if (m.pageCode?.toInt() == Constants.DAILY_REPORT) {
                 model = m
                 break
+            }else{
+                binding.imageView.visibility = View.VISIBLE
+                binding.imageView.setImageResource(R.drawable.dr_hussain)
             }
         }
         when (model.type) {
@@ -96,12 +99,12 @@ class EmployeeReportActivity : BaseActivity<ActivityEmployeeReportBinding>(), Ch
 
                 binding.imageView.visibility = View.VISIBLE
                 Glide.with(this).load(model.resourceLink).centerCrop()
-                    .placeholder(R.drawable.devart_logo).into(binding.imageView)
+                    .placeholder(R.drawable.dr_hussain).into(binding.imageView)
             }
             "GIF" -> {
                 binding.imageView.visibility = View.VISIBLE
                 Glide.with(this).asGif().load(model.resourceLink).centerCrop()
-                    .placeholder(R.drawable.devart_logo).into(binding.imageView);
+                    .placeholder(R.drawable.dr_hussain).into(binding.imageView);
 
 
             }

@@ -48,6 +48,9 @@ class DevartLinkActivity : BaseActivity<ActivityDevartLinkBinding>(),
             if (m.pageCode?.toInt() == Constants.DEVART_LINK) {
                 model = m
                 break
+            }else{
+                binding.imageView.visibility = View.VISIBLE
+                binding.imageView.setImageResource(R.drawable.dr_hussain)
             }
         }
         when (model.type) {
@@ -60,12 +63,12 @@ class DevartLinkActivity : BaseActivity<ActivityDevartLinkBinding>(),
 
                 binding.imageView.visibility = View.VISIBLE
                 Glide.with(this).load(model.resourceLink).centerCrop()
-                    .placeholder(R.drawable.devart_logo).into(binding.imageView)
+                    .placeholder(R.drawable.dr_hussain).into(binding.imageView)
             }
             "GIF" -> {
                 binding.imageView.visibility = View.VISIBLE
                 Glide.with(this).asGif().load(model.resourceLink).centerCrop()
-                    .placeholder(R.drawable.devart_logo).into(binding.imageView);
+                    .placeholder(R.drawable.dr_hussain).into(binding.imageView);
 
 
             }

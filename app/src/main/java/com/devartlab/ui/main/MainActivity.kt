@@ -104,6 +104,9 @@ class MainActivity : BaseActivity<ActivityMainBinding?>(), View.OnClickListener,
             if (m.pageCode?.toInt() == Constants.HOME_PAGE) {
                 model = m
                 break
+            }else{
+                binding.imageView.visibility = View.VISIBLE
+                binding.imageView.setImageResource(R.drawable.dr_hussain)
             }
         }
         when (model.type) {
@@ -116,12 +119,12 @@ class MainActivity : BaseActivity<ActivityMainBinding?>(), View.OnClickListener,
 
                 binding.imageView.visibility = View.VISIBLE
                 Glide.with(this).load(model.resourceLink)
-                    .centerCrop().placeholder(R.drawable.devart_logo).into(binding.imageView)
+                    .centerCrop().placeholder(R.drawable.dr_hussain).into(binding.imageView)
             }
             "GIF" -> {
                 binding.imageView.visibility = View.VISIBLE
                 Glide.with(this).asGif().load(model.resourceLink)
-                    .centerCrop().placeholder(R.drawable.devart_logo).into(binding.imageView);
+                    .centerCrop().placeholder(R.drawable.dr_hussain).into(binding.imageView);
 
 
             }
@@ -297,7 +300,7 @@ class MainActivity : BaseActivity<ActivityMainBinding?>(), View.OnClickListener,
         list.add(CardModel(2, resources.getString(R.string.self_service), R.drawable.self_service))
         list.add(CardModel(3, resources.getString(R.string.my_profile), R.drawable.employee))
         list.add(CardModel(4, resources.getString(R.string.market_request), R.drawable.money))
-        list.add(CardModel(5, "DevartLink", R.drawable.devartlink))
+     //   list.add(CardModel(5, "DevartLink", R.drawable.devartlink))
 
         adapter = MenuListAdapter(this, list, this)
         val layoutManager = GridLayoutManager(this, 2)

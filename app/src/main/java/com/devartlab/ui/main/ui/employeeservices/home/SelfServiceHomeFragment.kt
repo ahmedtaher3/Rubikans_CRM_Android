@@ -24,6 +24,7 @@ import com.devartlab.data.room.filterdata.FilterDataEntity
 import com.devartlab.model.AdModel
 import com.devartlab.ui.dialogs.chooseemployee.ChooseEmployee
 import com.devartlab.ui.dialogs.chooseemployee.ChooseEmployeeInterFace
+import com.devartlab.ui.dialogs.placeholder
 import com.devartlab.ui.main.ui.callmanagement.syncdata.SyncDataDialog
 import com.devartlab.ui.main.ui.employeeservices.EmployeeServicesActivity
 import com.devartlab.ui.main.ui.employeeservices.SubmitFingerprintActivity
@@ -44,6 +45,7 @@ import com.jarvanmo.exoplayerview.media.SimpleMediaSource
 import io.reactivex.Completable
 import io.reactivex.functions.Action
 import io.reactivex.schedulers.Schedulers
+import kotlinx.android.synthetic.main.activity_devart_link.*
 import ss.com.bannerslider.Slider
 
 
@@ -98,6 +100,9 @@ class SelfServiceHomeFragment : BaseFragment<FragmentSelfServiceHomeBinding>(),
             if (m.pageCode?.toInt() == Constants.SELF_SERVICES_PAGE) {
                 model = m
                 break
+            }else{
+                binding.imageView.visibility = View.VISIBLE
+                binding.imageView.setImageResource(R.drawable.dr_hussain)
             }
         }
         when (model.type) {
@@ -109,12 +114,13 @@ class SelfServiceHomeFragment : BaseFragment<FragmentSelfServiceHomeBinding>(),
             "Image" -> {
 
                 binding.imageView.visibility = View.VISIBLE
-                Glide.with(this).load(model.resourceLink).centerCrop().placeholder(R.drawable.devart_logo).into(binding.imageView)
+                    Glide.with(this).load(model.resourceLink)
+                        .placeholder(R.drawable.dr_hussain).into(binding.imageView)
             }
             "GIF" -> {
                 binding.imageView.visibility = View.VISIBLE
-                Glide.with(this).asGif().load(model.resourceLink).centerCrop().placeholder(R.drawable.devart_logo).into(binding.imageView);
-
+                    Glide.with(this).asGif().load(model.resourceLink)
+                        .placeholder(R.drawable.dr_hussain).into(binding.imageView)
 
             }
             "Slider" -> {
@@ -130,12 +136,12 @@ class SelfServiceHomeFragment : BaseFragment<FragmentSelfServiceHomeBinding>(),
             }
         }
         binding.btnHideShowAds.setOnClickListener {
-            if(binding.constrAds.visibility == View.VISIBLE) {
+            if (binding.constrAds.visibility == View.VISIBLE) {
                 binding.constrAds.setVisibility(View.GONE)
-                binding.btnHideShowAds.setImageResource( R.drawable.ic_show_hide_ads)
+                binding.btnHideShowAds.setImageResource(R.drawable.ic_show_hide_ads)
 //                binding.btnHideShowAds.setBackgroundColor(binding.btnHideShowAds.
 //                getContext().getResources().getColor(R.color.colorPrimary))
-            }else{
+            } else {
                 binding.constrAds.setVisibility(View.VISIBLE)
                 binding.btnHideShowAds.setImageResource(R.drawable.ic_hide_show_ads)
 //                binding.btnHideShowAds.setBackgroundColor(binding.btnHideShowAds.

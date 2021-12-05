@@ -107,6 +107,9 @@ class PlanFragment : BaseFragment<FragmentPlanBinding?>(), ActivitiesAdapter.Cho
             if (m.pageCode?.toInt() == Constants.PLAN_RECYCLER) {
                 model = m
                 break
+            }else{
+                binding.imageView.visibility = View.VISIBLE
+                binding.imageView.setImageResource(R.drawable.dr_hussain)
             }
         }
         when (model.type) {
@@ -119,12 +122,12 @@ class PlanFragment : BaseFragment<FragmentPlanBinding?>(), ActivitiesAdapter.Cho
 
                 binding.imageView.visibility = View.VISIBLE
                 Glide.with(this).load(model.resourceLink).centerCrop()
-                    .placeholder(R.drawable.devart_logo).into(binding.imageView)
+                    .placeholder(R.drawable.dr_hussain).into(binding.imageView)
             }
             "GIF" -> {
                 binding.imageView.visibility = View.VISIBLE
                 Glide.with(this).asGif().load(model.resourceLink).centerCrop()
-                    .placeholder(R.drawable.devart_logo).into(binding.imageView);
+                    .placeholder(R.drawable.dr_hussain).into(binding.imageView);
 
 
             }
@@ -898,6 +901,9 @@ class PlanFragment : BaseFragment<FragmentPlanBinding?>(), ActivitiesAdapter.Cho
             if (m.pageCode?.toInt() == Constants.CREATE_PLAN) {
                 model = m
                 break
+            }else{
+                imageView.visibility = View.VISIBLE
+                imageView.setImageResource(R.drawable.dr_hussain)
             }
         }
         when (model.type) {
@@ -910,12 +916,12 @@ class PlanFragment : BaseFragment<FragmentPlanBinding?>(), ActivitiesAdapter.Cho
 
                 imageView.visibility = View.VISIBLE
                 Glide.with(this).load(model.resourceLink).centerCrop()
-                    .placeholder(R.drawable.devart_logo).into(imageView)
+                    .placeholder(R.drawable.dr_hussain).into(imageView)
             }
             "GIF" -> {
                 imageView.visibility = View.VISIBLE
                 Glide.with(this).asGif().load(model.resourceLink).centerCrop()
-                    .placeholder(R.drawable.devart_logo).into(imageView);
+                    .placeholder(R.drawable.dr_hussain).into(imageView);
 
 
             }

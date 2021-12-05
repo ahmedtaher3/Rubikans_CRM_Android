@@ -99,6 +99,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ChooseEmployeeInterFac
             if (m.pageCode?.toInt() == Constants.CALL_MANAGEMENT_PAGE) {
                 model = m
                 break
+            }else{
+                binding.imageView.visibility = View.VISIBLE
+                binding.imageView.setImageResource(R.drawable.dr_hussain)
             }
         }
         when (model.type) {
@@ -110,11 +113,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ChooseEmployeeInterFac
             "Image" -> {
 
                 binding.imageView.visibility = View.VISIBLE
-                Glide.with(this).load(model.resourceLink).centerCrop().placeholder(R.drawable.devart_logo).into(binding.imageView)
+                Glide.with(this).load(model.resourceLink).centerCrop().placeholder(R.drawable.dr_hussain).into(binding.imageView)
             }
             "GIF" -> {
                 binding.imageView.visibility = View.VISIBLE
-                Glide.with(this).asGif().load(model.resourceLink).centerCrop().placeholder(R.drawable.devart_logo).into(binding.imageView);
+                Glide.with(this).asGif().load(model.resourceLink).centerCrop().placeholder(R.drawable.dr_hussain).into(binding.imageView);
 
 
             }

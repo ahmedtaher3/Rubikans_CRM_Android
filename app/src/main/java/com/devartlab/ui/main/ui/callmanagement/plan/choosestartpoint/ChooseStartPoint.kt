@@ -98,6 +98,9 @@ class ChooseStartPoint(
             if (m.pageCode?.toInt() == Constants.CHOOSE_START_POINT) {
                 model = m
                 break
+            }else{
+                imageView.visibility = View.VISIBLE
+                imageView.setImageResource(R.drawable.dr_hussain)
             }
         }
         when (model.type) {
@@ -110,12 +113,12 @@ class ChooseStartPoint(
 
                 imageView.visibility = View.VISIBLE
                 Glide.with(context).load(model.resourceLink).centerCrop()
-                    .placeholder(R.drawable.devart_logo).into(imageView)
+                    .placeholder(R.drawable.dr_hussain).into(imageView)
             }
             "GIF" -> {
                 imageView.visibility = View.VISIBLE
                 Glide.with(context).asGif().load(model.resourceLink).centerCrop()
-                    .placeholder(R.drawable.devart_logo).into(imageView);
+                    .placeholder(R.drawable.dr_hussain).into(imageView);
 
 
             }
