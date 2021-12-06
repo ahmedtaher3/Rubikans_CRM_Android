@@ -125,7 +125,8 @@ class SelfServiceHomeFragment : BaseFragment<FragmentSelfServiceHomeBinding>(),
             "Video" -> {
                 binding.videoView.visibility = View.VISIBLE
                 val mediaSource = SimpleMediaSource(model.resourceLink)
-                binding.videoView.videoUrl(model.resourceLink)
+               // binding.videoView.videoUrl(model.resourceLink)
+                binding.videoView.play(mediaSource)
 
             }
             "Image" -> {
@@ -392,9 +393,9 @@ class SelfServiceHomeFragment : BaseFragment<FragmentSelfServiceHomeBinding>(),
 
     }
 
-//    override fun onStop() {
-//        super.onStop()
-//        binding.videoView.stop()
-//    }
+    override fun onStop() {
+        super.onStop()
+        binding.videoView.stop()
+    }
 
 }
