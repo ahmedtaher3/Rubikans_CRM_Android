@@ -103,10 +103,17 @@ class MainActivity : BaseActivity<ActivityMainBinding?>(), View.OnClickListener,
         for (m in viewModel.dataManager.ads.ads!!) {
             if (m.pageCode?.toInt() == Constants.HOME_PAGE) {
                 model = m
+                binding.imageView.visibility = View.GONE
                 break
-            }else{
+            } else {
                 binding.imageView.visibility = View.VISIBLE
                 binding.imageView.setImageResource(R.drawable.dr_hussain)
+            }
+        }
+
+        if (!model.webPageLink.equals("")) {
+            binding.cardviewAds.setOnClickListener {
+                openWebPage(model.webPageLink)
             }
         }
         when (model.type) {
@@ -141,12 +148,12 @@ class MainActivity : BaseActivity<ActivityMainBinding?>(), View.OnClickListener,
             }
         }
         binding.btnHideShowAds.setOnClickListener {
-            if(binding.constrAds.visibility == View.VISIBLE) {
+            if (binding.constrAds.visibility == View.VISIBLE) {
                 binding.constrAds.setVisibility(View.GONE)
-                binding.btnHideShowAds.setImageResource( R.drawable.ic_show_hide_ads)
+                binding.btnHideShowAds.setImageResource(R.drawable.ic_show_hide_ads)
 //                binding.btnHideShowAds.setBackgroundColor(binding.btnHideShowAds.
 //                getContext().getResources().getColor(R.color.colorPrimary))
-            }else{
+            } else {
                 binding.constrAds.setVisibility(View.VISIBLE)
                 binding.btnHideShowAds.setImageResource(R.drawable.ic_hide_show_ads)
 //                binding.btnHideShowAds.setBackgroundColor(binding.btnHideShowAds.
@@ -300,7 +307,7 @@ class MainActivity : BaseActivity<ActivityMainBinding?>(), View.OnClickListener,
         list.add(CardModel(2, resources.getString(R.string.self_service), R.drawable.self_service))
         list.add(CardModel(3, resources.getString(R.string.my_profile), R.drawable.employee))
         list.add(CardModel(4, resources.getString(R.string.market_request), R.drawable.money))
-     //   list.add(CardModel(5, "DevartLink", R.drawable.devartlink))
+        //   list.add(CardModel(5, "DevartLink", R.drawable.devartlink))
 
         adapter = MenuListAdapter(this, list, this)
         val layoutManager = GridLayoutManager(this, 2)

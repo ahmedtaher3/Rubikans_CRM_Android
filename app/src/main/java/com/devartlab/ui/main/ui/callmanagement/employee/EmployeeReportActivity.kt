@@ -83,10 +83,16 @@ class EmployeeReportActivity : BaseActivity<ActivityEmployeeReportBinding>(), Ch
         for (m in viewModel.dataManager.ads.ads!!) {
             if (m.pageCode?.toInt() == Constants.DAILY_REPORT) {
                 model = m
+                binding.imageView.visibility = View.GONE
                 break
             }else{
                 binding.imageView.visibility = View.VISIBLE
                 binding.imageView.setImageResource(R.drawable.dr_hussain)
+            }
+        }
+        if (!model.webPageLink.equals("")) {
+            binding.cardviewAds.setOnClickListener {
+                openWebPage(model.webPageLink)
             }
         }
         when (model.type) {

@@ -2,6 +2,7 @@ package com.devartlab.ui.main.ui.employeeservices.home
 
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -40,13 +41,20 @@ import com.devartlab.utils.CommonUtilities
 import com.devartlab.utils.Constants
 import com.devartlab.utils.MainSliderAdapter
 import com.devartlab.utils.PicassoImageLoadingService
+import com.google.android.exoplayer2.ui.AspectRatioFrameLayout
 import com.google.gson.Gson
 import com.jarvanmo.exoplayerview.media.SimpleMediaSource
+import com.jarvanmo.exoplayerview.ui.ExoVideoPlaybackControlView
 import io.reactivex.Completable
 import io.reactivex.functions.Action
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_devart_link.*
 import ss.com.bannerslider.Slider
+import kotlin.math.log
+import com.google.android.exoplayer2.ui.PlaybackControlView
+
+
+
 
 
 private const val TAG = "SelfServiceHomeFragment"
@@ -98,18 +106,27 @@ class SelfServiceHomeFragment : BaseFragment<FragmentSelfServiceHomeBinding>(),
         var model = AdModel()
         for (m in viewModel.dataManager.ads.ads!!) {
             if (m.pageCode?.toInt() == Constants.SELF_SERVICES_PAGE) {
+                Log.e("xxx",m.pageCode)
                 model = m
+                binding.imageView.visibility = View.GONE
                 break
             }else{
                 binding.imageView.visibility = View.VISIBLE
                 binding.imageView.setImageResource(R.drawable.dr_hussain)
             }
         }
+
+        if (!model.webPageLink.equals("")) {
+            binding.cardviewAds.setOnClickListener {
+                openWebPage(model.webPageLink)
+            }
+        }
         when (model.type) {
             "Video" -> {
                 binding.videoView.visibility = View.VISIBLE
                 val mediaSource = SimpleMediaSource(model.resourceLink)
-                binding.videoView.play(mediaSource);
+                binding.videoView.videoUrl(model.resourceLink)
+
             }
             "Image" -> {
 
@@ -139,13 +156,9 @@ class SelfServiceHomeFragment : BaseFragment<FragmentSelfServiceHomeBinding>(),
             if (binding.constrAds.visibility == View.VISIBLE) {
                 binding.constrAds.setVisibility(View.GONE)
                 binding.btnHideShowAds.setImageResource(R.drawable.ic_show_hide_ads)
-//                binding.btnHideShowAds.setBackgroundColor(binding.btnHideShowAds.
-//                getContext().getResources().getColor(R.color.colorPrimary))
             } else {
                 binding.constrAds.setVisibility(View.VISIBLE)
                 binding.btnHideShowAds.setImageResource(R.drawable.ic_hide_show_ads)
-//                binding.btnHideShowAds.setBackgroundColor(binding.btnHideShowAds.
-//                getContext().getResources().getColor(R.color.red))
             }
         }
 
@@ -379,9 +392,9 @@ class SelfServiceHomeFragment : BaseFragment<FragmentSelfServiceHomeBinding>(),
 
     }
 
-    override fun onStop() {
-        super.onStop()
-        binding.videoView.stop()
-    }
+//    override fun onStop() {
+//        super.onStop()
+//        binding.videoView.stop()
+//    }
 
 }

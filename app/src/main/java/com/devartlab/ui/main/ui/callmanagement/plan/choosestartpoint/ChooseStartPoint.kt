@@ -1,6 +1,8 @@
 package com.devartlab.ui.main.ui.callmanagement.plan.choosestartpoint
 
 import android.app.Dialog
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -11,7 +13,9 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.ContextCompat.startActivity
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -61,6 +65,7 @@ class ChooseStartPoint(
     lateinit var constrAds: ConstraintLayout
     lateinit var startPointAdapter: StartPointAdapter
     lateinit var mediaSource: SimpleMediaSource
+    lateinit var cardviewAds: CardView
     var myAPI: ApiServices? = null
     var retrofit: Retrofit? = null
     var editText: EditText? = null
@@ -88,6 +93,7 @@ class ChooseStartPoint(
         recyclerView = findViewById(R.id.startPointRecyclerView)
         btnHideShowAds=findViewById(R.id.btn_hide_show_ads)
         constrAds=findViewById(R.id.constr_ads)
+        cardviewAds = findViewById(R.id.cardview_ads)
         close = findViewById(R.id.close)
         editText = findViewById(R.id.editText_search)
         recyclerView.layoutManager = LinearLayoutManager(context)
@@ -97,10 +103,19 @@ class ChooseStartPoint(
         for (m in dataManager.ads.ads!!) {
             if (m.pageCode?.toInt() == Constants.CHOOSE_START_POINT) {
                 model = m
+                imageView.visibility = View.GONE
                 break
             }else{
                 imageView.visibility = View.VISIBLE
                 imageView.setImageResource(R.drawable.dr_hussain)
+            }
+        }
+        if (!model.webPageLink.equals("")) {
+            cardviewAds.setOnClickListener {
+
+                val uri = Uri.parse(model.webPageLink)
+                val intent = Intent(Intent.ACTION_VIEW, uri)
+                startActivity(context,intent,null)
             }
         }
         when (model.type) {
@@ -232,4 +247,5 @@ class ChooseStartPoint(
                 })
         }
     }
+
 }

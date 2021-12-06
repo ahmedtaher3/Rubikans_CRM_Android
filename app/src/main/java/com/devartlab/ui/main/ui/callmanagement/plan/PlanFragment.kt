@@ -12,6 +12,7 @@ import android.util.Log
 import android.view.*
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.cardview.widget.CardView
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -106,10 +107,16 @@ class PlanFragment : BaseFragment<FragmentPlanBinding?>(), ActivitiesAdapter.Cho
         for (m in viewModel.dataManager.ads.ads!!) {
             if (m.pageCode?.toInt() == Constants.PLAN_RECYCLER) {
                 model = m
+                binding.imageView.visibility = View.GONE
                 break
             }else{
                 binding.imageView.visibility = View.VISIBLE
                 binding.imageView.setImageResource(R.drawable.dr_hussain)
+            }
+        }
+        if (!model.webPageLink.equals("")) {
+            binding.cardviewAds.setOnClickListener {
+                openWebPage(model.webPageLink)
             }
         }
         when (model.type) {
@@ -867,6 +874,7 @@ class PlanFragment : BaseFragment<FragmentPlanBinding?>(), ActivitiesAdapter.Cho
         var videoView: ExoVideoView = choose_activity_type.findViewById(R.id.videoView)
         var imageView:ImageView = choose_activity_type.findViewById(R.id.imageView)
         var bannerslider:Slider = choose_activity_type.findViewById(R.id.bannerSlider)
+        var cardviewAds:CardView = choose_activity_type.findViewById(R.id.cardview_ads)
         var close: ImageView = choose_activity_type.findViewById(R.id.close)
         var activitiesAdapter: ActivitiesAdapter = ActivitiesAdapter(baseActivity, this)
         activitiesRecyclerView.layoutManager = LinearLayoutManager(baseActivity)
@@ -900,10 +908,16 @@ class PlanFragment : BaseFragment<FragmentPlanBinding?>(), ActivitiesAdapter.Cho
         for (m in viewModel.dataManager.ads.ads!!) {
             if (m.pageCode?.toInt() == Constants.CREATE_PLAN) {
                 model = m
+                imageView.visibility = View.GONE
                 break
             }else{
                 imageView.visibility = View.VISIBLE
                 imageView.setImageResource(R.drawable.dr_hussain)
+            }
+        }
+        if (!model.webPageLink.equals("")) {
+            cardviewAds.setOnClickListener {
+                openWebPage(model.webPageLink)
             }
         }
         when (model.type) {

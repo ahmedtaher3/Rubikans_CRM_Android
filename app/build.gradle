@@ -203,4 +203,5 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.8.8'
     implementation 'com.github.smarteist:autoimageslider:1.4.0'
 
+    implementation 'bg.devlabs:fullscreen-video-view:1.2.0'
 }

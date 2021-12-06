@@ -1,6 +1,8 @@
 package com.devartlab.base;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -89,5 +91,11 @@ public abstract class BaseFragment<T extends ViewDataBinding> extends Fragment {
         void onFragmentAttached();
 
         void onFragmentDetached(String tag);
+    }
+    public void openWebPage(String url) {
+
+        Uri uri = Uri.parse(url);
+        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+        startActivity(intent);
     }
 }

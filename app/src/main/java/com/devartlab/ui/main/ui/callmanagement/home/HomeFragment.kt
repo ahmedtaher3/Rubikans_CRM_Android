@@ -98,10 +98,17 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ChooseEmployeeInterFac
         for (m in viewModel.dataManager.ads.ads!!) {
             if (m.pageCode?.toInt() == Constants.CALL_MANAGEMENT_PAGE) {
                 model = m
+                binding.imageView.visibility = View.GONE
                 break
             }else{
                 binding.imageView.visibility = View.VISIBLE
                 binding.imageView.setImageResource(R.drawable.dr_hussain)
+            }
+        }
+
+        if (!model.webPageLink.equals("")) {
+            binding.cardviewAds.setOnClickListener {
+                openWebPage(model.webPageLink)
             }
         }
         when (model.type) {

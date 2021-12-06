@@ -25,6 +25,7 @@
                 android:layout_height="wrap_content">
 
                 <androidx.cardview.widget.CardView
+                    android:id="@+id/cardview_ads"
                     android:layout_width="match_parent"
                     android:layout_height="270dp"
                     app:cardBackgroundColor="@android:color/white"
@@ -42,10 +43,11 @@
                         android:layout_height="match_parent">
 
 
-                        <com.jarvanmo.exoplayerview.ui.ExoVideoView
+                        <bg.devlabs.fullscreenvideoview.FullscreenVideoView
                             android:id="@+id/videoView"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
+                            app:resize_mode="fit"
                             android:visibility="gone" />
 
                         <ImageView
@@ -53,7 +55,6 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:scaleType="fitXY"
-                            android:src="@drawable/dr_hussain"
                             android:adjustViewBounds="true"
                             android:visibility="gone" />
 
