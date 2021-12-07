@@ -16,11 +16,17 @@ import com.devartlab.base.BaseActivity
 import com.devartlab.data.retrofit.ApiServices
 import com.devartlab.databinding.FragmentMarketRequestTypesBinding
 import com.devartlab.data.room.filterdata.FilterDataEntity
+import com.devartlab.model.AdModel
 import com.devartlab.model.Summary
 import com.devartlab.ui.dialogs.chooseemployee.ChooseEmployee
 import com.devartlab.ui.dialogs.chooseemployee.ChooseEmployeeInterFace
 import com.devartlab.ui.main.ui.market.requests.MarketRequestsFragment
+import com.devartlab.utils.Constants
+import com.devartlab.utils.MainSliderAdapter
+import com.devartlab.utils.PicassoImageLoadingService
 import com.devartlab.utils.ProgressLoading
+import com.jarvanmo.exoplayerview.media.SimpleMediaSource
+import ss.com.bannerslider.Slider
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -38,6 +44,7 @@ class MarketRequestTypesActivity : BaseActivity<FragmentMarketRequestTypesBindin
     lateinit var viewModel: MarketRequestViewModel
     lateinit var adapter: MarketRequestTypesAdapter
     lateinit var chooseEmployee: ChooseEmployee
+    lateinit var mediaSource: SimpleMediaSource
 
 
     var mainAcc = true
@@ -84,7 +91,66 @@ class MarketRequestTypesActivity : BaseActivity<FragmentMarketRequestTypesBindin
             chooseEmployee.show()
         })
 
+        var model = AdModel()
+        for (m in viewModel.dataManager.ads.ads!!) {
+            if (m.pageCode?.toInt() == Constants.MARKET_REQUEST) {
+                model = m
+                binding.imageView.visibility = View.GONE
+                break
+            }else{
+                binding.imageView.visibility = View.VISIBLE
+                binding.imageView.setImageResource(R.drawable.dr_hussain)
+            }
+        }
+        if (!model.webPageLink.equals("")) {
+            binding.cardviewAds.setOnClickListener {
+                openWebPage(model.webPageLink)
+            }
+        }
+        when (model.type) {
+            "Video" -> {
+                binding.videoView.visibility = View.VISIBLE
+                mediaSource = SimpleMediaSource(model.resourceLink)
+                binding.videoView.play(mediaSource);
+            }
+            "Image" -> {
 
+                binding.imageView.visibility = View.VISIBLE
+                Glide.with(this).load(model.resourceLink).centerCrop()
+                    .placeholder(R.drawable.dr_hussain).into(binding.imageView)
+            }
+            "GIF" -> {
+                binding.imageView.visibility = View.VISIBLE
+                Glide.with(this).asGif().load(model.resourceLink).centerCrop()
+                    .placeholder(R.drawable.dr_hussain).into(binding.imageView);
+
+
+            }
+            "Slider" -> {
+                binding.bannerSlider.visibility = View.VISIBLE
+                Slider.init(PicassoImageLoadingService(this))
+                binding.bannerSlider?.setInterval(5000)
+
+                val list = ArrayList<String>()
+                for (i in model.slideImages!!) {
+                    list.add(i?.link!!)
+                }
+                binding.bannerSlider?.setAdapter(MainSliderAdapter(list))
+            }
+        }
+        binding.btnHideShowAds.setOnClickListener {
+            if(binding.constrAds.visibility == View.VISIBLE) {
+                binding.constrAds.setVisibility(View.GONE)
+                binding.btnHideShowAds.setImageResource( R.drawable.ic_show_hide_ads)
+//                binding.btnHideShowAds.setBackgroundColor(binding.btnHideShowAds.
+//                getContext().getResources().getColor(R.color.colorPrimary))
+            }else{
+                binding.constrAds.setVisibility(View.VISIBLE)
+                binding.btnHideShowAds.setImageResource(R.drawable.ic_hide_show_ads)
+//                binding.btnHideShowAds.setBackgroundColor(binding.btnHideShowAds.
+//                getContext().getResources().getColor(R.color.red))
+            }
+        }
 
 
         viewModel.getData(0, accId, accAddId)

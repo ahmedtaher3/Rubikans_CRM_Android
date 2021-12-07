@@ -15,10 +15,13 @@ import android.view.*
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.cardview.widget.CardView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.widget.NestedScrollView
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.devartlab.R
 import com.devartlab.base.BaseFragment
 import com.devartlab.data.room.activity.ActivityEntity
@@ -27,6 +30,7 @@ import com.devartlab.data.room.plan.PlanEntity
 import com.devartlab.data.room.startPoint.StartPointEntity
 import com.devartlab.data.room.values.ValuesEntity
 import com.devartlab.databinding.FragmentSuperReportBinding
+import com.devartlab.model.AdModel
 import com.devartlab.model.Cycle
 import com.devartlab.model.Shift
 import com.devartlab.model.StartPoint
@@ -43,8 +47,11 @@ import com.devartlab.ui.main.ui.callmanagement.plan.choosestartpoint.ChooseStart
 import com.devartlab.ui.main.ui.callmanagement.report.ReportInterface
 import com.devartlab.ui.main.ui.callmanagement.report.ReportViewModel
 import com.devartlab.utils.*
+import com.jarvanmo.exoplayerview.media.SimpleMediaSource
+import com.jarvanmo.exoplayerview.ui.ExoVideoView
 import devs.mulham.horizontalcalendar.HorizontalCalendar
 import devs.mulham.horizontalcalendar.utils.HorizontalCalendarListener
+import ss.com.bannerslider.Slider
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -61,6 +68,7 @@ class ManagerReportFragment : BaseFragment<FragmentSuperReportBinding>()
     lateinit var viewModel: ReportViewModel
     lateinit var binding: FragmentSuperReportBinding
     lateinit var dialog: ConfirmDialog
+    lateinit var mediaSource: SimpleMediaSource
 
     private var adapter: SuperReportAdapter? = null
     private var DATE: String? = null
@@ -109,7 +117,66 @@ class ManagerReportFragment : BaseFragment<FragmentSuperReportBinding>()
         binding = viewDataBinding
         setHasOptionsMenu(true);
 
+        var model = AdModel()
+        for (m in viewModel.dataManager.ads.ads!!) {
+            if (m.pageCode?.toInt() == Constants.MANAGER_REPORT) {
+                model = m
+                binding.imageView.visibility = View.GONE
+                break
+            }else{
+                binding.imageView.visibility = View.VISIBLE
+                binding.imageView.setImageResource(R.drawable.dr_hussain)
+            }
+        }
+        if (!model.webPageLink.equals("")) {
+            binding.cardviewAds.setOnClickListener {
+                openWebPage(model.webPageLink)
+            }
+        }
+        when (model.type) {
+            "Video" -> {
+                binding.videoView.visibility = View.VISIBLE
+                mediaSource = SimpleMediaSource(model.resourceLink)
+                binding.videoView.play(mediaSource);
+            }
+            "Image" -> {
 
+                binding.imageView.visibility = View.VISIBLE
+                Glide.with(this).load(model.resourceLink).centerCrop()
+                    .placeholder(R.drawable.dr_hussain).into(binding.imageView)
+            }
+            "GIF" -> {
+                binding.imageView.visibility = View.VISIBLE
+                Glide.with(this).asGif().load(model.resourceLink).centerCrop()
+                    .placeholder(R.drawable.dr_hussain).into(binding.imageView);
+
+
+            }
+            "Slider" -> {
+                binding.bannerSlider.visibility = View.VISIBLE
+                Slider.init(PicassoImageLoadingService(context))
+                binding.bannerSlider?.setInterval(5000)
+
+                val list = ArrayList<String>()
+                for (i in model.slideImages!!) {
+                    list.add(i?.link!!)
+                }
+                binding.bannerSlider?.setAdapter(MainSliderAdapter(list))
+            }
+        }
+        binding.btnHideShowAds.setOnClickListener {
+            if(binding.constrAds.visibility == View.VISIBLE) {
+                binding.constrAds.setVisibility(View.GONE)
+                binding.btnHideShowAds.setImageResource( R.drawable.ic_show_hide_ads)
+//                binding.btnHideShowAds.setBackgroundColor(binding.btnHideShowAds.
+//                getContext().getResources().getColor(R.color.colorPrimary))
+            }else{
+                binding.constrAds.setVisibility(View.VISIBLE)
+                binding.btnHideShowAds.setImageResource(R.drawable.ic_hide_show_ads)
+//                binding.btnHideShowAds.setBackgroundColor(binding.btnHideShowAds.
+//                getContext().getResources().getColor(R.color.red))
+            }
+        }
 
         if (viewModel.dataManager.user.isOpenReportLimit) {
 
@@ -1173,6 +1240,13 @@ class ManagerReportFragment : BaseFragment<FragmentSuperReportBinding>()
         var activitiesRecyclerView: RecyclerView =
             choose_activity_type.findViewById(R.id.activitiesRecyclerView)
         var close: ImageView = choose_activity_type.findViewById(R.id.close)
+        var videoView: ExoVideoView = choose_activity_type.findViewById(R.id.videoView)
+        var imageView:ImageView = choose_activity_type.findViewById(R.id.imageView)
+        var bannerslider: Slider = choose_activity_type.findViewById(R.id.bannerSlider)
+        var cardviewAds: CardView = choose_activity_type.findViewById(R.id.cardview_ads)
+        var btnHideShowAds: ImageView= choose_activity_type.findViewById(R.id.btn_hide_show_ads)
+        var constrAds: ConstraintLayout = choose_activity_type.findViewById(R.id.constr_ads)
+        lateinit var mediaSource: SimpleMediaSource
 
         var activitiesAdapter = ActivitiesAdapter(baseActivity, this)
         activitiesRecyclerView.layoutManager = LinearLayoutManager(baseActivity)
@@ -1186,6 +1260,69 @@ class ManagerReportFragment : BaseFragment<FragmentSuperReportBinding>()
             activitiesAdapter.setMyData(it)
 
         })
+        var model = AdModel()
+        Log.e("xx", model.pageCode.toString())
+        for (m in viewModel.dataManager.ads.ads!!) {
+            Log.e("xxx",model.pageCode.toString())
+            if (m.pageCode?.toInt() == Constants.CREATE_PLAN) {
+                Log.e("xx",m.pageCode)
+                model = m
+                imageView.visibility = View.GONE
+                break
+            }else{
+                imageView.visibility = View.VISIBLE
+                imageView.setImageResource(R.drawable.dr_hussain)
+            }
+        }
+        if (!model.webPageLink.equals("")) {
+            cardviewAds.setOnClickListener {
+                openWebPage(model.webPageLink)
+            }
+        }
+        when (model.type) {
+            "Video" -> {
+                videoView.visibility = View.VISIBLE
+                mediaSource = SimpleMediaSource(model.resourceLink)
+                videoView.play(mediaSource);
+            }
+            "Image" -> {
+
+                imageView.visibility = View.VISIBLE
+                Glide.with(this).load(model.resourceLink).centerCrop()
+                    .placeholder(R.drawable.dr_hussain).into(imageView)
+            }
+            "GIF" -> {
+                imageView.visibility = View.VISIBLE
+                Glide.with(this).asGif().load(model.resourceLink).centerCrop()
+                    .placeholder(R.drawable.dr_hussain).into(imageView);
+
+
+            }
+            "Slider" -> {
+                bannerslider.visibility = View.VISIBLE
+                Slider.init(PicassoImageLoadingService(context))
+                bannerslider?.setInterval(5000)
+
+                val list = ArrayList<String>()
+                for (i in model.slideImages!!) {
+                    list.add(i?.link!!)
+                }
+                bannerslider?.setAdapter(MainSliderAdapter(list))
+            }
+        }
+        btnHideShowAds.setOnClickListener {
+            if(constrAds.visibility == View.VISIBLE) {
+                constrAds.setVisibility(View.GONE)
+                btnHideShowAds.setImageResource( R.drawable.ic_show_hide_ads)
+//                binding.btnHideShowAds.setBackgroundColor(binding.btnHideShowAds.
+//                getContext().getResources().getColor(R.color.colorPrimary))
+            }else{
+                constrAds.setVisibility(View.VISIBLE)
+                btnHideShowAds.setImageResource(R.drawable.ic_hide_show_ads)
+//                binding.btnHideShowAds.setBackgroundColor(binding.btnHideShowAds.
+//                getContext().getResources().getColor(R.color.red))
+            }
+        }
     }
 
     /**

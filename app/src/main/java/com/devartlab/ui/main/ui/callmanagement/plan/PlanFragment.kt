@@ -13,6 +13,7 @@ import android.view.*
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -871,12 +872,15 @@ class PlanFragment : BaseFragment<FragmentPlanBinding?>(), ActivitiesAdapter.Cho
         var activitiesRecyclerView: RecyclerView =
             choose_activity_type.findViewById(R.id.activitiesRecyclerView)
         var progressBar: ProgressBar = choose_activity_type.findViewById(R.id.ProgressBar)
+        var close: ImageView = choose_activity_type.findViewById(R.id.close)
         var videoView: ExoVideoView = choose_activity_type.findViewById(R.id.videoView)
         var imageView:ImageView = choose_activity_type.findViewById(R.id.imageView)
         var bannerslider:Slider = choose_activity_type.findViewById(R.id.bannerSlider)
         var cardviewAds:CardView = choose_activity_type.findViewById(R.id.cardview_ads)
-        var close: ImageView = choose_activity_type.findViewById(R.id.close)
         var activitiesAdapter: ActivitiesAdapter = ActivitiesAdapter(baseActivity, this)
+        var btnHideShowAds: ImageView= choose_activity_type.findViewById(R.id.btn_hide_show_ads)
+        var constrAds: ConstraintLayout= choose_activity_type.findViewById(R.id.constr_ads)
+
         activitiesRecyclerView.layoutManager = LinearLayoutManager(baseActivity)
         activitiesRecyclerView.adapter = activitiesAdapter
 
@@ -905,7 +909,9 @@ class PlanFragment : BaseFragment<FragmentPlanBinding?>(), ActivitiesAdapter.Cho
         })
 
         var model = AdModel()
+        Log.e("xx", model.pageCode.toString())
         for (m in viewModel.dataManager.ads.ads!!) {
+            Log.e("xxx",model.pageCode.toString())
             if (m.pageCode?.toInt() == Constants.CREATE_PLAN) {
                 model = m
                 imageView.visibility = View.GONE
@@ -951,15 +957,15 @@ class PlanFragment : BaseFragment<FragmentPlanBinding?>(), ActivitiesAdapter.Cho
                 bannerslider?.setAdapter(MainSliderAdapter(list))
             }
         }
-        binding.btnHideShowAds.setOnClickListener {
-            if(binding.constrAds.visibility == View.VISIBLE) {
-                binding.constrAds.setVisibility(View.GONE)
-                binding.btnHideShowAds.setImageResource( R.drawable.ic_show_hide_ads)
+        btnHideShowAds.setOnClickListener {
+            if(constrAds.visibility == View.VISIBLE) {
+                constrAds.setVisibility(View.GONE)
+                btnHideShowAds.setImageResource( R.drawable.ic_show_hide_ads)
 //                binding.btnHideShowAds.setBackgroundColor(binding.btnHideShowAds.
 //                getContext().getResources().getColor(R.color.colorPrimary))
             }else{
-                binding.constrAds.setVisibility(View.VISIBLE)
-                binding.btnHideShowAds.setImageResource(R.drawable.ic_hide_show_ads)
+                constrAds.setVisibility(View.VISIBLE)
+                btnHideShowAds.setImageResource(R.drawable.ic_hide_show_ads)
 //                binding.btnHideShowAds.setBackgroundColor(binding.btnHideShowAds.
 //                getContext().getResources().getColor(R.color.red))
             }

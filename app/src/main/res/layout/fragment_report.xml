@@ -65,10 +65,10 @@
                     android:id="@+id/cardview_ads"
                     android:layout_width="match_parent"
                     android:layout_height="270dp"
+                    android:scaleType="fitXY"
                     app:cardBackgroundColor="@android:color/white"
                     app:cardCornerRadius="5dp"
                     app:cardElevation="2dp"
-                    android:scaleType="fitXY"
                     app:cardUseCompatPadding="true"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -99,41 +99,46 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:visibility="gone"
-
                             app:slider_loopSlides="true" />
 
-
-                        <TextView
-                            android:id="@+id/tv_more_than_ads"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentStart="true"
-                            android:layout_alignParentBottom="true"
-                            android:layout_marginStart="15dp"
-                            android:layout_marginTop="15dp"
-                            android:layout_marginEnd="15dp"
-                            android:layout_marginBottom="15dp"
-                            android:text="@string/more_than"
-                            android:visibility="gone"
-                            android:textColor="@color/colorPrimary"
-                            android:textSize="15sp" />
                     </RelativeLayout>
-
-
                 </androidx.cardview.widget.CardView>
-
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <ImageView
-                android:id="@+id/btn_hide_show_ads"
-                android:layout_width="wrap_content"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
                 android:layout_height="26dp"
-                android:layout_gravity="end"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="-4dp"
                 android:layout_marginEnd="4dp"
-                android:layout_marginTop="-5dp"
-                android:background="@drawable/custom_bg_btn_blue"
-                android:gravity="center"
-                android:src="@drawable/ic_hide_show_ads" />
+                android:layout_marginBottom="5dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_more_than_ads"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/custom_bg_btn_blue"
+                    android:padding="5dp"
+                    android:text="@string/more_than"
+                    android:textColor="@color/white"
+                    android:textSize="15sp"
+                    android:visibility="visible"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+                <ImageView
+                    android:id="@+id/btn_hide_show_ads"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="end"
+                    android:background="@drawable/custom_bg_btn_blue"
+                    android:gravity="center"
+                    android:src="@drawable/ic_hide_show_ads"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -217,10 +222,7 @@
                         android:layout_margin="20dp"
                         app:layout_anchorGravity="bottom|right|end"
                         app:srcCompat="@drawable/add_icon" />
-
-
                 </androidx.coordinatorlayout.widget.CoordinatorLayout>
-
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/startShift"
@@ -235,10 +237,7 @@
                     android:text="@string/start_shift"
                     android:textAllCaps="false"
                     android:textColor="@color/white" />
-
             </LinearLayout>
-
-
         </LinearLayout>
     </ScrollView>
 </layout>
