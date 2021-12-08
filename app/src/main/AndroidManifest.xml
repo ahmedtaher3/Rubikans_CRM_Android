@@ -44,6 +44,7 @@
         <activity android:name=".ui.main.ui.callmanagement.trade.selectProductContract.SelectProductsActivity" />
         <activity android:name=".ui.main.ui.callmanagement.planListpermission.ListPermissionActivity" />
         <activity android:name=".ui.main.ui.callmanagement.ranks.doublevisit.DVDetailsActivity" />
+        <activity android:name=".ui.main.ui.moreDetailsAds.MoreDetailsAdsActivity" />
         <activity android:name=".ui.main.ui.callmanagement.ranks.medicalriprank.MedicalRepReportActivity" />
         <activity android:name=".ui.main.ui.callmanagement.trade.TradeActivity" />
         <activity android:name=".ui.main.ui.trade.NewCustomerActivity" />
