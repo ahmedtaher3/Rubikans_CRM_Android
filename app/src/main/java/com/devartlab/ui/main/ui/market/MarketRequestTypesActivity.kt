@@ -1,5 +1,6 @@
 package com.devartlab.ui.main.ui.market
 
+import android.content.Intent
 import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.util.Base64
@@ -21,6 +22,7 @@ import com.devartlab.model.Summary
 import com.devartlab.ui.dialogs.chooseemployee.ChooseEmployee
 import com.devartlab.ui.dialogs.chooseemployee.ChooseEmployeeInterFace
 import com.devartlab.ui.main.ui.market.requests.MarketRequestsFragment
+import com.devartlab.ui.main.ui.moreDetailsAds.MoreDetailsAdsActivity
 import com.devartlab.utils.Constants
 import com.devartlab.utils.MainSliderAdapter
 import com.devartlab.utils.PicassoImageLoadingService
@@ -93,14 +95,15 @@ class MarketRequestTypesActivity : BaseActivity<FragmentMarketRequestTypesBindin
 
         var model = AdModel()
         for (m in viewModel.dataManager.ads.ads!!) {
-            if (m.pageCode?.toInt() == Constants.MARKET_REQUEST) {
+            if (m.pageCode?.toInt() == Constants.HOME_PAGE) {
                 model = m
-                binding.imageView.visibility = View.GONE
                 break
-            }else{
-                binding.imageView.visibility = View.VISIBLE
-                binding.imageView.setImageResource(R.drawable.dr_hussain)
             }
+        }
+        if (model.resourceLink.equals(null)) {
+            binding.imageView.visibility = View.VISIBLE
+            Glide.with(this).load(model.default_ad_image)
+                .centerCrop().placeholder(R.drawable.dr_hussain).into(binding.imageView)
         }
         if (!model.webPageLink.equals("")) {
             binding.cardviewAds.setOnClickListener {
@@ -116,13 +119,13 @@ class MarketRequestTypesActivity : BaseActivity<FragmentMarketRequestTypesBindin
             "Image" -> {
 
                 binding.imageView.visibility = View.VISIBLE
-                Glide.with(this).load(model.resourceLink).centerCrop()
-                    .placeholder(R.drawable.dr_hussain).into(binding.imageView)
+                Glide.with(this).load(model.resourceLink)
+                    .centerCrop().placeholder(R.drawable.dr_hussain).into(binding.imageView)
             }
             "GIF" -> {
                 binding.imageView.visibility = View.VISIBLE
-                Glide.with(this).asGif().load(model.resourceLink).centerCrop()
-                    .placeholder(R.drawable.dr_hussain).into(binding.imageView);
+                Glide.with(this).asGif().load(model.resourceLink)
+                    .centerCrop().placeholder(R.drawable.dr_hussain).into(binding.imageView);
 
 
             }
@@ -138,17 +141,24 @@ class MarketRequestTypesActivity : BaseActivity<FragmentMarketRequestTypesBindin
                 binding.bannerSlider?.setAdapter(MainSliderAdapter(list))
             }
         }
-        binding.btnHideShowAds.setOnClickListener {
-            if(binding.constrAds.visibility == View.VISIBLE) {
-                binding.constrAds.setVisibility(View.GONE)
-                binding.btnHideShowAds.setImageResource( R.drawable.ic_show_hide_ads)
-//                binding.btnHideShowAds.setBackgroundColor(binding.btnHideShowAds.
-//                getContext().getResources().getColor(R.color.colorPrimary))
-            }else{
-                binding.constrAds.setVisibility(View.VISIBLE)
-                binding.btnHideShowAds.setImageResource(R.drawable.ic_hide_show_ads)
-//                binding.btnHideShowAds.setBackgroundColor(binding.btnHideShowAds.
-//                getContext().getResources().getColor(R.color.red))
+        if (model.show_ad == true) {
+            binding.btnHideShowAds.setVisibility(View.VISIBLE)
+            binding.btnHideShowAds.setOnClickListener {
+                if (binding.constrAds.visibility == View.VISIBLE) {
+                    binding.constrAds.setVisibility(View.GONE)
+                    binding.btnHideShowAds.setImageResource(R.drawable.ic_show_hide_ads)
+                } else {
+                    binding.constrAds.setVisibility(View.VISIBLE)
+                    binding.btnHideShowAds.setImageResource(R.drawable.ic_hide_show_ads)
+                }
+            }
+        }
+        if (model.show_more == true) {
+            binding.tvMoreThanAds.setVisibility(View.VISIBLE)
+            binding.tvMoreThanAds.setOnClickListener {
+                intent = Intent(this, MoreDetailsAdsActivity::class.java)
+                intent.putExtra("pageCode", model.pageCode)
+                startActivity(intent)
             }
         }
 

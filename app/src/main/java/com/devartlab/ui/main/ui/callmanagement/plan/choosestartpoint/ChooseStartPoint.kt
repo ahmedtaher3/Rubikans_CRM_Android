@@ -8,10 +8,7 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.View
-import android.widget.Button
-import android.widget.EditText
-import android.widget.ImageView
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -30,6 +27,7 @@ import com.devartlab.data.room.list.ListEntity
 import com.devartlab.data.shared.DataManager
 import com.devartlab.model.AdModel
 import com.devartlab.ui.main.ui.devartlink.DevartLinkViewModel
+import com.devartlab.ui.main.ui.moreDetailsAds.MoreDetailsAdsActivity
 import com.devartlab.utils.Constants
 import com.devartlab.utils.MainSliderAdapter
 import com.devartlab.utils.PicassoImageLoadingService
@@ -61,11 +59,12 @@ class ChooseStartPoint(
     lateinit var imageView: ImageView
     lateinit var bannerslider: Slider
     lateinit var close: ImageView
-    lateinit var btnHideShowAds:ImageView
+    lateinit var btnHideShowAds: ImageView
     lateinit var constrAds: ConstraintLayout
     lateinit var startPointAdapter: StartPointAdapter
     lateinit var mediaSource: SimpleMediaSource
     lateinit var cardviewAds: CardView
+    lateinit var moreThanAds: TextView
     var myAPI: ApiServices? = null
     var retrofit: Retrofit? = null
     var editText: EditText? = null
@@ -91,8 +90,9 @@ class ChooseStartPoint(
         imageView = findViewById(R.id.imageView)
         bannerslider = findViewById(R.id.bannerSlider)
         recyclerView = findViewById(R.id.startPointRecyclerView)
-        btnHideShowAds=findViewById(R.id.btn_hide_show_ads)
-        constrAds=findViewById(R.id.constr_ads)
+        btnHideShowAds = findViewById(R.id.btn_hide_show_ads)
+        moreThanAds = findViewById(R.id.tv_more_than_ads)
+        constrAds = findViewById(R.id.constr_ads)
         cardviewAds = findViewById(R.id.cardview_ads)
         close = findViewById(R.id.close)
         editText = findViewById(R.id.editText_search)
@@ -103,16 +103,16 @@ class ChooseStartPoint(
         for (m in dataManager.ads.ads!!) {
             if (m.pageCode?.toInt() == Constants.CHOOSE_START_POINT) {
                 model = m
-                imageView.visibility = View.GONE
                 break
-            }else{
-                imageView.visibility = View.VISIBLE
-                imageView.setImageResource(R.drawable.dr_hussain)
             }
+        }
+        if (model.resourceLink.equals(null)) {
+            imageView.visibility = View.VISIBLE
+            Glide.with(context).load(model.default_ad_image)
+                .centerCrop().placeholder(R.drawable.dr_hussain).into(imageView)
         }
         if (!model.webPageLink.equals("")) {
             cardviewAds.setOnClickListener {
-
                 val uri = Uri.parse(model.webPageLink)
                 val intent = Intent(Intent.ACTION_VIEW, uri)
                 startActivity(context,intent,null)
@@ -125,15 +125,14 @@ class ChooseStartPoint(
                 videoView.play(mediaSource);
             }
             "Image" -> {
-
                 imageView.visibility = View.VISIBLE
-                Glide.with(context).load(model.resourceLink).centerCrop()
-                    .placeholder(R.drawable.dr_hussain).into(imageView)
+                Glide.with(context).load(model.resourceLink)
+                    .centerCrop().placeholder(R.drawable.dr_hussain).into(imageView)
             }
             "GIF" -> {
                 imageView.visibility = View.VISIBLE
-                Glide.with(context).asGif().load(model.resourceLink).centerCrop()
-                    .placeholder(R.drawable.dr_hussain).into(imageView);
+                Glide.with(context).asGif().load(model.resourceLink)
+                    .centerCrop().placeholder(R.drawable.dr_hussain).into(imageView);
 
 
             }
@@ -149,38 +148,26 @@ class ChooseStartPoint(
                 bannerslider?.setAdapter(MainSliderAdapter(list))
             }
         }
-
-        btnHideShowAds.setOnClickListener {
-            if(constrAds.visibility == View.VISIBLE) {
-                constrAds.setVisibility(View.GONE)
-                btnHideShowAds.setImageResource( R.drawable.ic_show_hide_ads)
-//                binding.btnHideShowAds.setBackgroundColor(binding.btnHideShowAds.
-//                getContext().getResources().getColor(R.color.colorPrimary))
-            }else{
-                constrAds.setVisibility(View.VISIBLE)
-                btnHideShowAds.setImageResource(R.drawable.ic_hide_show_ads)
-//                binding.btnHideShowAds.setBackgroundColor(binding.btnHideShowAds.
-//                getContext().getResources().getColor(R.color.red))
+        if (model.show_ad == true) {
+            btnHideShowAds.setVisibility(View.VISIBLE)
+            btnHideShowAds.setOnClickListener {
+                if (constrAds.visibility == View.VISIBLE) {
+                    constrAds.setVisibility(View.GONE)
+                    btnHideShowAds.setImageResource(R.drawable.ic_show_hide_ads)
+                } else {
+                    constrAds.setVisibility(View.VISIBLE)
+                    btnHideShowAds.setImageResource(R.drawable.ic_hide_show_ads)
+                }
             }
         }
-        editText?.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {}
-            override fun onTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {
-
-
-                if (charSequence.length > 0) {
-                    getStartPointList("0", "0", "0", "0", charSequence.toString())
-
-                } else {
-                    getStartPointList("0", "0", "0", "0", "0")
-
-                }
-
-
+        if (model.show_more == true) {
+            moreThanAds.setVisibility(View.VISIBLE)
+            moreThanAds.setOnClickListener {
+                val  intent = Intent(activity, MoreDetailsAdsActivity::class.java)
+                intent.putExtra("pageCode", model.pageCode)
+                activity.startActivity(intent)
             }
-
-            override fun afterTextChanged(editable: Editable) {}
-        })
+        }
 
         close?.setOnClickListener(View.OnClickListener { dismiss() })
 

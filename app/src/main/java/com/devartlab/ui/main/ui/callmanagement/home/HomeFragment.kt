@@ -41,6 +41,7 @@ import com.devartlab.ui.main.ui.callmanagement.report.superreport.ManagerReportF
 import com.devartlab.ui.main.ui.callmanagement.sync.SyncFragment
 import com.devartlab.ui.main.ui.callmanagement.syncdata.SyncDataDialog
 import com.devartlab.ui.main.ui.callmanagement.trade.TradeReportsFragment
+import com.devartlab.ui.main.ui.moreDetailsAds.MoreDetailsAdsActivity
 import com.devartlab.utils.CommonUtilities
 import com.devartlab.utils.Constants
 import com.devartlab.utils.MainSliderAdapter
@@ -98,14 +99,14 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ChooseEmployeeInterFac
         for (m in viewModel.dataManager.ads.ads!!) {
             if (m.pageCode?.toInt() == Constants.CALL_MANAGEMENT_PAGE) {
                 model = m
-                binding.imageView.visibility = View.GONE
                 break
-            }else{
-                binding.imageView.visibility = View.VISIBLE
-                binding.imageView.setImageResource(R.drawable.dr_hussain)
             }
         }
-
+        if (model.resourceLink.equals(null)) {
+            binding.imageView.visibility = View.VISIBLE
+            Glide.with(this).load(model.default_ad_image)
+                .centerCrop().placeholder(R.drawable.dr_hussain).into(binding.imageView)
+        }
         if (!model.webPageLink.equals("")) {
             binding.cardviewAds.setOnClickListener {
                 openWebPage(model.webPageLink)
@@ -120,17 +121,19 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ChooseEmployeeInterFac
             "Image" -> {
 
                 binding.imageView.visibility = View.VISIBLE
-                Glide.with(this).load(model.resourceLink).centerCrop().placeholder(R.drawable.dr_hussain).into(binding.imageView)
+                Glide.with(this).load(model.resourceLink)
+                    .centerCrop().placeholder(R.drawable.dr_hussain).into(binding.imageView)
             }
             "GIF" -> {
                 binding.imageView.visibility = View.VISIBLE
-                Glide.with(this).asGif().load(model.resourceLink).centerCrop().placeholder(R.drawable.dr_hussain).into(binding.imageView);
+                Glide.with(this).asGif().load(model.resourceLink)
+                    .centerCrop().placeholder(R.drawable.dr_hussain).into(binding.imageView);
 
 
             }
             "Slider" -> {
                 binding.bannerSlider.visibility = View.VISIBLE
-                Slider.init(PicassoImageLoadingService(baseActivity))
+                Slider.init(PicassoImageLoadingService(context))
                 binding.bannerSlider?.setInterval(5000)
 
                 val list = ArrayList<String>()
@@ -140,18 +143,24 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ChooseEmployeeInterFac
                 binding.bannerSlider?.setAdapter(MainSliderAdapter(list))
             }
         }
-
-        binding.btnHideShowAds.setOnClickListener {
-            if(binding.constrAds.visibility == View.VISIBLE) {
-                binding.constrAds.setVisibility(View.GONE)
-                binding.btnHideShowAds.setImageResource( R.drawable.ic_show_hide_ads)
-//                binding.btnHideShowAds.setBackgroundColor(binding.btnHideShowAds.
-//                getContext().getResources().getColor(R.color.colorPrimary))
-            }else{
-                binding.constrAds.setVisibility(View.VISIBLE)
-                binding.btnHideShowAds.setImageResource(R.drawable.ic_hide_show_ads)
-//                binding.btnHideShowAds.setBackgroundColor(binding.btnHideShowAds.
-//                getContext().getResources().getColor(R.color.red))
+        if (model.show_ad == true) {
+            binding.btnHideShowAds.setVisibility(View.VISIBLE)
+            binding.btnHideShowAds.setOnClickListener {
+                if (binding.constrAds.visibility == View.VISIBLE) {
+                    binding.constrAds.setVisibility(View.GONE)
+                    binding.btnHideShowAds.setImageResource(R.drawable.ic_show_hide_ads)
+                } else {
+                    binding.constrAds.setVisibility(View.VISIBLE)
+                    binding.btnHideShowAds.setImageResource(R.drawable.ic_hide_show_ads)
+                }
+            }
+        }
+        if (model.show_more == true) {
+            binding.tvMoreThanAds.setVisibility(View.VISIBLE)
+            binding.tvMoreThanAds.setOnClickListener {
+                val  intent = Intent(getActivity(), MoreDetailsAdsActivity::class.java)
+                intent.putExtra("pageCode", model.pageCode)
+                getActivity()?.startActivity(intent)
             }
         }
 

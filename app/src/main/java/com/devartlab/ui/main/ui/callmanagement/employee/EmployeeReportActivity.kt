@@ -1,5 +1,6 @@
 package com.devartlab.ui.main.ui.callmanagement.employee
 
+import android.content.Intent
 import android.graphics.BitmapFactory
 import android.location.Address
 import android.location.Geocoder
@@ -31,6 +32,7 @@ import com.devartlab.ui.dialogs.chooseemployee.ChooseEmployeeInterFace
 import com.devartlab.ui.main.ui.callmanagement.employee.temp.TempReportFragment
 import com.devartlab.ui.main.ui.cycles.ChangeCycle
 import com.devartlab.ui.main.ui.cycles.ChangeCycleInterface
+import com.devartlab.ui.main.ui.moreDetailsAds.MoreDetailsAdsActivity
 import com.devartlab.utils.*
 import com.jarvanmo.exoplayerview.media.SimpleMediaSource
 import com.ramijemli.percentagechartview.PercentageChartView
@@ -83,12 +85,13 @@ class EmployeeReportActivity : BaseActivity<ActivityEmployeeReportBinding>(), Ch
         for (m in viewModel.dataManager.ads.ads!!) {
             if (m.pageCode?.toInt() == Constants.DAILY_REPORT) {
                 model = m
-                binding.imageView.visibility = View.GONE
                 break
-            }else{
-                binding.imageView.visibility = View.VISIBLE
-                binding.imageView.setImageResource(R.drawable.dr_hussain)
             }
+        }
+        if (model.resourceLink.equals(null)) {
+            binding.imageView.visibility = View.VISIBLE
+            Glide.with(this).load(model.default_ad_image)
+                .centerCrop().placeholder(R.drawable.dr_hussain).into(binding.imageView)
         }
         if (!model.webPageLink.equals("")) {
             binding.cardviewAds.setOnClickListener {
@@ -104,13 +107,13 @@ class EmployeeReportActivity : BaseActivity<ActivityEmployeeReportBinding>(), Ch
             "Image" -> {
 
                 binding.imageView.visibility = View.VISIBLE
-                Glide.with(this).load(model.resourceLink).centerCrop()
-                    .placeholder(R.drawable.dr_hussain).into(binding.imageView)
+                Glide.with(this).load(model.resourceLink)
+                    .centerCrop().placeholder(R.drawable.dr_hussain).into(binding.imageView)
             }
             "GIF" -> {
                 binding.imageView.visibility = View.VISIBLE
-                Glide.with(this).asGif().load(model.resourceLink).centerCrop()
-                    .placeholder(R.drawable.dr_hussain).into(binding.imageView);
+                Glide.with(this).asGif().load(model.resourceLink)
+                    .centerCrop().placeholder(R.drawable.dr_hussain).into(binding.imageView);
 
 
             }
@@ -126,17 +129,24 @@ class EmployeeReportActivity : BaseActivity<ActivityEmployeeReportBinding>(), Ch
                 binding.bannerSlider?.setAdapter(MainSliderAdapter(list))
             }
         }
-        binding.btnHideShowAds.setOnClickListener {
-            if(binding.constrAds.visibility == View.VISIBLE) {
-                binding.constrAds.setVisibility(View.GONE)
-                binding.btnHideShowAds.setImageResource( R.drawable.ic_show_hide_ads)
-//                binding.btnHideShowAds.setBackgroundColor(binding.btnHideShowAds.
-//                getContext().getResources().getColor(R.color.colorPrimary))
-            }else{
-                binding.constrAds.setVisibility(View.VISIBLE)
-                binding.btnHideShowAds.setImageResource(R.drawable.ic_hide_show_ads)
-//                binding.btnHideShowAds.setBackgroundColor(binding.btnHideShowAds.
-//                getContext().getResources().getColor(R.color.red))
+        if (model.show_ad == true) {
+            binding.btnHideShowAds.setVisibility(View.VISIBLE)
+            binding.btnHideShowAds.setOnClickListener {
+                if (binding.constrAds.visibility == View.VISIBLE) {
+                    binding.constrAds.setVisibility(View.GONE)
+                    binding.btnHideShowAds.setImageResource(R.drawable.ic_show_hide_ads)
+                } else {
+                    binding.constrAds.setVisibility(View.VISIBLE)
+                    binding.btnHideShowAds.setImageResource(R.drawable.ic_hide_show_ads)
+                }
+            }
+        }
+        if (model.show_more == true) {
+            binding.tvMoreThanAds.setVisibility(View.VISIBLE)
+            binding.tvMoreThanAds.setOnClickListener {
+                intent = Intent(this, MoreDetailsAdsActivity::class.java)
+                intent.putExtra("pageCode", model.pageCode)
+                startActivity(intent)
             }
         }
         filterDatamodel = FilterDataEntity(

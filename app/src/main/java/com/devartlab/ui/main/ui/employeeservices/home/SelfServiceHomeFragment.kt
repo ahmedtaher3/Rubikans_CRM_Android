@@ -37,6 +37,7 @@ import com.devartlab.ui.main.ui.employeeservices.penalties.google.GetMyPenalties
 import com.devartlab.ui.main.ui.employeeservices.leavework.LeaveWorkActivity
 import com.devartlab.ui.main.ui.employeeservices.businessCard.BusinessCardActivity
 import com.devartlab.ui.main.ui.employeeservices.workfromhome.WorkFromHomeFragment
+import com.devartlab.ui.main.ui.moreDetailsAds.MoreDetailsAdsActivity
 import com.devartlab.utils.CommonUtilities
 import com.devartlab.utils.Constants
 import com.devartlab.utils.MainSliderAdapter
@@ -67,6 +68,7 @@ class SelfServiceHomeFragment : BaseFragment<FragmentSelfServiceHomeBinding>(),
     lateinit var dialog: SyncDataDialog
     lateinit var authorityDao: AuthorityDao
     lateinit var chooseEmployee: ChooseEmployee
+    lateinit var mediaSource: SimpleMediaSource
 
     lateinit var adapter: EmployeeServicesAdapter
 
@@ -106,16 +108,15 @@ class SelfServiceHomeFragment : BaseFragment<FragmentSelfServiceHomeBinding>(),
         var model = AdModel()
         for (m in viewModel.dataManager.ads.ads!!) {
             if (m.pageCode?.toInt() == Constants.SELF_SERVICES_PAGE) {
-                Log.e("xxx",m.pageCode)
                 model = m
-                binding.imageView.visibility = View.GONE
                 break
-            }else{
-                binding.imageView.visibility = View.VISIBLE
-                binding.imageView.setImageResource(R.drawable.dr_hussain)
             }
         }
-
+        if (model.resourceLink.equals(null)) {
+            binding.imageView.visibility = View.VISIBLE
+            Glide.with(this).load(model.default_ad_image)
+                .centerCrop().placeholder(R.drawable.dr_hussain).into(binding.imageView)
+        }
         if (!model.webPageLink.equals("")) {
             binding.cardviewAds.setOnClickListener {
                 openWebPage(model.webPageLink)
@@ -124,26 +125,25 @@ class SelfServiceHomeFragment : BaseFragment<FragmentSelfServiceHomeBinding>(),
         when (model.type) {
             "Video" -> {
                 binding.videoView.visibility = View.VISIBLE
-                val mediaSource = SimpleMediaSource(model.resourceLink)
-               // binding.videoView.videoUrl(model.resourceLink)
-                binding.videoView.play(mediaSource)
-
+                mediaSource = SimpleMediaSource(model.resourceLink)
+                binding.videoView.play(mediaSource);
             }
             "Image" -> {
 
                 binding.imageView.visibility = View.VISIBLE
-                    Glide.with(this).load(model.resourceLink)
-                        .placeholder(R.drawable.dr_hussain).into(binding.imageView)
+                Glide.with(this).load(model.resourceLink)
+                    .centerCrop().placeholder(R.drawable.dr_hussain).into(binding.imageView)
             }
             "GIF" -> {
                 binding.imageView.visibility = View.VISIBLE
-                    Glide.with(this).asGif().load(model.resourceLink)
-                        .placeholder(R.drawable.dr_hussain).into(binding.imageView)
+                Glide.with(this).asGif().load(model.resourceLink)
+                    .centerCrop().placeholder(R.drawable.dr_hussain).into(binding.imageView);
+
 
             }
             "Slider" -> {
                 binding.bannerSlider.visibility = View.VISIBLE
-                Slider.init(PicassoImageLoadingService(baseActivity))
+                Slider.init(PicassoImageLoadingService(context))
                 binding.bannerSlider?.setInterval(5000)
 
                 val list = ArrayList<String>()
@@ -153,13 +153,24 @@ class SelfServiceHomeFragment : BaseFragment<FragmentSelfServiceHomeBinding>(),
                 binding.bannerSlider?.setAdapter(MainSliderAdapter(list))
             }
         }
-        binding.btnHideShowAds.setOnClickListener {
-            if (binding.constrAds.visibility == View.VISIBLE) {
-                binding.constrAds.setVisibility(View.GONE)
-                binding.btnHideShowAds.setImageResource(R.drawable.ic_show_hide_ads)
-            } else {
-                binding.constrAds.setVisibility(View.VISIBLE)
-                binding.btnHideShowAds.setImageResource(R.drawable.ic_hide_show_ads)
+        if (model.show_ad == true) {
+            binding.btnHideShowAds.setVisibility(View.VISIBLE)
+            binding.btnHideShowAds.setOnClickListener {
+                if (binding.constrAds.visibility == View.VISIBLE) {
+                    binding.constrAds.setVisibility(View.GONE)
+                    binding.btnHideShowAds.setImageResource(R.drawable.ic_show_hide_ads)
+                } else {
+                    binding.constrAds.setVisibility(View.VISIBLE)
+                    binding.btnHideShowAds.setImageResource(R.drawable.ic_hide_show_ads)
+                }
+            }
+        }
+        if (model.show_more == true) {
+            binding.tvMoreThanAds.setVisibility(View.VISIBLE)
+            binding.tvMoreThanAds.setOnClickListener {
+                val  intent = Intent(getActivity(), MoreDetailsAdsActivity::class.java)
+                intent.putExtra("pageCode", model.pageCode)
+                getActivity()?.startActivity(intent)
             }
         }
 

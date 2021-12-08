@@ -15,6 +15,7 @@ import com.devartlab.databinding.ActivityDevartLinkBinding
 import com.devartlab.model.AdModel
 import com.devartlab.model.CardModel
 import com.devartlab.ui.main.ui.callmanagement.home.MenuListAdapter
+import com.devartlab.ui.main.ui.moreDetailsAds.MoreDetailsAdsActivity
 import com.devartlab.utils.Constants
 import com.devartlab.utils.MainSliderAdapter
 import com.devartlab.utils.PicassoImageLoadingService
@@ -47,12 +48,13 @@ class DevartLinkActivity : BaseActivity<ActivityDevartLinkBinding>(),
         for (m in viewModel.dataManager.ads.ads!!) {
             if (m.pageCode?.toInt() == Constants.DEVART_LINK) {
                 model = m
-                binding.imageView.visibility = View.GONE
                 break
-            }else{
-                binding.imageView.visibility = View.VISIBLE
-                binding.imageView.setImageResource(R.drawable.dr_hussain)
             }
+        }
+        if (model.resourceLink.equals(null)) {
+            binding.imageView.visibility = View.VISIBLE
+            Glide.with(this).load(model.default_ad_image)
+                .centerCrop().placeholder(R.drawable.dr_hussain).into(binding.imageView)
         }
         if (!model.webPageLink.equals("")) {
             binding.cardviewAds.setOnClickListener {
@@ -68,13 +70,13 @@ class DevartLinkActivity : BaseActivity<ActivityDevartLinkBinding>(),
             "Image" -> {
 
                 binding.imageView.visibility = View.VISIBLE
-                Glide.with(this).load(model.resourceLink).centerCrop()
-                    .placeholder(R.drawable.dr_hussain).into(binding.imageView)
+                Glide.with(this).load(model.resourceLink)
+                    .centerCrop().placeholder(R.drawable.dr_hussain).into(binding.imageView)
             }
             "GIF" -> {
                 binding.imageView.visibility = View.VISIBLE
-                Glide.with(this).asGif().load(model.resourceLink).centerCrop()
-                    .placeholder(R.drawable.dr_hussain).into(binding.imageView);
+                Glide.with(this).asGif().load(model.resourceLink)
+                    .centerCrop().placeholder(R.drawable.dr_hussain).into(binding.imageView);
 
 
             }
@@ -90,17 +92,24 @@ class DevartLinkActivity : BaseActivity<ActivityDevartLinkBinding>(),
                 binding.bannerSlider?.setAdapter(MainSliderAdapter(list))
             }
         }
-        binding.btnHideShowAds.setOnClickListener {
-            if(binding.constrAds.visibility == View.VISIBLE) {
-                binding.constrAds.setVisibility(View.GONE)
-                binding.btnHideShowAds.setImageResource( R.drawable.ic_show_hide_ads)
-//                binding.btnHideShowAds.setBackgroundColor(binding.btnHideShowAds.
-//                getContext().getResources().getColor(R.color.colorPrimary))
-            }else{
-                binding.constrAds.setVisibility(View.VISIBLE)
-                binding.btnHideShowAds.setImageResource(R.drawable.ic_hide_show_ads)
-//                binding.btnHideShowAds.setBackgroundColor(binding.btnHideShowAds.
-//                getContext().getResources().getColor(R.color.red))
+        if (model.show_ad == true) {
+            binding.btnHideShowAds.setVisibility(View.VISIBLE)
+            binding.btnHideShowAds.setOnClickListener {
+                if (binding.constrAds.visibility == View.VISIBLE) {
+                    binding.constrAds.setVisibility(View.GONE)
+                    binding.btnHideShowAds.setImageResource(R.drawable.ic_show_hide_ads)
+                } else {
+                    binding.constrAds.setVisibility(View.VISIBLE)
+                    binding.btnHideShowAds.setImageResource(R.drawable.ic_hide_show_ads)
+                }
+            }
+        }
+        if (model.show_more == true) {
+            binding.tvMoreThanAds.setVisibility(View.VISIBLE)
+            binding.tvMoreThanAds.setOnClickListener {
+                intent = Intent(this, MoreDetailsAdsActivity::class.java)
+                intent.putExtra("pageCode", model.pageCode)
+                startActivity(intent)
             }
         }
         val list = ArrayList<CardModel>()

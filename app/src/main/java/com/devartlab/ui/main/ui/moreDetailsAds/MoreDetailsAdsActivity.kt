@@ -15,6 +15,7 @@ import com.devartlab.model.AdModel
 import com.devartlab.utils.MainSliderAdapter
 import com.devartlab.utils.PicassoImageLoadingService
 import com.google.gson.Gson
+import com.jarvanmo.exoplayerview.media.SimpleMediaSource
 import ss.com.bannerslider.Slider
 
 private const val TAG = "MoreDetailsAdsActivity"
@@ -45,18 +46,18 @@ class MoreDetailsAdsActivity : AppCompatActivity() {
         when (model.view_more_type) {
             "Video" -> {
                 binding.videoView.visibility = View.VISIBLE
-                mediaSource = SimpleMediaSource(model.resourceLink)
+                mediaSource = SimpleMediaSource(model.view_more_image!!.get(0)!!.link)
                 binding.videoView.play(mediaSource);
             }
             "Image" -> {
 
                 binding.imageView.visibility = View.VISIBLE
-                Glide.with(this).load(model.resourceLink)
+                Glide.with(this).load(model.view_more_image!!.get(0)!!.link)
                     .centerCrop().placeholder(R.drawable.dr_hussain).into(binding.imageView)
             }
             "GIF" -> {
                 binding.imageView.visibility = View.VISIBLE
-                Glide.with(this).asGif().load(model.resourceLink)
+                Glide.with(this).asGif().load(model.view_more_image!!.get(0)!!.link)
                     .centerCrop().placeholder(R.drawable.dr_hussain).into(binding.imageView);
 
 
@@ -73,7 +74,9 @@ class MoreDetailsAdsActivity : AppCompatActivity() {
                 binding.bannerSlider?.setAdapter(MainSliderAdapter(list))
             }
         }
-        binding.tvDataCreate.setText(model.createdAt)
+        val str =model.createdAt!!.split("T".toRegex())[0]
+        binding.tvDataCreate.setText(str)
+
         binding.tvTitle.setText(model.view_more_title)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             binding.tvDec.setText(Html.fromHtml(model.view_more_text, Html.FROM_HTML_MODE_LEGACY));

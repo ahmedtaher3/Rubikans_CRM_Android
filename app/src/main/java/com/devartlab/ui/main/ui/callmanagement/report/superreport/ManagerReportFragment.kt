@@ -46,6 +46,7 @@ import com.devartlab.ui.main.ui.callmanagement.plan.choosestartpoint.ChooseStart
 import com.devartlab.ui.main.ui.callmanagement.plan.choosestartpoint.ChooseStartPointInterFace
 import com.devartlab.ui.main.ui.callmanagement.report.ReportInterface
 import com.devartlab.ui.main.ui.callmanagement.report.ReportViewModel
+import com.devartlab.ui.main.ui.moreDetailsAds.MoreDetailsAdsActivity
 import com.devartlab.utils.*
 import com.jarvanmo.exoplayerview.media.SimpleMediaSource
 import com.jarvanmo.exoplayerview.ui.ExoVideoView
@@ -1246,6 +1247,7 @@ class ManagerReportFragment : BaseFragment<FragmentSuperReportBinding>()
         var cardviewAds: CardView = choose_activity_type.findViewById(R.id.cardview_ads)
         var btnHideShowAds: ImageView= choose_activity_type.findViewById(R.id.btn_hide_show_ads)
         var constrAds: ConstraintLayout = choose_activity_type.findViewById(R.id.constr_ads)
+        var moreThanAds:TextView=choose_activity_type.findViewById(R.id.tv_more_than_ads)
         lateinit var mediaSource: SimpleMediaSource
 
         var activitiesAdapter = ActivitiesAdapter(baseActivity, this)
@@ -1261,18 +1263,16 @@ class ManagerReportFragment : BaseFragment<FragmentSuperReportBinding>()
 
         })
         var model = AdModel()
-        Log.e("xx", model.pageCode.toString())
         for (m in viewModel.dataManager.ads.ads!!) {
-            Log.e("xxx",model.pageCode.toString())
             if (m.pageCode?.toInt() == Constants.CREATE_PLAN) {
-                Log.e("xx",m.pageCode)
                 model = m
-                imageView.visibility = View.GONE
                 break
-            }else{
-                imageView.visibility = View.VISIBLE
-                imageView.setImageResource(R.drawable.dr_hussain)
             }
+        }
+        if (model.resourceLink.equals(null)) {
+            imageView.visibility = View.VISIBLE
+            Glide.with(this).load(model.default_ad_image)
+                .centerCrop().placeholder(R.drawable.dr_hussain).into(imageView)
         }
         if (!model.webPageLink.equals("")) {
             cardviewAds.setOnClickListener {
@@ -1286,15 +1286,14 @@ class ManagerReportFragment : BaseFragment<FragmentSuperReportBinding>()
                 videoView.play(mediaSource);
             }
             "Image" -> {
-
                 imageView.visibility = View.VISIBLE
-                Glide.with(this).load(model.resourceLink).centerCrop()
-                    .placeholder(R.drawable.dr_hussain).into(imageView)
+                Glide.with(this).load(model.resourceLink)
+                    .centerCrop().placeholder(R.drawable.dr_hussain).into(imageView)
             }
             "GIF" -> {
                 imageView.visibility = View.VISIBLE
-                Glide.with(this).asGif().load(model.resourceLink).centerCrop()
-                    .placeholder(R.drawable.dr_hussain).into(imageView);
+                Glide.with(this).asGif().load(model.resourceLink)
+                    .centerCrop().placeholder(R.drawable.dr_hussain).into(imageView);
 
 
             }
@@ -1310,17 +1309,24 @@ class ManagerReportFragment : BaseFragment<FragmentSuperReportBinding>()
                 bannerslider?.setAdapter(MainSliderAdapter(list))
             }
         }
-        btnHideShowAds.setOnClickListener {
-            if(constrAds.visibility == View.VISIBLE) {
-                constrAds.setVisibility(View.GONE)
-                btnHideShowAds.setImageResource( R.drawable.ic_show_hide_ads)
-//                binding.btnHideShowAds.setBackgroundColor(binding.btnHideShowAds.
-//                getContext().getResources().getColor(R.color.colorPrimary))
-            }else{
-                constrAds.setVisibility(View.VISIBLE)
-                btnHideShowAds.setImageResource(R.drawable.ic_hide_show_ads)
-//                binding.btnHideShowAds.setBackgroundColor(binding.btnHideShowAds.
-//                getContext().getResources().getColor(R.color.red))
+        if (model.show_ad == true) {
+            btnHideShowAds.setVisibility(View.VISIBLE)
+            btnHideShowAds.setOnClickListener {
+                if (constrAds.visibility == View.VISIBLE) {
+                    constrAds.setVisibility(View.GONE)
+                    btnHideShowAds.setImageResource(R.drawable.ic_show_hide_ads)
+                } else {
+                    constrAds.setVisibility(View.VISIBLE)
+                    btnHideShowAds.setImageResource(R.drawable.ic_hide_show_ads)
+                }
+            }
+        }
+        if (model.show_more == true) {
+            moreThanAds.setVisibility(View.VISIBLE)
+            moreThanAds.setOnClickListener {
+                val  intent = Intent(getActivity(), MoreDetailsAdsActivity::class.java)
+                intent.putExtra("pageCode", model.pageCode)
+                getActivity()?.startActivity(intent)
             }
         }
     }

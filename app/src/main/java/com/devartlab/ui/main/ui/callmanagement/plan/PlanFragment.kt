@@ -36,6 +36,7 @@ import com.devartlab.ui.main.ui.callmanagement.plan.addplan.single.AddPlanSingle
 import com.devartlab.ui.main.ui.callmanagement.plan.choosestartpoint.ChooseStartPoint
 import com.devartlab.ui.main.ui.callmanagement.plan.choosestartpoint.ChooseStartPointInterFace
 import com.devartlab.ui.main.ui.callmanagement.plan.cycles.CyclesDialog
+import com.devartlab.ui.main.ui.moreDetailsAds.MoreDetailsAdsActivity
 import com.devartlab.utils.*
 import com.google.gson.Gson
 import com.jarvanmo.exoplayerview.media.SimpleMediaSource
@@ -47,6 +48,7 @@ import io.reactivex.SingleObserver
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
+import kotlinx.android.synthetic.main.activity_main.*
 import ss.com.bannerslider.Slider
 import java.text.SimpleDateFormat
 import java.util.*
@@ -108,12 +110,13 @@ class PlanFragment : BaseFragment<FragmentPlanBinding?>(), ActivitiesAdapter.Cho
         for (m in viewModel.dataManager.ads.ads!!) {
             if (m.pageCode?.toInt() == Constants.PLAN_RECYCLER) {
                 model = m
-                binding.imageView.visibility = View.GONE
                 break
-            }else{
-                binding.imageView.visibility = View.VISIBLE
-                binding.imageView.setImageResource(R.drawable.dr_hussain)
             }
+        }
+        if (model.resourceLink.equals(null)) {
+            binding.imageView.visibility = View.VISIBLE
+            Glide.with(this).load(model.default_ad_image)
+                .centerCrop().placeholder(R.drawable.dr_hussain).into(binding.imageView)
         }
         if (!model.webPageLink.equals("")) {
             binding.cardviewAds.setOnClickListener {
@@ -129,13 +132,13 @@ class PlanFragment : BaseFragment<FragmentPlanBinding?>(), ActivitiesAdapter.Cho
             "Image" -> {
 
                 binding.imageView.visibility = View.VISIBLE
-                Glide.with(this).load(model.resourceLink).centerCrop()
-                    .placeholder(R.drawable.dr_hussain).into(binding.imageView)
+                Glide.with(this).load(model.resourceLink)
+                    .centerCrop().placeholder(R.drawable.dr_hussain).into(binding.imageView)
             }
             "GIF" -> {
                 binding.imageView.visibility = View.VISIBLE
-                Glide.with(this).asGif().load(model.resourceLink).centerCrop()
-                    .placeholder(R.drawable.dr_hussain).into(binding.imageView);
+                Glide.with(this).asGif().load(model.resourceLink)
+                    .centerCrop().placeholder(R.drawable.dr_hussain).into(binding.imageView);
 
 
             }
@@ -151,17 +154,24 @@ class PlanFragment : BaseFragment<FragmentPlanBinding?>(), ActivitiesAdapter.Cho
                 binding.bannerSlider?.setAdapter(MainSliderAdapter(list))
             }
         }
-        binding.btnHideShowAds.setOnClickListener {
-            if(binding.constrAds.visibility == View.VISIBLE) {
-                binding.constrAds.setVisibility(View.GONE)
-                binding.btnHideShowAds.setImageResource( R.drawable.ic_show_hide_ads)
-//                binding.btnHideShowAds.setBackgroundColor(binding.btnHideShowAds.
-//                getContext().getResources().getColor(R.color.colorPrimary))
-            }else{
-                binding.constrAds.setVisibility(View.VISIBLE)
-                binding.btnHideShowAds.setImageResource(R.drawable.ic_hide_show_ads)
-//                binding.btnHideShowAds.setBackgroundColor(binding.btnHideShowAds.
-//                getContext().getResources().getColor(R.color.red))
+        if (model.show_ad == true) {
+            binding.btnHideShowAds.setVisibility(View.VISIBLE)
+            binding.btnHideShowAds.setOnClickListener {
+                if (binding.constrAds.visibility == View.VISIBLE) {
+                    binding.constrAds.setVisibility(View.GONE)
+                    binding.btnHideShowAds.setImageResource(R.drawable.ic_show_hide_ads)
+                } else {
+                    binding.constrAds.setVisibility(View.VISIBLE)
+                    binding.btnHideShowAds.setImageResource(R.drawable.ic_hide_show_ads)
+                }
+            }
+        }
+        if (model.show_more == true) {
+            binding.tvMoreThanAds.setVisibility(View.VISIBLE)
+            binding.tvMoreThanAds.setOnClickListener {
+                val  intent = Intent(getActivity(), MoreDetailsAdsActivity::class.java)
+                intent.putExtra("pageCode", model.pageCode)
+                getActivity()?.startActivity(intent)
             }
         }
         Log.d(TAG, "onViewCreated: $adList")
@@ -880,6 +890,7 @@ class PlanFragment : BaseFragment<FragmentPlanBinding?>(), ActivitiesAdapter.Cho
         var activitiesAdapter: ActivitiesAdapter = ActivitiesAdapter(baseActivity, this)
         var btnHideShowAds: ImageView= choose_activity_type.findViewById(R.id.btn_hide_show_ads)
         var constrAds: ConstraintLayout= choose_activity_type.findViewById(R.id.constr_ads)
+        var moreThanAds:TextView=choose_activity_type.findViewById(R.id.tv_more_than_ads)
 
         activitiesRecyclerView.layoutManager = LinearLayoutManager(baseActivity)
         activitiesRecyclerView.adapter = activitiesAdapter
@@ -909,17 +920,16 @@ class PlanFragment : BaseFragment<FragmentPlanBinding?>(), ActivitiesAdapter.Cho
         })
 
         var model = AdModel()
-        Log.e("xx", model.pageCode.toString())
         for (m in viewModel.dataManager.ads.ads!!) {
-            Log.e("xxx",model.pageCode.toString())
             if (m.pageCode?.toInt() == Constants.CREATE_PLAN) {
                 model = m
-                imageView.visibility = View.GONE
                 break
-            }else{
-                imageView.visibility = View.VISIBLE
-                imageView.setImageResource(R.drawable.dr_hussain)
             }
+        }
+        if (model.resourceLink.equals(null)) {
+            imageView.visibility = View.VISIBLE
+            Glide.with(this).load(model.default_ad_image)
+                .centerCrop().placeholder(R.drawable.dr_hussain).into(imageView)
         }
         if (!model.webPageLink.equals("")) {
             cardviewAds.setOnClickListener {
@@ -933,15 +943,14 @@ class PlanFragment : BaseFragment<FragmentPlanBinding?>(), ActivitiesAdapter.Cho
                 videoView.play(mediaSource);
             }
             "Image" -> {
-
                 imageView.visibility = View.VISIBLE
-                Glide.with(this).load(model.resourceLink).centerCrop()
-                    .placeholder(R.drawable.dr_hussain).into(imageView)
+                Glide.with(this).load(model.resourceLink)
+                    .centerCrop().placeholder(R.drawable.dr_hussain).into(imageView)
             }
             "GIF" -> {
                 imageView.visibility = View.VISIBLE
-                Glide.with(this).asGif().load(model.resourceLink).centerCrop()
-                    .placeholder(R.drawable.dr_hussain).into(imageView);
+                Glide.with(this).asGif().load(model.resourceLink)
+                    .centerCrop().placeholder(R.drawable.dr_hussain).into(imageView);
 
 
             }
@@ -957,17 +966,24 @@ class PlanFragment : BaseFragment<FragmentPlanBinding?>(), ActivitiesAdapter.Cho
                 bannerslider?.setAdapter(MainSliderAdapter(list))
             }
         }
-        btnHideShowAds.setOnClickListener {
-            if(constrAds.visibility == View.VISIBLE) {
-                constrAds.setVisibility(View.GONE)
-                btnHideShowAds.setImageResource( R.drawable.ic_show_hide_ads)
-//                binding.btnHideShowAds.setBackgroundColor(binding.btnHideShowAds.
-//                getContext().getResources().getColor(R.color.colorPrimary))
-            }else{
-                constrAds.setVisibility(View.VISIBLE)
-                btnHideShowAds.setImageResource(R.drawable.ic_hide_show_ads)
-//                binding.btnHideShowAds.setBackgroundColor(binding.btnHideShowAds.
-//                getContext().getResources().getColor(R.color.red))
+        if (model.show_ad == true) {
+            btnHideShowAds.setVisibility(View.VISIBLE)
+            btnHideShowAds.setOnClickListener {
+                if (constrAds.visibility == View.VISIBLE) {
+                    constrAds.setVisibility(View.GONE)
+                    btnHideShowAds.setImageResource(R.drawable.ic_show_hide_ads)
+                } else {
+                    constrAds.setVisibility(View.VISIBLE)
+                    btnHideShowAds.setImageResource(R.drawable.ic_hide_show_ads)
+                }
+            }
+        }
+        if (model.show_more == true) {
+            moreThanAds.setVisibility(View.VISIBLE)
+            moreThanAds.setOnClickListener {
+                val  intent = Intent(getActivity(), MoreDetailsAdsActivity::class.java)
+                intent.putExtra("pageCode", model.pageCode)
+                getActivity()?.startActivity(intent)
             }
         }
     }
