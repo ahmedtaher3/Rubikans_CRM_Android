@@ -12,7 +12,7 @@
     <string name="google_maps_key">AIzaSyBtCSwehQfoAdYemxDzJrKInCYafq83e6g</string>
 
 
-    <string name="more_than">المزيد...</string>
+    <string name="more_than"><u>المزيد...</u></string>
     <string-array name="vacationname">
         <item>إعتيادي</item>
         <item>مرضي</item>

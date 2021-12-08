@@ -34,9 +34,6 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".ui.main.ui.moreDetailsAds.MoreDetailsAdsActivity"
-            android:exported="false" />
-        <activity
             android:name=".ui.main.ui.devartlink.DevartLinkActivity"
             android:exported="false" />
         <activity android:name=".ui.main.ui.callmanagement.list.create.CreateNewCustomerActivity" />

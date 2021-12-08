@@ -78,7 +78,7 @@
           android:layout_height="32dp"
           android:layout_gravity="right">
 
-         <ImageView
+         <Button
              android:id="@+id/exo_fullscreen_icon"
              android:layout_width="24dp"
              android:layout_height="24dp"
