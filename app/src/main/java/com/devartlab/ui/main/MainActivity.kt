@@ -9,7 +9,9 @@ import android.content.pm.PackageManager
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.opengl.Visibility
+import android.os.Build
 import android.os.Bundle
+import android.text.Html
 import android.util.Base64
 import android.util.Log
 import android.view.Menu
@@ -107,14 +109,18 @@ class MainActivity : BaseActivity<ActivityMainBinding?>(), View.OnClickListener,
                 break
             }
         }
-        if (model.resourceLink.equals(null)) {
+        if (model.resourceLink.equals(null)
+            && model.default_ad_image.equals(null)
+        ) {
+            binding.constrAds.setVisibility(View.GONE)
+        } else if (model.resourceLink.equals(null)) {
             binding.imageView.visibility = View.VISIBLE
             Glide.with(this).load(model.default_ad_image)
                 .centerCrop().placeholder(R.drawable.dr_hussain).into(binding.imageView)
         }
         if (!model.webPageLink.equals("")) {
-            binding.cardviewAds.setOnClickListener {
-                openWebPage(model.webPageLink)
+            openWebPage(model.webPageLink)
+        binding.cardviewAds.setOnClickListener {
             }
         }
         when (model.type) {
@@ -133,8 +139,13 @@ class MainActivity : BaseActivity<ActivityMainBinding?>(), View.OnClickListener,
                 binding.imageView.visibility = View.VISIBLE
                 Glide.with(this).asGif().load(model.resourceLink)
                     .centerCrop().placeholder(R.drawable.dr_hussain).into(binding.imageView);
-
-
+            }
+            "Paragraph" -> {
+                binding.textView.visibility = View.VISIBLE
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                    binding.textView.setText(Html.fromHtml(model.resourceLink, Html.FROM_HTML_MODE_LEGACY));
+                } else
+                    binding.textView.setText(Html.fromHtml(model.resourceLink))
             }
             "Slider" -> {
                 binding.bannerSlider.visibility = View.VISIBLE
