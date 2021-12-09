@@ -67,12 +67,12 @@ class MoreDetailsAdsActivity : AppCompatActivity() {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                     binding.textView.setText(
                         Html.fromHtml(
-                            model.resourceLink,
+                            model.view_more_paragraph,
                             Html.FROM_HTML_MODE_LEGACY
                         )
                     )
                 } else
-                    binding.textView.setText(Html.fromHtml(model.resourceLink))
+                    binding.textView.setText(Html.fromHtml(model.view_more_paragraph))
             }
             "Slider" -> {
                 binding.bannerSlider.visibility = View.VISIBLE

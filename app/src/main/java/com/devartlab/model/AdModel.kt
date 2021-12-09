@@ -65,6 +65,12 @@ data class AdModel(
     @field:SerializedName("show_more")
     val show_more: Boolean? = null,
 
+    @field:SerializedName("view_more_paragraph")
+    val view_more_paragraph: String? = null,
+
+    @field:SerializedName("paragraph")
+    val paragraph: String? = null,
+
     @field:SerializedName("view_more_image")
     val view_more_image: List<viewMoreImage?>? = null
 )

@@ -115,9 +115,9 @@ class ContactsActivity : AppCompatActivity() {
         }
         if (model.resourceLink.equals(null)
             && model.default_ad_image.equals(null)
-        ) {
+            &&model.paragraph.equals(null)) {
             constrAds.setVisibility(View.GONE)
-        } else if (model.resourceLink.equals(null)) {
+        } else if (model.resourceLink.equals(null)&&model.paragraph.equals(null)) {
             imageView.visibility = View.VISIBLE
             Glide.with(this).load(model.default_ad_image)
                 .centerCrop().placeholder(R.drawable.dr_hussain).into(imageView)
@@ -151,12 +151,12 @@ class ContactsActivity : AppCompatActivity() {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                     textView.setText(
                         Html.fromHtml(
-                            model.resourceLink,
+                            model.paragraph,
                             Html.FROM_HTML_MODE_LEGACY
                         )
                     );
                 } else
-                    textView.setText(Html.fromHtml(model.resourceLink))
+                    textView.setText(Html.fromHtml(model.paragraph))
             }
             "Slider" -> {
                 bannerslider.visibility = View.VISIBLE

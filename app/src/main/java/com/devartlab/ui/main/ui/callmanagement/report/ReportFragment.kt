@@ -122,9 +122,9 @@ class ReportFragment : BaseFragment<FragmentReportBinding>(), InvoiceTypsAdapter
         }
         if (model.resourceLink.equals(null)
             && model.default_ad_image.equals(null)
-        ) {
+            &&model.paragraph.equals(null)) {
             binding.constrAds.setVisibility(View.GONE)
-        } else if (model.resourceLink.equals(null)) {
+        } else if (model.resourceLink.equals(null)&&model.paragraph.equals(null)) {
             binding.imageView.visibility = View.VISIBLE
             Glide.with(this).load(model.default_ad_image)
                 .centerCrop().placeholder(R.drawable.dr_hussain).into(binding.imageView)
@@ -156,12 +156,12 @@ class ReportFragment : BaseFragment<FragmentReportBinding>(), InvoiceTypsAdapter
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                     binding.textView.setText(
                         Html.fromHtml(
-                            model.resourceLink,
+                            model.paragraph,
                             Html.FROM_HTML_MODE_LEGACY
                         )
                     );
                 } else
-                    binding.textView.setText(Html.fromHtml(model.resourceLink))
+                    binding.textView.setText(Html.fromHtml(model.paragraph))
             }
             "Slider" -> {
                 binding.bannerSlider.visibility = View.VISIBLE
