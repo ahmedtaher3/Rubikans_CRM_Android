@@ -1,7 +1,9 @@
 package com.devartlab.ui.main.ui.devartlink
 
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
+import android.text.Html
 import android.util.Log
 import android.view.MenuItem
 import android.view.View
@@ -51,12 +53,16 @@ class DevartLinkActivity : BaseActivity<ActivityDevartLinkBinding>(),
                 break
             }
         }
-        if (model.resourceLink.equals(null)) {
+        if (model.resourceLink.equals(null)
+            && model.default_ad_image.equals(null)
+        ) {
+            binding.constrAds.setVisibility(View.GONE)
+        } else if (model.resourceLink.equals(null)) {
             binding.imageView.visibility = View.VISIBLE
             Glide.with(this).load(model.default_ad_image)
                 .centerCrop().placeholder(R.drawable.dr_hussain).into(binding.imageView)
         }
-        if (!model.webPageLink.equals("")) {
+        if (!model.webPageLink.equals(null)) {
             binding.cardviewAds.setOnClickListener {
                 openWebPage(model.webPageLink)
             }
@@ -77,8 +83,18 @@ class DevartLinkActivity : BaseActivity<ActivityDevartLinkBinding>(),
                 binding.imageView.visibility = View.VISIBLE
                 Glide.with(this).asGif().load(model.resourceLink)
                     .centerCrop().placeholder(R.drawable.dr_hussain).into(binding.imageView);
-
-
+            }
+            "Paragraph" -> {
+                binding.textView.visibility = View.VISIBLE
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                    binding.textView.setText(
+                        Html.fromHtml(
+                            model.resourceLink,
+                            Html.FROM_HTML_MODE_LEGACY
+                        )
+                    );
+                } else
+                    binding.textView.setText(Html.fromHtml(model.resourceLink))
             }
             "Slider" -> {
                 binding.bannerSlider.visibility = View.VISIBLE

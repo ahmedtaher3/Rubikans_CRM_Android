@@ -54,6 +54,7 @@ import com.jarvanmo.exoplayerview.media.SimpleMediaSource
 import com.jarvanmo.exoplayerview.ui.ExoVideoView
 import devs.mulham.horizontalcalendar.HorizontalCalendar
 import devs.mulham.horizontalcalendar.utils.HorizontalCalendarListener
+import kotlinx.android.synthetic.main.activity_main.*
 import ss.com.bannerslider.Slider
 import java.text.SimpleDateFormat
 import java.util.*
@@ -1264,6 +1265,7 @@ class ManagerReportFragment : BaseFragment<FragmentSuperReportBinding>()
         var videoView: ExoVideoView = choose_activity_type.findViewById(R.id.videoView)
         var imageView:ImageView = choose_activity_type.findViewById(R.id.imageView)
         var bannerslider: Slider = choose_activity_type.findViewById(R.id.bannerSlider)
+        var textView:TextView = choose_activity_type.findViewById(R.id.textView)
         var cardviewAds: CardView = choose_activity_type.findViewById(R.id.cardview_ads)
         var btnHideShowAds: ImageView= choose_activity_type.findViewById(R.id.btn_hide_show_ads)
         var constrAds: ConstraintLayout = choose_activity_type.findViewById(R.id.constr_ads)
@@ -1283,18 +1285,24 @@ class ManagerReportFragment : BaseFragment<FragmentSuperReportBinding>()
 
         })
         var model = AdModel()
+
         for (m in viewModel.dataManager.ads.ads!!) {
             if (m.pageCode?.toInt() == Constants.CREATE_PLAN) {
                 model = m
                 break
             }
         }
-        if (model.resourceLink.equals(null)) {
+        if (model.resourceLink.equals(null)
+            && model.default_ad_image.equals(null)
+        ) {
+            constrAds.setVisibility(View.GONE)
+        }
+        else if (model.resourceLink.equals(null)) {
             imageView.visibility = View.VISIBLE
             Glide.with(this).load(model.default_ad_image)
                 .centerCrop().placeholder(R.drawable.dr_hussain).into(imageView)
         }
-        if (!model.webPageLink.equals("")) {
+        if (!model.webPageLink.equals(null)) {
             cardviewAds.setOnClickListener {
                 openWebPage(model.webPageLink)
             }
@@ -1306,6 +1314,7 @@ class ManagerReportFragment : BaseFragment<FragmentSuperReportBinding>()
                 videoView.play(mediaSource);
             }
             "Image" -> {
+
                 imageView.visibility = View.VISIBLE
                 Glide.with(this).load(model.resourceLink)
                     .centerCrop().placeholder(R.drawable.dr_hussain).into(imageView)
@@ -1314,8 +1323,18 @@ class ManagerReportFragment : BaseFragment<FragmentSuperReportBinding>()
                 imageView.visibility = View.VISIBLE
                 Glide.with(this).asGif().load(model.resourceLink)
                     .centerCrop().placeholder(R.drawable.dr_hussain).into(imageView);
-
-
+            }
+            "Paragraph" -> {
+                textView.visibility = View.VISIBLE
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                    textView.setText(
+                        Html.fromHtml(
+                            model.resourceLink,
+                            Html.FROM_HTML_MODE_LEGACY
+                        )
+                    );
+                } else
+                    textView.setText(Html.fromHtml(model.resourceLink))
             }
             "Slider" -> {
                 bannerslider.visibility = View.VISIBLE

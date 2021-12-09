@@ -43,11 +43,10 @@
                     <androidx.cardview.widget.CardView
                         android:id="@+id/cardview_ads"
                         android:layout_width="match_parent"
-                        android:layout_height="270dp"
+                        android:layout_height="250dp"
                         app:cardBackgroundColor="@android:color/white"
                         app:cardCornerRadius="5dp"
-                        app:cardElevation="2dp"
-                        android:scaleType="fitXY"
+                        app:cardElevation="1dp"
                         app:cardUseCompatPadding="true"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -58,6 +57,14 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent">
 
+                            <TextView
+                                android:id="@+id/textView"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:textSize="12sp"
+                                android:textColor="@color/black"
+                                android:fontFamily="sans-serif"
+                                android:visibility="gone" />
 
                             <com.jarvanmo.exoplayerview.ui.ExoVideoView
                                 android:id="@+id/videoView"
@@ -69,21 +76,14 @@
                                 android:id="@+id/imageView"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:scaleType="fitXY"
                                 android:visibility="gone" />
 
-                            <TextView
-                                android:id="@+id/textView"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:visibility="gone" />
 
                             <ss.com.bannerslider.Slider
                                 android:id="@+id/bannerSlider"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:visibility="gone"
-
                                 app:slider_loopSlides="true" />
 
 
@@ -106,11 +106,11 @@
                         android:id="@+id/tv_more_than_ads"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:textStyle="bold"
                         android:padding="5dp"
                         android:text="@string/more_than"
                         android:textColor="@color/colorPrimary"
                         android:textSize="15sp"
+                        android:textStyle="bold"
                         android:visibility="gone"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -123,8 +123,8 @@
                         android:layout_gravity="end"
                         android:background="@drawable/custom_bg_btn_blue"
                         android:gravity="center"
-                        android:visibility="gone"
                         android:src="@drawable/ic_hide_show_ads"
+                        android:visibility="gone"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
                 </androidx.constraintlayout.widget.ConstraintLayout>

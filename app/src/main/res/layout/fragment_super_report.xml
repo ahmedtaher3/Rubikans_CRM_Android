@@ -72,11 +72,10 @@
                 <androidx.cardview.widget.CardView
                     android:id="@+id/cardview_ads"
                     android:layout_width="match_parent"
-                    android:layout_height="270dp"
-                    android:scaleType="fitXY"
+                    android:layout_height="250dp"
                     app:cardBackgroundColor="@android:color/white"
                     app:cardCornerRadius="5dp"
-                    app:cardElevation="2dp"
+                    app:cardElevation="1dp"
                     app:cardUseCompatPadding="true"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -87,6 +86,14 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent">
 
+                        <TextView
+                            android:id="@+id/textView"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:textSize="12sp"
+                            android:textColor="@color/black"
+                            android:fontFamily="sans-serif"
+                            android:visibility="gone" />
 
                         <com.jarvanmo.exoplayerview.ui.ExoVideoView
                             android:id="@+id/videoView"
@@ -98,22 +105,14 @@
                             android:id="@+id/imageView"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:scaleType="fitXY"
                             android:visibility="gone" />
 
-
-                        <TextView
-                            android:id="@+id/textView"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:visibility="gone" />
 
                         <ss.com.bannerslider.Slider
                             android:id="@+id/bannerSlider"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:visibility="gone"
-
                             app:slider_loopSlides="true" />
 
 
@@ -123,7 +122,6 @@
                 </androidx.cardview.widget.CardView>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
-
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

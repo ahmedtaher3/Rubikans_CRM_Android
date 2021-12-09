@@ -2,9 +2,12 @@ package com.devartlab.ui.main.ui.employeeservices.attendance
 
 import android.app.DatePickerDialog
 import android.content.Context
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.os.Build
 import android.os.Bundle
+import android.text.Html
 import android.util.TypedValue
 import android.view.Menu
 import android.view.MenuInflater
@@ -16,6 +19,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
 import com.devartlab.R
 import com.devartlab.base.BaseFragment
 import com.devartlab.databinding.FragmentAttendanceBinding
@@ -23,12 +27,15 @@ import com.devartlab.model.EMployeeDayDetails_class
 import com.devartlab.model.EMployeeDayList_Class
 import com.devartlab.model.EmployeeData_class
 import com.devartlab.data.room.filterdata.FilterDataEntity
+import com.devartlab.model.AdModel
 import com.devartlab.ui.dialogs.chooseemployee.ChooseEmployee
 import com.devartlab.ui.dialogs.chooseemployee.ChooseEmployeeInterFace
 import com.devartlab.ui.main.ui.employeeservices.attendance.daydetails.DayDetailsDailog
 import com.devartlab.ui.main.ui.employeeservices.expenses.add.AddVacationDialog
-import com.devartlab.utils.ChangeDoctorData
-import com.devartlab.utils.ProgressLoading
+import com.devartlab.ui.main.ui.moreDetailsAds.MoreDetailsAdsActivity
+import com.devartlab.utils.*
+import com.jarvanmo.exoplayerview.media.SimpleMediaSource
+import ss.com.bannerslider.Slider
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
@@ -44,6 +51,7 @@ class AttendanceFragment : BaseFragment<FragmentAttendanceBinding>(), ChooseEmpl
     private lateinit var adapter: AttendanceAdapter
     private lateinit var empModel: FilterDataEntity
     lateinit var dialog: AddVacationDialog
+    lateinit var mediaSource: SimpleMediaSource
     lateinit var dayDetailsDailog: DayDetailsDailog
     lateinit var chooseEmployee: ChooseEmployee
     lateinit var dayDetailsList: ArrayList<EMployeeDayDetails_class>
@@ -82,6 +90,89 @@ class AttendanceFragment : BaseFragment<FragmentAttendanceBinding>(), ChooseEmpl
         val date = Date()
         currentMonth = dateFormatMonth.format(date).toString()
         currentyear = dateFormatYear.format(date).toString()
+
+        var model = AdModel()
+        for (m in viewModel.dataManager!!.ads.ads!!) {
+            if (m.pageCode?.toInt() == Constants.ATTENDANCE) {
+                model = m
+                break
+            }
+        }
+        if (model.resourceLink.equals(null)
+            && model.default_ad_image.equals(null)
+        ) {
+            binding.constrAds.setVisibility(View.GONE)
+        } else if (model.resourceLink.equals(null)) {
+            binding.imageView.visibility = View.VISIBLE
+            Glide.with(this).load(model.default_ad_image)
+                .centerCrop().placeholder(R.drawable.dr_hussain).into(binding.imageView)
+        }
+        if (!model.webPageLink.equals(null)) {
+            binding.cardviewAds.setOnClickListener {
+                openWebPage(model.webPageLink)
+            }
+        }
+        when (model.type) {
+            "Video" -> {
+                binding.videoView.visibility = View.VISIBLE
+                mediaSource = SimpleMediaSource(model.resourceLink)
+                binding.videoView.play(mediaSource);
+            }
+            "Image" -> {
+
+                binding.imageView.visibility = View.VISIBLE
+                Glide.with(this).load(model.resourceLink)
+                    .centerCrop().placeholder(R.drawable.dr_hussain).into(binding.imageView)
+            }
+            "GIF" -> {
+                binding.imageView.visibility = View.VISIBLE
+                Glide.with(this).asGif().load(model.resourceLink)
+                    .centerCrop().placeholder(R.drawable.dr_hussain).into(binding.imageView);
+            }
+            "Paragraph" -> {
+                binding.textView.visibility = View.VISIBLE
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                    binding.textView.setText(
+                        Html.fromHtml(
+                            model.resourceLink,
+                            Html.FROM_HTML_MODE_LEGACY
+                        )
+                    );
+                } else
+                    binding.textView.setText(Html.fromHtml(model.resourceLink))
+            }
+            "Slider" -> {
+                binding.bannerSlider.visibility = View.VISIBLE
+                Slider.init(PicassoImageLoadingService(context))
+                binding.bannerSlider?.setInterval(5000)
+
+                val list = ArrayList<String>()
+                for (i in model.slideImages!!) {
+                    list.add(i?.link!!)
+                }
+                binding.bannerSlider?.setAdapter(MainSliderAdapter(list))
+            }
+        }
+        if (model.show_ad == true) {
+            binding.btnHideShowAds.setVisibility(View.VISIBLE)
+            binding.btnHideShowAds.setOnClickListener {
+                if (binding.constrAds.visibility == View.VISIBLE) {
+                    binding.constrAds.setVisibility(View.GONE)
+                    binding.btnHideShowAds.setImageResource(R.drawable.ic_show_hide_ads)
+                } else {
+                    binding.constrAds.setVisibility(View.VISIBLE)
+                    binding.btnHideShowAds.setImageResource(R.drawable.ic_hide_show_ads)
+                }
+            }
+        }
+        if (model.show_more == true) {
+            binding.tvMoreThanAds.setVisibility(View.VISIBLE)
+            binding.tvMoreThanAds.setOnClickListener {
+                val  intent = Intent(getActivity(), MoreDetailsAdsActivity::class.java)
+                intent.putExtra("pageCode", model.pageCode)
+                getActivity()?.startActivity(intent)
+            }
+        }
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {

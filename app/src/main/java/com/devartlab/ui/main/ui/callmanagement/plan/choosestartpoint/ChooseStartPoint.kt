@@ -3,8 +3,10 @@ package com.devartlab.ui.main.ui.callmanagement.plan.choosestartpoint
 import android.app.Dialog
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.text.Editable
+import android.text.Html
 import android.text.TextWatcher
 import android.util.Log
 import android.view.View
@@ -58,13 +60,14 @@ class ChooseStartPoint(
     lateinit var videoView: ExoVideoView
     lateinit var imageView: ImageView
     lateinit var bannerslider: Slider
-    lateinit var close: ImageView
     lateinit var btnHideShowAds: ImageView
     lateinit var constrAds: ConstraintLayout
     lateinit var startPointAdapter: StartPointAdapter
     lateinit var mediaSource: SimpleMediaSource
     lateinit var cardviewAds: CardView
     lateinit var moreThanAds: TextView
+    lateinit var textView: TextView
+    lateinit var close: ImageView
     var myAPI: ApiServices? = null
     var retrofit: Retrofit? = null
     var editText: EditText? = null
@@ -94,24 +97,31 @@ class ChooseStartPoint(
         moreThanAds = findViewById(R.id.tv_more_than_ads)
         constrAds = findViewById(R.id.constr_ads)
         cardviewAds = findViewById(R.id.cardview_ads)
+        textView = findViewById(R.id.textView)
         close = findViewById(R.id.close)
         editText = findViewById(R.id.editText_search)
         recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.adapter = startPointAdapter
         listDao = DatabaseClient.getInstance(context)?.appDatabase?.listDao()
         var model = AdModel()
+
         for (m in dataManager.ads.ads!!) {
             if (m.pageCode?.toInt() == Constants.CHOOSE_START_POINT) {
                 model = m
                 break
             }
         }
-        if (model.resourceLink.equals(null)) {
+        if (model.resourceLink.equals(null)
+            && model.default_ad_image.equals(null)
+        ) {
+            constrAds.setVisibility(View.GONE)
+        }
+        else if (model.resourceLink.equals(null)) {
             imageView.visibility = View.VISIBLE
             Glide.with(context).load(model.default_ad_image)
                 .centerCrop().placeholder(R.drawable.dr_hussain).into(imageView)
         }
-        if (!model.webPageLink.equals("")) {
+        if (!model.webPageLink.equals(null)) {
             cardviewAds.setOnClickListener {
                 val uri = Uri.parse(model.webPageLink)
                 val intent = Intent(Intent.ACTION_VIEW, uri)
@@ -125,6 +135,7 @@ class ChooseStartPoint(
                 videoView.play(mediaSource);
             }
             "Image" -> {
+
                 imageView.visibility = View.VISIBLE
                 Glide.with(context).load(model.resourceLink)
                     .centerCrop().placeholder(R.drawable.dr_hussain).into(imageView)
@@ -133,8 +144,18 @@ class ChooseStartPoint(
                 imageView.visibility = View.VISIBLE
                 Glide.with(context).asGif().load(model.resourceLink)
                     .centerCrop().placeholder(R.drawable.dr_hussain).into(imageView);
-
-
+            }
+            "Paragraph" -> {
+                textView.visibility = View.VISIBLE
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                    textView.setText(
+                        Html.fromHtml(
+                            model.resourceLink,
+                            Html.FROM_HTML_MODE_LEGACY
+                        )
+                    );
+                } else
+                    textView.setText(Html.fromHtml(model.resourceLink))
             }
             "Slider" -> {
                 bannerslider.visibility = View.VISIBLE
@@ -165,10 +186,9 @@ class ChooseStartPoint(
             moreThanAds.setOnClickListener {
                 val  intent = Intent(activity, MoreDetailsAdsActivity::class.java)
                 intent.putExtra("pageCode", model.pageCode)
-                activity.startActivity(intent)
+                activity?.startActivity(intent)
             }
         }
-
         close?.setOnClickListener(View.OnClickListener { dismiss() })
 
         getStartPointList("0", "0", "0", "0", "0")

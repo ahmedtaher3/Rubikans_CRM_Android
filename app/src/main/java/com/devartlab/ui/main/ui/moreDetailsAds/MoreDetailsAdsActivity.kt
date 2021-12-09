@@ -62,6 +62,18 @@ class MoreDetailsAdsActivity : AppCompatActivity() {
 
 
             }
+            "Paragraph" -> {
+                binding.textView.visibility = View.VISIBLE
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                    binding.textView.setText(
+                        Html.fromHtml(
+                            model.resourceLink,
+                            Html.FROM_HTML_MODE_LEGACY
+                        )
+                    )
+                } else
+                    binding.textView.setText(Html.fromHtml(model.resourceLink))
+            }
             "Slider" -> {
                 binding.bannerSlider.visibility = View.VISIBLE
                 Slider.init(PicassoImageLoadingService(this))

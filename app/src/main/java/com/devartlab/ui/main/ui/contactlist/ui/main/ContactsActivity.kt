@@ -1,18 +1,21 @@
 package com.devartlab.ui.main.ui.contactlist.ui.main
 
+import android.content.Intent
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.text.Editable
+import android.text.Html
 import android.text.TextWatcher
 import android.util.Log
 import android.view.MenuItem
 import android.view.View
-import android.widget.AdapterView
+import android.widget.*
 import android.widget.AdapterView.OnItemSelectedListener
-import android.widget.ArrayAdapter
-import android.widget.EditText
-import android.widget.Spinner
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.cardview.widget.CardView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -20,12 +23,24 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener
+import com.bumptech.glide.Glide
 import com.devartlab.R
+import com.devartlab.base.BaseApplication
+import com.devartlab.data.shared.DataManager
+import com.devartlab.model.AdModel
 import com.devartlab.ui.main.ui.callmanagement.plan.addplan.doubleextra.FilterListExtraFragment
+import com.devartlab.ui.main.ui.callmanagement.plan.choosestartpoint.StartPointAdapter
 import com.devartlab.ui.main.ui.contactlist.pojo.Contactlist
 import com.devartlab.ui.main.ui.contactlist.pojo.Request
+import com.devartlab.ui.main.ui.moreDetailsAds.MoreDetailsAdsActivity
+import com.devartlab.utils.Constants
+import com.devartlab.utils.MainSliderAdapter
+import com.devartlab.utils.PicassoImageLoadingService
 import com.devartlab.utils.ProgressLoading.dismiss
 import com.devartlab.utils.ProgressLoading.show
+import com.jarvanmo.exoplayerview.media.SimpleMediaSource
+import com.jarvanmo.exoplayerview.ui.ExoVideoView
+import ss.com.bannerslider.Slider
 import java.util.*
 
 class ContactsActivity : AppCompatActivity() {
@@ -33,6 +48,15 @@ class ContactsActivity : AppCompatActivity() {
     private var contactlistArrayList: ArrayList<Contactlist>? = null
     private var contactsRecyclerAdapter: GetContactsRecyclerAdapter? = null
     private var contactrecycler: RecyclerView? = null
+    lateinit var videoView: ExoVideoView
+    lateinit var imageView: ImageView
+    lateinit var bannerslider: Slider
+    lateinit var btnHideShowAds: ImageView
+    lateinit var constrAds: ConstraintLayout
+    lateinit var mediaSource: SimpleMediaSource
+    lateinit var cardviewAds: CardView
+    lateinit var moreThanAds: TextView
+    lateinit var textView: TextView
     private var inputsearch: EditText? = null
     private var toolbar: Toolbar? = null
     var swiperefresh: SwipeRefreshLayout? = null
@@ -48,6 +72,16 @@ class ContactsActivity : AppCompatActivity() {
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         supportActionBar!!.title = "Contacts List"
         contactrecycler = findViewById(R.id.contact_recycler)
+        videoView = findViewById(R.id.videoView)
+        imageView = findViewById(R.id.imageView)
+        var dataManager: DataManager? = null
+        bannerslider = findViewById(R.id.bannerSlider)
+        btnHideShowAds = findViewById(R.id.btn_hide_show_ads)
+        moreThanAds = findViewById(R.id.tv_more_than_ads)
+        constrAds = findViewById(R.id.constr_ads)
+        cardviewAds = findViewById(R.id.cardview_ads)
+        textView = findViewById(R.id.textView)
+        dataManager = (getApplication() as BaseApplication).dataManager!!
         spinnerfilteroftyperequest = findViewById(R.id.spinerr_of_filterdep)
         contactsRecyclerAdapter = GetContactsRecyclerAdapter(this@ContactsActivity)
         contactrecycler?.setLayoutManager(LinearLayoutManager(this))
@@ -72,6 +106,90 @@ class ContactsActivity : AppCompatActivity() {
             }
         })
 
+        var model = AdModel()
+        for (m in dataManager!!.ads.ads!!) {
+            if (m.pageCode?.toInt() == Constants.CONTACTS_LIST) {
+                model = m
+                break
+            }
+        }
+        if (model.resourceLink.equals(null)
+            && model.default_ad_image.equals(null)
+        ) {
+            constrAds.setVisibility(View.GONE)
+        } else if (model.resourceLink.equals(null)) {
+            imageView.visibility = View.VISIBLE
+            Glide.with(this).load(model.default_ad_image)
+                .centerCrop().placeholder(R.drawable.dr_hussain).into(imageView)
+        }
+        if (!model.webPageLink.equals(null)) {
+            cardviewAds.setOnClickListener {
+                val uri = Uri.parse(model.webPageLink)
+                val intent = Intent(Intent.ACTION_VIEW, uri)
+                startActivity(intent)
+            }
+        }
+        when (model.type) {
+            "Video" -> {
+                videoView.visibility = View.VISIBLE
+                mediaSource = SimpleMediaSource(model.resourceLink)
+                videoView.play(mediaSource);
+            }
+            "Image" -> {
+
+                imageView.visibility = View.VISIBLE
+                Glide.with(this).load(model.resourceLink)
+                    .centerCrop().placeholder(R.drawable.dr_hussain).into(imageView)
+            }
+            "GIF" -> {
+                imageView.visibility = View.VISIBLE
+                Glide.with(this).asGif().load(model.resourceLink)
+                    .centerCrop().placeholder(R.drawable.dr_hussain).into(imageView);
+            }
+            "Paragraph" -> {
+                textView.visibility = View.VISIBLE
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                    textView.setText(
+                        Html.fromHtml(
+                            model.resourceLink,
+                            Html.FROM_HTML_MODE_LEGACY
+                        )
+                    );
+                } else
+                    textView.setText(Html.fromHtml(model.resourceLink))
+            }
+            "Slider" -> {
+                bannerslider.visibility = View.VISIBLE
+                Slider.init(PicassoImageLoadingService(this))
+                bannerslider?.setInterval(5000)
+
+                val list = ArrayList<String>()
+                for (i in model.slideImages!!) {
+                    list.add(i?.link!!)
+                }
+                bannerslider?.setAdapter(MainSliderAdapter(list))
+            }
+        }
+        if (model.show_ad == true) {
+            btnHideShowAds.setVisibility(View.VISIBLE)
+            btnHideShowAds.setOnClickListener {
+                if (constrAds.visibility == View.VISIBLE) {
+                    constrAds.setVisibility(View.GONE)
+                    btnHideShowAds.setImageResource(R.drawable.ic_show_hide_ads)
+                } else {
+                    constrAds.setVisibility(View.VISIBLE)
+                    btnHideShowAds.setImageResource(R.drawable.ic_hide_show_ads)
+                }
+            }
+        }
+        if (model.show_more == true) {
+            moreThanAds.setVisibility(View.VISIBLE)
+            moreThanAds.setOnClickListener {
+                intent = Intent(this, MoreDetailsAdsActivity::class.java)
+                intent.putExtra("pageCode", model.pageCode)
+                startActivity(intent)
+            }
+        }
 
 //
 //        lastCompletelyVisibleItemPosition = ((LinearLayoutManager) contactrecycler.getLayoutManager()).findLastVisibleItemPosition();

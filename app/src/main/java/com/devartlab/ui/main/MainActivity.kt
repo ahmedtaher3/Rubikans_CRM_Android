@@ -118,9 +118,9 @@ class MainActivity : BaseActivity<ActivityMainBinding?>(), View.OnClickListener,
             Glide.with(this).load(model.default_ad_image)
                 .centerCrop().placeholder(R.drawable.dr_hussain).into(binding.imageView)
         }
-        if (!model.webPageLink.equals("")) {
-            openWebPage(model.webPageLink)
-        binding.cardviewAds.setOnClickListener {
+        if (!model.webPageLink.equals(null)) {
+            binding.cardviewAds.setOnClickListener {
+                openWebPage(model.webPageLink)
             }
         }
         when (model.type) {
@@ -143,7 +143,12 @@ class MainActivity : BaseActivity<ActivityMainBinding?>(), View.OnClickListener,
             "Paragraph" -> {
                 binding.textView.visibility = View.VISIBLE
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                    binding.textView.setText(Html.fromHtml(model.resourceLink, Html.FROM_HTML_MODE_LEGACY));
+                    binding.textView.setText(
+                        Html.fromHtml(
+                            model.resourceLink,
+                            Html.FROM_HTML_MODE_LEGACY
+                        )
+                    );
                 } else
                     binding.textView.setText(Html.fromHtml(model.resourceLink))
             }

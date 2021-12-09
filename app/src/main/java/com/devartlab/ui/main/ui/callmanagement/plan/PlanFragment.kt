@@ -7,7 +7,9 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.os.Build
 import android.os.Bundle
+import android.text.Html
 import android.util.Log
 import android.view.*
 import android.widget.*
@@ -49,6 +51,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_main.*
+import org.w3c.dom.Text
 import ss.com.bannerslider.Slider
 import java.text.SimpleDateFormat
 import java.util.*
@@ -113,12 +116,16 @@ class PlanFragment : BaseFragment<FragmentPlanBinding?>(), ActivitiesAdapter.Cho
                 break
             }
         }
-        if (model.resourceLink.equals(null)) {
+        if (model.resourceLink.equals(null)
+            && model.default_ad_image.equals(null)
+        ) {
+            binding.constrAds.setVisibility(View.GONE)
+        } else if (model.resourceLink.equals(null)) {
             binding.imageView.visibility = View.VISIBLE
             Glide.with(this).load(model.default_ad_image)
                 .centerCrop().placeholder(R.drawable.dr_hussain).into(binding.imageView)
         }
-        if (!model.webPageLink.equals("")) {
+        if (!model.webPageLink.equals(null)) {
             binding.cardviewAds.setOnClickListener {
                 openWebPage(model.webPageLink)
             }
@@ -139,8 +146,18 @@ class PlanFragment : BaseFragment<FragmentPlanBinding?>(), ActivitiesAdapter.Cho
                 binding.imageView.visibility = View.VISIBLE
                 Glide.with(this).asGif().load(model.resourceLink)
                     .centerCrop().placeholder(R.drawable.dr_hussain).into(binding.imageView);
-
-
+            }
+            "Paragraph" -> {
+                binding.textView.visibility = View.VISIBLE
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                    binding.textView.setText(
+                        Html.fromHtml(
+                            model.resourceLink,
+                            Html.FROM_HTML_MODE_LEGACY
+                        )
+                    )
+                } else
+                    binding.textView.setText(Html.fromHtml(model.resourceLink))
             }
             "Slider" -> {
                 binding.bannerSlider.visibility = View.VISIBLE
@@ -886,6 +903,7 @@ class PlanFragment : BaseFragment<FragmentPlanBinding?>(), ActivitiesAdapter.Cho
         var videoView: ExoVideoView = choose_activity_type.findViewById(R.id.videoView)
         var imageView:ImageView = choose_activity_type.findViewById(R.id.imageView)
         var bannerslider:Slider = choose_activity_type.findViewById(R.id.bannerSlider)
+        var textView:TextView = choose_activity_type.findViewById(R.id.textView)
         var cardviewAds:CardView = choose_activity_type.findViewById(R.id.cardview_ads)
         var activitiesAdapter: ActivitiesAdapter = ActivitiesAdapter(baseActivity, this)
         var btnHideShowAds: ImageView= choose_activity_type.findViewById(R.id.btn_hide_show_ads)
@@ -920,18 +938,24 @@ class PlanFragment : BaseFragment<FragmentPlanBinding?>(), ActivitiesAdapter.Cho
         })
 
         var model = AdModel()
+
         for (m in viewModel.dataManager.ads.ads!!) {
             if (m.pageCode?.toInt() == Constants.CREATE_PLAN) {
                 model = m
                 break
             }
         }
-        if (model.resourceLink.equals(null)) {
+        if (model.resourceLink.equals(null)
+            && model.default_ad_image.equals(null)
+        ) {
+            constrAds.setVisibility(View.GONE)
+        }
+        else if (model.resourceLink.equals(null)) {
             imageView.visibility = View.VISIBLE
             Glide.with(this).load(model.default_ad_image)
                 .centerCrop().placeholder(R.drawable.dr_hussain).into(imageView)
         }
-        if (!model.webPageLink.equals("")) {
+        if (!model.webPageLink.equals(null)) {
             cardviewAds.setOnClickListener {
                 openWebPage(model.webPageLink)
             }
@@ -943,6 +967,7 @@ class PlanFragment : BaseFragment<FragmentPlanBinding?>(), ActivitiesAdapter.Cho
                 videoView.play(mediaSource);
             }
             "Image" -> {
+
                 imageView.visibility = View.VISIBLE
                 Glide.with(this).load(model.resourceLink)
                     .centerCrop().placeholder(R.drawable.dr_hussain).into(imageView)
@@ -951,8 +976,18 @@ class PlanFragment : BaseFragment<FragmentPlanBinding?>(), ActivitiesAdapter.Cho
                 imageView.visibility = View.VISIBLE
                 Glide.with(this).asGif().load(model.resourceLink)
                     .centerCrop().placeholder(R.drawable.dr_hussain).into(imageView);
-
-
+            }
+            "Paragraph" -> {
+                textView.visibility = View.VISIBLE
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                    textView.setText(
+                        Html.fromHtml(
+                            model.resourceLink,
+                            Html.FROM_HTML_MODE_LEGACY
+                        )
+                    );
+                } else
+                    textView.setText(Html.fromHtml(model.resourceLink))
             }
             "Slider" -> {
                 bannerslider.visibility = View.VISIBLE

@@ -4,8 +4,11 @@ import android.content.Intent
 import android.graphics.BitmapFactory
 import android.location.Address
 import android.location.Geocoder
+import android.os.Build
 import android.os.Bundle
+import android.text.Html
 import android.util.Base64
+import android.util.Log
 import android.view.*
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -34,6 +37,7 @@ import com.devartlab.ui.main.ui.cycles.ChangeCycle
 import com.devartlab.ui.main.ui.cycles.ChangeCycleInterface
 import com.devartlab.ui.main.ui.moreDetailsAds.MoreDetailsAdsActivity
 import com.devartlab.utils.*
+import com.google.gson.Gson
 import com.jarvanmo.exoplayerview.media.SimpleMediaSource
 import com.ramijemli.percentagechartview.PercentageChartView
 import devs.mulham.horizontalcalendar.HorizontalCalendar
@@ -81,19 +85,26 @@ class EmployeeReportActivity : BaseActivity<ActivityEmployeeReportBinding>(), Ch
         fmt = SimpleDateFormat("yyyy-MM-dd", Locale.US)
         DATE = fmt?.format(CommonUtilities.currentToMillis)
 
+
+        Log.d("daily report", "onCreate: " + Gson().toJson(viewModel.dataManager.ads.ads!! as Any?))
         var model = AdModel()
         for (m in viewModel.dataManager.ads.ads!!) {
             if (m.pageCode?.toInt() == Constants.DAILY_REPORT) {
+                Log.e("xzz",m.pageCode)
                 model = m
                 break
             }
         }
-        if (model.resourceLink.equals(null)) {
+        if (model.resourceLink.equals(null)
+            && model.default_ad_image.equals(null)
+        ) {
+            binding.constrAds.setVisibility(View.GONE)
+        } else if (model.resourceLink.equals(null)) {
             binding.imageView.visibility = View.VISIBLE
             Glide.with(this).load(model.default_ad_image)
                 .centerCrop().placeholder(R.drawable.dr_hussain).into(binding.imageView)
         }
-        if (!model.webPageLink.equals("")) {
+        if (!model.webPageLink.equals(null)) {
             binding.cardviewAds.setOnClickListener {
                 openWebPage(model.webPageLink)
             }
@@ -114,8 +125,18 @@ class EmployeeReportActivity : BaseActivity<ActivityEmployeeReportBinding>(), Ch
                 binding.imageView.visibility = View.VISIBLE
                 Glide.with(this).asGif().load(model.resourceLink)
                     .centerCrop().placeholder(R.drawable.dr_hussain).into(binding.imageView);
-
-
+            }
+            "Paragraph" -> {
+                binding.textView.visibility = View.VISIBLE
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                    binding.textView.setText(
+                        Html.fromHtml(
+                            model.resourceLink,
+                            Html.FROM_HTML_MODE_LEGACY
+                        )
+                    );
+                } else
+                    binding.textView.setText(Html.fromHtml(model.resourceLink))
             }
             "Slider" -> {
                 binding.bannerSlider.visibility = View.VISIBLE

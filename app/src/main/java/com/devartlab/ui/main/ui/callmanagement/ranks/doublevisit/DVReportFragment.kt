@@ -3,8 +3,10 @@ package com.devartlab.ui.main.ui.callmanagement.ranks.doublevisit
 import android.content.Context
 import android.content.Intent
 import android.graphics.BitmapFactory
+import android.os.Build
 import android.os.Bundle
 import android.text.Editable
+import android.text.Html
 import android.text.TextWatcher
 import android.util.Base64
 import android.view.View
@@ -20,19 +22,24 @@ import com.devartlab.databinding.DvReportFragmentBinding
 import com.devartlab.model.Cycle
 import com.devartlab.model.DoubleVisitReport
 import com.devartlab.data.room.filterdata.FilterDataEntity
+import com.devartlab.model.AdModel
 import com.devartlab.ui.dialogs.chooseemployee.ChooseEmployee
 import com.devartlab.ui.dialogs.chooseemployee.ChooseEmployeeInterFace
 import com.devartlab.ui.main.ui.callmanagement.ranks.RanksViewModel
 import com.devartlab.ui.main.ui.cycles.ChangeCycleAll
 import com.devartlab.ui.main.ui.cycles.ChangeCycleInterface
-import com.devartlab.utils.CommonUtilities
-import com.devartlab.utils.ProgressLoading
+import com.devartlab.ui.main.ui.moreDetailsAds.MoreDetailsAdsActivity
+import com.devartlab.utils.*
+import com.jarvanmo.exoplayerview.media.SimpleMediaSource
+import ss.com.bannerslider.Slider
 
 
 class DVReportFragment : BaseFragment<DvReportFragmentBinding>(), DVReportAdapter.OnItemSelect, ChooseEmployeeInterFace, ChangeCycleInterface {
     private lateinit var viewModel: RanksViewModel
     private lateinit var binding: DvReportFragmentBinding
     private lateinit var adapter: DVReportAdapter
+    lateinit var mediaSource: SimpleMediaSource
+
     var chooseEmployee: ChooseEmployee? = null
     var changeCycle: ChangeCycleAll? = null
     var fromDate = ""
@@ -45,6 +52,8 @@ class DVReportFragment : BaseFragment<DvReportFragmentBinding>(), DVReportAdapte
         super.onCreate(savedInstanceState)
         viewModel = ViewModelProviders.of(this).get(RanksViewModel::class.java)
         adapter = DVReportAdapter(baseActivity, ArrayList(), this)
+
+
     }
 
     override fun getLayoutId(): Int {
@@ -65,7 +74,88 @@ class DVReportFragment : BaseFragment<DvReportFragmentBinding>(), DVReportAdapte
         setEmpData()
         viewModel.getDVReport(  fromDate, toDate,  empId)
 
+        var model = AdModel()
+        for (m in viewModel.dataManager.ads.ads!!) {
+            if (m.pageCode?.toInt() == Constants.DOUBLE_VISIT_REPORT) {
+                model = m
+                break
+            }
+        }
+        if (model.resourceLink.equals(null)
+            && model.default_ad_image.equals(null)
+        ) {
+            binding.constrAds.setVisibility(View.GONE)
+        } else if (model.resourceLink.equals(null)) {
+            binding.imageView.visibility = View.VISIBLE
+            Glide.with(this).load(model.default_ad_image)
+                .centerCrop().placeholder(R.drawable.dr_hussain).into(binding.imageView)
+        }
+        if (!model.webPageLink.equals(null)) {
+            binding.cardviewAds.setOnClickListener {
+                openWebPage(model.webPageLink)
+            }
+        }
+        when (model.type) {
+            "Video" -> {
+                binding.videoView.visibility = View.VISIBLE
+                mediaSource = SimpleMediaSource(model.resourceLink)
+                binding.videoView.play(mediaSource);
+            }
+            "Image" -> {
 
+                binding.imageView.visibility = View.VISIBLE
+                Glide.with(this).load(model.resourceLink)
+                    .centerCrop().placeholder(R.drawable.dr_hussain).into(binding.imageView)
+            }
+            "GIF" -> {
+                binding.imageView.visibility = View.VISIBLE
+                Glide.with(this).asGif().load(model.resourceLink)
+                    .centerCrop().placeholder(R.drawable.dr_hussain).into(binding.imageView);
+            }
+            "Paragraph" -> {
+                binding.textView.visibility = View.VISIBLE
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                    binding.textView.setText(
+                        Html.fromHtml(
+                            model.resourceLink,
+                            Html.FROM_HTML_MODE_LEGACY
+                        )
+                    );
+                } else
+                    binding.textView.setText(Html.fromHtml(model.resourceLink))
+            }
+            "Slider" -> {
+                binding.bannerSlider.visibility = View.VISIBLE
+                Slider.init(PicassoImageLoadingService(context))
+                binding.bannerSlider?.setInterval(5000)
+
+                val list = ArrayList<String>()
+                for (i in model.slideImages!!) {
+                    list.add(i?.link!!)
+                }
+                binding.bannerSlider?.setAdapter(MainSliderAdapter(list))
+            }
+        }
+        if (model.show_ad == true) {
+            binding.btnHideShowAds.setVisibility(View.VISIBLE)
+            binding.btnHideShowAds.setOnClickListener {
+                if (binding.constrAds.visibility == View.VISIBLE) {
+                    binding.constrAds.setVisibility(View.GONE)
+                    binding.btnHideShowAds.setImageResource(R.drawable.ic_show_hide_ads)
+                } else {
+                    binding.constrAds.setVisibility(View.VISIBLE)
+                    binding.btnHideShowAds.setImageResource(R.drawable.ic_hide_show_ads)
+                }
+            }
+        }
+        if (model.show_more == true) {
+            binding.tvMoreThanAds.setVisibility(View.VISIBLE)
+            binding.tvMoreThanAds.setOnClickListener {
+                val  intent = Intent(getActivity(), MoreDetailsAdsActivity::class.java)
+                intent.putExtra("pageCode", model.pageCode)
+                getActivity()?.startActivity(intent)
+            }
+        }
         binding.searchEditText?.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {}
             override fun onTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {

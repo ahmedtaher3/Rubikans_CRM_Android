@@ -13,4 +13,8 @@ package com.devartlab.utils
     const val CHOOSE_START_POINT = 9
     const val MARKET_REQUEST = 10
     const val MANAGER_REPORT = 11
+    const val ATTENDANCE = 12
+    const val CHOOSE_EMPLOYEE = 13
+    const val CONTACTS_LIST = 14
+    const val DOUBLE_VISIT_REPORT = 15
  }

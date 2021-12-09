@@ -45,10 +45,10 @@
                     <androidx.cardview.widget.CardView
                         android:id="@+id/cardview_ads"
                         android:layout_width="match_parent"
-                        android:layout_height="270dp"
+                        android:layout_height="250dp"
                         app:cardBackgroundColor="@android:color/white"
                         app:cardCornerRadius="5dp"
-                        app:cardElevation="2dp"
+                        app:cardElevation="1dp"
                         app:cardUseCompatPadding="true"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -81,6 +81,15 @@
 
                                 app:slider_loopSlides="true" />
 
+                            <TextView
+                                android:id="@+id/textView"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:fontFamily="sans-serif"
+                                android:textColor="@color/black"
+                                android:textSize="12sp"
+                                android:visibility="gone" />
+
 
                         </RelativeLayout>
 
@@ -95,11 +104,11 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
                     android:layout_alignParentEnd="true"
+                    android:layout_marginTop="-5dp"
                     android:background="@drawable/custom_bg_btn_blue"
                     android:drawableStart="@drawable/ic_calendar"
                     android:drawablePadding="@dimen/text_padding_top_5dp"
                     android:fontFamily="sans-serif"
-                    android:layout_marginTop="-5dp"
                     android:gravity="center"
                     android:padding="@dimen/text_padding_top_5dp"
                     android:text="Nov 2021"
@@ -113,7 +122,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
-                    android:layout_marginTop="15dp"
                     android:text="titel ads"
                     android:textColor="@color/colorPrimary"
                     android:textSize="25sp"
@@ -127,6 +135,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
+                    android:layout_marginBottom="20dp"
                     android:fontFamily="sans-serif"
                     android:lineSpacingExtra="3dp"
                     android:text="dsafdsfasdfdsafd,af;ldsjfl;dasmlfkdslfmdsalfm"
