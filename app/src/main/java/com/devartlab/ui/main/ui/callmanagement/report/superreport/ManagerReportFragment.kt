@@ -121,9 +121,10 @@ class ManagerReportFragment : BaseFragment<FragmentSuperReportBinding>()
         binding = viewDataBinding
         setHasOptionsMenu(true);
 
+
         var model = AdModel()
         for (m in viewModel.dataManager.ads.ads!!) {
-            if (m.pageCode?.toInt() == Constants.MANAGER_REPORT) {
+            if (m.pageCode?.toInt() == Constants.CALL_MANAGEMENT_PAGE) {
                 model = m
                 break
             }
@@ -138,8 +139,8 @@ class ManagerReportFragment : BaseFragment<FragmentSuperReportBinding>()
                 .centerCrop().placeholder(R.drawable.dr_hussain).into(binding.imageView)
         }
         if (!model.webPageLink.equals("")) {
-            openWebPage(model.webPageLink)
             binding.cardviewAds.setOnClickListener {
+                openWebPage(model.webPageLink)
             }
         }
         when (model.type) {
@@ -162,7 +163,12 @@ class ManagerReportFragment : BaseFragment<FragmentSuperReportBinding>()
             "Paragraph" -> {
                 binding.textView.visibility = View.VISIBLE
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                    binding.textView.setText(Html.fromHtml(model.paragraph, Html.FROM_HTML_MODE_LEGACY));
+                    binding.textView.setText(
+                        Html.fromHtml(
+                            model.paragraph,
+                            Html.FROM_HTML_MODE_LEGACY
+                        )
+                    );
                 } else
                     binding.textView.setText(Html.fromHtml(model.paragraph))
             }

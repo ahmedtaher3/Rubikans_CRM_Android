@@ -91,6 +91,23 @@ class AttendanceFragment : BaseFragment<FragmentAttendanceBinding>(), ChooseEmpl
         currentMonth = dateFormatMonth.format(date).toString()
         currentyear = dateFormatYear.format(date).toString()
 
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        setHasOptionsMenu(true)
+        binding = viewDataBinding
+
+
+
+
+
+        viewModel.getAttendance(empModel.empId.toString(), currentMonth, currentyear)
+
+
+        setupRecyclerView()
+        setObservers()
+
         var model = AdModel()
         for (m in viewModel.dataManager!!.ads.ads!!) {
             if (m.pageCode?.toInt() == Constants.ATTENDANCE) {
@@ -102,9 +119,10 @@ class AttendanceFragment : BaseFragment<FragmentAttendanceBinding>(), ChooseEmpl
             && model.default_ad_image.equals(null)
             &&model.paragraph.equals(null)) {
             binding.constrAds.setVisibility(View.GONE)
-        } else if (model.resourceLink.equals(null)&&model.paragraph.equals(null)) {
+        }
+        else if (model.resourceLink.equals(null)&&model.paragraph.equals(null)) {
             binding.imageView.visibility = View.VISIBLE
-            Glide.with(this).load(model.default_ad_image)
+            Glide.with(this).load(model.image)
                 .centerCrop().placeholder(R.drawable.dr_hussain).into(binding.imageView)
         }
         if (!model.webPageLink.equals("")) {
@@ -173,22 +191,6 @@ class AttendanceFragment : BaseFragment<FragmentAttendanceBinding>(), ChooseEmpl
                 getActivity()?.startActivity(intent)
             }
         }
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        setHasOptionsMenu(true)
-        binding = viewDataBinding
-
-
-
-
-
-        viewModel.getAttendance(empModel.empId.toString(), currentMonth, currentyear)
-
-
-        setupRecyclerView()
-        setObservers()
     }
 
     private fun setupRecyclerView() {
