@@ -1302,7 +1302,7 @@ class ManagerReportFragment : BaseFragment<FragmentSuperReportBinding>()
             Glide.with(this).load(model.default_ad_image)
                 .centerCrop().placeholder(R.drawable.dr_hussain).into(imageView)
         }
-        if (!model.webPageLink.equals(null)) {
+        if (!model.webPageLink.equals("")) {
             cardviewAds.setOnClickListener {
                 openWebPage(model.webPageLink)
             }

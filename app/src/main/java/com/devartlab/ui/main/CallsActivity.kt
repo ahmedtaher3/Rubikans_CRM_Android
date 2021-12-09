@@ -2,7 +2,9 @@ package com.devartlab.ui.main
 
 import android.app.AlertDialog
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
+import android.text.Html
 import android.util.Log
 import android.view.*
 import android.widget.Button
@@ -12,6 +14,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
 import com.devartlab.R
 import com.devartlab.base.BaseActivity
 import com.devartlab.data.room.DatabaseClient
@@ -22,19 +25,22 @@ import com.devartlab.data.room.plan.PlanEntity
 import com.devartlab.data.room.poduct.ProductEntity
 import com.devartlab.data.room.slides.SlideEntity
 import com.devartlab.databinding.ActivityCallsBinding
+import com.devartlab.model.AdModel
 import com.devartlab.model.SlideModel
 import com.devartlab.ui.dialogs.massages.MassagesActivity
 import com.devartlab.ui.dialogs.massages.OnMassageSelect
 import com.devartlab.ui.main.ui.MainArrangedAdapter
 import com.devartlab.ui.main.ui.callmanagement.trade.printer.printerControl.BixolonPrinter
+import com.devartlab.ui.main.ui.moreDetailsAds.MoreDetailsAdsActivity
 import com.devartlab.ui.slider.ImagesSlider
-import com.devartlab.utils.CommonUtilities
-import com.devartlab.utils.ProgressLoading
+import com.devartlab.utils.*
 import com.google.gson.Gson
+import com.jarvanmo.exoplayerview.media.SimpleMediaSource
 import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import ss.com.bannerslider.Slider
 import java.util.concurrent.TimeUnit
 import kotlin.collections.ArrayList
 
@@ -43,13 +49,14 @@ private const val TAG = "CallsActivity"
 class CallsActivity : BaseActivity<ActivityCallsBinding?>(), MainAdapter.OpenMassages,
     OnMassageSelect, MainArrangedAdapter.OpenArrangedMassages {
     var isTablet = false
-    var activityCallsBinding: ActivityCallsBinding? = null
+    lateinit var activityCallsBinding: ActivityCallsBinding
     var mainAdapter: MainAdapter? = null
     var mainArrangedAdapter: MainArrangedAdapter? = null
     var mainViewModel: MainViewModel? = null
     var slides: ArrayList<SlideEntity>? = null
     var Plan_Visit_ID: String? = null
     var arrangedDao: ArrangedDao? = null
+    lateinit var mediaSource: SimpleMediaSource
 
     private val bxlPrinter: BixolonPrinter? = null
 
@@ -65,7 +72,7 @@ class CallsActivity : BaseActivity<ActivityCallsBinding?>(), MainAdapter.OpenMas
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        activityCallsBinding = viewDataBinding
+        activityCallsBinding = viewDataBinding!!
         mainViewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
         arrangedDao = DatabaseClient.getInstance(application)?.appDatabase?.arrangedDao()
 
@@ -154,6 +161,90 @@ class CallsActivity : BaseActivity<ActivityCallsBinding?>(), MainAdapter.OpenMas
             }
 
         })
+
+        var model = AdModel()
+        for (m in mainViewModel!!.dataManager.ads.ads!!) {
+            if (m.pageCode?.toInt() == Constants.ROLE_PLAY) {
+                model = m
+                break
+            }
+        }
+        if (model.resourceLink.equals(null)
+            && model.default_ad_image.equals(null)
+            &&model.paragraph.equals(null)) {
+            activityCallsBinding.constrAds!!.setVisibility(View.GONE)
+        }
+        else if (model.resourceLink.equals(null)&&model.paragraph.equals(null)) {
+            activityCallsBinding.imageView!!.visibility = View.VISIBLE
+            Glide.with(this).load(model.default_ad_image)
+                .centerCrop().placeholder(R.drawable.dr_hussain).into(activityCallsBinding.imageView!!)
+        }
+        if (!model.webPageLink.equals("")) {
+            activityCallsBinding.cardviewAds!!.setOnClickListener {
+                openWebPage(model.webPageLink)
+            }
+        }
+        when (model.type) {
+            "Video" -> {
+                activityCallsBinding.videoView!!.visibility = View.VISIBLE
+                mediaSource = SimpleMediaSource(model.resourceLink)
+                activityCallsBinding.videoView!!.play(mediaSource);
+            }
+            "Image" -> {
+
+                activityCallsBinding.imageView!!.visibility = View.VISIBLE
+                Glide.with(this).load(model.resourceLink)
+                    .centerCrop().placeholder(R.drawable.dr_hussain).into(activityCallsBinding.imageView!!)
+            }
+            "GIF" -> {
+                activityCallsBinding.imageView!!.visibility = View.VISIBLE
+                Glide.with(this).asGif().load(model.resourceLink)
+                    .centerCrop().placeholder(R.drawable.dr_hussain).into(activityCallsBinding.imageView!!);
+            }
+            "Paragraph" -> {
+                activityCallsBinding.textView!!.visibility = View.VISIBLE
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                    activityCallsBinding.textView!!.setText(
+                        Html.fromHtml(
+                            model.paragraph,
+                            Html.FROM_HTML_MODE_LEGACY
+                        )
+                    );
+                } else
+                    activityCallsBinding.textView!!.setText(Html.fromHtml(model.paragraph))
+            }
+            "Slider" -> {
+                activityCallsBinding.bannerSlider!!.visibility = View.VISIBLE
+                Slider.init(PicassoImageLoadingService(this))
+                activityCallsBinding.bannerSlider?.setInterval(5000)
+
+                val list = ArrayList<String>()
+                for (i in model.slideImages!!) {
+                    list.add(i?.link!!)
+                }
+                activityCallsBinding.bannerSlider?.setAdapter(MainSliderAdapter(list))
+            }
+        }
+        if (model.show_ad == true) {
+            viewDataBinding!!.btnHideShowAds!!.setVisibility(View.VISIBLE)
+            viewDataBinding!!.btnHideShowAds!!.setOnClickListener {
+                if (viewDataBinding!!.constrAds!!.visibility == View.VISIBLE) {
+                    viewDataBinding!!.constrAds!!.setVisibility(View.GONE)
+                    viewDataBinding!!.btnHideShowAds!!.setImageResource(R.drawable.ic_show_hide_ads)
+                } else {
+                    viewDataBinding!!.constrAds!!.setVisibility(View.VISIBLE)
+                    viewDataBinding!!.btnHideShowAds!!.setImageResource(R.drawable.ic_hide_show_ads)
+                }
+            }
+        }
+        if (model.show_more == true) {
+            viewDataBinding!!.tvMoreThanAds!!.setVisibility(View.VISIBLE)
+            viewDataBinding!!.tvMoreThanAds!!.setOnClickListener {
+                intent = Intent(this, MoreDetailsAdsActivity::class.java)
+                intent.putExtra("pageCode", model.pageCode)
+                startActivity(intent)
+            }
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

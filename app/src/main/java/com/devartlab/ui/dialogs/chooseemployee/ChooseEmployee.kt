@@ -131,7 +131,7 @@ class ChooseEmployee(context: Context, private var chooseEmployeeInterFace: Choo
             Glide.with(context).load(model.default_ad_image)
                 .centerCrop().placeholder(R.drawable.dr_hussain).into(imageView)
         }
-        if (!model.webPageLink.equals(null)) {
+        if (!model.webPageLink.equals("")) {
             cardviewAds.setOnClickListener {
                 val uri = Uri.parse(model.webPageLink)
                 val intent = Intent(Intent.ACTION_VIEW, uri)

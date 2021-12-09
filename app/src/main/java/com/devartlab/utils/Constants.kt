@@ -1,6 +1,6 @@
 package com.devartlab.utils
 
- object Constants {
+object Constants {
 
     const val HOME_PAGE = 1
     const val PLAN_RECYCLER = 2
@@ -17,4 +17,9 @@ package com.devartlab.utils
     const val CHOOSE_EMPLOYEE = 13
     const val CONTACTS_LIST = 14
     const val DOUBLE_VISIT_REPORT = 15
- }
+    const val MEALS = 16
+    const val MEDICAL_REP = 17
+    const val ROLE_PLAY = 18
+    const val SALARY = 19
+    const val WORK_FROM_HOME = 20
+}

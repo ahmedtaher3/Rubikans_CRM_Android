@@ -113,7 +113,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ChooseEmployeeInterFac
             Glide.with(this).load(model.default_ad_image)
                 .centerCrop().placeholder(R.drawable.dr_hussain).into(binding.imageView)
         }
-        if (!model.webPageLink.equals(null)) {
+        if (!model.webPageLink.equals("")) {
             binding.cardviewAds.setOnClickListener {
                 openWebPage(model.webPageLink)
             }
