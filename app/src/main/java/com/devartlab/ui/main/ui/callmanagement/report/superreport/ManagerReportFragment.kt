@@ -124,7 +124,7 @@ class ManagerReportFragment : BaseFragment<FragmentSuperReportBinding>()
 
         var model = AdModel()
         for (m in viewModel.dataManager.ads.ads!!) {
-            if (m.pageCode?.toInt() == Constants.CALL_MANAGEMENT_PAGE) {
+            if (m.pageCode?.toInt() == Constants.MANAGER_REPORT) {
                 model = m
                 break
             }

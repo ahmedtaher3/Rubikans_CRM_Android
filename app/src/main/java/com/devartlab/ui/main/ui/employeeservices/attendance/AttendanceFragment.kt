@@ -122,7 +122,7 @@ class AttendanceFragment : BaseFragment<FragmentAttendanceBinding>(), ChooseEmpl
         }
         else if (model.resourceLink.equals(null)&&model.paragraph.equals(null)) {
             binding.imageView.visibility = View.VISIBLE
-            Glide.with(this).load(model.image)
+            Glide.with(this).load(model.default_ad_image)
                 .centerCrop().placeholder(R.drawable.dr_hussain).into(binding.imageView)
         }
         if (!model.webPageLink.equals("")) {

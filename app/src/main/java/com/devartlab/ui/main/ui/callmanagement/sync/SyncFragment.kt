@@ -338,9 +338,9 @@ class SyncFragment : BaseFragment<SyncFragmentBinding>() {
             &&model.paragraph.equals(null)) {
             binding.constrAds.setVisibility(View.GONE)
         } else if (model.resourceLink.equals(null)&&model.paragraph.equals(null)) {
-            binding.imageView.visibility = View.VISIBLE
+            binding.imageView1.visibility = View.VISIBLE
             Glide.with(this).load(model.default_ad_image)
-                .centerCrop().placeholder(R.drawable.dr_hussain).into(binding.imageView)
+                .centerCrop().placeholder(R.drawable.dr_hussain).into(binding.imageView1)
         }
         if (!model.webPageLink.equals("")) {
             binding.cardviewAds.setOnClickListener {
@@ -355,14 +355,14 @@ class SyncFragment : BaseFragment<SyncFragmentBinding>() {
             }
             "Image" -> {
 
-                binding.imageView.visibility = View.VISIBLE
+                binding.imageView1.visibility = View.VISIBLE
                 Glide.with(this).load(model.resourceLink)
-                    .centerCrop().placeholder(R.drawable.dr_hussain).into(binding.imageView)
+                    .centerCrop().placeholder(R.drawable.dr_hussain).into(binding.imageView1)
             }
             "GIF" -> {
-                binding.imageView.visibility = View.VISIBLE
+                binding.imageView1.visibility = View.VISIBLE
                 Glide.with(this).asGif().load(model.resourceLink)
-                    .centerCrop().placeholder(R.drawable.dr_hussain).into(binding.imageView);
+                    .centerCrop().placeholder(R.drawable.dr_hussain).into(binding.imageView1);
             }
             "Paragraph" -> {
                 binding.textView.visibility = View.VISIBLE
