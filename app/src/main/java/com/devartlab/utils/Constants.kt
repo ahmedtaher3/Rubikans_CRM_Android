@@ -23,4 +23,5 @@ object Constants {
     const val SALARY = 19
     const val WORK_FROM_HOME = 20
     const val SYNC = 21
+    const val SHOW_ALL_WORK_FROM_HOME = 22
 }

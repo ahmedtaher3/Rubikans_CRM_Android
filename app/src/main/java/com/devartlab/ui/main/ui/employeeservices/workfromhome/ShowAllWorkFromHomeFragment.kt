@@ -44,7 +44,7 @@ class ShowAllWorkFromHomeFragment : BaseFragment<FragmentAllWorkFromHomeBinding>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel = ViewModelProviders.of(this).get(WorkFromHomeViewModel::class.java)
-        adapter = WorkFromHomeAdapter(baseActivity , ArrayList())
+        adapter = WorkFromHomeAdapter(baseActivity, ArrayList())
         fmt = SimpleDateFormat("yyyy-MM-dd", Locale.US)
         DATE = fmt?.format(CommonUtilities.currentToMillis)
     }
@@ -59,16 +59,19 @@ class ShowAllWorkFromHomeFragment : BaseFragment<FragmentAllWorkFromHomeBinding>
         viewModel.getAll()
         var model = AdModel()
         for (m in viewModel.dataManager.ads.ads!!) {
-            if (m.pageCode?.toInt() == Constants.WORK_FROM_HOME) {
+            if (m.pageCode?.toInt() == Constants.SHOW_ALL_WORK_FROM_HOME) {
                 model = m
                 break
             }
         }
         if (model.resourceLink.equals(null)
             && model.default_ad_image.equals(null)
-            &&model.paragraph.equals(null)) {
+            && model.paragraph.equals(null)
+        ) {
             binding.constrAds.setVisibility(View.GONE)
-        } else if (model.resourceLink.equals(null)&&model.paragraph.equals(null)) {
+        } else if (model.resourceLink.equals(null)
+            && model.paragraph.equals(null)
+        ) {
             binding.imageView.visibility = View.VISIBLE
             Glide.with(this).load(model.default_ad_image)
                 .centerCrop().placeholder(R.drawable.dr_hussain).into(binding.imageView)
@@ -134,7 +137,7 @@ class ShowAllWorkFromHomeFragment : BaseFragment<FragmentAllWorkFromHomeBinding>
         if (model.show_more == true) {
             binding.tvMoreThanAds.setVisibility(View.VISIBLE)
             binding.tvMoreThanAds.setOnClickListener {
-                val  intent = Intent(getActivity(), MoreDetailsAdsActivity::class.java)
+                val intent = Intent(getActivity(), MoreDetailsAdsActivity::class.java)
                 intent.putExtra("pageCode", model.pageCode)
                 getActivity()?.startActivity(intent)
             }
@@ -146,7 +149,7 @@ class ShowAllWorkFromHomeFragment : BaseFragment<FragmentAllWorkFromHomeBinding>
         viewModel.responseLive.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
 
 
-            adapter .setMyData(it.workFromHomelist!!)
+            adapter.setMyData(it.workFromHomelist!!)
 
         })
 

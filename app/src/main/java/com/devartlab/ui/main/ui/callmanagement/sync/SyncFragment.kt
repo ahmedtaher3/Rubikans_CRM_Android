@@ -61,6 +61,7 @@ class SyncFragment : BaseFragment<SyncFragmentBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding = viewDataBinding
 
         viewModel = ViewModelProviders.of(this).get(SyncViewModel::class.java)
 

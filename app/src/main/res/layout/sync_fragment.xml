@@ -47,9 +47,6 @@
                             android:id="@+id/textView"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:fontFamily="sans-serif"
-                            android:textColor="@color/black"
-                            android:textSize="12sp"
                             android:visibility="gone" />
 
                         <com.jarvanmo.exoplayerview.ui.ExoVideoView

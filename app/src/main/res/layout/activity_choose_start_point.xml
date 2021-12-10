@@ -134,9 +134,6 @@
                         android:id="@+id/textView"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:textSize="12sp"
-                        android:textColor="@color/black"
-                        android:fontFamily="sans-serif"
                         android:visibility="gone" />
 
                     <com.jarvanmo.exoplayerview.ui.ExoVideoView

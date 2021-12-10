@@ -47,14 +47,17 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent">
 
-                                <TextView
-                                    android:id="@+id/textView"
+                                <ScrollView
                                     android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:textSize="12sp"
-                                    android:textColor="@color/black"
-                                    android:fontFamily="sans-serif"
-                                    android:visibility="gone" />
+                                    android:layout_height="match_parent">
+
+                                    <TextView
+                                        android:id="@+id/textView"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:visibility="gone" />
+                                </ScrollView>
+
 
                                 <com.jarvanmo.exoplayerview.ui.ExoVideoView
                                     android:id="@+id/videoView"
@@ -83,6 +86,7 @@
                         </androidx.cardview.widget.CardView>
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
+
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -118,6 +122,7 @@
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"

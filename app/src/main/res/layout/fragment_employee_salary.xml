@@ -39,9 +39,6 @@
                         android:id="@+id/textView"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:textSize="12sp"
-                        android:textColor="@color/black"
-                        android:fontFamily="sans-serif"
                         android:visibility="gone" />
 
                     <com.jarvanmo.exoplayerview.ui.ExoVideoView
@@ -111,7 +108,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="20dp"
             android:layout_marginRight="10dp"
             android:layout_marginBottom="5dp"
             app:cardBackgroundColor="@color/white"
