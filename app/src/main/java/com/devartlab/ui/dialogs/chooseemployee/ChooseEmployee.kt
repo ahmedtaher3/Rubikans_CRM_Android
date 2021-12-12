@@ -79,7 +79,6 @@ class ChooseEmployee(context: Context, private var chooseEmployeeInterFace: Choo
         videoView = findViewById(R.id.videoView)
         imageView = findViewById(R.id.imageView)
         bannerslider = findViewById(R.id.bannerSlider)
-        recyclerView = findViewById(R.id.startPointRecyclerView)
         btnHideShowAds = findViewById(R.id.btn_hide_show_ads)
         moreThanAds = findViewById(R.id.tv_more_than_ads)
         constrAds = findViewById(R.id.constr_ads)
