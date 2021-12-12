@@ -11,6 +11,7 @@ import android.text.Html
 import android.text.TextUtils
 import android.text.TextWatcher
 import android.view.View
+import android.webkit.WebView
 import android.widget.*
 import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -56,7 +57,7 @@ class ChooseEmployee(context: Context, private var chooseEmployeeInterFace: Choo
     lateinit var mediaSource: SimpleMediaSource
     lateinit var cardviewAds: CardView
     lateinit var moreThanAds: TextView
-    lateinit var textView: TextView
+    lateinit var textView: WebView
     var myAPI: ApiServices? = null
     var retrofit: Retrofit? = null
     var editText: EditText? = null
@@ -157,15 +158,17 @@ class ChooseEmployee(context: Context, private var chooseEmployeeInterFace: Choo
             }
             "Paragraph" -> {
                 textView.visibility = View.VISIBLE
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                    textView.setText(
-                        Html.fromHtml(
-                            model.paragraph,
-                            Html.FROM_HTML_MODE_LEGACY
-                        )
-                    );
-                } else
-                    textView.setText(Html.fromHtml(model.paragraph))
+//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+//                    textView.setText(
+//                        Html.fromHtml(
+//                            model.paragraph,
+//                            Html.FROM_HTML_MODE_LEGACY
+//                        )
+//                    );
+//                } else
+//                    textView.setText(Html.fromHtml(model.paragraph))
+                textView.loadDataWithBaseURL(null, model.paragraph!!
+                    ,  "text/html", "utf-8", null)
             }
             "Slider" -> {
                 bannerslider.visibility = View.VISIBLE

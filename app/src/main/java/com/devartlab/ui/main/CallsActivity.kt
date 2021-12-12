@@ -203,15 +203,17 @@ class CallsActivity : BaseActivity<ActivityCallsBinding?>(), MainAdapter.OpenMas
             }
             "Paragraph" -> {
                 activityCallsBinding.textView!!.visibility = View.VISIBLE
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                    activityCallsBinding.textView!!.setText(
-                        Html.fromHtml(
-                            model.paragraph,
-                            Html.FROM_HTML_MODE_LEGACY
-                        )
-                    );
-                } else
-                    activityCallsBinding.textView!!.setText(Html.fromHtml(model.paragraph))
+//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+//                    activityCallsBinding.textView!!.setText(
+//                        Html.fromHtml(
+//                            model.paragraph,
+//                            Html.FROM_HTML_MODE_LEGACY
+//                        )
+//                    );
+//                } else
+//                    activityCallsBinding.textView!!.setText(Html.fromHtml(model.paragraph))
+                activityCallsBinding.textView!!.loadDataWithBaseURL(null, model.paragraph!!
+                    ,  "text/html", "utf-8", null)
             }
             "Slider" -> {
                 activityCallsBinding.bannerSlider!!.visibility = View.VISIBLE

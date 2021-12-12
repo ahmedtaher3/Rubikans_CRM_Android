@@ -64,15 +64,17 @@ class MoreDetailsAdsActivity : AppCompatActivity() {
             }
             "Paragraph" -> {
                 binding.textView.visibility = View.VISIBLE
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                    binding.textView.setText(
-                        Html.fromHtml(
-                            model.view_more_paragraph,
-                            Html.FROM_HTML_MODE_LEGACY
-                        )
-                    )
-                } else
-                    binding.textView.setText(Html.fromHtml(model.view_more_paragraph))
+//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+//                    binding.textView.setText(
+//                        Html.fromHtml(
+//                            model.view_more_paragraph,
+//                            Html.FROM_HTML_MODE_LEGACY
+//                        )
+//                    )
+//                } else
+//                    binding.textView.setText(Html.fromHtml(model.view_more_paragraph))
+                binding.textView.loadDataWithBaseURL(null, model.paragraph!!
+                    ,  "text/html", "utf-8", null)
             }
             "Slider" -> {
                 binding.bannerSlider.visibility = View.VISIBLE
@@ -90,9 +92,14 @@ class MoreDetailsAdsActivity : AppCompatActivity() {
         binding.tvDataCreate.setText(str)
 
         binding.tvTitle.setText(model.view_more_title)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            binding.tvDec.setText(Html.fromHtml(model.view_more_text, Html.FROM_HTML_MODE_LEGACY));
-        } else
-            binding.tvDec.setText(Html.fromHtml(model.view_more_text))
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+//            binding.tvDec.setText(Html.fromHtml(model.view_more_text, Html.FROM_HTML_MODE_COMPACT))
+//        } else
+//            binding.tvDec.setText(Html.fromHtml(model.view_more_text))
+//        binding.tvDec.getSettings().setJavaScriptEnabled(true);
+//        binding.tvDec.loadUrl(model.view_more_text!!)
+        binding.tvDec.loadDataWithBaseURL(null, model.view_more_text!!
+            ,  "text/html", "utf-8", null)
+
     }
 }

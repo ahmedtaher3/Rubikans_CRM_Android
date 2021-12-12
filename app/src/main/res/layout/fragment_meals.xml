@@ -47,17 +47,12 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent">
 
-                                <ScrollView
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent">
 
-                                    <TextView
+                                    <WebView
                                         android:id="@+id/textView"
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
                                         android:visibility="gone" />
-                                </ScrollView>
-
 
                                 <com.jarvanmo.exoplayerview.ui.ExoVideoView
                                     android:id="@+id/videoView"

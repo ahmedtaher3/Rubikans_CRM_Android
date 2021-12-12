@@ -14,6 +14,7 @@ import android.os.Bundle
 import android.text.Html
 import android.util.Log
 import android.view.*
+import android.webkit.WebView
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -162,15 +163,17 @@ class ManagerReportFragment : BaseFragment<FragmentSuperReportBinding>()
             }
             "Paragraph" -> {
                 binding.textView.visibility = View.VISIBLE
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                    binding.textView.setText(
-                        Html.fromHtml(
-                            model.paragraph,
-                            Html.FROM_HTML_MODE_LEGACY
-                        )
-                    );
-                } else
-                    binding.textView.setText(Html.fromHtml(model.paragraph))
+//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+//                    binding.textView.setText(
+//                        Html.fromHtml(
+//                            model.paragraph,
+//                            Html.FROM_HTML_MODE_LEGACY
+//                        )
+//                    );
+//                } else
+//                    binding.textView.setText(Html.fromHtml(model.paragraph))
+                binding.textView.loadDataWithBaseURL(null, model.paragraph!!
+                    ,  "text/html", "utf-8", null)
             }
             "Slider" -> {
                 binding.bannerSlider.visibility = View.VISIBLE
@@ -1271,7 +1274,7 @@ class ManagerReportFragment : BaseFragment<FragmentSuperReportBinding>()
         var videoView: ExoVideoView = choose_activity_type.findViewById(R.id.videoView)
         var imageView:ImageView = choose_activity_type.findViewById(R.id.imageView)
         var bannerslider: Slider = choose_activity_type.findViewById(R.id.bannerSlider)
-        var textView:TextView = choose_activity_type.findViewById(R.id.textView)
+        var textView:WebView = choose_activity_type.findViewById(R.id.textView)
         var cardviewAds: CardView = choose_activity_type.findViewById(R.id.cardview_ads)
         var btnHideShowAds: ImageView= choose_activity_type.findViewById(R.id.btn_hide_show_ads)
         var constrAds: ConstraintLayout = choose_activity_type.findViewById(R.id.constr_ads)
@@ -1332,15 +1335,17 @@ class ManagerReportFragment : BaseFragment<FragmentSuperReportBinding>()
             }
             "Paragraph" -> {
                 textView.visibility = View.VISIBLE
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                    textView.setText(
-                        Html.fromHtml(
-                            model.paragraph,
-                            Html.FROM_HTML_MODE_LEGACY
-                        )
-                    );
-                } else
-                    textView.setText(Html.fromHtml(model.paragraph))
+//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+//                    textView.setText(
+//                        Html.fromHtml(
+//                            model.paragraph,
+//                            Html.FROM_HTML_MODE_LEGACY
+//                        )
+//                    );
+//                } else
+//                    textView.setText(Html.fromHtml(model.paragraph))
+                textView.loadDataWithBaseURL(null, model.paragraph!!
+                    ,  "text/html", "utf-8", null)
             }
             "Slider" -> {
                 bannerslider.visibility = View.VISIBLE

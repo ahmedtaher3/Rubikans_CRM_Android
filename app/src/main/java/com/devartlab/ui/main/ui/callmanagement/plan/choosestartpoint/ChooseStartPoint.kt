@@ -10,6 +10,7 @@ import android.text.Html
 import android.text.TextWatcher
 import android.util.Log
 import android.view.View
+import android.webkit.WebView
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
@@ -66,7 +67,7 @@ class ChooseStartPoint(
     lateinit var mediaSource: SimpleMediaSource
     lateinit var cardviewAds: CardView
     lateinit var moreThanAds: TextView
-    lateinit var textView: TextView
+    lateinit var textView: WebView
     lateinit var close: ImageView
     var myAPI: ApiServices? = null
     var retrofit: Retrofit? = null
@@ -147,15 +148,17 @@ class ChooseStartPoint(
             }
             "Paragraph" -> {
                 textView.visibility = View.VISIBLE
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                    textView.setText(
-                        Html.fromHtml(
-                            model.resourceLink,
-                            Html.FROM_HTML_MODE_LEGACY
-                        )
-                    );
-                } else
-                    textView.setText(Html.fromHtml(model.resourceLink))
+//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+//                    textView.setText(
+//                        Html.fromHtml(
+//                            model.resourceLink,
+//                            Html.FROM_HTML_MODE_LEGACY
+//                        )
+//                    );
+//                } else
+//                    textView.setText(Html.fromHtml(model.resourceLink))
+                textView.loadDataWithBaseURL(null, model.paragraph!!
+                    ,  "text/html", "utf-8", null)
             }
             "Slider" -> {
                 bannerslider.visibility = View.VISIBLE

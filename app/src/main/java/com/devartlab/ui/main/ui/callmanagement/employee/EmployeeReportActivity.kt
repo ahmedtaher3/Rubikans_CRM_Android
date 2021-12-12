@@ -128,15 +128,17 @@ class EmployeeReportActivity : BaseActivity<ActivityEmployeeReportBinding>(), Ch
             }
             "Paragraph" -> {
                 binding.textView.visibility = View.VISIBLE
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                    binding.textView.setText(
-                        Html.fromHtml(
-                            model.paragraph,
-                            Html.FROM_HTML_MODE_LEGACY
-                        )
-                    );
-                } else
-                    binding.textView.setText(Html.fromHtml(model.paragraph))
+//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+//                    binding.textView.setText(
+//                        Html.fromHtml(
+//                            model.paragraph,
+//                            Html.FROM_HTML_MODE_LEGACY
+//                        )
+//                    );
+//                } else
+//                    binding.textView.setText(Html.fromHtml(model.paragraph))
+                binding.textView.loadDataWithBaseURL(null, model.paragraph!!
+                    ,  "text/html", "utf-8", null)
             }
             "Slider" -> {
                 binding.bannerSlider.visibility = View.VISIBLE

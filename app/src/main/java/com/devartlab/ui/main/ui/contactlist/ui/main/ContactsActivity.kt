@@ -10,6 +10,7 @@ import android.text.TextWatcher
 import android.util.Log
 import android.view.MenuItem
 import android.view.View
+import android.webkit.WebView
 import android.widget.*
 import android.widget.AdapterView.OnItemSelectedListener
 import androidx.appcompat.app.AppCompatActivity
@@ -56,7 +57,7 @@ class ContactsActivity : AppCompatActivity() {
     lateinit var mediaSource: SimpleMediaSource
     lateinit var cardviewAds: CardView
     lateinit var moreThanAds: TextView
-    lateinit var textView: TextView
+    lateinit var textView: WebView
     private var inputsearch: EditText? = null
     private var toolbar: Toolbar? = null
     var swiperefresh: SwipeRefreshLayout? = null
@@ -148,15 +149,17 @@ class ContactsActivity : AppCompatActivity() {
             }
             "Paragraph" -> {
                 textView.visibility = View.VISIBLE
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                    textView.setText(
-                        Html.fromHtml(
-                            model.paragraph,
-                            Html.FROM_HTML_MODE_LEGACY
-                        )
-                    );
-                } else
-                    textView.setText(Html.fromHtml(model.paragraph))
+//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+//                    textView.setText(
+//                        Html.fromHtml(
+//                            model.paragraph,
+//                            Html.FROM_HTML_MODE_LEGACY
+//                        )
+//                    );
+//                } else
+//                    textView.setText(Html.fromHtml(model.paragraph))
+                textView.loadDataWithBaseURL(null, model.paragraph!!
+                    ,  "text/html", "utf-8", null)
             }
             "Slider" -> {
                 bannerslider.visibility = View.VISIBLE
