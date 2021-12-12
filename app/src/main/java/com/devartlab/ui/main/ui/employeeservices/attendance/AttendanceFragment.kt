@@ -44,7 +44,8 @@ import kotlin.collections.ArrayList
 /**
  * A simple [Fragment] subclass.
  */
-class AttendanceFragment : BaseFragment<FragmentAttendanceBinding>(), ChooseEmployeeInterFace, ChangeDoctorData, AttendanceAdapter.OnDayClick {
+class AttendanceFragment : BaseFragment<FragmentAttendanceBinding>(), ChooseEmployeeInterFace,
+    ChangeDoctorData, AttendanceAdapter.OnDayClick {
 
     private lateinit var viewModel: AttendanceViewModel
     private lateinit var binding: FragmentAttendanceBinding
@@ -83,7 +84,7 @@ class AttendanceFragment : BaseFragment<FragmentAttendanceBinding>(), ChooseEmpl
         fakeList = ArrayList()
         fakeList.add(EMployeeDayList_Class())
 
-        empModel = requireArguments().getParcelable<FilterDataEntity>("EMP_MODEL") !!
+        empModel = requireArguments().getParcelable<FilterDataEntity>("EMP_MODEL")!!
 
         val dateFormatYear: DateFormat = SimpleDateFormat("yyyy", Locale.US)
         val dateFormatMonth: DateFormat = SimpleDateFormat("MM", Locale.US)
@@ -117,17 +118,22 @@ class AttendanceFragment : BaseFragment<FragmentAttendanceBinding>(), ChooseEmpl
         }
         if (model.resourceLink.equals(null)
             && model.default_ad_image.equals(null)
-            &&model.paragraph.equals(null)
-            && model.slideImages!!.equals(null)) {
+            && model.paragraph.equals(null)
+            && model.slideImages == null
+        ) {
             binding.constrAds.setVisibility(View.GONE)
-        }
-        else if (model.resourceLink.equals(null)&&model.paragraph.equals(null)
-            && model.slideImages!!.equals(null)) {
+        } else if (model.resourceLink.equals(null) && model.paragraph.equals(null)
+            && model.slideImages == null
+        ) {
             binding.imageView.visibility = View.VISIBLE
             Glide.with(this).load(model.default_ad_image)
                 .centerCrop().placeholder(R.drawable.dr_hussain).into(binding.imageView)
         }
         if (!model.webPageLink.equals("")) {
+            binding.cardviewAds.setOnClickListener {
+                openWebPage(model.webPageLink)
+            }
+        } else if (!model.webPageLink.equals(null)) {
             binding.cardviewAds.setOnClickListener {
                 openWebPage(model.webPageLink)
             }
@@ -160,8 +166,9 @@ class AttendanceFragment : BaseFragment<FragmentAttendanceBinding>(), ChooseEmpl
 //                    );
 //                } else
 //                    binding.textView.setText(Html.fromHtml(model.paragraph))
-                binding.textView.loadDataWithBaseURL(null, model.paragraph!!
-                    ,  "text/html", "utf-8", null)
+                binding.textView.loadDataWithBaseURL(
+                    null, model.paragraph!!, "text/html", "utf-8", null
+                )
             }
             "Slider" -> {
                 binding.bannerSlider.visibility = View.VISIBLE
@@ -190,7 +197,7 @@ class AttendanceFragment : BaseFragment<FragmentAttendanceBinding>(), ChooseEmpl
         if (model.show_more == true) {
             binding.tvMoreThanAds.setVisibility(View.VISIBLE)
             binding.tvMoreThanAds.setOnClickListener {
-                val  intent = Intent(getActivity(), MoreDetailsAdsActivity::class.java)
+                val intent = Intent(getActivity(), MoreDetailsAdsActivity::class.java)
                 intent.putExtra("pageCode", model.pageCode)
                 getActivity()?.startActivity(intent)
             }
@@ -203,15 +210,16 @@ class AttendanceFragment : BaseFragment<FragmentAttendanceBinding>(), ChooseEmpl
         binding.recyclerView.adapter = adapter
         adapter.setdrData(
 
-                EmployeeData_class(
-                        empModel.empId!!,
-                        empModel.empTitle,
-                        empModel.empTitle,
-                        empModel.empName,
-                        "",
-                        "0.0 day deduction",
-                        0
-                ) , empModel)
+            EmployeeData_class(
+                empModel.empId!!,
+                empModel.empTitle,
+                empModel.empTitle,
+                empModel.empName,
+                "",
+                "0.0 day deduction",
+                0
+            ), empModel
+        )
 
         adapter.setMyData(fakeList)
 
@@ -223,7 +231,7 @@ class AttendanceFragment : BaseFragment<FragmentAttendanceBinding>(), ChooseEmpl
 
 
             if (it.isSuccesed) {
-                adapter.setdrData(it.data.employeeData[0] , empModel)
+                adapter.setdrData(it.data.employeeData[0], empModel)
                 dayDetailsList = it.data.eMployeeDayDetails
                 fullList = it.data.eMployeeDayList_Class
                 fullList.add(0, EMployeeDayList_Class())
@@ -282,7 +290,8 @@ class AttendanceFragment : BaseFragment<FragmentAttendanceBinding>(), ChooseEmpl
         val dateFormatYear: DateFormat = SimpleDateFormat("yyyy", Locale.US)
         val dateFormatMonth: DateFormat = SimpleDateFormat("MM", Locale.US)
         val date = Date()
-        textView.text = dateFormatMonth.format(date).toString() + " - " + dateFormatYear.format(date).toString()
+        textView.text =
+            dateFormatMonth.format(date).toString() + " - " + dateFormatYear.format(date).toString()
         textView.setOnClickListener(View.OnClickListener {
 
             // Get Current Date
@@ -293,18 +302,24 @@ class AttendanceFragment : BaseFragment<FragmentAttendanceBinding>(), ChooseEmpl
             var mDay = c.get(Calendar.DAY_OF_MONTH)
 
 
-            val datePickerDialog = DatePickerDialog(baseActivity, android.R.style.Theme_Holo_Light_Dialog_MinWidth,
+            val datePickerDialog =
+                DatePickerDialog(baseActivity, android.R.style.Theme_Holo_Light_Dialog_MinWidth,
                     DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
 
                         currentMonth = (monthOfYear + 1).toString()
                         currentyear = year.toString()
 
-                        viewModel.getAttendance(empModel.empId.toString(), currentMonth, currentyear)
+                        viewModel.getAttendance(
+                            empModel.empId.toString(),
+                            currentMonth,
+                            currentyear
+                        )
 
                         textView.text = currentMonth + " - " + currentyear
 
 
-                    }, mYear, mMonth, mDay)
+                    }, mYear, mMonth, mDay
+                )
             datePickerDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
             datePickerDialog.show()
 
@@ -322,27 +337,32 @@ class AttendanceFragment : BaseFragment<FragmentAttendanceBinding>(), ChooseEmpl
         viewModel.getAttendance(empModel.empId.toString(), currentMonth, currentyear)
         adapter.setdrData(
 
-                EmployeeData_class(
-                        empModel.empId!!,
-                        empModel.empTitle,
-                        empModel.empTitle,
-                        empModel.empName,
-                        "",
-                        "0.0 day deduction",
-                        0
-                )
-         , empModel)
+            EmployeeData_class(
+                empModel.empId!!,
+                empModel.empTitle,
+                empModel.empTitle,
+                empModel.empName,
+                "",
+                "0.0 day deduction",
+                0
+            ), empModel
+        )
 
         chooseEmployeeInterFace.chooseEmployee(model)
     }
 
     override fun changeDrData() {
-        chooseEmployee = ChooseEmployee(baseActivity, this@AttendanceFragment, viewModel?.dataManager!!);
+        chooseEmployee =
+            ChooseEmployee(baseActivity, this@AttendanceFragment, viewModel?.dataManager!!);
         chooseEmployee.setCanceledOnTouchOutside(true);
         val window = chooseEmployee.getWindow();
-        window?.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
+        window?.setLayout(
+            WindowManager.LayoutParams.MATCH_PARENT,
+            WindowManager.LayoutParams.MATCH_PARENT
+        );
         chooseEmployee.getWindow()?.setBackgroundDrawableResource(android.R.color.transparent);
-        chooseEmployee.getWindow()?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+        chooseEmployee.getWindow()
+            ?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
         chooseEmployee.show();
     }
 
@@ -359,7 +379,8 @@ class AttendanceFragment : BaseFragment<FragmentAttendanceBinding>(), ChooseEmpl
         dialogBuilder.setView(dialogView)
         val alertDialog = dialogBuilder.create()
 
-        dialogView.findViewById<ImageView>(R.id.exit_icona).setOnClickListener(View.OnClickListener { alertDialog.dismiss() })
+        dialogView.findViewById<ImageView>(R.id.exit_icona)
+            .setOnClickListener(View.OnClickListener { alertDialog.dismiss() })
         alertDialog.show()
     }
 
@@ -369,9 +390,14 @@ class AttendanceFragment : BaseFragment<FragmentAttendanceBinding>(), ChooseEmpl
             dayDetailsDailog = DayDetailsDailog(baseActivity, dayDetailsList);
             dayDetailsDailog.setCanceledOnTouchOutside(true);
             val window = dayDetailsDailog.getWindow();
-            window?.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
-            dayDetailsDailog.getWindow()?.setBackgroundDrawableResource(android.R.color.transparent);
-            dayDetailsDailog.getWindow()?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+            window?.setLayout(
+                WindowManager.LayoutParams.MATCH_PARENT,
+                WindowManager.LayoutParams.MATCH_PARENT
+            );
+            dayDetailsDailog.getWindow()
+                ?.setBackgroundDrawableResource(android.R.color.transparent);
+            dayDetailsDailog.getWindow()
+                ?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
             dayDetailsDailog.show();
 
 
@@ -389,9 +415,14 @@ class AttendanceFragment : BaseFragment<FragmentAttendanceBinding>(), ChooseEmpl
                 dayDetailsDailog = DayDetailsDailog(baseActivity, new_list);
                 dayDetailsDailog.setCanceledOnTouchOutside(true);
                 val window = dayDetailsDailog.getWindow();
-                window?.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
-                dayDetailsDailog.getWindow()?.setBackgroundDrawableResource(android.R.color.transparent);
-                dayDetailsDailog.getWindow()?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+                window?.setLayout(
+                    WindowManager.LayoutParams.MATCH_PARENT,
+                    WindowManager.LayoutParams.MATCH_PARENT
+                );
+                dayDetailsDailog.getWindow()
+                    ?.setBackgroundDrawableResource(android.R.color.transparent);
+                dayDetailsDailog.getWindow()
+                    ?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
                 dayDetailsDailog.show();
             }
 

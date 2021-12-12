@@ -14,9 +14,12 @@ import android.os.Bundle
 import android.text.Html
 import android.util.Log
 import android.view.*
+import android.webkit.WebView
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.cardview.widget.CardView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.widget.NestedScrollView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -49,6 +52,7 @@ import com.devartlab.ui.main.ui.callmanagement.trade.selectProductContract.Selec
 import com.devartlab.ui.main.ui.moreDetailsAds.MoreDetailsAdsActivity
 import com.devartlab.utils.*
 import com.jarvanmo.exoplayerview.media.SimpleMediaSource
+import com.jarvanmo.exoplayerview.ui.ExoVideoView
 import devs.mulham.horizontalcalendar.HorizontalCalendar
 import devs.mulham.horizontalcalendar.utils.HorizontalCalendarListener
 import io.reactivex.Observable
@@ -123,10 +127,10 @@ class ReportFragment : BaseFragment<FragmentReportBinding>(), InvoiceTypsAdapter
         if (model.resourceLink.equals(null)
             && model.default_ad_image.equals(null)
             &&model.paragraph.equals(null)
-            && model.slideImages!!.equals(null)) {
+            && model.slideImages==null) {
             binding.constrAds.setVisibility(View.GONE)
         } else if (model.resourceLink.equals(null)&&model.paragraph.equals(null)
-            && model.slideImages!!.equals(null)) {
+            && model.slideImages==null) {
             binding.imageView.visibility = View.VISIBLE
             Glide.with(this).load(model.default_ad_image)
                 .centerCrop().placeholder(R.drawable.dr_hussain).into(binding.imageView)
@@ -915,6 +919,14 @@ class ReportFragment : BaseFragment<FragmentReportBinding>(), InvoiceTypsAdapter
 
         val factory = LayoutInflater.from(baseActivity)
         val choose_activity_type: View = factory.inflate(R.layout.choose_activity_type, null)
+        var videoView: ExoVideoView = choose_activity_type.findViewById(R.id.videoView)
+        var imageView:ImageView = choose_activity_type.findViewById(R.id.imageView)
+        var bannerslider:Slider = choose_activity_type.findViewById(R.id.bannerSlider)
+        var textView: WebView = choose_activity_type.findViewById(R.id.textView)
+        var cardviewAds: CardView = choose_activity_type.findViewById(R.id.cardview_ads)
+        var btnHideShowAds: ImageView= choose_activity_type.findViewById(R.id.btn_hide_show_ads)
+        var constrAds: ConstraintLayout = choose_activity_type.findViewById(R.id.constr_ads)
+        var moreThanAds:TextView=choose_activity_type.findViewById(R.id.tv_more_than_ads)
 
         if (alertDialog != null && alertDialog?.isShowing!!) {
             return
@@ -942,6 +954,95 @@ class ReportFragment : BaseFragment<FragmentReportBinding>(), InvoiceTypsAdapter
             adapter.setMyData(it)
 
         })
+
+        var model = AdModel()
+
+        for (m in viewModel.dataManager.ads.ads!!) {
+            if (m.pageCode?.toInt() == Constants.CREATE_PLAN) {
+                model = m
+                break
+            }
+        }
+        if (model.resourceLink.equals(null)
+            && model.default_ad_image.equals(null)
+            &&model.paragraph.equals(null)
+            && model.slideImages==null) {
+            constrAds.setVisibility(View.GONE)
+        }
+        else if (model.resourceLink.equals(null)&&model.paragraph.equals(null)
+            && model.slideImages==null) {
+            imageView.visibility = View.VISIBLE
+            Glide.with(this).load(model.default_ad_image)
+                .centerCrop().placeholder(R.drawable.dr_hussain).into(imageView)
+        }
+        if (!model.webPageLink.equals("")) {
+            cardviewAds.setOnClickListener {
+                openWebPage(model.webPageLink)
+            }
+        }
+        when (model.type) {
+            "Video" -> {
+                videoView.visibility = View.VISIBLE
+                mediaSource = SimpleMediaSource(model.resourceLink)
+                videoView.play(mediaSource);
+            }
+            "Image" -> {
+
+                imageView.visibility = View.VISIBLE
+                Glide.with(this).load(model.resourceLink)
+                    .centerCrop().placeholder(R.drawable.dr_hussain).into(imageView)
+            }
+            "GIF" -> {
+                imageView.visibility = View.VISIBLE
+                Glide.with(this).asGif().load(model.resourceLink)
+                    .centerCrop().placeholder(R.drawable.dr_hussain).into(imageView);
+            }
+            "Paragraph" -> {
+                textView.visibility = View.VISIBLE
+//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+//                    textView.setText(
+//                        Html.fromHtml(
+//                            model.paragraph,
+//                            Html.FROM_HTML_MODE_LEGACY
+//                        )
+//                    );
+//                } else
+//                    textView.setText(Html.fromHtml(model.paragraph))
+                textView.loadDataWithBaseURL(null, model.paragraph!!
+                    ,  "text/html", "utf-8", null)
+            }
+            "Slider" -> {
+                bannerslider.visibility = View.VISIBLE
+                Slider.init(PicassoImageLoadingService(context))
+                bannerslider?.setInterval(5000)
+
+                val list = ArrayList<String>()
+                for (i in model.slideImages!!) {
+                    list.add(i?.link!!)
+                }
+                bannerslider?.setAdapter(MainSliderAdapter(list))
+            }
+        }
+        if (model.show_ad == true) {
+            btnHideShowAds.setVisibility(View.VISIBLE)
+            btnHideShowAds.setOnClickListener {
+                if (constrAds.visibility == View.VISIBLE) {
+                    constrAds.setVisibility(View.GONE)
+                    btnHideShowAds.setImageResource(R.drawable.ic_show_hide_ads)
+                } else {
+                    constrAds.setVisibility(View.VISIBLE)
+                    btnHideShowAds.setImageResource(R.drawable.ic_hide_show_ads)
+                }
+            }
+        }
+        if (model.show_more == true) {
+            moreThanAds.setVisibility(View.VISIBLE)
+            moreThanAds.setOnClickListener {
+                val  intent = Intent(getActivity(), MoreDetailsAdsActivity::class.java)
+                intent.putExtra("pageCode", model.pageCode)
+                getActivity()?.startActivity(intent)
+            }
+        }
     }
 
     override fun setChooseInvoiceType(model: PurchaseTypeEntity?) {
@@ -1119,6 +1220,14 @@ class ReportFragment : BaseFragment<FragmentReportBinding>(), InvoiceTypsAdapter
 
         val factory = LayoutInflater.from(baseActivity)
         val choose_activity_type: View = factory.inflate(R.layout.choose_activity_type, null)
+        var videoView: ExoVideoView = choose_activity_type.findViewById(R.id.videoView)
+        var imageView:ImageView = choose_activity_type.findViewById(R.id.imageView)
+        var bannerslider:Slider = choose_activity_type.findViewById(R.id.bannerSlider)
+        var textView: WebView = choose_activity_type.findViewById(R.id.textView)
+        var cardviewAds: CardView = choose_activity_type.findViewById(R.id.cardview_ads)
+        var btnHideShowAds: ImageView= choose_activity_type.findViewById(R.id.btn_hide_show_ads)
+        var constrAds: ConstraintLayout = choose_activity_type.findViewById(R.id.constr_ads)
+        var moreThanAds:TextView=choose_activity_type.findViewById(R.id.tv_more_than_ads)
 
         if (alertDialog != null && alertDialog?.isShowing!!) {
             return
@@ -1146,6 +1255,96 @@ class ReportFragment : BaseFragment<FragmentReportBinding>(), InvoiceTypsAdapter
             activitiesAdapter.setMyData(it)
 
         })
+
+
+        var model = AdModel()
+
+        for (m in viewModel.dataManager.ads.ads!!) {
+            if (m.pageCode?.toInt() == Constants.CREATE_PLAN) {
+                model = m
+                break
+            }
+        }
+        if (model.resourceLink.equals(null)
+            && model.default_ad_image.equals(null)
+            &&model.paragraph.equals(null)
+            && model.slideImages==null) {
+            constrAds.setVisibility(View.GONE)
+        }
+        else if (model.resourceLink.equals(null)&&model.paragraph.equals(null)
+            && model.slideImages==null) {
+            imageView.visibility = View.VISIBLE
+            Glide.with(this).load(model.default_ad_image)
+                .centerCrop().placeholder(R.drawable.dr_hussain).into(imageView)
+        }
+        if (!model.webPageLink.equals("")) {
+            cardviewAds.setOnClickListener {
+                openWebPage(model.webPageLink)
+            }
+        }
+        when (model.type) {
+            "Video" -> {
+                videoView.visibility = View.VISIBLE
+                mediaSource = SimpleMediaSource(model.resourceLink)
+                videoView.play(mediaSource);
+            }
+            "Image" -> {
+
+                imageView.visibility = View.VISIBLE
+                Glide.with(this).load(model.resourceLink)
+                    .centerCrop().placeholder(R.drawable.dr_hussain).into(imageView)
+            }
+            "GIF" -> {
+                imageView.visibility = View.VISIBLE
+                Glide.with(this).asGif().load(model.resourceLink)
+                    .centerCrop().placeholder(R.drawable.dr_hussain).into(imageView);
+            }
+            "Paragraph" -> {
+                textView.visibility = View.VISIBLE
+//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+//                    textView.setText(
+//                        Html.fromHtml(
+//                            model.paragraph,
+//                            Html.FROM_HTML_MODE_LEGACY
+//                        )
+//                    );
+//                } else
+//                    textView.setText(Html.fromHtml(model.paragraph))
+                textView.loadDataWithBaseURL(null, model.paragraph!!
+                    ,  "text/html", "utf-8", null)
+            }
+            "Slider" -> {
+                bannerslider.visibility = View.VISIBLE
+                Slider.init(PicassoImageLoadingService(context))
+                bannerslider?.setInterval(5000)
+
+                val list = ArrayList<String>()
+                for (i in model.slideImages!!) {
+                    list.add(i?.link!!)
+                }
+                bannerslider?.setAdapter(MainSliderAdapter(list))
+            }
+        }
+        if (model.show_ad == true) {
+            btnHideShowAds.setVisibility(View.VISIBLE)
+            btnHideShowAds.setOnClickListener {
+                if (constrAds.visibility == View.VISIBLE) {
+                    constrAds.setVisibility(View.GONE)
+                    btnHideShowAds.setImageResource(R.drawable.ic_show_hide_ads)
+                } else {
+                    constrAds.setVisibility(View.VISIBLE)
+                    btnHideShowAds.setImageResource(R.drawable.ic_hide_show_ads)
+                }
+            }
+        }
+        if (model.show_more == true) {
+            moreThanAds.setVisibility(View.VISIBLE)
+            moreThanAds.setOnClickListener {
+                val  intent = Intent(getActivity(), MoreDetailsAdsActivity::class.java)
+                intent.putExtra("pageCode", model.pageCode)
+                getActivity()?.startActivity(intent)
+            }
+        }
     }
 
 

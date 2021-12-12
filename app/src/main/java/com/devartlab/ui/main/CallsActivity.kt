@@ -172,11 +172,11 @@ class CallsActivity : BaseActivity<ActivityCallsBinding?>(), MainAdapter.OpenMas
         if (model.resourceLink.equals(null)
             && model.default_ad_image.equals(null)
             &&model.paragraph.equals(null)
-            && model.slideImages!!.equals(null)) {
+            && model.slideImages==null) {
             activityCallsBinding.constrAds!!.setVisibility(View.GONE)
         }
         else if (model.resourceLink.equals(null)&&model.paragraph.equals(null)
-            && model.slideImages!!.equals(null)) {
+            && model.slideImages==null) {
             activityCallsBinding.imageView!!.visibility = View.VISIBLE
             Glide.with(this).load(model.default_ad_image)
                 .centerCrop().placeholder(R.drawable.dr_hussain).into(activityCallsBinding.imageView!!)

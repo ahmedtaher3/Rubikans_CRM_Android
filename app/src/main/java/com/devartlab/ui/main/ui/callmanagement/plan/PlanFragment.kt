@@ -120,10 +120,10 @@ class PlanFragment : BaseFragment<FragmentPlanBinding?>(), ActivitiesAdapter.Cho
         if (model.resourceLink.equals(null)
             && model.default_ad_image.equals(null)
             &&model.paragraph.equals(null)
-            && model.slideImages!!.equals(null)) {
+            && model.slideImages==null) {
             binding.constrAds.setVisibility(View.GONE)
         } else if (model.resourceLink.equals(null)&&model.paragraph.equals(null)
-            && model.slideImages!!.equals(null)) {
+            && model.slideImages==null) {
             binding.imageView.visibility = View.VISIBLE
             Glide.with(this).load(model.default_ad_image)
                 .centerCrop().placeholder(R.drawable.dr_hussain).into(binding.imageView)
@@ -915,32 +915,6 @@ class PlanFragment : BaseFragment<FragmentPlanBinding?>(), ActivitiesAdapter.Cho
         var constrAds: ConstraintLayout= choose_activity_type.findViewById(R.id.constr_ads)
         var moreThanAds:TextView=choose_activity_type.findViewById(R.id.tv_more_than_ads)
 
-        activitiesRecyclerView.layoutManager = LinearLayoutManager(baseActivity)
-        activitiesRecyclerView.adapter = activitiesAdapter
-
-
-        close.setOnClickListener(View.OnClickListener {
-            activityTypeDialog?.dismiss()
-        })
-
-        viewModel.getActivities()
-        viewModel.responseActivitiesLive.observe(viewLifecycleOwner, Observer {
-
-            activitiesAdapter.setMyData(it)
-
-        })
-        viewModel.progress.observe(viewLifecycleOwner, Observer {
-
-            when (it) {
-                4 -> {
-                    progressBar.visibility = View.VISIBLE
-                }
-                5 -> {
-                    progressBar.visibility = View.GONE
-                }
-            }
-
-        })
 
         var model = AdModel()
 
@@ -953,11 +927,11 @@ class PlanFragment : BaseFragment<FragmentPlanBinding?>(), ActivitiesAdapter.Cho
         if (model.resourceLink.equals(null)
             && model.default_ad_image.equals(null)
             &&model.paragraph.equals(null)
-            && model.slideImages!!.equals(null)) {
+            && model.slideImages==null) {
             constrAds.setVisibility(View.GONE)
         }
         else if (model.resourceLink.equals(null)&&model.paragraph.equals(null)
-            && model.slideImages!!.equals(null)) {
+            && model.slideImages==null) {
             imageView.visibility = View.VISIBLE
             Glide.with(this).load(model.default_ad_image)
                 .centerCrop().placeholder(R.drawable.dr_hussain).into(imageView)
@@ -1030,6 +1004,32 @@ class PlanFragment : BaseFragment<FragmentPlanBinding?>(), ActivitiesAdapter.Cho
                 getActivity()?.startActivity(intent)
             }
         }
+        activitiesRecyclerView.layoutManager = LinearLayoutManager(baseActivity)
+        activitiesRecyclerView.adapter = activitiesAdapter
+
+
+        close.setOnClickListener(View.OnClickListener {
+            activityTypeDialog?.dismiss()
+        })
+
+        viewModel.getActivities()
+        viewModel.responseActivitiesLive.observe(viewLifecycleOwner, Observer {
+
+            activitiesAdapter.setMyData(it)
+
+        })
+        viewModel.progress.observe(viewLifecycleOwner, Observer {
+
+            when (it) {
+                4 -> {
+                    progressBar.visibility = View.VISIBLE
+                }
+                5 -> {
+                    progressBar.visibility = View.GONE
+                }
+            }
+
+        })
     }
 
     override fun onAttach(context: Context) {

@@ -124,11 +124,11 @@ class ChooseEmployee(context: Context, private var chooseEmployeeInterFace: Choo
         if (model.resourceLink.equals(null)
             && model.default_ad_image.equals(null)
             &&model.paragraph.equals(null)
-            && model.slideImages!!.equals(null)) {
+            && model.slideImages==null) {
             constrAds.setVisibility(View.GONE)
         }
         else if (model.resourceLink.equals(null)&&model.paragraph.equals(null)
-            && model.slideImages!!.equals(null)) {
+            && model.slideImages==null) {
             imageView.visibility = View.VISIBLE
             Glide.with(context).load(model.default_ad_image)
                 .centerCrop().placeholder(R.drawable.dr_hussain).into(imageView)
