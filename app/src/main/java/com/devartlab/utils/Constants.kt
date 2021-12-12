@@ -21,7 +21,7 @@ object Constants {
     const val MEDICAL_REP = 17
     const val ROLE_PLAY = 18
     const val SALARY = 19
-    const val WORK_FROM_HOME = 20
+    const val SHOW_ALL_WORK_FROM_HOME = 20
     const val SYNC = 21
-    const val SHOW_ALL_WORK_FROM_HOME = 22
+    const val WORK_FROM_HOME = 22
 }

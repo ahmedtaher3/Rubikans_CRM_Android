@@ -132,9 +132,11 @@ class ManagerReportFragment : BaseFragment<FragmentSuperReportBinding>()
         }
         if (model.resourceLink.equals(null)
             && model.default_ad_image.equals(null)
-            &&model.paragraph.equals(null)) {
+            &&model.paragraph.equals(null)
+            && model.slideImages!!.equals(null)) {
             binding.constrAds.setVisibility(View.GONE)
-        } else if (model.resourceLink.equals(null)&&model.paragraph.equals(null)) {
+        } else if (model.resourceLink.equals(null)&&model.paragraph.equals(null)
+            && model.slideImages!!.equals(null)) {
             binding.imageView.visibility = View.VISIBLE
             Glide.with(this).load(model.default_ad_image)
                 .centerCrop().placeholder(R.drawable.dr_hussain).into(binding.imageView)
@@ -1303,10 +1305,12 @@ class ManagerReportFragment : BaseFragment<FragmentSuperReportBinding>()
         }
         if (model.resourceLink.equals(null)
             && model.default_ad_image.equals(null)
-            &&model.paragraph.equals(null)) {
+            &&model.paragraph.equals(null)
+            && model.slideImages!!.equals(null)) {
             constrAds.setVisibility(View.GONE)
         }
-        else if (model.resourceLink.equals(null)&&model.paragraph.equals(null)) {
+        else if (model.resourceLink.equals(null)&&model.paragraph.equals(null)
+            && model.slideImages!!.equals(null)) {
             imageView.visibility = View.VISIBLE
             Glide.with(this).load(model.default_ad_image)
                 .centerCrop().placeholder(R.drawable.dr_hussain).into(imageView)
