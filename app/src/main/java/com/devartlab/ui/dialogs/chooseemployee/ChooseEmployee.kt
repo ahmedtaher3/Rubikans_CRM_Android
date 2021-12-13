@@ -40,8 +40,12 @@ import io.reactivex.schedulers.Schedulers
 import retrofit2.Retrofit
 import ss.com.bannerslider.Slider
 
-class ChooseEmployee(context: Context, private var chooseEmployeeInterFace: ChooseEmployeeInterFace, private var dataManager: DataManager)
-    : Dialog(context), EmployeeSearchAdapter.OnEmployeeFilterClick, EmployeeSearchSelectedAdapter.OnFilterEmployeesChange {
+class ChooseEmployee(
+    context: Context,
+    private var chooseEmployeeInterFace: ChooseEmployeeInterFace,
+    private var dataManager: DataManager
+) : Dialog(context), EmployeeSearchAdapter.OnEmployeeFilterClick,
+    EmployeeSearchSelectedAdapter.OnFilterEmployeesChange {
 
     lateinit var recyclerView: RecyclerView
     lateinit var recyclerViewSelected: RecyclerView
@@ -75,7 +79,7 @@ class ChooseEmployee(context: Context, private var chooseEmployeeInterFace: Choo
         progressBar = findViewById(R.id.progressBar)
         close = findViewById(R.id.close)
         editText = findViewById(R.id.editText_search)
-        lastId =  dataManager.user.empId
+        lastId = dataManager.user.empId
         videoView = findViewById(R.id.videoView)
         imageView = findViewById(R.id.imageView)
         bannerslider = findViewById(R.id.bannerSlider)
@@ -92,7 +96,8 @@ class ChooseEmployee(context: Context, private var chooseEmployeeInterFace: Choo
 
         recyclerViewSelected = findViewById(R.id.recyclerViewSelected)
         adapterSelected = EmployeeSearchSelectedAdapter(context, this)
-        recyclerViewSelected.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        recyclerViewSelected.layoutManager =
+            LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         recyclerViewSelected.adapter = adapterSelected
 
         close.setOnClickListener(View.OnClickListener {
@@ -113,7 +118,60 @@ class ChooseEmployee(context: Context, private var chooseEmployeeInterFace: Choo
         })
 
         getFilterEmpl(lastId, "0")
+        ads()
+    }
 
+    public fun getFilterEmpl(empId: Int, filterText: String) {
+
+        System.out.println("accountId  = " + empId + "filterText = " + filterText)
+        progressBar.visibility = View.VISIBLE
+        myAPI?.filterEmployees(empId, "0")!!
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(object : Observer<ArrayList<FilterDataEntity>> {
+                override fun onSubscribe(d: Disposable) {}
+                override fun onNext(data: ArrayList<FilterDataEntity>) {
+
+
+                    print(data)
+                    progressBar.visibility = View.GONE
+                    adapter.setMyData(data)
+
+
+                }
+
+                override fun onError(e: Throwable) {
+                    progressBar.visibility = View.GONE
+                    Toast.makeText(context, e.message, Toast.LENGTH_SHORT).show()
+                }
+
+                override fun onComplete() {}
+            })
+    }
+
+    override fun setOnEmployeeFilterClick(model: FilterDataEntity?) {
+
+
+        adapterSelected.addItem(model)
+
+    }
+
+    override fun onChange(employeesList: MutableList<FilterDataEntity>?) {
+
+
+        if (employeesList.isNullOrEmpty()) {
+            lastId = dataManager.user.empId
+            getFilterEmpl(lastId, "0")
+            print("lastId  " + lastId)
+        } else {
+            lastId = employeesList.last().empId!!
+            getFilterEmpl(lastId, "0")
+            print("lastId  " + lastId)
+        }
+
+    }
+
+    fun ads() {
         var model = AdModel()
         for (m in dataManager.ads.ads!!) {
             if (m.pageCode?.toInt() == Constants.CHOOSE_EMPLOYEE) {
@@ -123,12 +181,13 @@ class ChooseEmployee(context: Context, private var chooseEmployeeInterFace: Choo
         }
         if (model.resourceLink.equals(null)
             && model.default_ad_image.equals(null)
-            &&model.paragraph.equals(null)
-            && model.slideImages==null) {
+            && model.paragraph.equals(null)
+            && model.slideImages == null
+        ) {
             constrAds.setVisibility(View.GONE)
-        }
-        else if (model.resourceLink.equals(null)&&model.paragraph.equals(null)
-            && model.slideImages==null) {
+        } else if (model.resourceLink.equals(null) && model.paragraph.equals(null)
+            && model.slideImages == null
+        ) {
             imageView.visibility = View.VISIBLE
             Glide.with(context).load(model.default_ad_image)
                 .centerCrop().placeholder(R.drawable.dr_hussain).into(imageView)
@@ -168,8 +227,9 @@ class ChooseEmployee(context: Context, private var chooseEmployeeInterFace: Choo
 //                    );
 //                } else
 //                    textView.setText(Html.fromHtml(model.paragraph))
-                textView.loadDataWithBaseURL(null, model.paragraph!!
-                    ,  "text/html", "utf-8", null)
+                textView.loadDataWithBaseURL(
+                    null, model.paragraph!!, "text/html", "utf-8", null
+                )
             }
             "Slider" -> {
                 bannerslider.visibility = View.VISIBLE
@@ -198,63 +258,10 @@ class ChooseEmployee(context: Context, private var chooseEmployeeInterFace: Choo
         if (model.show_more == true) {
             moreThanAds.setVisibility(View.VISIBLE)
             moreThanAds.setOnClickListener {
-                val  intent = Intent(context, MoreDetailsAdsActivity::class.java)
+                val intent = Intent(context, MoreDetailsAdsActivity::class.java)
                 intent.putExtra("pageCode", model.pageCode)
                 context.startActivity(intent)
             }
         }
     }
-
-    public fun getFilterEmpl(empId: Int, filterText: String) {
-
-        System.out.println("accountId  = " + empId + "filterText = " + filterText)
-        progressBar.visibility = View.VISIBLE
-        myAPI?.filterEmployees(empId, "0")!!
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(object : Observer<ArrayList<FilterDataEntity>> {
-                    override fun onSubscribe(d: Disposable) {}
-                    override fun onNext(data: ArrayList<FilterDataEntity>) {
-
-
-                        print(data)
-                        progressBar.visibility = View.GONE
-                        adapter.setMyData(data)
-
-
-                    }
-
-                    override fun onError(e: Throwable) {
-                        progressBar.visibility = View.GONE
-                        Toast.makeText(context, e.message, Toast.LENGTH_SHORT).show()
-                    }
-
-                    override fun onComplete() {}
-                })
-    }
-
-    override fun setOnEmployeeFilterClick(model: FilterDataEntity?) {
-
-
-
-                 adapterSelected.addItem(model)
-
-    }
-
-    override fun onChange(employeesList: MutableList<FilterDataEntity>?) {
-
-
-        if (employeesList.isNullOrEmpty()) {
-            lastId = dataManager.user.empId
-            getFilterEmpl(lastId, "0")
-            print("lastId  " + lastId)
-        } else {
-            lastId = employeesList.last().empId!!
-            getFilterEmpl(lastId, "0")
-            print("lastId  " + lastId)
-        }
-
-    }
-
-
 }

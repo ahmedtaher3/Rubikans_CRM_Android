@@ -61,10 +61,10 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 
-class ManagerReportFragment : BaseFragment<FragmentSuperReportBinding>()
-    , ReportInterface, ChooseEmployeeInterFace
-    , ChooseStartPointInterFace, ActivitiesAdapter.ChooseActivity, ManagerReportListener
-    , SuperReportAdapter.UpdatePlan, AdapterView.OnItemSelectedListener, View.OnClickListener {
+class ManagerReportFragment : BaseFragment<FragmentSuperReportBinding>(), ReportInterface,
+    ChooseEmployeeInterFace, ChooseStartPointInterFace, ActivitiesAdapter.ChooseActivity,
+    ManagerReportListener, SuperReportAdapter.UpdatePlan, AdapterView.OnItemSelectedListener,
+    View.OnClickListener {
 
     // TODO: Rename and change types of parameters
     private var param1: String? = null
@@ -122,95 +122,6 @@ class ManagerReportFragment : BaseFragment<FragmentSuperReportBinding>()
         binding = viewDataBinding
         setHasOptionsMenu(true);
 
-
-        var model = AdModel()
-        for (m in viewModel.dataManager.ads.ads!!) {
-            if (m.pageCode?.toInt() == Constants.MANAGER_REPORT) {
-                model = m
-                break
-            }
-        }
-        if (model.resourceLink.equals(null)
-            && model.default_ad_image.equals(null)
-            &&model.paragraph.equals(null)
-            && model.slideImages==null) {
-            binding.constrAds.setVisibility(View.GONE)
-        } else if (model.resourceLink.equals(null)&&model.paragraph.equals(null)
-            && model.slideImages==null) {
-            binding.imageView.visibility = View.VISIBLE
-            Glide.with(this).load(model.default_ad_image)
-                .centerCrop().placeholder(R.drawable.dr_hussain).into(binding.imageView)
-        }
-        if (!model.webPageLink.equals("")) {
-            binding.cardviewAds.setOnClickListener {
-                openWebPage(model.webPageLink)
-            }
-        }
-        when (model.type) {
-            "Video" -> {
-                binding.videoView.visibility = View.VISIBLE
-                mediaSource = SimpleMediaSource(model.resourceLink)
-                binding.videoView.play(mediaSource);
-            }
-            "Image" -> {
-
-                binding.imageView.visibility = View.VISIBLE
-                Glide.with(this).load(model.resourceLink)
-                    .centerCrop().placeholder(R.drawable.dr_hussain).into(binding.imageView)
-            }
-            "GIF" -> {
-                binding.imageView.visibility = View.VISIBLE
-                Glide.with(this).asGif().load(model.resourceLink)
-                    .centerCrop().placeholder(R.drawable.dr_hussain).into(binding.imageView);
-            }
-            "Paragraph" -> {
-                binding.textView.visibility = View.VISIBLE
-//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-//                    binding.textView.setText(
-//                        Html.fromHtml(
-//                            model.paragraph,
-//                            Html.FROM_HTML_MODE_LEGACY
-//                        )
-//                    );
-//                } else
-//                    binding.textView.setText(Html.fromHtml(model.paragraph))
-                binding.textView.loadDataWithBaseURL(null, model.paragraph!!
-                    ,  "text/html", "utf-8", null)
-            }
-            "Slider" -> {
-                binding.bannerSlider.visibility = View.VISIBLE
-                Slider.init(PicassoImageLoadingService(context))
-                binding.bannerSlider?.setInterval(5000)
-
-                val list = ArrayList<String>()
-                for (i in model.slideImages!!) {
-                    list.add(i?.link!!)
-                }
-                binding.bannerSlider?.setAdapter(MainSliderAdapter(list))
-            }
-        }
-        if (model.show_ad == true) {
-            binding.btnHideShowAds.setVisibility(View.VISIBLE)
-            binding.btnHideShowAds.setOnClickListener {
-                if (binding.constrAds.visibility == View.VISIBLE) {
-                    binding.constrAds.setVisibility(View.GONE)
-                    binding.btnHideShowAds.setImageResource(R.drawable.ic_show_hide_ads)
-                } else {
-                    binding.constrAds.setVisibility(View.VISIBLE)
-                    binding.btnHideShowAds.setImageResource(R.drawable.ic_hide_show_ads)
-                }
-            }
-        }
-        if (model.show_more == true) {
-            binding.tvMoreThanAds.setVisibility(View.VISIBLE)
-            binding.tvMoreThanAds.setOnClickListener {
-                val  intent = Intent(getActivity(), MoreDetailsAdsActivity::class.java)
-                intent.putExtra("pageCode", model.pageCode)
-                getActivity()?.startActivity(intent)
-            }
-        }
-
-
         if (viewModel.dataManager.user.isOpenReportLimit) {
 
             startDate?.timeInMillis = viewModel.dataManager.user?.minDate?.toLong()!!
@@ -239,6 +150,7 @@ class ManagerReportFragment : BaseFragment<FragmentSuperReportBinding>()
         setListeners()
         setObservers()
         setUpRecycler()
+        ads()
     }
 
     private fun setObservers() {
@@ -655,7 +567,10 @@ class ManagerReportFragment : BaseFragment<FragmentSuperReportBinding>()
 
                     } else {
                         if (LocationUtils.checkPermission(baseActivity)) {
-                           ProgressLoading.showWithText(baseActivity, getString(R.string.fetching_location))
+                            ProgressLoading.showWithText(
+                                baseActivity,
+                                getString(R.string.fetching_location)
+                            )
                             val myLocation = MyLocation(baseActivity, true)
                             myLocation.getLocation(
                                 baseActivity,
@@ -699,7 +614,7 @@ class ManagerReportFragment : BaseFragment<FragmentSuperReportBinding>()
 
                                         } else {
                                             baseActivity.runOnUiThread {
-                                               Toast.makeText(
+                                                Toast.makeText(
                                                     baseActivity,
                                                     getString(R.string.error_location_try_again),
                                                     Toast.LENGTH_LONG
@@ -736,7 +651,10 @@ class ManagerReportFragment : BaseFragment<FragmentSuperReportBinding>()
 
 
                     if (LocationUtils.checkPermission(baseActivity)) {
-                        ProgressLoading.showWithText(baseActivity, getString(R.string.fetching_location))
+                        ProgressLoading.showWithText(
+                            baseActivity,
+                            getString(R.string.fetching_location)
+                        )
                         val myLocation = MyLocation(baseActivity, true)
                         myLocation.getLocation(baseActivity, object : MyLocation.LocationResult() {
                             override fun gotLocation(
@@ -848,7 +766,11 @@ class ManagerReportFragment : BaseFragment<FragmentSuperReportBinding>()
 
                 }
                 if (shift.equals("All Day")) {
-                    Toast.makeText(baseActivity, getString(R.string.choose_shift_first), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        baseActivity,
+                        getString(R.string.choose_shift_first),
+                        Toast.LENGTH_SHORT
+                    ).show()
                 } else {
                     chooseActivity()
                 }
@@ -873,7 +795,10 @@ class ManagerReportFragment : BaseFragment<FragmentSuperReportBinding>()
 
 
                 if (LocationUtils.checkPermission(baseActivity)) {
-                    ProgressLoading.showWithText(baseActivity, getString(R.string.fetching_location))
+                    ProgressLoading.showWithText(
+                        baseActivity,
+                        getString(R.string.fetching_location)
+                    )
                     val myLocation = MyLocation(baseActivity, false)
                     myLocation.getLocation(baseActivity, object : MyLocation.LocationResult() {
                         override fun gotLocation(location: Location?, type: String?, msg: String?) {
@@ -1274,13 +1199,13 @@ class ManagerReportFragment : BaseFragment<FragmentSuperReportBinding>()
             choose_activity_type.findViewById(R.id.activitiesRecyclerView)
         var close: ImageView = choose_activity_type.findViewById(R.id.close)
         var videoView: ExoVideoView = choose_activity_type.findViewById(R.id.videoView)
-        var imageView:ImageView = choose_activity_type.findViewById(R.id.imageView)
+        var imageView: ImageView = choose_activity_type.findViewById(R.id.imageView)
         var bannerslider: Slider = choose_activity_type.findViewById(R.id.bannerSlider)
-        var textView:WebView = choose_activity_type.findViewById(R.id.textView)
+        var textView: WebView = choose_activity_type.findViewById(R.id.textView)
         var cardviewAds: CardView = choose_activity_type.findViewById(R.id.cardview_ads)
-        var btnHideShowAds: ImageView= choose_activity_type.findViewById(R.id.btn_hide_show_ads)
+        var btnHideShowAds: ImageView = choose_activity_type.findViewById(R.id.btn_hide_show_ads)
         var constrAds: ConstraintLayout = choose_activity_type.findViewById(R.id.constr_ads)
-        var moreThanAds:TextView=choose_activity_type.findViewById(R.id.tv_more_than_ads)
+        var moreThanAds: TextView = choose_activity_type.findViewById(R.id.tv_more_than_ads)
         lateinit var mediaSource: SimpleMediaSource
 
         var activitiesAdapter = ActivitiesAdapter(baseActivity, this)
@@ -1305,17 +1230,18 @@ class ManagerReportFragment : BaseFragment<FragmentSuperReportBinding>()
         }
         if (model.resourceLink.equals(null)
             && model.default_ad_image.equals(null)
-            &&model.paragraph.equals(null)
-            && model.slideImages==null) {
+            && model.paragraph.equals(null)
+            && model.slideImages == null
+        ) {
             constrAds.setVisibility(View.GONE)
-        }
-        else if (model.resourceLink.equals(null)&&model.paragraph.equals(null)
-            && model.slideImages==null) {
+        } else if (model.resourceLink.equals(null) && model.paragraph.equals(null)
+            && model.slideImages == null
+        ) {
             imageView.visibility = View.VISIBLE
             Glide.with(this).load(model.default_ad_image)
                 .centerCrop().placeholder(R.drawable.dr_hussain).into(imageView)
         }
-        if (!model.webPageLink.equals("")) {
+        if (!model.webPageLink.equals(null)) {
             cardviewAds.setOnClickListener {
                 openWebPage(model.webPageLink)
             }
@@ -1348,8 +1274,9 @@ class ManagerReportFragment : BaseFragment<FragmentSuperReportBinding>()
 //                    );
 //                } else
 //                    textView.setText(Html.fromHtml(model.paragraph))
-                textView.loadDataWithBaseURL(null, model.paragraph!!
-                    ,  "text/html", "utf-8", null)
+                textView.loadDataWithBaseURL(
+                    null, model.paragraph!!, "text/html", "utf-8", null
+                )
             }
             "Slider" -> {
                 bannerslider.visibility = View.VISIBLE
@@ -1378,7 +1305,7 @@ class ManagerReportFragment : BaseFragment<FragmentSuperReportBinding>()
         if (model.show_more == true) {
             moreThanAds.setVisibility(View.VISIBLE)
             moreThanAds.setOnClickListener {
-                val  intent = Intent(getActivity(), MoreDetailsAdsActivity::class.java)
+                val intent = Intent(getActivity(), MoreDetailsAdsActivity::class.java)
                 intent.putExtra("pageCode", model.pageCode)
                 getActivity()?.startActivity(intent)
             }
@@ -1577,5 +1504,96 @@ class ManagerReportFragment : BaseFragment<FragmentSuperReportBinding>()
         }
     }
 
+    fun ads() {
+        var model = AdModel()
+        for (m in viewModel.dataManager.ads.ads!!) {
+            if (m.pageCode?.toInt() == Constants.MANAGER_REPORT) {
+                model = m
+                break
+            }
+        }
+        if (model.resourceLink.equals(null)
+            && model.default_ad_image.equals(null)
+            && model.paragraph.equals(null)
+            && model.slideImages == null
+        ) {
+            binding.constrAds.setVisibility(View.GONE)
+        } else if (model.resourceLink.equals(null) && model.paragraph.equals(null)
+            && model.slideImages == null
+        ) {
+            binding.imageView.visibility = View.VISIBLE
+            Glide.with(this).load(model.default_ad_image)
+                .centerCrop().placeholder(R.drawable.dr_hussain).into(binding.imageView)
+        }
+        if (!model.webPageLink.equals("")) {
+            binding.cardviewAds.setOnClickListener {
+                openWebPage(model.webPageLink)
+            }
+        }
+        when (model.type) {
+            "Video" -> {
+                binding.videoView.visibility = View.VISIBLE
+                mediaSource = SimpleMediaSource(model.resourceLink)
+                binding.videoView.play(mediaSource);
+            }
+            "Image" -> {
+
+                binding.imageView.visibility = View.VISIBLE
+                Glide.with(this).load(model.resourceLink)
+                    .centerCrop().placeholder(R.drawable.dr_hussain).into(binding.imageView)
+            }
+            "GIF" -> {
+                binding.imageView.visibility = View.VISIBLE
+                Glide.with(this).asGif().load(model.resourceLink)
+                    .centerCrop().placeholder(R.drawable.dr_hussain).into(binding.imageView);
+            }
+            "Paragraph" -> {
+                binding.textView.visibility = View.VISIBLE
+//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+//                    binding.textView.setText(
+//                        Html.fromHtml(
+//                            model.paragraph,
+//                            Html.FROM_HTML_MODE_LEGACY
+//                        )
+//                    );
+//                } else
+//                    binding.textView.setText(Html.fromHtml(model.paragraph))
+                binding.textView.loadDataWithBaseURL(
+                    null, model.paragraph!!, "text/html", "utf-8", null
+                )
+            }
+            "Slider" -> {
+                binding.bannerSlider.visibility = View.VISIBLE
+                Slider.init(PicassoImageLoadingService(context))
+                binding.bannerSlider?.setInterval(5000)
+
+                val list = ArrayList<String>()
+                for (i in model.slideImages!!) {
+                    list.add(i?.link!!)
+                }
+                binding.bannerSlider?.setAdapter(MainSliderAdapter(list))
+            }
+        }
+        if (model.show_ad == true) {
+            binding.btnHideShowAds.setVisibility(View.VISIBLE)
+            binding.btnHideShowAds.setOnClickListener {
+                if (binding.constrAds.visibility == View.VISIBLE) {
+                    binding.constrAds.setVisibility(View.GONE)
+                    binding.btnHideShowAds.setImageResource(R.drawable.ic_show_hide_ads)
+                } else {
+                    binding.constrAds.setVisibility(View.VISIBLE)
+                    binding.btnHideShowAds.setImageResource(R.drawable.ic_hide_show_ads)
+                }
+            }
+        }
+        if (model.show_more == true) {
+            binding.tvMoreThanAds.setVisibility(View.VISIBLE)
+            binding.tvMoreThanAds.setOnClickListener {
+                val intent = Intent(getActivity(), MoreDetailsAdsActivity::class.java)
+                intent.putExtra("pageCode", model.pageCode)
+                getActivity()?.startActivity(intent)
+            }
+        }
+    }
 
 }

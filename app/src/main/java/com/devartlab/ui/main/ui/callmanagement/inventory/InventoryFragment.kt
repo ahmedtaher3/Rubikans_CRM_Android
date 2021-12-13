@@ -225,7 +225,7 @@ class InventoryFragment : BaseFragment<FragmentTradeReportsBinding>(),
             Glide.with(this).load(model.default_ad_image)
                 .centerCrop().placeholder(R.drawable.dr_hussain).into(imageView)
         }
-        if (!model.webPageLink.equals("")) {
+        if (!model.webPageLink.equals(null)) {
             cardviewAds.setOnClickListener {
                 openWebPage(model.webPageLink)
             }

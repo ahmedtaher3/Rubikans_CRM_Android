@@ -104,98 +104,8 @@ class ChooseStartPoint(
         recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.adapter = startPointAdapter
         listDao = DatabaseClient.getInstance(context)?.appDatabase?.listDao()
-        var model = AdModel()
-
-        for (m in dataManager.ads.ads!!) {
-            if (m.pageCode?.toInt() == Constants.CHOOSE_START_POINT) {
-                model = m
-                break
-            }
-        }
-        if (model.resourceLink.equals(null)
-            && model.default_ad_image.equals(null)
-            &&model.paragraph.equals(null)
-            && model.slideImages==null) {
-            constrAds.setVisibility(View.GONE)
-        }
-        else if (model.resourceLink.equals(null)&&model.paragraph.equals(null)
-            && model.slideImages==null) {
-            imageView.visibility = View.VISIBLE
-            Glide.with(context).load(model.default_ad_image)
-                .centerCrop().placeholder(R.drawable.dr_hussain).into(imageView)
-        }
-        if (!model.webPageLink.equals("")) {
-            cardviewAds.setOnClickListener {
-                val uri = Uri.parse(model.webPageLink)
-                val intent = Intent(Intent.ACTION_VIEW, uri)
-                startActivity(context,intent,null)
-            }
-        }
-        when (model.type) {
-            "Video" -> {
-                videoView.visibility = View.VISIBLE
-                mediaSource = SimpleMediaSource(model.resourceLink)
-                videoView.play(mediaSource);
-            }
-            "Image" -> {
-
-                imageView.visibility = View.VISIBLE
-                Glide.with(context).load(model.resourceLink)
-                    .centerCrop().placeholder(R.drawable.dr_hussain).into(imageView)
-            }
-            "GIF" -> {
-                imageView.visibility = View.VISIBLE
-                Glide.with(context).asGif().load(model.resourceLink)
-                    .centerCrop().placeholder(R.drawable.dr_hussain).into(imageView);
-            }
-            "Paragraph" -> {
-                textView.visibility = View.VISIBLE
-//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-//                    textView.setText(
-//                        Html.fromHtml(
-//                            model.resourceLink,
-//                            Html.FROM_HTML_MODE_LEGACY
-//                        )
-//                    );
-//                } else
-//                    textView.setText(Html.fromHtml(model.resourceLink))
-                textView.loadDataWithBaseURL(null, model.paragraph!!
-                    ,  "text/html", "utf-8", null)
-            }
-            "Slider" -> {
-                bannerslider.visibility = View.VISIBLE
-                Slider.init(PicassoImageLoadingService(context))
-                bannerslider?.setInterval(5000)
-
-                val list = ArrayList<String>()
-                for (i in model.slideImages!!) {
-                    list.add(i?.link!!)
-                }
-                bannerslider?.setAdapter(MainSliderAdapter(list))
-            }
-        }
-        if (model.show_ad == true) {
-            btnHideShowAds.setVisibility(View.VISIBLE)
-            btnHideShowAds.setOnClickListener {
-                if (constrAds.visibility == View.VISIBLE) {
-                    constrAds.setVisibility(View.GONE)
-                    btnHideShowAds.setImageResource(R.drawable.ic_show_hide_ads)
-                } else {
-                    constrAds.setVisibility(View.VISIBLE)
-                    btnHideShowAds.setImageResource(R.drawable.ic_hide_show_ads)
-                }
-            }
-        }
-        if (model.show_more == true) {
-            moreThanAds.setVisibility(View.VISIBLE)
-            moreThanAds.setOnClickListener {
-                val  intent = Intent(activity, MoreDetailsAdsActivity::class.java)
-                intent.putExtra("pageCode", model.pageCode)
-                activity?.startActivity(intent)
-            }
-        }
         close?.setOnClickListener(View.OnClickListener { dismiss() })
-
+        ads()// fun to show ads
         getStartPointList("0", "0", "0", "0", "0")
     }
 
@@ -259,5 +169,97 @@ class ChooseStartPoint(
                 })
         }
     }
+fun ads(){
 
+    var model = AdModel()
+
+    for (m in dataManager.ads.ads!!) {
+        if (m.pageCode?.toInt() == Constants.CHOOSE_START_POINT) {
+            model = m
+            break
+        }
+    }
+    if (model.resourceLink.equals(null)
+        && model.default_ad_image.equals(null)
+        &&model.paragraph.equals(null)
+        && model.slideImages==null) {
+        constrAds.setVisibility(View.GONE)
+    }
+    else if (model.resourceLink.equals(null)&&model.paragraph.equals(null)
+        && model.slideImages==null) {
+        imageView.visibility = View.VISIBLE
+        Glide.with(context).load(model.default_ad_image)
+            .centerCrop().placeholder(R.drawable.dr_hussain).into(imageView)
+    }
+    if (!model.webPageLink.equals("")) {
+        cardviewAds.setOnClickListener {
+            val uri = Uri.parse(model.webPageLink)
+            val intent = Intent(Intent.ACTION_VIEW, uri)
+            startActivity(context,intent,null)
+        }
+    }
+    when (model.type) {
+        "Video" -> {
+            videoView.visibility = View.VISIBLE
+            mediaSource = SimpleMediaSource(model.resourceLink)
+            videoView.play(mediaSource);
+        }
+        "Image" -> {
+
+            imageView.visibility = View.VISIBLE
+            Glide.with(context).load(model.resourceLink)
+                .centerCrop().placeholder(R.drawable.dr_hussain).into(imageView)
+        }
+        "GIF" -> {
+            imageView.visibility = View.VISIBLE
+            Glide.with(context).asGif().load(model.resourceLink)
+                .centerCrop().placeholder(R.drawable.dr_hussain).into(imageView);
+        }
+        "Paragraph" -> {
+            textView.visibility = View.VISIBLE
+//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+//                    textView.setText(
+//                        Html.fromHtml(
+//                            model.resourceLink,
+//                            Html.FROM_HTML_MODE_LEGACY
+//                        )
+//                    );
+//                } else
+//                    textView.setText(Html.fromHtml(model.resourceLink))
+            textView.loadDataWithBaseURL(null, model.paragraph!!
+                ,  "text/html", "utf-8", null)
+        }
+        "Slider" -> {
+            bannerslider.visibility = View.VISIBLE
+            Slider.init(PicassoImageLoadingService(context))
+            bannerslider?.setInterval(5000)
+
+            val list = ArrayList<String>()
+            for (i in model.slideImages!!) {
+                list.add(i?.link!!)
+            }
+            bannerslider?.setAdapter(MainSliderAdapter(list))
+        }
+    }
+    if (model.show_ad == true) {
+        btnHideShowAds.setVisibility(View.VISIBLE)
+        btnHideShowAds.setOnClickListener {
+            if (constrAds.visibility == View.VISIBLE) {
+                constrAds.setVisibility(View.GONE)
+                btnHideShowAds.setImageResource(R.drawable.ic_show_hide_ads)
+            } else {
+                constrAds.setVisibility(View.VISIBLE)
+                btnHideShowAds.setImageResource(R.drawable.ic_hide_show_ads)
+            }
+        }
+    }
+    if (model.show_more == true) {
+        moreThanAds.setVisibility(View.VISIBLE)
+        moreThanAds.setOnClickListener {
+            val  intent = Intent(activity, MoreDetailsAdsActivity::class.java)
+            intent.putExtra("pageCode", model.pageCode)
+            activity?.startActivity(intent)
+        }
+    }
+}
 }

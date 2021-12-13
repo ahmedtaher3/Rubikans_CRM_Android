@@ -42,7 +42,8 @@ private const val ARG_PARAM2 = "param2"
  * Use the [MarketRequestTypesFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class MarketRequestTypesActivity : BaseActivity<FragmentMarketRequestTypesBinding>(), ChooseEmployeeInterFace, MarketRequestTypesAdapter.OnRequestTypeClick {
+class MarketRequestTypesActivity : BaseActivity<FragmentMarketRequestTypesBinding>(),
+    ChooseEmployeeInterFace, MarketRequestTypesAdapter.OnRequestTypeClick {
 
     lateinit var binding: FragmentMarketRequestTypesBinding
     lateinit var viewModel: MarketRequestViewModel
@@ -80,108 +81,33 @@ class MarketRequestTypesActivity : BaseActivity<FragmentMarketRequestTypesBindin
         binding.drName.setText(viewModel.dataManager.user?.nameAr)
         binding.drTitle.setText(viewModel.dataManager.user?.title)
         if (!viewModel.dataManager.user?.image.isNullOrEmpty()) {
-            val decodedString: ByteArray = Base64.decode(viewModel.dataManager.user?.image, Base64.DEFAULT)
+            val decodedString: ByteArray =
+                Base64.decode(viewModel.dataManager.user?.image, Base64.DEFAULT)
             val decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.size)
             binding.empImage?.setImageBitmap(decodedByte)
         }
         binding.empImage.setOnClickListener(View.OnClickListener {
 
-            chooseEmployee = ChooseEmployee(this@MarketRequestTypesActivity, this@MarketRequestTypesActivity, viewModel.dataManager)
+            chooseEmployee = ChooseEmployee(
+                this@MarketRequestTypesActivity,
+                this@MarketRequestTypesActivity,
+                viewModel.dataManager
+            )
             chooseEmployee.setCanceledOnTouchOutside(true)
             val window = chooseEmployee.window
-            window?.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT)
+            window?.setLayout(
+                WindowManager.LayoutParams.MATCH_PARENT,
+                WindowManager.LayoutParams.MATCH_PARENT
+            )
             chooseEmployee.window?.setBackgroundDrawableResource(android.R.color.transparent)
             chooseEmployee.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
             chooseEmployee.show()
         })
 
-        var model = AdModel()
-        for (m in viewModel.dataManager.ads.ads!!) {
-            if (m.pageCode?.toInt() == Constants.MARKET_REQUEST) {
-                model = m
-                break
-            }
-        }
-        if (model.resourceLink.equals(null)
-            && model.default_ad_image.equals(null)
-            &&model.paragraph.equals(null)
-            && model.slideImages==null) {
-            binding.constrAds.setVisibility(View.GONE)
-        } else if (model.resourceLink.equals(null)&&model.paragraph.equals(null)
-            && model.slideImages==null) {
-            binding.imageView.visibility = View.VISIBLE
-            Glide.with(this).load(model.default_ad_image)
-                .centerCrop().placeholder(R.drawable.dr_hussain).into(binding.imageView)
-        }
-        if (!model.webPageLink.equals("")) {
-            openWebPage(model.webPageLink)
-            binding.cardviewAds.setOnClickListener {
-            }
-        }
-        when (model.type) {
-            "Video" -> {
-                binding.videoView.visibility = View.VISIBLE
-                mediaSource = SimpleMediaSource(model.resourceLink)
-                binding.videoView.play(mediaSource);
-            }
-            "Image" -> {
-
-                binding.imageView.visibility = View.VISIBLE
-                Glide.with(this).load(model.resourceLink)
-                    .centerCrop().placeholder(R.drawable.dr_hussain).into(binding.imageView)
-            }
-            "GIF" -> {
-                binding.imageView.visibility = View.VISIBLE
-                Glide.with(this).asGif().load(model.resourceLink)
-                    .centerCrop().placeholder(R.drawable.dr_hussain).into(binding.imageView);
-            }
-            "Paragraph" -> {
-                binding.textView.visibility = View.VISIBLE
-//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-//                    binding.textView.setText(Html.fromHtml(model.paragraph, Html.FROM_HTML_MODE_LEGACY));
-//                } else
-//                    binding.textView.setText(Html.fromHtml(model.paragraph))
-                binding.textView.loadDataWithBaseURL(null, model.paragraph!!
-                    ,  "text/html", "utf-8", null)
-            }
-            "Slider" -> {
-                binding.bannerSlider.visibility = View.VISIBLE
-                Slider.init(PicassoImageLoadingService(this))
-                binding.bannerSlider?.setInterval(5000)
-
-                val list = ArrayList<String>()
-                for (i in model.slideImages!!) {
-                    list.add(i?.link!!)
-                }
-                binding.bannerSlider?.setAdapter(MainSliderAdapter(list))
-            }
-        }
-        if (model.show_ad == true) {
-            binding.btnHideShowAds.setVisibility(View.VISIBLE)
-            binding.btnHideShowAds.setOnClickListener {
-                if (binding.constrAds.visibility == View.VISIBLE) {
-                    binding.constrAds.setVisibility(View.GONE)
-                    binding.btnHideShowAds.setImageResource(R.drawable.ic_show_hide_ads)
-                } else {
-                    binding.constrAds.setVisibility(View.VISIBLE)
-                    binding.btnHideShowAds.setImageResource(R.drawable.ic_hide_show_ads)
-                }
-            }
-        }
-        if (model.show_more == true) {
-            binding.tvMoreThanAds.setVisibility(View.VISIBLE)
-            binding.tvMoreThanAds.setOnClickListener {
-                intent = Intent(this, MoreDetailsAdsActivity::class.java)
-                intent.putExtra("pageCode", model.pageCode)
-                startActivity(intent)
-            }
-        }
-
-
-
         viewModel.getData(0, accId, accAddId)
         setObservers()
         setRecyclerViews()
+        ads()
     }
 
 
@@ -265,13 +191,13 @@ class MarketRequestTypesActivity : BaseActivity<FragmentMarketRequestTypesBindin
         fragment.setArguments(bundle)
 
         supportFragmentManager
-                .beginTransaction()
-                .replace(
-                        R.id.Container,
-                        fragment!!
-                )
-                .addToBackStack("")
-                .commit()
+            .beginTransaction()
+            .replace(
+                R.id.Container,
+                fragment!!
+            )
+            .addToBackStack("")
+            .commit()
 
     }
 
@@ -294,14 +220,14 @@ class MarketRequestTypesActivity : BaseActivity<FragmentMarketRequestTypesBindin
         binding.empImage?.setImageResource(R.drawable.user_logo)
         if (model?.fileImage != null) {
             Glide.with(this)
-                    .load(ApiServices.ImageBaseURL + "ImageUpload/Employee/" + model.fileImage)
-                    .placeholder(binding.empImage?.drawable)
-                    .into(binding.empImage!!)
+                .load(ApiServices.ImageBaseURL + "ImageUpload/Employee/" + model.fileImage)
+                .placeholder(binding.empImage?.drawable)
+                .into(binding.empImage!!)
         } else {
             Glide.with(this)
-                    .load(ApiServices.ImageBaseURL + "ImageUpload/Employee/DefaultEmpImage.jpg")
-                    .placeholder(binding.empImage?.drawable)
-                    .into(binding.empImage!!)
+                .load(ApiServices.ImageBaseURL + "ImageUpload/Employee/DefaultEmpImage.jpg")
+                .placeholder(binding.empImage?.drawable)
+                .into(binding.empImage!!)
         }
 
         mainAcc = false
@@ -313,4 +239,90 @@ class MarketRequestTypesActivity : BaseActivity<FragmentMarketRequestTypesBindin
 
     }
 
+    fun ads() {
+        var model = AdModel()
+        for (m in viewModel.dataManager.ads.ads!!) {
+            if (m.pageCode?.toInt() == Constants.MARKET_REQUEST) {
+                model = m
+                break
+            }
+        }
+        if (model.resourceLink.equals(null)
+            && model.default_ad_image.equals(null)
+            && model.paragraph.equals(null)
+            && model.slideImages == null
+        ) {
+            binding.constrAds.setVisibility(View.GONE)
+        } else if (model.resourceLink.equals(null) && model.paragraph.equals(null)
+            && model.slideImages == null
+        ) {
+            binding.imageView.visibility = View.VISIBLE
+            Glide.with(this).load(model.default_ad_image)
+                .centerCrop().placeholder(R.drawable.dr_hussain).into(binding.imageView)
+        }
+        if (!model.webPageLink.equals("")) {
+            openWebPage(model.webPageLink)
+            binding.cardviewAds.setOnClickListener {
+            }
+        }
+        when (model.type) {
+            "Video" -> {
+                binding.videoView.visibility = View.VISIBLE
+                mediaSource = SimpleMediaSource(model.resourceLink)
+                binding.videoView.play(mediaSource);
+            }
+            "Image" -> {
+
+                binding.imageView.visibility = View.VISIBLE
+                Glide.with(this).load(model.resourceLink)
+                    .centerCrop().placeholder(R.drawable.dr_hussain).into(binding.imageView)
+            }
+            "GIF" -> {
+                binding.imageView.visibility = View.VISIBLE
+                Glide.with(this).asGif().load(model.resourceLink)
+                    .centerCrop().placeholder(R.drawable.dr_hussain).into(binding.imageView);
+            }
+            "Paragraph" -> {
+                binding.textView.visibility = View.VISIBLE
+//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+//                    binding.textView.setText(Html.fromHtml(model.paragraph, Html.FROM_HTML_MODE_LEGACY));
+//                } else
+//                    binding.textView.setText(Html.fromHtml(model.paragraph))
+                binding.textView.loadDataWithBaseURL(
+                    null, model.paragraph!!, "text/html", "utf-8", null
+                )
+            }
+            "Slider" -> {
+                binding.bannerSlider.visibility = View.VISIBLE
+                Slider.init(PicassoImageLoadingService(this))
+                binding.bannerSlider?.setInterval(5000)
+
+                val list = ArrayList<String>()
+                for (i in model.slideImages!!) {
+                    list.add(i?.link!!)
+                }
+                binding.bannerSlider?.setAdapter(MainSliderAdapter(list))
+            }
+        }
+        if (model.show_ad == true) {
+            binding.btnHideShowAds.setVisibility(View.VISIBLE)
+            binding.btnHideShowAds.setOnClickListener {
+                if (binding.constrAds.visibility == View.VISIBLE) {
+                    binding.constrAds.setVisibility(View.GONE)
+                    binding.btnHideShowAds.setImageResource(R.drawable.ic_show_hide_ads)
+                } else {
+                    binding.constrAds.setVisibility(View.VISIBLE)
+                    binding.btnHideShowAds.setImageResource(R.drawable.ic_hide_show_ads)
+                }
+            }
+        }
+        if (model.show_more == true) {
+            binding.tvMoreThanAds.setVisibility(View.VISIBLE)
+            binding.tvMoreThanAds.setOnClickListener {
+                intent = Intent(this, MoreDetailsAdsActivity::class.java)
+                intent.putExtra("pageCode", model.pageCode)
+                startActivity(intent)
+            }
+        }
+    }
 }

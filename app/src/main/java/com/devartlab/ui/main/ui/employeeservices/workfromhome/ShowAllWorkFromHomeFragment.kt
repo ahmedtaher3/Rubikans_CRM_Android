@@ -57,6 +57,50 @@ class ShowAllWorkFromHomeFragment : BaseFragment<FragmentAllWorkFromHomeBinding>
         setObservers()
 
         viewModel.getAll()
+        ads()
+    }
+
+    private fun setObservers() {
+
+        viewModel.responseLive.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+
+
+            adapter.setMyData(it.workFromHomelist!!)
+
+        })
+
+
+        viewModel.progress.observe(viewLifecycleOwner, androidx.lifecycle.Observer { progress ->
+
+            when (progress) {
+                0 -> {
+
+                    ProgressLoading.dismiss()
+                }
+                1 -> {
+
+                    ProgressLoading.show(baseActivity)
+                }
+            }
+        })
+
+
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        try {
+            (activity as AppCompatActivity?)!!.supportActionBar!!.title = "Previous Work From Home"
+
+        } catch (e: Exception) {
+        }
+
+        try {
+            CommonUtilities.sendMessage(baseActivity, false)
+        } catch (e: Exception) {
+        }
+    }
+    fun ads(){
         var model = AdModel()
         for (m in viewModel.dataManager.ads.ads!!) {
             if (m.pageCode?.toInt() == Constants.SHOW_ALL_WORK_FROM_HOME) {
@@ -144,47 +188,5 @@ class ShowAllWorkFromHomeFragment : BaseFragment<FragmentAllWorkFromHomeBinding>
                 getActivity()?.startActivity(intent)
             }
         }
-    }
-
-    private fun setObservers() {
-
-        viewModel.responseLive.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
-
-
-            adapter.setMyData(it.workFromHomelist!!)
-
-        })
-
-
-        viewModel.progress.observe(viewLifecycleOwner, androidx.lifecycle.Observer { progress ->
-
-            when (progress) {
-                0 -> {
-
-                    ProgressLoading.dismiss()
-                }
-                1 -> {
-
-                    ProgressLoading.show(baseActivity)
-                }
-            }
-        })
-
-
-    }
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        try {
-            (activity as AppCompatActivity?)!!.supportActionBar!!.title = "Previous Work From Home"
-
-        } catch (e: Exception) {
-        }
-
-        try {
-            CommonUtilities.sendMessage(baseActivity, false)
-        } catch (e: Exception) {
-        }
-
     }
 }

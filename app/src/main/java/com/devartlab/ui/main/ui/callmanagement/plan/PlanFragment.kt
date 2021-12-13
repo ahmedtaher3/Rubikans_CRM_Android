@@ -62,7 +62,8 @@ import kotlin.collections.ArrayList
 
 private const val TAG = "PlanFragment"
 
-class PlanFragment : BaseFragment<FragmentPlanBinding?>(), ActivitiesAdapter.ChooseActivity, DialogInterface.OnDismissListener,
+class PlanFragment : BaseFragment<FragmentPlanBinding?>(), ActivitiesAdapter.ChooseActivity,
+    DialogInterface.OnDismissListener,
     AdapterView.OnItemSelectedListener, ChooseStartPointInterFace {
 
     lateinit var binding: FragmentPlanBinding
@@ -110,109 +111,27 @@ class PlanFragment : BaseFragment<FragmentPlanBinding?>(), ActivitiesAdapter.Cho
         setHasOptionsMenu(true);
         binding = viewDataBinding!!
         viewModel.getDayPlan(DATE!!, Shift)
-        var model = AdModel()
-        for (m in viewModel.dataManager.ads.ads!!) {
-            if (m.pageCode?.toInt() == Constants.PLAN_RECYCLER) {
-                model = m
-                break
-            }
-        }
-        if (model.resourceLink.equals(null)
-            && model.default_ad_image.equals(null)
-            &&model.paragraph.equals(null)
-            && model.slideImages==null) {
-            binding.constrAds.setVisibility(View.GONE)
-        } else if (model.resourceLink.equals(null)&&model.paragraph.equals(null)
-            && model.slideImages==null) {
-            binding.imageView.visibility = View.VISIBLE
-            Glide.with(this).load(model.default_ad_image)
-                .centerCrop().placeholder(R.drawable.dr_hussain).into(binding.imageView)
-        }
-        if (!model.webPageLink.equals("")) {
-            binding.cardviewAds.setOnClickListener {
-                openWebPage(model.webPageLink)
-            }
-        }
-        when (model.type) {
-            "Video" -> {
-                binding.videoView.visibility = View.VISIBLE
-                mediaSource = SimpleMediaSource(model.resourceLink)
-                binding.videoView.play(mediaSource);
-            }
-            "Image" -> {
-
-                binding.imageView.visibility = View.VISIBLE
-                Glide.with(this).load(model.resourceLink)
-                    .centerCrop().placeholder(R.drawable.dr_hussain).into(binding.imageView)
-            }
-            "GIF" -> {
-                binding.imageView.visibility = View.VISIBLE
-                Glide.with(this).asGif().load(model.resourceLink)
-                    .centerCrop().placeholder(R.drawable.dr_hussain).into(binding.imageView);
-            }
-            "Paragraph" -> {
-                binding.textView.visibility = View.VISIBLE
-//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-//                    binding.textView.setText(
-//                        Html.fromHtml(
-//                            model.paragraph,
-//                            Html.FROM_HTML_MODE_LEGACY
-//                        )
-//                    )
-//                } else
-//                    binding.textView.setText(Html.fromHtml(model.paragraph))
-                binding.textView.loadDataWithBaseURL(null, model.paragraph!!
-                    ,  "text/html", "utf-8", null)
-            }
-            "Slider" -> {
-                binding.bannerSlider.visibility = View.VISIBLE
-                Slider.init(PicassoImageLoadingService(context))
-                binding.bannerSlider?.setInterval(5000)
-
-                val list = ArrayList<String>()
-                for (i in model.slideImages!!) {
-                    list.add(i?.link!!)
-                }
-                binding.bannerSlider?.setAdapter(MainSliderAdapter(list))
-            }
-        }
-        if (model.show_ad == true) {
-            binding.btnHideShowAds.setVisibility(View.VISIBLE)
-            binding.btnHideShowAds.setOnClickListener {
-                if (binding.constrAds.visibility == View.VISIBLE) {
-                    binding.constrAds.setVisibility(View.GONE)
-                    binding.btnHideShowAds.setImageResource(R.drawable.ic_show_hide_ads)
-                } else {
-                    binding.constrAds.setVisibility(View.VISIBLE)
-                    binding.btnHideShowAds.setImageResource(R.drawable.ic_hide_show_ads)
-                }
-            }
-        }
-        if (model.show_more == true) {
-            binding.tvMoreThanAds.setVisibility(View.VISIBLE)
-            binding.tvMoreThanAds.setOnClickListener {
-                val  intent = Intent(getActivity(), MoreDetailsAdsActivity::class.java)
-                intent.putExtra("pageCode", model.pageCode)
-                getActivity()?.startActivity(intent)
-            }
-        }
         Log.d(TAG, "onViewCreated: $adList")
         viewModel.dataManager.isNewCycle(viewModel.dataManager.newOldCycle.currentCyclePlanId == 0)
 
-        viewModel.dataManager.saveCycle(Cycle(viewModel.dataManager.newOldCycle.currentCyclePlanId,
-            viewModel.dataManager.newOldCycle.currentCycleId,
-            "",
-            "",
-            0,
-            "",
-            true,
-            0,
-            0))
-
+        viewModel.dataManager.saveCycle(
+            Cycle(
+                viewModel.dataManager.newOldCycle.currentCyclePlanId,
+                viewModel.dataManager.newOldCycle.currentCycleId,
+                "",
+                "",
+                0,
+                "",
+                true,
+                0,
+                0
+            )
+        )
 
         setUpCalendar()
         setUpRecyclerView()
         setObservers()
+        ads()// fun to show ads
 
         binding.addToPlan.setOnClickListener(View.OnClickListener {
             System.out.println(" DATE =  " + CommonUtilities.convertToMillis(DATE)!!.toString())
@@ -388,7 +307,6 @@ class PlanFragment : BaseFragment<FragmentPlanBinding?>(), ActivitiesAdapter.Cho
                     override fun onSwipeOptionClicked(viewID: Int, position: Int) {
                         when (viewID) {
                             R.id.delete_task -> {
-
 
 
                                 if (CommonUtilities.isSameDay(
@@ -669,13 +587,10 @@ class PlanFragment : BaseFragment<FragmentPlanBinding?>(), ActivitiesAdapter.Cho
                 if (m.recyclerPosition?.toInt()!! > 0) {
                     if (fullList?.size!! > m.recyclerPosition?.toInt()!!) {
                         fullList?.add(m.recyclerPosition?.toInt()!!, model)
-                    }
-                    else
-                    {
+                    } else {
                         fullList?.add(fullList?.size!!, model)
                     }
-                }
-                else {
+                } else {
                     fullList?.add(m.recyclerPosition?.toInt()!!, model)
                 }
 
@@ -688,8 +603,7 @@ class PlanFragment : BaseFragment<FragmentPlanBinding?>(), ActivitiesAdapter.Cho
             try {
                 System.out.println(it[0].toString())
 
-            }
-            catch (e: java.lang.Exception) {
+            } catch (e: java.lang.Exception) {
             }
 
             /* save startPoint model in shard prefrance to use it when adding new plan
@@ -844,8 +758,7 @@ class PlanFragment : BaseFragment<FragmentPlanBinding?>(), ActivitiesAdapter.Cho
                         .setMessage("يجب ادخال الزيارات الجديدة اولا") // Specifying a listener allows you to take an action before dismissing the dialog.
                         // The dialog is automatically dismissed when a dialog button is clicked.
                         .setPositiveButton(
-                            android.R.string.yes
-                            , null
+                            android.R.string.yes, null
                         )  // A null listener allows the button to dismiss the dialog and take no further action.
                         .setIcon(android.R.drawable.ic_dialog_alert)
                         .show()
@@ -906,14 +819,14 @@ class PlanFragment : BaseFragment<FragmentPlanBinding?>(), ActivitiesAdapter.Cho
         var progressBar: ProgressBar = choose_activity_type.findViewById(R.id.ProgressBar)
         var close: ImageView = choose_activity_type.findViewById(R.id.close)
         var videoView: ExoVideoView = choose_activity_type.findViewById(R.id.videoView)
-        var imageView:ImageView = choose_activity_type.findViewById(R.id.imageView)
-        var bannerslider:Slider = choose_activity_type.findViewById(R.id.bannerSlider)
-        var textView:WebView = choose_activity_type.findViewById(R.id.textView)
-        var cardviewAds:CardView = choose_activity_type.findViewById(R.id.cardview_ads)
+        var imageView: ImageView = choose_activity_type.findViewById(R.id.imageView)
+        var bannerslider: Slider = choose_activity_type.findViewById(R.id.bannerSlider)
+        var textView: WebView = choose_activity_type.findViewById(R.id.textView)
+        var cardviewAds: CardView = choose_activity_type.findViewById(R.id.cardview_ads)
         var activitiesAdapter: ActivitiesAdapter = ActivitiesAdapter(baseActivity, this)
-        var btnHideShowAds: ImageView= choose_activity_type.findViewById(R.id.btn_hide_show_ads)
-        var constrAds: ConstraintLayout= choose_activity_type.findViewById(R.id.constr_ads)
-        var moreThanAds:TextView=choose_activity_type.findViewById(R.id.tv_more_than_ads)
+        var btnHideShowAds: ImageView = choose_activity_type.findViewById(R.id.btn_hide_show_ads)
+        var constrAds: ConstraintLayout = choose_activity_type.findViewById(R.id.constr_ads)
+        var moreThanAds: TextView = choose_activity_type.findViewById(R.id.tv_more_than_ads)
 
 
         var model = AdModel()
@@ -926,17 +839,18 @@ class PlanFragment : BaseFragment<FragmentPlanBinding?>(), ActivitiesAdapter.Cho
         }
         if (model.resourceLink.equals(null)
             && model.default_ad_image.equals(null)
-            &&model.paragraph.equals(null)
-            && model.slideImages==null) {
+            && model.paragraph.equals(null)
+            && model.slideImages == null
+        ) {
             constrAds.setVisibility(View.GONE)
-        }
-        else if (model.resourceLink.equals(null)&&model.paragraph.equals(null)
-            && model.slideImages==null) {
+        } else if (model.resourceLink.equals(null) && model.paragraph.equals(null)
+            && model.slideImages == null
+        ) {
             imageView.visibility = View.VISIBLE
             Glide.with(this).load(model.default_ad_image)
                 .centerCrop().placeholder(R.drawable.dr_hussain).into(imageView)
         }
-        if (!model.webPageLink.equals("")) {
+        if (!model.webPageLink.equals(null)) {
             cardviewAds.setOnClickListener {
                 openWebPage(model.webPageLink)
             }
@@ -969,8 +883,9 @@ class PlanFragment : BaseFragment<FragmentPlanBinding?>(), ActivitiesAdapter.Cho
 //                    );
 //                } else
 //                    textView.setText(Html.fromHtml(model.paragraph))
-                textView.loadDataWithBaseURL(null, model.paragraph!!
-                    ,  "text/html", "utf-8", null)
+                textView.loadDataWithBaseURL(
+                    null, model.paragraph!!, "text/html", "utf-8", null
+                )
             }
             "Slider" -> {
                 bannerslider.visibility = View.VISIBLE
@@ -999,7 +914,7 @@ class PlanFragment : BaseFragment<FragmentPlanBinding?>(), ActivitiesAdapter.Cho
         if (model.show_more == true) {
             moreThanAds.setVisibility(View.VISIBLE)
             moreThanAds.setOnClickListener {
-                val  intent = Intent(getActivity(), MoreDetailsAdsActivity::class.java)
+                val intent = Intent(getActivity(), MoreDetailsAdsActivity::class.java)
                 intent.putExtra("pageCode", model.pageCode)
                 getActivity()?.startActivity(intent)
             }
@@ -1323,5 +1238,97 @@ class PlanFragment : BaseFragment<FragmentPlanBinding?>(), ActivitiesAdapter.Cho
         intent.putExtra("cusIdes", CommonUtilities.getCusIdes(fullList))
         intent.putExtra("cusBranchIds", CommonUtilities.getBranchIdes(fullList))
         startActivity(intent)
+    }
+
+    fun ads() {
+        var model = AdModel()
+        for (m in viewModel.dataManager.ads.ads!!) {
+            if (m.pageCode?.toInt() == Constants.PLAN_RECYCLER) {
+                model = m
+                break
+            }
+        }
+        if (model.resourceLink.equals(null)
+            && model.default_ad_image.equals(null)
+            && model.paragraph.equals(null)
+            && model.slideImages == null
+        ) {
+            binding.constrAds.setVisibility(View.GONE)
+        } else if (model.resourceLink.equals(null) && model.paragraph.equals(null)
+            && model.slideImages == null
+        ) {
+            binding.imageView.visibility = View.VISIBLE
+            Glide.with(this).load(model.default_ad_image)
+                .centerCrop().placeholder(R.drawable.dr_hussain).into(binding.imageView)
+        }
+        if (!model.webPageLink.equals(null)) {
+            binding.cardviewAds.setOnClickListener {
+                openWebPage(model.webPageLink)
+            }
+        }
+        when (model.type) {
+            "Video" -> {
+                binding.videoView.visibility = View.VISIBLE
+                mediaSource = SimpleMediaSource(model.resourceLink)
+                binding.videoView.play(mediaSource);
+            }
+            "Image" -> {
+
+                binding.imageView.visibility = View.VISIBLE
+                Glide.with(this).load(model.resourceLink)
+                    .centerCrop().placeholder(R.drawable.dr_hussain).into(binding.imageView)
+            }
+            "GIF" -> {
+                binding.imageView.visibility = View.VISIBLE
+                Glide.with(this).asGif().load(model.resourceLink)
+                    .centerCrop().placeholder(R.drawable.dr_hussain).into(binding.imageView);
+            }
+            "Paragraph" -> {
+                binding.textView.visibility = View.VISIBLE
+//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+//                    binding.textView.setText(
+//                        Html.fromHtml(
+//                            model.paragraph,
+//                            Html.FROM_HTML_MODE_LEGACY
+//                        )
+//                    )
+//                } else
+//                    binding.textView.setText(Html.fromHtml(model.paragraph))
+                binding.textView.loadDataWithBaseURL(
+                    null, model.paragraph!!, "text/html", "utf-8", null
+                )
+            }
+            "Slider" -> {
+                binding.bannerSlider.visibility = View.VISIBLE
+                Slider.init(PicassoImageLoadingService(context))
+                binding.bannerSlider?.setInterval(5000)
+
+                val list = ArrayList<String>()
+                for (i in model.slideImages!!) {
+                    list.add(i?.link!!)
+                }
+                binding.bannerSlider?.setAdapter(MainSliderAdapter(list))
+            }
+        }
+        if (model.show_ad == true) {
+            binding.btnHideShowAds.setVisibility(View.VISIBLE)
+            binding.btnHideShowAds.setOnClickListener {
+                if (binding.constrAds.visibility == View.VISIBLE) {
+                    binding.constrAds.setVisibility(View.GONE)
+                    binding.btnHideShowAds.setImageResource(R.drawable.ic_show_hide_ads)
+                } else {
+                    binding.constrAds.setVisibility(View.VISIBLE)
+                    binding.btnHideShowAds.setImageResource(R.drawable.ic_hide_show_ads)
+                }
+            }
+        }
+        if (model.show_more == true) {
+            binding.tvMoreThanAds.setVisibility(View.VISIBLE)
+            binding.tvMoreThanAds.setOnClickListener {
+                val intent = Intent(getActivity(), MoreDetailsAdsActivity::class.java)
+                intent.putExtra("pageCode", model.pageCode)
+                getActivity()?.startActivity(intent)
+            }
+        }
     }
 }

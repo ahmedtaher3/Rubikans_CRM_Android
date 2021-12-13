@@ -47,7 +47,8 @@ import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
-class EmployeeReportActivity : BaseActivity<ActivityEmployeeReportBinding>(), ChangeCycleInterface, ChooseEmployeeInterFace, AdapterView.OnItemSelectedListener {
+class EmployeeReportActivity : BaseActivity<ActivityEmployeeReportBinding>(), ChangeCycleInterface,
+    ChooseEmployeeInterFace, AdapterView.OnItemSelectedListener {
     var mChart: PercentageChartView? = null
     lateinit var binding: ActivityEmployeeReportBinding
     lateinit var viewModel: EmployeeReportViewModel
@@ -86,94 +87,6 @@ class EmployeeReportActivity : BaseActivity<ActivityEmployeeReportBinding>(), Ch
         DATE = fmt?.format(CommonUtilities.currentToMillis)
 
 
-        Log.d("daily report", "onCreate: " + Gson().toJson(viewModel.dataManager.ads.ads!! as Any?))
-        var model = AdModel()
-        for (m in viewModel.dataManager.ads.ads!!) {
-            if (m.pageCode?.toInt() == Constants.DAILY_REPORT) {
-                Log.e("xzz",m.pageCode)
-                model = m
-                break
-            }
-        }
-        if (model.resourceLink.equals(null)
-            && model.default_ad_image.equals(null)
-            &&model.paragraph.equals(null)
-            && model.slideImages==null) {
-            binding.constrAds.setVisibility(View.GONE)
-        } else if (model.resourceLink.equals(null)&&model.paragraph.equals(null)
-            && model.slideImages==null) {
-            binding.imageView.visibility = View.VISIBLE
-            Glide.with(this).load(model.default_ad_image)
-                .centerCrop().placeholder(R.drawable.dr_hussain).into(binding.imageView)
-        }
-        if (!model.webPageLink.equals("")) {
-            binding.cardviewAds.setOnClickListener {
-                openWebPage(model.webPageLink)
-            }
-        }
-        when (model.type) {
-            "Video" -> {
-                binding.videoView.visibility = View.VISIBLE
-                mediaSource = SimpleMediaSource(model.resourceLink)
-                binding.videoView.play(mediaSource);
-            }
-            "Image" -> {
-
-                binding.imageView.visibility = View.VISIBLE
-                Glide.with(this).load(model.resourceLink)
-                    .centerCrop().placeholder(R.drawable.dr_hussain).into(binding.imageView)
-            }
-            "GIF" -> {
-                binding.imageView.visibility = View.VISIBLE
-                Glide.with(this).asGif().load(model.resourceLink)
-                    .centerCrop().placeholder(R.drawable.dr_hussain).into(binding.imageView);
-            }
-            "Paragraph" -> {
-                binding.textView.visibility = View.VISIBLE
-//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-//                    binding.textView.setText(
-//                        Html.fromHtml(
-//                            model.paragraph,
-//                            Html.FROM_HTML_MODE_LEGACY
-//                        )
-//                    );
-//                } else
-//                    binding.textView.setText(Html.fromHtml(model.paragraph))
-                binding.textView.loadDataWithBaseURL(null, model.paragraph!!
-                    ,  "text/html", "utf-8", null)
-            }
-            "Slider" -> {
-                binding.bannerSlider.visibility = View.VISIBLE
-                Slider.init(PicassoImageLoadingService(this))
-                binding.bannerSlider?.setInterval(5000)
-
-                val list = ArrayList<String>()
-                for (i in model.slideImages!!) {
-                    list.add(i?.link!!)
-                }
-                binding.bannerSlider?.setAdapter(MainSliderAdapter(list))
-            }
-        }
-        if (model.show_ad == true) {
-            binding.btnHideShowAds.setVisibility(View.VISIBLE)
-            binding.btnHideShowAds.setOnClickListener {
-                if (binding.constrAds.visibility == View.VISIBLE) {
-                    binding.constrAds.setVisibility(View.GONE)
-                    binding.btnHideShowAds.setImageResource(R.drawable.ic_show_hide_ads)
-                } else {
-                    binding.constrAds.setVisibility(View.VISIBLE)
-                    binding.btnHideShowAds.setImageResource(R.drawable.ic_hide_show_ads)
-                }
-            }
-        }
-        if (model.show_more == true) {
-            binding.tvMoreThanAds.setVisibility(View.VISIBLE)
-            binding.tvMoreThanAds.setOnClickListener {
-                intent = Intent(this, MoreDetailsAdsActivity::class.java)
-                intent.putExtra("pageCode", model.pageCode)
-                startActivity(intent)
-            }
-        }
         filterDatamodel = FilterDataEntity(
             viewModel!!.dataManager.user.empId,
             viewModel!!.dataManager.user.nameAr,
@@ -182,7 +95,7 @@ class EmployeeReportActivity : BaseActivity<ActivityEmployeeReportBinding>(), Ch
             viewModel!!.dataManager.user.accId,
             0,
             viewModel!!.dataManager.user.image,
-            0, "" ,0 , ""
+            0, "", 0, ""
         )
 
 
@@ -199,32 +112,57 @@ class EmployeeReportActivity : BaseActivity<ActivityEmployeeReportBinding>(), Ch
 
         binding.cycles.setOnClickListener(View.OnClickListener {
 
-            val changeCycle = ChangeCycle(this@EmployeeReportActivity, this@EmployeeReportActivity, viewModel.dataManager, filterDatamodel?.empAccountId!!)
+            val changeCycle = ChangeCycle(
+                this@EmployeeReportActivity,
+                this@EmployeeReportActivity,
+                viewModel.dataManager,
+                filterDatamodel?.empAccountId!!
+            )
             changeCycle.setCanceledOnTouchOutside(true)
             val window = changeCycle.window
-            window?.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT)
+            window?.setLayout(
+                WindowManager.LayoutParams.MATCH_PARENT,
+                WindowManager.LayoutParams.MATCH_PARENT
+            )
             changeCycle.window?.setBackgroundDrawableResource(android.R.color.transparent)
             changeCycle.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
             changeCycle.show()
         })
 
-        val adapter = ArrayAdapter.createFromResource(this@EmployeeReportActivity, R.array.spinner_list_item_array, R.layout.spinner_item_black)
+        val adapter = ArrayAdapter.createFromResource(
+            this@EmployeeReportActivity,
+            R.array.spinner_list_item_array,
+            R.layout.spinner_item_black
+        )
         adapter.setDropDownViewResource(R.layout.spinner_item_black)
         binding.shiftSpinner.adapter = adapter
         binding.shiftSpinner.onItemSelectedListener = this
 
         binding.reportMap.setOnClickListener(View.OnClickListener {
 
-            replace_fragment(ReportMapFragment.newInstance(filterDatamodel?.empAccountId.toString(), (CommonUtilities.convertToMillis(DATE)!!.toLong() + 7200000).toString(), ShiftID), "ReportMapFragment")
+            replace_fragment(
+                ReportMapFragment.newInstance(
+                    filterDatamodel?.empAccountId.toString(),
+                    (CommonUtilities.convertToMillis(DATE)!!.toLong() + 7200000).toString(),
+                    ShiftID
+                ), "ReportMapFragment"
+            )
             //  replace_fragment(ReportMapFragment.newInstance(filterDatamodel!!.empAccountId, CommonUtilities.convertToMillis(DATE)!!, ShiftID), "ReportMapFragment")
 
         })
         binding.empImage.setOnClickListener(View.OnClickListener {
 
-            chooseEmployee = ChooseEmployee(this@EmployeeReportActivity, this@EmployeeReportActivity, viewModel.dataManager)
+            chooseEmployee = ChooseEmployee(
+                this@EmployeeReportActivity,
+                this@EmployeeReportActivity,
+                viewModel.dataManager
+            )
             chooseEmployee.setCanceledOnTouchOutside(true)
             val window = chooseEmployee.window
-            window?.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT)
+            window?.setLayout(
+                WindowManager.LayoutParams.MATCH_PARENT,
+                WindowManager.LayoutParams.MATCH_PARENT
+            )
             chooseEmployee.window?.setBackgroundDrawableResource(android.R.color.transparent)
             chooseEmployee.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
             chooseEmployee.show()
@@ -232,8 +170,11 @@ class EmployeeReportActivity : BaseActivity<ActivityEmployeeReportBinding>(), Ch
         setUpCalendar()
         setupRecyclerView()
         setObservers()
-        viewModel.getCycleReport(filterDatamodel?.empAccountId.toString(), viewModel.dataManager.newOldCycle.currentCycleId.toString())
-
+        viewModel.getCycleReport(
+            filterDatamodel?.empAccountId.toString(),
+            viewModel.dataManager.newOldCycle.currentCycleId.toString()
+        )
+        ads()
     }
 
     private fun setUpCalendar() {
@@ -248,16 +189,21 @@ class EmployeeReportActivity : BaseActivity<ActivityEmployeeReportBinding>(), Ch
 
 
         horizontalCalendar = HorizontalCalendar.Builder(binding?.root, R.id.calendarView)
-                .range(startDate, endDate)
-                .datesNumberOnScreen(5)
-                .build();
+            .range(startDate, endDate)
+            .datesNumberOnScreen(5)
+            .build();
 
         horizontalCalendar?.calendarListener = object : HorizontalCalendarListener() {
             override fun onDateSelected(date: Calendar?, position: Int) {
 
                 DATE = fmt?.format(date?.timeInMillis)
                 clearAdapter()
-                viewModel.getDailyReport(false, filterDatamodel?.empAccountId!!, CommonUtilities.convertToMillis(DATE)!! + 7200000, ShiftID.toInt())
+                viewModel.getDailyReport(
+                    false,
+                    filterDatamodel?.empAccountId!!,
+                    CommonUtilities.convertToMillis(DATE)!! + 7200000,
+                    ShiftID.toInt()
+                )
 
 
             }
@@ -296,7 +242,9 @@ class EmployeeReportActivity : BaseActivity<ActivityEmployeeReportBinding>(), Ch
                 System.out.println(it.data.startEndPoint.size)
 
                 if (it.data.startEndPoint.isNullOrEmpty() || it.data.startEndPoint.size < 2) {
-                    adapter.setMyData(fullList, StartEndPoint(0,
+                    adapter.setMyData(
+                        fullList, StartEndPoint(
+                            0,
                             "0",
                             0,
                             "0",
@@ -307,34 +255,40 @@ class EmployeeReportActivity : BaseActivity<ActivityEmployeeReportBinding>(), Ch
                             "0",
                             "0",
                             0
-                    ), StartEndPoint(0,
-                            "0",
+                        ), StartEndPoint(
                             0,
                             "0",
                             0,
                             "0",
                             0,
+                            "0",
+                            0,
                             0,
                             "0",
                             "0",
-                            0))
+                            0
+                        )
+                    )
 
                 } else {
 
-                    val model1 =  it.data.startEndPoint[0]
-                    val model2 =  it.data.startEndPoint[1]
+                    val model1 = it.data.startEndPoint[0]
+                    val model2 = it.data.startEndPoint[1]
 
-                    model1.address = getAddress(model1.latVal?.toDouble()!! , model1.langVal?.toDouble()!! )!!
-                    model2.address =getAddress(model2.latVal?.toDouble()!! , model2.langVal?.toDouble()!! )!!
+                    model1.address =
+                        getAddress(model1.latVal?.toDouble()!!, model1.langVal?.toDouble()!!)!!
+                    model2.address =
+                        getAddress(model2.latVal?.toDouble()!!, model2.langVal?.toDouble()!!)!!
 
                     adapter.setMyData(fullList, model1, model2)
-                    System.out.println(" fullList "+ model2.address)
+                    System.out.println(" fullList " + model2.address)
                 }
 
             } else {
                 binding.emptyList.visibility = View.VISIBLE
                 adapter.setMyData(ArrayList(), StartEndPoint(), StartEndPoint())
-                Toast.makeText(this@EmployeeReportActivity, it.rerurnMessage, Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@EmployeeReportActivity, it.rerurnMessage, Toast.LENGTH_SHORT)
+                    .show()
             }
 
 
@@ -418,12 +372,15 @@ class EmployeeReportActivity : BaseActivity<ActivityEmployeeReportBinding>(), Ch
 
                 binding.totalBudget.setText("Total Budget = (" + it.data.achivement[0].totalBudget.toString() + ")")
 
-                binding.mChart?.setProgress(it.data.achivement[0].salesAchivement?.take(2)?.toFloat()!!, true)
+                binding.mChart?.setProgress(
+                    it.data.achivement[0].salesAchivement?.take(2)?.toFloat()!!, true
+                )
 
 
             } else {
 
-                Toast.makeText(this@EmployeeReportActivity, it.rerurnMessage, Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@EmployeeReportActivity, it.rerurnMessage, Toast.LENGTH_SHORT)
+                    .show()
             }
 
 
@@ -499,7 +456,12 @@ class EmployeeReportActivity : BaseActivity<ActivityEmployeeReportBinding>(), Ch
         }
 
         clearAdapter()
-        viewModel.getDailyReport(false, filterDatamodel?.empAccountId!!, CommonUtilities.convertToMillis(DATE)!! + 7200000, ShiftID.toInt())
+        viewModel.getDailyReport(
+            false,
+            filterDatamodel?.empAccountId!!,
+            CommonUtilities.convertToMillis(DATE)!! + 7200000,
+            ShiftID.toInt()
+        )
 
     }
 
@@ -514,19 +476,19 @@ class EmployeeReportActivity : BaseActivity<ActivityEmployeeReportBinding>(), Ch
     fun replace_fragment(fragment: Fragment?, tag: String?) {
         supportFragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
         supportFragmentManager
-                .beginTransaction()
-                .setCustomAnimations(
-                        R.anim.slide_in_left,
-                        R.anim.slide_out_left,
-                        R.anim.slide_in_left,
-                        R.anim.slide_out_left
-                )
-                .add(
-                        R.id.DailyReportContainer,
-                        fragment!!
-                )
-                .addToBackStack(tag)
-                .commit()
+            .beginTransaction()
+            .setCustomAnimations(
+                R.anim.slide_in_left,
+                R.anim.slide_out_left,
+                R.anim.slide_in_left,
+                R.anim.slide_out_left
+            )
+            .add(
+                R.id.DailyReportContainer,
+                fragment!!
+            )
+            .addToBackStack(tag)
+            .commit()
     }
 
 
@@ -535,21 +497,24 @@ class EmployeeReportActivity : BaseActivity<ActivityEmployeeReportBinding>(), Ch
         binding.empImage?.setImageResource(R.drawable.user_logo)
         chooseEmployee.dismiss()
         filterDatamodel = model
-        viewModel.getCycleReport(filterDatamodel?.empAccountId.toString(), viewModel?.dataManager?.cycle.cycleId.toString())
+        viewModel.getCycleReport(
+            filterDatamodel?.empAccountId.toString(),
+            viewModel?.dataManager?.cycle.cycleId.toString()
+        )
         binding.drName.setText(filterDatamodel?.empName)
         binding.drTitle.setText(filterDatamodel?.empTitle)
         binding.empImage?.setImageResource(R.drawable.user_logo)
 
         if (model?.fileImage != null) {
             Glide.with(this)
-                    .load(ApiServices.ImageBaseURL + "ImageUpload/Employee/" + model.fileImage)
-                    .placeholder(binding.empImage?.drawable)
-                    .into(binding.empImage!!)
+                .load(ApiServices.ImageBaseURL + "ImageUpload/Employee/" + model.fileImage)
+                .placeholder(binding.empImage?.drawable)
+                .into(binding.empImage!!)
         } else {
             Glide.with(this)
-                    .load(ApiServices.ImageBaseURL + "ImageUpload/Employee/DefaultEmpImage.jpg")
-                    .placeholder(binding.empImage?.drawable)
-                    .into(binding.empImage!!)
+                .load(ApiServices.ImageBaseURL + "ImageUpload/Employee/DefaultEmpImage.jpg")
+                .placeholder(binding.empImage?.drawable)
+                .into(binding.empImage!!)
         }
 
 
@@ -558,7 +523,10 @@ class EmployeeReportActivity : BaseActivity<ActivityEmployeeReportBinding>(), Ch
     override fun changeCycle(cycle: Cycle?) {
 
         binding.cycles.setText(cycle?.cycleArName)
-        viewModel.getCycleReport(filterDatamodel?.empAccountId.toString(), cycle?.cycleId.toString())
+        viewModel.getCycleReport(
+            filterDatamodel?.empAccountId.toString(),
+            cycle?.cycleId.toString()
+        )
 
 
         startDate?.timeInMillis = cycle?.fromDateMs?.toLong()!!
@@ -584,7 +552,13 @@ class EmployeeReportActivity : BaseActivity<ActivityEmployeeReportBinding>(), Ch
                 true
             }
             R.id.TempReport -> {
-                replace_fragment(TempReportFragment.newInstance(filterDatamodel?.empAccountId.toString(), (CommonUtilities.convertToMillis(DATE)!!.toLong() + 7200000).toString(), ShiftID), "TempReportFragment")
+                replace_fragment(
+                    TempReportFragment.newInstance(
+                        filterDatamodel?.empAccountId.toString(),
+                        (CommonUtilities.convertToMillis(DATE)!!.toLong() + 7200000).toString(),
+                        ShiftID
+                    ), "TempReportFragment"
+                )
                 true
             }
             else -> super.onOptionsItemSelected(item)
@@ -596,7 +570,9 @@ class EmployeeReportActivity : BaseActivity<ActivityEmployeeReportBinding>(), Ch
 
         binding.emptyList.visibility = View.VISIBLE
         if (adapter != null) {
-            adapter.setMyData(ArrayList(), StartEndPoint(0,
+            adapter.setMyData(
+                ArrayList(), StartEndPoint(
+                    0,
                     "0",
                     0,
                     "0",
@@ -607,21 +583,23 @@ class EmployeeReportActivity : BaseActivity<ActivityEmployeeReportBinding>(), Ch
                     "0",
                     "0",
                     0
-            ), StartEndPoint(0,
-                    "0",
+                ), StartEndPoint(
                     0,
                     "0",
                     0,
                     "0",
                     0,
+                    "0",
+                    0,
                     0,
                     "0",
                     "0",
-                    0))
+                    0
+                )
+            )
         }
 
     }
-
 
 
     fun getAddress(latitude: Double, longitude: Double): String? {
@@ -630,8 +608,13 @@ class EmployeeReportActivity : BaseActivity<ActivityEmployeeReportBinding>(), Ch
         geocoder = Geocoder(this, Locale("ar"))
         var address = ""
         try {
-            addresses = geocoder.getFromLocation(latitude, longitude, 1) // Here 1 represent max location result to returned, by documents it recommended 1 to 5
-            address = addresses[0].getAddressLine(0) // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
+            addresses = geocoder.getFromLocation(
+                latitude,
+                longitude,
+                1
+            ) // Here 1 represent max location result to returned, by documents it recommended 1 to 5
+            address =
+                addresses[0].getAddressLine(0) // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
 
         } catch (e: java.lang.Exception) {
             e.printStackTrace()
@@ -641,6 +624,98 @@ class EmployeeReportActivity : BaseActivity<ActivityEmployeeReportBinding>(), Ch
     }
 
 
+    fun ads() {
 
+        var model = AdModel()
+        for (m in viewModel.dataManager.ads.ads!!) {
+            if (m.pageCode?.toInt() == Constants.DAILY_REPORT) {
+                Log.e("xzz", m.pageCode)
+                model = m
+                break
+            }
+        }
+        if (model.resourceLink.equals(null)
+            && model.default_ad_image.equals(null)
+            && model.paragraph.equals(null)
+            && model.slideImages == null
+        ) {
+            binding.constrAds.setVisibility(View.GONE)
+        } else if (model.resourceLink.equals(null) && model.paragraph.equals(null)
+            && model.slideImages == null
+        ) {
+            binding.imageView.visibility = View.VISIBLE
+            Glide.with(this).load(model.default_ad_image)
+                .centerCrop().placeholder(R.drawable.dr_hussain).into(binding.imageView)
+        }
+        if (!model.webPageLink.equals("")) {
+            binding.cardviewAds.setOnClickListener {
+                openWebPage(model.webPageLink)
+            }
+        }
+        when (model.type) {
+            "Video" -> {
+                binding.videoView.visibility = View.VISIBLE
+                mediaSource = SimpleMediaSource(model.resourceLink)
+                binding.videoView.play(mediaSource);
+            }
+            "Image" -> {
+
+                binding.imageView.visibility = View.VISIBLE
+                Glide.with(this).load(model.resourceLink)
+                    .centerCrop().placeholder(R.drawable.dr_hussain).into(binding.imageView)
+            }
+            "GIF" -> {
+                binding.imageView.visibility = View.VISIBLE
+                Glide.with(this).asGif().load(model.resourceLink)
+                    .centerCrop().placeholder(R.drawable.dr_hussain).into(binding.imageView);
+            }
+            "Paragraph" -> {
+                binding.textView.visibility = View.VISIBLE
+//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+//                    binding.textView.setText(
+//                        Html.fromHtml(
+//                            model.paragraph,
+//                            Html.FROM_HTML_MODE_LEGACY
+//                        )
+//                    );
+//                } else
+//                    binding.textView.setText(Html.fromHtml(model.paragraph))
+                binding.textView.loadDataWithBaseURL(
+                    null, model.paragraph!!, "text/html", "utf-8", null
+                )
+            }
+            "Slider" -> {
+                binding.bannerSlider.visibility = View.VISIBLE
+                Slider.init(PicassoImageLoadingService(this))
+                binding.bannerSlider?.setInterval(5000)
+
+                val list = ArrayList<String>()
+                for (i in model.slideImages!!) {
+                    list.add(i?.link!!)
+                }
+                binding.bannerSlider?.setAdapter(MainSliderAdapter(list))
+            }
+        }
+        if (model.show_ad == true) {
+            binding.btnHideShowAds.setVisibility(View.VISIBLE)
+            binding.btnHideShowAds.setOnClickListener {
+                if (binding.constrAds.visibility == View.VISIBLE) {
+                    binding.constrAds.setVisibility(View.GONE)
+                    binding.btnHideShowAds.setImageResource(R.drawable.ic_show_hide_ads)
+                } else {
+                    binding.constrAds.setVisibility(View.VISIBLE)
+                    binding.btnHideShowAds.setImageResource(R.drawable.ic_hide_show_ads)
+                }
+            }
+        }
+        if (model.show_more == true) {
+            binding.tvMoreThanAds.setVisibility(View.VISIBLE)
+            binding.tvMoreThanAds.setOnClickListener {
+                intent = Intent(this, MoreDetailsAdsActivity::class.java)
+                intent.putExtra("pageCode", model.pageCode)
+                startActivity(intent)
+            }
+        }
+    }
 
 }

@@ -326,7 +326,20 @@ class SyncFragment : BaseFragment<SyncFragmentBinding>() {
             }
 
         })
+        ads()
+    }
 
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        (activity as AppCompatActivity?)!!.supportActionBar!!.title = "Report"
+
+        try {
+            CommonUtilities.sendMessage(baseActivity, false)
+        } catch (e: Exception) {
+        }
+    }
+    fun ads(){
         var model = AdModel()
         for (m in viewModel.dataManager.ads.ads!!) {
             if (m.pageCode?.toInt() == Constants.SYNC) {
@@ -339,13 +352,14 @@ class SyncFragment : BaseFragment<SyncFragmentBinding>() {
             &&model.paragraph.equals(null)
             && model.slideImages==null) {
             binding.constrAds.setVisibility(View.GONE)
-        } else if (model.resourceLink.equals(null)&&model.paragraph.equals(null)
+        }
+        else if (model.resourceLink.equals(null)&&model.paragraph.equals(null)
             && model.slideImages==null) {
             binding.imageView1.visibility = View.VISIBLE
             Glide.with(this).load(model.default_ad_image)
                 .centerCrop().placeholder(R.drawable.dr_hussain).into(binding.imageView1)
         }
-        if (!model.webPageLink.equals("")) {
+        if (!model.webPageLink.equals(null)) {
             binding.cardviewAds.setOnClickListener {
                 openWebPage(model.webPageLink)
             }
@@ -414,17 +428,4 @@ class SyncFragment : BaseFragment<SyncFragmentBinding>() {
             }
         }
     }
-
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        (activity as AppCompatActivity?)!!.supportActionBar!!.title = "Report"
-
-        try {
-            CommonUtilities.sendMessage(baseActivity, false)
-        } catch (e: Exception) {
-        }
-    }
-
-
 }

@@ -58,6 +58,7 @@ class ContactsActivity : AppCompatActivity() {
     lateinit var cardviewAds: CardView
     lateinit var moreThanAds: TextView
     lateinit var textView: WebView
+    var dataManager:DataManager? = null
     private var inputsearch: EditText? = null
     private var toolbar: Toolbar? = null
     var swiperefresh: SwipeRefreshLayout? = null
@@ -75,7 +76,6 @@ class ContactsActivity : AppCompatActivity() {
         contactrecycler = findViewById(R.id.contact_recycler)
         videoView = findViewById(R.id.videoView)
         imageView = findViewById(R.id.imageView)
-        var dataManager: DataManager? = null
         bannerslider = findViewById(R.id.bannerSlider)
         btnHideShowAds = findViewById(R.id.btn_hide_show_ads)
         moreThanAds = findViewById(R.id.tv_more_than_ads)
@@ -88,7 +88,8 @@ class ContactsActivity : AppCompatActivity() {
         contactrecycler?.setLayoutManager(LinearLayoutManager(this))
         contactrecycler?.setHasFixedSize(true)
         contactrecycler?.setAdapter(contactsRecyclerAdapter)
-        contactsViewModel = ViewModelProviders.of(this@ContactsActivity).get(GetContactsViewModel::class.java)
+        contactsViewModel =
+            ViewModelProviders.of(this@ContactsActivity).get(GetContactsViewModel::class.java)
         contactlistArrayList = ArrayList()
         getmyrequest("")
         //        selecttheTypeRequestfilter();
@@ -107,6 +108,98 @@ class ContactsActivity : AppCompatActivity() {
             }
         })
 
+//
+//        lastCompletelyVisibleItemPosition = ((LinearLayoutManager) contactrecycler.getLayoutManager()).findLastVisibleItemPosition();
+//
+    ads()
+    }
+
+    private fun filter(text: String) {
+        val filteredList = ArrayList<Contactlist>()
+        for (item in filterdlistsearch!!) {
+            if (item.name.toLowerCase().contains(text.toLowerCase())) {
+                filteredList.add(item)
+            }
+        }
+        //        this.contactlistArrayList = filteredList;
+        contactsRecyclerAdapter!!.setArrayList(filteredList)
+        //
+    }
+
+    fun selecttheTypeRequestfilter(filterd: ArrayList<String?>?) {
+        val adapter = ArrayAdapter(applicationContext, R.layout.textspinner, filterd!!)
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spinnerfilteroftyperequest!!.adapter = adapter
+        spinnerfilteroftyperequest!!.onItemSelectedListener = object : OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>,
+                view: View,
+                position: Int,
+                l: Long
+            ) {
+                choosedspinner_typerequesttextFILTER = parent.getItemAtPosition(position).toString()
+                val newList = ArrayList<Contactlist>()
+                for (model in contactlistArrayList!!) {
+                    Log.d("getTypeRequest =   ", model.dep)
+                    if (model.dep == choosedspinner_typerequesttextFILTER) {
+                        newList.add(model)
+                    } else if (choosedspinner_typerequesttextFILTER == "All") {
+                        newList.add(model)
+                    }
+                }
+                filterdlistsearch = newList
+                contactsRecyclerAdapter!!.setArrayList(newList)
+            }
+
+            override fun onNothingSelected(adapterView: AdapterView<*>?) {}
+        }
+    }
+
+    fun getmyrequest(text: String) {
+        show(this)
+        contactsViewModel!!.getRequest()
+        contactsViewModel!!.googlesheetMutableLiveData.observe(
+            this@ContactsActivity,
+            Observer<Request?> { request ->
+                if (request != null && request.contactlist != null) {
+                    contactlistArrayList = request.contactlist as ArrayList<Contactlist>
+                    val all: ArrayList<String?> = ArrayList()
+                    val filterd: ArrayList<String?> = ArrayList()
+                    val newList = ArrayList<Contactlist>()
+                    for (filtered in contactlistArrayList!!) {
+                        all.add(filtered.dep)
+                        if (filtered.name.toLowerCase().contains(text.toLowerCase())) {
+                            newList.add(filtered)
+                        } else {
+                            newList.add(filtered)
+                        }
+                        //                        newList.add(model);
+                        Log.d("getTypeRequest =   ", filtered.name)
+                    }
+                    //                    call();
+                    filterd.add("All")
+                    for (filter in all) {
+                        if (!filterd.contains(filter)) filterd.add(filter)
+                    }
+                    selecttheTypeRequestfilter(filterd)
+                    contactsRecyclerAdapter!!.setArrayList(newList)
+                    dismiss()
+                }
+            })
+    }
+
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+
+            android.R.id.home -> {
+                onBackPressed()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+    fun ads(){
         var model = AdModel()
         for (m in dataManager!!.ads.ads!!) {
             if (m.pageCode?.toInt() == Constants.CONTACTS_LIST) {
@@ -117,9 +210,10 @@ class ContactsActivity : AppCompatActivity() {
         if (model.resourceLink.equals(null)
             && model.default_ad_image.equals(null)
             &&model.paragraph.equals(null)
-                    && model.slideImages==null) {
+            && model.slideImages==null) {
             constrAds.setVisibility(View.GONE)
-        } else if (model.resourceLink.equals(null)&&model.paragraph.equals(null)
+        }
+        else if (model.resourceLink.equals(null)&&model.paragraph.equals(null)
             && model.slideImages==null) {
             imageView.visibility = View.VISIBLE
             Glide.with(this).load(model.default_ad_image)
@@ -194,89 +288,6 @@ class ContactsActivity : AppCompatActivity() {
                 intent.putExtra("pageCode", model.pageCode)
                 startActivity(intent)
             }
-        }
-
-//
-//        lastCompletelyVisibleItemPosition = ((LinearLayoutManager) contactrecycler.getLayoutManager()).findLastVisibleItemPosition();
-//
-    }
-
-    private fun filter(text: String) {
-        val filteredList = ArrayList<Contactlist>()
-        for (item in filterdlistsearch!!) {
-            if (item.name.toLowerCase().contains(text.toLowerCase())) {
-                filteredList.add(item)
-            }
-        }
-        //        this.contactlistArrayList = filteredList;
-        contactsRecyclerAdapter!!.setArrayList(filteredList)
-        //
-    }
-
-    fun selecttheTypeRequestfilter(filterd: ArrayList<String?>?) {
-        val adapter = ArrayAdapter(applicationContext, R.layout.textspinner, filterd!!)
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        spinnerfilteroftyperequest!!.adapter = adapter
-        spinnerfilteroftyperequest!!.onItemSelectedListener = object : OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, l: Long) {
-                choosedspinner_typerequesttextFILTER = parent.getItemAtPosition(position).toString()
-                val newList = ArrayList<Contactlist>()
-                for (model in contactlistArrayList!!) {
-                    Log.d("getTypeRequest =   ", model.dep)
-                    if (model.dep == choosedspinner_typerequesttextFILTER) {
-                        newList.add(model)
-                    } else if (choosedspinner_typerequesttextFILTER == "All") {
-                        newList.add(model)
-                    }
-                }
-                filterdlistsearch = newList
-                contactsRecyclerAdapter!!.setArrayList(newList)
-            }
-
-            override fun onNothingSelected(adapterView: AdapterView<*>?) {}
-        }
-    }
-
-    fun getmyrequest(text: String) {
-        show(this)
-        contactsViewModel!!.getRequest()
-        contactsViewModel!!.googlesheetMutableLiveData.observe(this@ContactsActivity, Observer<Request?> { request ->
-            if (request != null && request.contactlist != null) {
-                contactlistArrayList = request.contactlist as ArrayList<Contactlist>
-                val all: ArrayList<String?> = ArrayList()
-                val filterd: ArrayList<String?> = ArrayList()
-                val newList = ArrayList<Contactlist>()
-                for (filtered in contactlistArrayList!!) {
-                    all.add(filtered.dep)
-                    if (filtered.name.toLowerCase().contains(text.toLowerCase())) {
-                        newList.add(filtered)
-                    } else {
-                        newList.add(filtered)
-                    }
-                    //                        newList.add(model);
-                    Log.d("getTypeRequest =   ", filtered.name)
-                }
-                //                    call();
-                filterd.add("All")
-                for (filter in all) {
-                    if (!filterd.contains(filter)) filterd.add(filter)
-                }
-                selecttheTypeRequestfilter(filterd)
-                contactsRecyclerAdapter!!.setArrayList(newList)
-                dismiss()
-            }
-        })
-    }
-
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-
-            android.R.id.home -> {
-                onBackPressed()
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
         }
     }
 }
