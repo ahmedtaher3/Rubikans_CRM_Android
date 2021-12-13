@@ -129,15 +129,17 @@ class AttendanceFragment : BaseFragment<FragmentAttendanceBinding>(), ChooseEmpl
             Glide.with(this).load(model.default_ad_image)
                 .centerCrop().placeholder(R.drawable.dr_hussain).into(binding.imageView)
         }
-        if (!model.webPageLink.equals("")) {
-            binding.cardviewAds.setOnClickListener {
-                openWebPage(model.webPageLink)
-            }
-        } else if (!model.webPageLink.equals(null)) {
+        if (!model.webPageLink.equals(null)) {
+            //  binding.cardviewAds.isEnabled = false
             binding.cardviewAds.setOnClickListener {
                 openWebPage(model.webPageLink)
             }
         }
+//        else  {
+//            binding.cardviewAds.setOnClickListener {
+//                openWebPage(model.webPageLink)
+//            }
+//        }
         when (model.type) {
             "Video" -> {
                 binding.videoView.visibility = View.VISIBLE
@@ -303,7 +305,8 @@ class AttendanceFragment : BaseFragment<FragmentAttendanceBinding>(), ChooseEmpl
 
 
             val datePickerDialog =
-                DatePickerDialog(baseActivity, android.R.style.Theme_Holo_Light_Dialog_MinWidth,
+                DatePickerDialog(
+                    baseActivity, android.R.style.Theme_Holo_Light_Dialog_MinWidth,
                     DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
 
                         currentMonth = (monthOfYear + 1).toString()
