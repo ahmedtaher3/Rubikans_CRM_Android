@@ -73,7 +73,7 @@ class MoreDetailsAdsActivity : AppCompatActivity() {
 //                    )
 //                } else
 //                    binding.textView.setText(Html.fromHtml(model.view_more_paragraph))
-                binding.textView.loadDataWithBaseURL(null, model.paragraph!!
+                binding.textView.loadDataWithBaseURL(null, model.view_more_paragraph!!
                     ,  "text/html", "utf-8", null)
             }
             "Slider" -> {

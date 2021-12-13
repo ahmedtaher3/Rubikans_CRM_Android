@@ -50,6 +50,12 @@ data class AdModel(
     @field:SerializedName("from_date")
     val from_date: String? = null,
 
+    @field:SerializedName("to_date")
+    val to_date: String? = null,
+
+    @field:SerializedName("name")
+    val name: String? = null,
+
     @field:SerializedName("view_more_title")
     val view_more_title: String? = null,
 
@@ -64,6 +70,9 @@ data class AdModel(
 
     @field:SerializedName("show_more")
     val show_more: Boolean? = null,
+
+    @field:SerializedName("active")
+    val active: Boolean? = null,
 
     @field:SerializedName("view_more_paragraph")
     val view_more_paragraph: String? = null,
