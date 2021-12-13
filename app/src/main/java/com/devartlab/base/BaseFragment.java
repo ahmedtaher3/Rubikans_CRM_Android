@@ -93,11 +93,8 @@ public abstract class BaseFragment<T extends ViewDataBinding> extends Fragment {
         void onFragmentDetached(String tag);
     }
     public void openWebPage(String url) {
-
         Uri uri = Uri.parse(url);
         Intent intent = new Intent(Intent.ACTION_VIEW, uri);
         startActivity(intent);
-//        Bundle bundle = new Bundle();
-//        bundle.putString(Intent.ACTION_VIEW, uri);
     }
 }

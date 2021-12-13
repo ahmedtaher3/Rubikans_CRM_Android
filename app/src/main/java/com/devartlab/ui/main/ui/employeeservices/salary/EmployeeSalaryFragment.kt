@@ -333,7 +333,8 @@ class EmployeeSalaryFragment : BaseFragment<FragmentEmployeeSalaryBinding>(),
                 binding.constrAds.setVisibility(View.VISIBLE)
                 if (model.resourceLink.equals(null)
                     && model.paragraph.equals(null)
-                    && model.slideImages == null) {
+                    && model.slideImages == null
+                ) {
                     binding.constrAds.setVisibility(View.VISIBLE)
                     binding.imageView.visibility = View.VISIBLE
                     Glide.with(this).load(model.default_ad_image)
@@ -343,13 +344,9 @@ class EmployeeSalaryFragment : BaseFragment<FragmentEmployeeSalaryBinding>(),
             }
         }
 
-        if (!model.webPageLink.equals("")) {
-            try {
-                binding.cardviewAds.setOnClickListener {
-                    openWebPage(model.webPageLink)
-                }
-            }catch (e: Exception){
-                Log.e("",e.toString())
+        if (model.webPageLink.equals("")) {
+            binding.cardviewAds.setOnClickListener {
+                openWebPage(model.webPageLink)
             }
         }
         when (model.type) {
@@ -419,3 +416,4 @@ class EmployeeSalaryFragment : BaseFragment<FragmentEmployeeSalaryBinding>(),
     }
 
 }
+
