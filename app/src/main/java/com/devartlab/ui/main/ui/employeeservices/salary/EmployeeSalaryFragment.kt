@@ -11,6 +11,7 @@ import android.os.Bundle
 import android.text.Html
 import android.text.TextUtils
 import android.util.Base64
+import android.util.Log
 import android.util.TypedValue
 import android.view.Menu
 import android.view.MenuInflater
@@ -329,25 +330,26 @@ class EmployeeSalaryFragment : BaseFragment<FragmentEmployeeSalaryBinding>(),
         for (m in viewModel.dataManager!!.ads.ads!!) {
             if (m.pageCode?.toInt() == Constants.SALARY) {
                 model = m
+                binding.constrAds.setVisibility(View.VISIBLE)
+                if (model.resourceLink.equals(null)
+                    && model.paragraph.equals(null)
+                    && model.slideImages == null) {
+                    binding.constrAds.setVisibility(View.VISIBLE)
+                    binding.imageView.visibility = View.VISIBLE
+                    Glide.with(this).load(model.default_ad_image)
+                        .centerCrop().placeholder(R.drawable.dr_hussain).into(binding.imageView)
+                }
                 break
             }
         }
-        if (model.resourceLink.equals(null)
-            && model.default_ad_image.equals(null)
-            && model.paragraph.equals(null)
-            && model.slideImages == null
-        ) {
-            binding.constrAds.setVisibility(View.GONE)
-        } else if (model.resourceLink.equals(null) && model.paragraph.equals(null)
-            && model.slideImages == null
-        ) {
-            binding.imageView.visibility = View.VISIBLE
-            Glide.with(this).load(model.default_ad_image)
-                .centerCrop().placeholder(R.drawable.dr_hussain).into(binding.imageView)
-        }
+
         if (!model.webPageLink.equals("")) {
-            binding.cardviewAds.setOnClickListener {
-                openWebPage(model.webPageLink)
+            try {
+                binding.cardviewAds.setOnClickListener {
+                    openWebPage(model.webPageLink)
+                }
+            }catch (e: Exception){
+                Log.e("",e.toString())
             }
         }
         when (model.type) {

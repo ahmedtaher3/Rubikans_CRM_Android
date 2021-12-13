@@ -244,22 +244,19 @@ class MarketRequestTypesActivity : BaseActivity<FragmentMarketRequestTypesBindin
         for (m in viewModel.dataManager.ads.ads!!) {
             if (m.pageCode?.toInt() == Constants.MARKET_REQUEST) {
                 model = m
+                binding.constrAds.setVisibility(View.VISIBLE)
+                if (model.resourceLink.equals(null)
+                    && model.paragraph.equals(null)
+                    && model.slideImages == null) {
+                    binding.constrAds.setVisibility(View.VISIBLE)
+                    binding.imageView.visibility = View.VISIBLE
+                    Glide.with(this).load(model.default_ad_image)
+                        .centerCrop().placeholder(R.drawable.dr_hussain).into(binding.imageView)
+                }
                 break
             }
         }
-        if (model.resourceLink.equals(null)
-            && model.default_ad_image.equals(null)
-            && model.paragraph.equals(null)
-            && model.slideImages == null
-        ) {
-            binding.constrAds.setVisibility(View.GONE)
-        } else if (model.resourceLink.equals(null) && model.paragraph.equals(null)
-            && model.slideImages == null
-        ) {
-            binding.imageView.visibility = View.VISIBLE
-            Glide.with(this).load(model.default_ad_image)
-                .centerCrop().placeholder(R.drawable.dr_hussain).into(binding.imageView)
-        }
+
         if (!model.webPageLink.equals("")) {
             openWebPage(model.webPageLink)
             binding.cardviewAds.setOnClickListener {

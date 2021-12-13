@@ -204,21 +204,19 @@ class ContactsActivity : AppCompatActivity() {
         for (m in dataManager!!.ads.ads!!) {
             if (m.pageCode?.toInt() == Constants.CONTACTS_LIST) {
                 model = m
+                constrAds.setVisibility(View.VISIBLE)
+                if (model.resourceLink.equals(null)
+                    && model.paragraph.equals(null)
+                    && model.slideImages == null) {
+                    constrAds.setVisibility(View.VISIBLE)
+                    imageView.visibility = View.VISIBLE
+                    Glide.with(this).load(model.default_ad_image)
+                        .centerCrop().placeholder(R.drawable.dr_hussain).into(imageView)
+                }
                 break
             }
         }
-        if (model.resourceLink.equals(null)
-            && model.default_ad_image.equals(null)
-            &&model.paragraph.equals(null)
-            && model.slideImages==null) {
-            constrAds.setVisibility(View.GONE)
-        }
-        else if (model.resourceLink.equals(null)&&model.paragraph.equals(null)
-            && model.slideImages==null) {
-            imageView.visibility = View.VISIBLE
-            Glide.with(this).load(model.default_ad_image)
-                .centerCrop().placeholder(R.drawable.dr_hussain).into(imageView)
-        }
+
         if (!model.webPageLink.equals("")) {
             cardviewAds.setOnClickListener {
                 val uri = Uri.parse(model.webPageLink)

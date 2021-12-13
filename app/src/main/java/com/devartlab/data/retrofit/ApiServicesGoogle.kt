@@ -204,10 +204,10 @@ interface ApiServicesGoogle {
         String ImageBaseURL = "https://devartlabcrm.com/"; */
         // const val BaseURL = "http://prelive.devartlabcrm.com/api/V1/";
         //   const val ImageBaseURL = "http://prelive.devartlabcrm.com/";
-//        const val BaseURL = "http://prelive.devartlabcrm.com/api/V1/"//dev
-//        const val ImageBaseURL = "http://prelive.devartlabcrm.com/"
-        const val BaseURL = "https://devartlabcrm.com/api/V1/"//live
-        const val ImageBaseURL = "https://devartlabcrm.com/"
+        const val BaseURL = "http://prelive.devartlabcrm.com/api/V1/"//dev
+        const val ImageBaseURL = "http://prelive.devartlabcrm.com/"
+//        const val BaseURL = "https://devartlabcrm.com/api/V1/"//live
+//        const val ImageBaseURL = "https://devartlabcrm.com/"
     }
 
 }

@@ -150,7 +150,7 @@ class ManagerReportFragment : BaseFragment<FragmentSuperReportBinding>(), Report
         setListeners()
         setObservers()
         setUpRecycler()
-        ads()
+        //ads()
     }
 
     private fun setObservers() {
@@ -1225,22 +1225,19 @@ class ManagerReportFragment : BaseFragment<FragmentSuperReportBinding>(), Report
         for (m in viewModel.dataManager.ads.ads!!) {
             if (m.pageCode?.toInt() == Constants.CREATE_PLAN) {
                 model = m
+                constrAds.setVisibility(View.VISIBLE)
+                if (model.resourceLink.equals(null)
+                    && model.paragraph.equals(null)
+                    && model.slideImages == null) {
+                    constrAds.setVisibility(View.VISIBLE)
+                    imageView.visibility = View.VISIBLE
+                    Glide.with(this).load(model.default_ad_image)
+                        .centerCrop().placeholder(R.drawable.dr_hussain).into(imageView)
+                }
                 break
             }
         }
-        if (model.resourceLink.equals(null)
-            && model.default_ad_image.equals(null)
-            && model.paragraph.equals(null)
-            && model.slideImages == null
-        ) {
-            constrAds.setVisibility(View.GONE)
-        } else if (model.resourceLink.equals(null) && model.paragraph.equals(null)
-            && model.slideImages == null
-        ) {
-            imageView.visibility = View.VISIBLE
-            Glide.with(this).load(model.default_ad_image)
-                .centerCrop().placeholder(R.drawable.dr_hussain).into(imageView)
-        }
+
         if (!model.webPageLink.equals(null)) {
             cardviewAds.setOnClickListener {
                 openWebPage(model.webPageLink)
@@ -1509,22 +1506,19 @@ class ManagerReportFragment : BaseFragment<FragmentSuperReportBinding>(), Report
         for (m in viewModel.dataManager.ads.ads!!) {
             if (m.pageCode?.toInt() == Constants.MANAGER_REPORT) {
                 model = m
+                binding.constrAds.setVisibility(View.VISIBLE)
+                if (model.resourceLink.equals(null)
+                    && model.paragraph.equals(null)
+                    && model.slideImages == null) {
+                    binding.constrAds.setVisibility(View.VISIBLE)
+                    binding.imageView.visibility = View.VISIBLE
+                    Glide.with(this).load(model.default_ad_image)
+                        .centerCrop().placeholder(R.drawable.dr_hussain).into(binding.imageView)
+                }
                 break
             }
         }
-        if (model.resourceLink.equals(null)
-            && model.default_ad_image.equals(null)
-            && model.paragraph.equals(null)
-            && model.slideImages == null
-        ) {
-            binding.constrAds.setVisibility(View.GONE)
-        } else if (model.resourceLink.equals(null) && model.paragraph.equals(null)
-            && model.slideImages == null
-        ) {
-            binding.imageView.visibility = View.VISIBLE
-            Glide.with(this).load(model.default_ad_image)
-                .centerCrop().placeholder(R.drawable.dr_hussain).into(binding.imageView)
-        }
+
         if (!model.webPageLink.equals("")) {
             binding.cardviewAds.setOnClickListener {
                 openWebPage(model.webPageLink)

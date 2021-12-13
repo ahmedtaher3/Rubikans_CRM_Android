@@ -57,6 +57,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constr_ads"
             android:layout_width="match_parent"
+            android:visibility="gone"
             android:layout_height="wrap_content">
 
             <androidx.cardview.widget.CardView

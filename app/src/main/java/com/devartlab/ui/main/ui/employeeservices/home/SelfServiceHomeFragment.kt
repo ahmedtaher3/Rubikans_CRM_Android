@@ -338,6 +338,15 @@ class SelfServiceHomeFragment : BaseFragment<FragmentSelfServiceHomeBinding>(),
         for (m in viewModel.dataManager.ads.ads!!) {
             if (m.pageCode?.toInt() == Constants.SELF_SERVICES_PAGE) {
                 model = m
+                binding.constrAds.setVisibility(View.VISIBLE)
+                if (model.resourceLink.equals(null)
+                    && model.paragraph.equals(null)
+                    && model.slideImages == null) {
+                    binding.constrAds.setVisibility(View.VISIBLE)
+                    binding.imageView.visibility = View.VISIBLE
+                    Glide.with(this).load(model.default_ad_image)
+                        .centerCrop().placeholder(R.drawable.dr_hussain).into(binding.imageView)
+                }
                 break
             }
         }

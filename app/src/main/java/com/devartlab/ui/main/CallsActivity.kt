@@ -322,23 +322,19 @@ class CallsActivity : BaseActivity<ActivityCallsBinding?>(), MainAdapter.OpenMas
         for (m in mainViewModel!!.dataManager.ads.ads!!) {
             if (m.pageCode?.toInt() == Constants.ROLE_PLAY) {
                 model = m
+                activityCallsBinding.constrAds!!.setVisibility(View.VISIBLE)
+                if (model.resourceLink.equals(null)
+                    && model.paragraph.equals(null)
+                    && model.slideImages == null) {
+                    activityCallsBinding.constrAds!!.setVisibility(View.VISIBLE)
+                    activityCallsBinding.imageView!!.visibility = View.VISIBLE
+                    Glide.with(this).load(model.default_ad_image)
+                        .centerCrop().placeholder(R.drawable.dr_hussain).into(activityCallsBinding.imageView!!)
+                }
                 break
             }
         }
-        if (model.resourceLink.equals(null)
-            && model.default_ad_image.equals(null)
-            && model.paragraph.equals(null)
-            && model.slideImages == null
-        ) {
-            activityCallsBinding.constrAds!!.setVisibility(View.GONE)
-        } else if (model.resourceLink.equals(null) && model.paragraph.equals(null)
-            && model.slideImages == null
-        ) {
-            activityCallsBinding.imageView!!.visibility = View.VISIBLE
-            Glide.with(this).load(model.default_ad_image)
-                .centerCrop().placeholder(R.drawable.dr_hussain)
-                .into(activityCallsBinding.imageView!!)
-        }
+
         if (!model.webPageLink.equals("")) {
             activityCallsBinding.cardviewAds!!.setOnClickListener {
                 openWebPage(model.webPageLink)

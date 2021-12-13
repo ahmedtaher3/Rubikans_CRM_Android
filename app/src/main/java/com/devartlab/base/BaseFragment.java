@@ -97,5 +97,7 @@ public abstract class BaseFragment<T extends ViewDataBinding> extends Fragment {
         Uri uri = Uri.parse(url);
         Intent intent = new Intent(Intent.ACTION_VIEW, uri);
         startActivity(intent);
+//        Bundle bundle = new Bundle();
+//        bundle.putString(Intent.ACTION_VIEW, uri);
     }
 }
