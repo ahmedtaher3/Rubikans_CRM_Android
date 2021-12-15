@@ -1237,7 +1237,7 @@ class PlanFragment : BaseFragment<FragmentPlanBinding?>(), ActivitiesAdapter.Cho
         startActivity(intent)
     }
 
-    fun ads() {
+  /*  fun ads() {
         var model = AdModel()
         for (m in viewModel.dataManager.ads.ads!!) {
             if (m.pageCode?.toInt() == Constants.PLAN_RECYCLER) {
@@ -1324,5 +1324,5 @@ class PlanFragment : BaseFragment<FragmentPlanBinding?>(), ActivitiesAdapter.Cho
                 getActivity()?.startActivity(intent)
             }
         }
-    }
+    }*/
 }

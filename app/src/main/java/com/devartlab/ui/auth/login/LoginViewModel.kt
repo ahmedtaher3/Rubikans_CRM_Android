@@ -91,47 +91,36 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
                     dataManager.saveAds(ads)
 
 
-                    val database = FirebaseDatabase.getInstance()
-                    var reference: DatabaseReference = database.getReference().child("Tokens")
-                    FirebaseMessaging.getInstance().token.addOnCompleteListener {
-                        if (it.isComplete) {
-                            val token = it.result.toString()
-                            Log.d(" FirebaseMessaging ", token)
+                    myAPI?.login(userEmail, userPass)!!
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(object : Observer<ResponseModel> {
+                            override fun onSubscribe(d: Disposable) {}
+                            override fun onNext(data: ResponseModel) {
+
+                                progress.postValue(0)
+                                responseLive.postValue(data)
+
+                                if (data.isSuccesed) {
 
 
-                            myAPI?.login(userEmail, userPass)!!
-                                .subscribeOn(Schedulers.io())
-                                .observeOn(AndroidSchedulers.mainThread())
-                                .subscribe(object : Observer<ResponseModel> {
-                                    override fun onSubscribe(d: Disposable) {}
-                                    override fun onNext(data: ResponseModel) {
+                                    dataManager.saveToken("token")
+                                }
 
-                                        progress.postValue(0)
-                                        responseLive.postValue(data)
+                            }
 
-                                        if (data.isSuccesed) {
-                                            reference.child(data.data.loginData[0].userEmpId.toString())
-                                                .setValue(token)
+                            override fun onError(e: Throwable) {
 
-                                            dataManager.saveToken(token)
-                                        }
+                                Toast.makeText(getApplication(), e.message, Toast.LENGTH_SHORT).show()
+                                progress.postValue(10)
 
-                                    }
+                            }
 
-                                    override fun onError(e: Throwable) {
-
-                                        Toast.makeText(getApplication(), e.message, Toast.LENGTH_SHORT).show()
-                                        progress.postValue(10)
-
-                                    }
-
-                                    override fun onComplete() {
+                            override fun onComplete() {
 
 
-                                    }
-                                })
-                        }
-                    }
+                            }
+                        })
 
                 }
 

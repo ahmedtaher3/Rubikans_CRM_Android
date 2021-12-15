@@ -671,8 +671,8 @@ interface ApiServices {
 
     companion object {
 
-        const val BaseURL = "http://prelive.devartlabcrm.com/api/V1/"// alaa dev
-        const val ImageBaseURL = "http://prelive.devartlabcrm.com/"
+        const val BaseURL = "https://devartlabcrm.com/api/V1/"// alaa dev
+        const val ImageBaseURL = "https://devartlabcrm.com/"
 
 //        const val BaseURL = "https://devartlabcrm.com/api/V1/"// alaa live
 //        const val ImageBaseURL = "https://devartlabcrm.com/"

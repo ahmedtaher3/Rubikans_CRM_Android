@@ -4,9 +4,15 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/DevartLabCRM/app/src/main/res/drawable/ic_message_outline.xml" value="0.19444444444444445" />
+        <entry key="..\:/DevartLabCRM/app/src/main/res/layout/activity_add_plan_single.xml" value="0.14351851851851852" />
+        <entry key="..\:/DevartLabCRM/app/src/main/res/layout/activity_calls.xml" value="0.17407407407407408" />
         <entry key="..\:/DevartLabCRM/app/src/main/res/layout/activity_devart_link.xml" value="0.20742753623188406" />
+        <entry key="..\:/DevartLabCRM/app/src/main/res/layout/activity_login.xml" value="0.14907407407407408" />
         <entry key="..\:/DevartLabCRM/app/src/main/res/layout/activity_main.xml" value="0.1793478260869565" />
         <entry key="..\:/DevartLabCRM/app/src/main/res/layout/call_managment_home_item.xml" value="0.20742753623188406" />
+        <entry key="..\:/DevartLabCRM/app/src/main/res/layout/fragment_plan.xml" value="0.24270833333333333" />
+        <entry key="..\:/DevartLabCRM/app/src/main/res/layout/fragment_report.xml" value="0.14907407407407408" />
+        <entry key="..\:/DevartLabCRM/app/src/main/res/layout/fragment_super_report.xml" value="0.24270833333333333" />
         <entry key="..\:/DevartLabCRM/app/src/main/res/layout/nav_header_main.xml" value="0.20833333333333334" />
         <entry key="..\:/work/DevartLab/DevartLabCRM/app/src/main/res/layout/activity_calls.xml" value="0.2421875" />
         <entry key="..\:/work/DevartLab/DevartLabCRM/app/src/main/res/layout/activity_choose_employee.xml" value="0.2421875" />

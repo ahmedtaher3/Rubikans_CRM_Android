@@ -331,6 +331,9 @@ object PlanUtlis {
                 if (model.terriotryEmpId == null)
                     model.terriotryEmpId = 0
 
+                if (model.branchPlaceId == null)
+                    model.branchPlaceId = 0
+
                 System.out.println(" Start At " + model.startAt)
 
                 val model =  PlanJson(

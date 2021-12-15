@@ -20,6 +20,8 @@ import com.devartlab.model.PenaltiesGoogle
 import com.devartlab.model.WorkFromHomeModel
 import com.devartlab.utils.CommonUtilities
 import com.devartlab.utils.ProgressLoading
+import io.reactivex.Completable
+import io.reactivex.schedulers.Schedulers
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -75,10 +77,6 @@ class ApprovalRequestsFragment : BaseFragment<FragmentApprovalRequestsBinding>()
         binding = viewDataBinding
 
 
-        binding.approveRequestsSwipeRefreshLayout.setOnRefreshListener(SwipeRefreshLayout.OnRefreshListener {
-            ProgressLoading.show(baseActivity)
-            viewModel.getAll("allPending", "")
-        })
 
 
         binding.closeRequests.setOnClickListener {
@@ -163,8 +161,6 @@ class ApprovalRequestsFragment : BaseFragment<FragmentApprovalRequestsBinding>()
                     } catch (e: Exception) {
                     }
 
-                    if (binding.approveRequestsSwipeRefreshLayout.isRefreshing)
-                        binding.approveRequestsSwipeRefreshLayout.isRefreshing = false
                 }
                 1 -> {
 

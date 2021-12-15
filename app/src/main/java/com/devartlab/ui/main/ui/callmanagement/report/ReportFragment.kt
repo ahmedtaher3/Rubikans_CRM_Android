@@ -1532,7 +1532,7 @@ class ReportFragment : BaseFragment<FragmentReportBinding>(), InvoiceTypsAdapter
         super.onDestroy()
     }
 
-    fun ads() {
+/*    fun ads() {
         var model = AdModel()
         for (m in viewModel.dataManager.ads.ads!!) {
             if (m.pageCode?.toInt() == Constants.REPORT_RECYCLER) {
@@ -1619,7 +1619,7 @@ class ReportFragment : BaseFragment<FragmentReportBinding>(), InvoiceTypsAdapter
                 getActivity()?.startActivity(intent)
             }
         }
-    }
+    }*/
 
 }
 

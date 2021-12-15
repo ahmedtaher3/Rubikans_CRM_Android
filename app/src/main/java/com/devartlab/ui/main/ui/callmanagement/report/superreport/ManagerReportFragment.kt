@@ -1501,7 +1501,7 @@ class ManagerReportFragment : BaseFragment<FragmentSuperReportBinding>(), Report
         }
     }
 
-    fun ads() {
+    /*fun ads() {
         var model = AdModel()
         for (m in viewModel.dataManager.ads.ads!!) {
             if (m.pageCode?.toInt() == Constants.MANAGER_REPORT) {
@@ -1588,6 +1588,6 @@ class ManagerReportFragment : BaseFragment<FragmentSuperReportBinding>(), Report
                 getActivity()?.startActivity(intent)
             }
         }
-    }
+    }*/
 
 }

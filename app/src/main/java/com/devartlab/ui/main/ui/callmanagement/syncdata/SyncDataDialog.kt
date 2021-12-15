@@ -260,7 +260,7 @@ class SyncDataDialog(
     }
 
     fun syncList() {
-
+/*
         ProgressLoading.show(activity)
         myAPI?.getCustomerListType(dataManager.user.accId)!!
             .subscribeOn(Schedulers.io())
@@ -311,7 +311,7 @@ class SyncDataDialog(
                 override fun onComplete() {
                     getCustomerList()
                 }
-            })
+            })*/
 
     }
 

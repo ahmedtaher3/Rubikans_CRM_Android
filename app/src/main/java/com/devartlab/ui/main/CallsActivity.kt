@@ -41,6 +41,7 @@ import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import ss.com.bannerslider.Slider
+import java.util.*
 import java.util.concurrent.TimeUnit
 import kotlin.collections.ArrayList
 
@@ -161,7 +162,9 @@ class CallsActivity : BaseActivity<ActivityCallsBinding?>(), MainAdapter.OpenMas
             }
 
         })
+
         ads()
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
