@@ -163,7 +163,7 @@ class CallsActivity : BaseActivity<ActivityCallsBinding?>(), MainAdapter.OpenMas
 
         })
 
-        ads()
+  
 
     }
 

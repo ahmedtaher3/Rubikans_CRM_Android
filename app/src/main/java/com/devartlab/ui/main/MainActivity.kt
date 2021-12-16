@@ -609,7 +609,9 @@ class MainActivity : BaseActivity<ActivityMainBinding?>(), View.OnClickListener,
     override fun setOnHomeItemClick(model: CardModel) {
         when (model.id) {
             1 -> {
-
+                val intent = Intent(this@MainActivity, CallManagementActivity::class.java)
+                intent.putExtra("CALL_MANAGEMENT_FLAG", 0)
+                startActivity(intent)
 
                 if (callManagementPermission) {
                     val intent = Intent(this@MainActivity, CallManagementActivity::class.java)

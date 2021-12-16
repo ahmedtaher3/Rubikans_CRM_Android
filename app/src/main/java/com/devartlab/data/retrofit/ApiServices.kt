@@ -651,6 +651,8 @@ interface ApiServices {
     ): Call<ResponseModel>
 
 
+ 
+
     @POST("InventoryTransaction/GetAllInvnetoryTrxByOption")
     fun getInventoryInventory(@Body objects: JsonObject): Call<ResponseModel>
 
@@ -666,15 +668,14 @@ interface ApiServices {
     ): Observable<ResponseModel>
 
 
+
+
     @GET("api/ads")
     fun getAds(): Observable<ResponseModel>
 
     companion object {
 
-        const val BaseURL = "https://devartlabcrm.com/api/V1/"// alaa dev
-        const val ImageBaseURL = "https://devartlabcrm.com/"
-
-//        const val BaseURL = "https://devartlabcrm.com/api/V1/"// alaa live
-//        const val ImageBaseURL = "https://devartlabcrm.com/"
+        const val  BaseURL = "http://devartlabcrm.com/api/V1/"
+        const val ImageBaseURL = "http://devartlabcrm.com/"
     }
 }

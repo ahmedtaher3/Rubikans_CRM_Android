@@ -267,7 +267,15 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ChooseEmployeeInterFac
                 }
             }
             3 -> {
+                if (viewModel.dataManager.isSupervisor) {
 
+                    replace_fragment(ManagerReportFragment(), "ManagerReportFragment")
+
+                }
+                else {
+                    replace_fragment(ReportFragment(), "ReportFragment")
+
+                }
 
                 if (report) {
                     if (viewModel.dataManager.isSupervisor) {
