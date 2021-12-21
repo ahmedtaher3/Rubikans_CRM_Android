@@ -361,7 +361,7 @@ object CommonUtilities {
     fun isGooglePlayServicesAvailable(activity: Activity?): Boolean {
 
         val googleApiAvailability = GoogleApiAvailability.getInstance()
-        val status = googleApiAvailability.isGooglePlayServicesAvailable(activity)
+        val status = googleApiAvailability.isGooglePlayServicesAvailable(activity!!)
         return status == ConnectionResult.SUCCESS
 
     }

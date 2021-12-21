@@ -7,13 +7,13 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.ViewModelProviders
+import com.devartlab.GetMyLocation
 import com.devartlab.R
 import com.devartlab.base.BaseActivity
 import com.devartlab.databinding.ActivityReportDailyBinding
 import com.devartlab.ui.main.ui.trade.TradeViewModel
 import com.devartlab.utils.CommonUtilities
 import com.devartlab.utils.LocationUtils
-import com.devartlab.utils.MyLocation
 import com.devartlab.utils.ProgressLoading
 import java.text.SimpleDateFormat
 import java.util.*
@@ -56,42 +56,43 @@ class SubmitFingerprintActivity : BaseActivity<ActivityReportDailyBinding>() {
 
                 dialog.dismiss()
 
-                if (LocationUtils.checkPermission(this)) {
-                    ProgressLoading.showWithText(this, "Fetching your location")
-                    val myLocation = MyLocation(this, false)
-                    myLocation.getLocation(this, object : MyLocation.LocationResult() {
-                        override fun gotLocation(location: Location?, type: String? , msg: String?) {
+                if (LocationUtils.checkPermission(this@SubmitFingerprintActivity)) {
+                    ProgressLoading.showWithText(this@SubmitFingerprintActivity, resources.getString(R.string.fetching_your_location))
+                    val getMyLocation = GetMyLocation(this@SubmitFingerprintActivity)
+                    getMyLocation.getLocation(this@SubmitFingerprintActivity, object : GetMyLocation.LocationResult() {
+                        override fun gotLocation(location: Location?, msg: String?) {
 
-                            ProgressLoading.dismiss()
-                            if (location != null) {
-
-
-                                val distance = location.distanceTo(companyLocation).toInt()
+                                ProgressLoading.dismiss()
+                                if (location != null) {
 
 
-                                viewModel.startDay(
-                                    DATE,
-                                    location.latitude.toString(),
-                                    location.longitude.toString(),
-                                    distance.toString()
-                                )
+                                    val distance = location.distanceTo(companyLocation).toInt()
 
 
-                            } else {
+                                    viewModel.startDay(
+                                        DATE,
+                                        location.latitude.toString(),
+                                        location.longitude.toString(),
+                                        distance.toString()
+                                    )
 
-                                runOnUiThread {
-                                    Toast.makeText(
-                                        this@SubmitFingerprintActivity,
-                                        "Field to get Location , please try again",
-                                        Toast.LENGTH_LONG
-                                    ).show()
+
+                                }
+                                else {
+
+                               runOnUiThread {
+                                        Toast.makeText(this@SubmitFingerprintActivity, getString(R.string.error_location_try_again), Toast.LENGTH_LONG).show()
+                                    }
+
+
                                 }
 
-
-                            }
                         }
+
                     })
+
                 }
+
 
             }
             builder.setNegativeButton("NO") { dialog, which ->
@@ -114,15 +115,14 @@ class SubmitFingerprintActivity : BaseActivity<ActivityReportDailyBinding>() {
             builder.setPositiveButton("YES") { dialog, which ->
 
                 dialog.dismiss()
-
-                if (LocationUtils.checkPermission(this)) {
-                    ProgressLoading.showWithText(this, "Fetching your location")
-                    val myLocation = MyLocation(this, false)
-                    myLocation.getLocation(this, object : MyLocation.LocationResult() {
-                        override fun gotLocation(location: Location?, type: String? , msg: String?) {
+                if (LocationUtils.checkPermission(this@SubmitFingerprintActivity)) {
+                    ProgressLoading.showWithText(this@SubmitFingerprintActivity, resources.getString(R.string.fetching_your_location))
+                    val getMyLocation = GetMyLocation(this@SubmitFingerprintActivity)
+                    getMyLocation.getLocation(this@SubmitFingerprintActivity, object : GetMyLocation.LocationResult() {
+                        override fun gotLocation(location: Location?, msg: String?) {
 
                             ProgressLoading.dismiss()
-                            if (location != null) {
+                            if (location != null){
 
                                 val distance = location.distanceTo(companyLocation).toInt()
 
@@ -141,21 +141,22 @@ class SubmitFingerprintActivity : BaseActivity<ActivityReportDailyBinding>() {
                                 )
 
 
-                            } else {
+                            }
+                            else {
 
                                 runOnUiThread {
-                                    Toast.makeText(
-                                        this@SubmitFingerprintActivity,
-                                        "Field to get Location , please try again",
-                                        Toast.LENGTH_LONG
-                                    ).show()
+                                    Toast.makeText(this@SubmitFingerprintActivity, getString(R.string.error_location_try_again), Toast.LENGTH_LONG).show()
                                 }
 
 
                             }
+
                         }
+
                     })
+
                 }
+
 
             }
             builder.setNegativeButton("NO") { dialog, which ->

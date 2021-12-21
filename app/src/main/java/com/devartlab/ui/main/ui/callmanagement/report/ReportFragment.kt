@@ -9,9 +9,7 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.location.Location
-import android.os.Build
 import android.os.Bundle
-import android.text.Html
 import android.util.Log
 import android.view.*
 import android.webkit.WebView
@@ -26,6 +24,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.devartlab.GetMyLocation
 import com.devartlab.R
 import com.devartlab.base.BaseFragment
 import com.devartlab.data.room.activity.ActivityEntity
@@ -64,10 +63,8 @@ import java.util.concurrent.TimeUnit
 
 private const val TAG = "ReportFragment"
 
-class ReportFragment : BaseFragment<FragmentReportBinding>(), InvoiceTypsAdapter.ChooseInvoiceType,
-    ReportInterface,
-    AdapterView.OnItemSelectedListener, View.OnClickListener,
-    ActivitiesAdapter.ChooseActivity, ChooseStartPointInterFace, ChooseEmployeeInterFace {
+class ReportFragment : BaseFragment<FragmentReportBinding>(), InvoiceTypsAdapter.ChooseInvoiceType, ReportInterface,
+    AdapterView.OnItemSelectedListener, View.OnClickListener, ActivitiesAdapter.ChooseActivity, ChooseStartPointInterFace, ChooseEmployeeInterFace {
 
     lateinit var binding: FragmentReportBinding
     lateinit var viewModel: ReportViewModel
@@ -120,8 +117,7 @@ class ReportFragment : BaseFragment<FragmentReportBinding>(), InvoiceTypsAdapter
         setRecyclerView()
         setHorizontalCalendar()
         setListeners()
-        setObservers()
-        //ads()
+        setObservers() //ads()
     }
 
     private fun setObservers() {
@@ -151,8 +147,7 @@ class ReportFragment : BaseFragment<FragmentReportBinding>(), InvoiceTypsAdapter
                 if (modelWithStartPoint != null) {
                     if (modelWithStartPoint?.startPoint != "null") {
                         binding.startPoint.text = modelWithStartPoint?.startPoint
-                        startTime =
-                            CommonUtilities.getTextAfterSlash(modelWithStartPoint?.startPoint!!)
+                        startTime = CommonUtilities.getTextAfterSlash(modelWithStartPoint?.startPoint!!)
 
                     }
                 }
@@ -165,17 +160,16 @@ class ReportFragment : BaseFragment<FragmentReportBinding>(), InvoiceTypsAdapter
                         spinner?.isEnabled = true
                     }
 
-                } else {
+                }
+                else {
 
 
                     if (viewModel.dataManager.startShift) {
                         setButtonStarted()
                         if (spinner != null) {
 
-                            if (viewModel.dataManager.shift.id == 8)
-                                spinner?.setSelection(0)
-                            else
-                                spinner?.setSelection(1)
+                            if (viewModel.dataManager.shift.id == 8) spinner?.setSelection(0)
+                            else spinner?.setSelection(1)
 
                             spinner?.isEnabled = false
 
@@ -193,7 +187,8 @@ class ReportFragment : BaseFragment<FragmentReportBinding>(), InvoiceTypsAdapter
 
                         horizontalCalendar?.setRange(startDate, endDate)
                         horizontalCalendar?.refresh()
-                    } else {
+                    }
+                    else {
                         setButtonReady()
 
                     }
@@ -201,7 +196,8 @@ class ReportFragment : BaseFragment<FragmentReportBinding>(), InvoiceTypsAdapter
 
                 }
 
-            } else {
+            }
+            else {
 
 
                 binding.startPoint.setText("")
@@ -212,10 +208,8 @@ class ReportFragment : BaseFragment<FragmentReportBinding>(), InvoiceTypsAdapter
                     setButtonStarted()
                     if (spinner != null) {
 
-                        if (viewModel.dataManager.shift.id == 8)
-                            spinner?.setSelection(0)
-                        else
-                            spinner?.setSelection(1)
+                        if (viewModel.dataManager.shift.id == 8) spinner?.setSelection(0)
+                        else spinner?.setSelection(1)
 
                         spinner?.isEnabled = false
 
@@ -229,7 +223,8 @@ class ReportFragment : BaseFragment<FragmentReportBinding>(), InvoiceTypsAdapter
 
                     System.out.println(DATE_IN_MILLIS!!.toLong())
 
-                } else {
+                }
+                else {
 
                     setButtonReady()
                 }
@@ -245,44 +240,25 @@ class ReportFragment : BaseFragment<FragmentReportBinding>(), InvoiceTypsAdapter
 
 
                 val componentName = ComponentName(baseActivity, ExampleJobService::class.java)
-                val info: JobInfo = JobInfo.Builder(123, componentName)
-                    .setPersisted(true)
-                    .setPeriodic(30 * 60 * 1000)
-                    .build()
-                val scheduler: JobScheduler =
-                    baseActivity.getSystemService(Context.JOB_SCHEDULER_SERVICE) as JobScheduler
+                val info: JobInfo = JobInfo.Builder(123, componentName).setPersisted(true).setPeriodic(30 * 60 * 1000).build()
+                val scheduler: JobScheduler = baseActivity.getSystemService(Context.JOB_SCHEDULER_SERVICE) as JobScheduler
                 val resultCode: Int = scheduler.schedule(info)
                 if (resultCode == JobScheduler.RESULT_SUCCESS) {
 
-                } else {
+                }
+                else {
                 }
 
                 viewModel.dataManager.saveStartShift(true, 3)
-                viewModel.dataManager.saveShift(
-                    Shift(
-                        shiftID.toInt(),
-                        shift,
-                        DATE_IN_MILLIS?.toLong().toString(),
-                        DATE,
-                        false
-                    )
-                )
+                viewModel.dataManager.saveShift(Shift(shiftID.toInt(), shift, DATE_IN_MILLIS?.toLong().toString(), DATE, false))
 
-                val valuesEntity = ValuesEntity(
-                    1,
-                    true,
-                    false,
-                    "",
-                    DATE_IN_MILLIS?.toLong(),
-                    shift,
-                    shiftID.toInt(),
-                    DATE
-                )
+                val valuesEntity = ValuesEntity(1, true, false, "", DATE_IN_MILLIS?.toLong(), shift, shiftID.toInt(), DATE)
                 viewModel.valuesRepository?.insert(valuesEntity)
 
                 viewModel.getAllByDateAndShift(DATE, shift, "1");
 
-            } else {
+            }
+            else {
                 Toast.makeText(baseActivity, it.rerurnMessage, Toast.LENGTH_SHORT).show()
 
 
@@ -290,7 +266,8 @@ class ReportFragment : BaseFragment<FragmentReportBinding>(), InvoiceTypsAdapter
                     if (it.data.startPointData.size == 2) {
 
 
-                    } else if (it.data.startPointData.size == 1) {
+                    }
+                    else if (it.data.startPointData.size == 1) {
 
                         var shiftName = ""
                         when (it.data.startPointData[0].shiftId) {
@@ -302,38 +279,27 @@ class ReportFragment : BaseFragment<FragmentReportBinding>(), InvoiceTypsAdapter
                             }
                         }
 
-                        DATE_IN_MILLIS = CommonUtilities.convertDateToMillis(
-                            it.data.startPointData[0].salesRptDate.take(10)
-                        ).toString()
+                        DATE_IN_MILLIS = CommonUtilities.convertDateToMillis(it.data.startPointData[0].salesRptDate.take(10)).toString()
                         DATE = it.data.startPointData[0].salesRptDate.take(10)
                         shift = shiftName
 
 
                         viewModel.dataManager.saveStartShift(true, 4)
-                        viewModel.dataManager.saveShift(
-                            Shift(
-                                it.data.startPointData[0].shiftId,
-                                shiftName,
-                                CommonUtilities.convertDateToMillis(
-                                    it.data.startPointData[0].salesRptDate.take(10)
-                                ).toString(),
-                                it.data.startPointData[0].salesRptDate.take(10),
-                                false
-                            )
-                        )
+                        viewModel.dataManager.saveShift(Shift(it.data.startPointData[0].shiftId,
+                                                              shiftName,
+                                                              CommonUtilities.convertDateToMillis(it.data.startPointData[0].salesRptDate.take(10))
+                                                                  .toString(),
+                                                              it.data.startPointData[0].salesRptDate.take(10),
+                                                              false))
 
-                        val valuesEntity = ValuesEntity(
-                            1,
-                            true,
-                            false,
-                            "",
-                            CommonUtilities.convertDateToMillis(
-                                it.data.startPointData[0].salesRptDate.take(10)
-                            ),
-                            shiftName,
-                            it.data.startPointData[0].shiftId,
-                            it.data.startPointData[0].salesRptDate.take(10)
-                        )
+                        val valuesEntity = ValuesEntity(1,
+                                                        true,
+                                                        false,
+                                                        "",
+                                                        CommonUtilities.convertDateToMillis(it.data.startPointData[0].salesRptDate.take(10)),
+                                                        shiftName,
+                                                        it.data.startPointData[0].shiftId,
+                                                        it.data.startPointData[0].salesRptDate.take(10))
                         viewModel.valuesRepository?.insert(valuesEntity)
 
                         viewModel.getAllByDateAndShift(DATE, shift, "1");
@@ -355,16 +321,7 @@ class ReportFragment : BaseFragment<FragmentReportBinding>(), InvoiceTypsAdapter
 
 
                 viewModel.dataManager.saveStartShift(false, 5)
-                val valuesEntity = ValuesEntity(
-                    1,
-                    false,
-                    true,
-                    "",
-                    DATE_IN_MILLIS?.toLong(),
-                    shift,
-                    shiftID.toInt(),
-                    DATE
-                )
+                val valuesEntity = ValuesEntity(1, false, true, "", DATE_IN_MILLIS?.toLong(), shift, shiftID.toInt(), DATE)
 
                 System.out.println(valuesEntity.toString())
                 viewModel.valuesRepository?.insert(valuesEntity)
@@ -372,7 +329,8 @@ class ReportFragment : BaseFragment<FragmentReportBinding>(), InvoiceTypsAdapter
                 viewModel.getAllByDateAndShift(DATE, shift, "1");
 
                 CommonUtilities.writeToSDFile("")
-            } else {
+            }
+            else {
                 Toast.makeText(baseActivity, it.rerurnMessage, Toast.LENGTH_SHORT).show()
                 if (it.data != null) {
                     if (it.data.startPointData != null) {
@@ -388,9 +346,7 @@ class ReportFragment : BaseFragment<FragmentReportBinding>(), InvoiceTypsAdapter
                                 }
                             }
 
-                            DATE_IN_MILLIS = CommonUtilities.convertDateToMillis(
-                                it.data.startPointData[0].salesRptDate.take(10)
-                            ).toString()
+                            DATE_IN_MILLIS = CommonUtilities.convertDateToMillis(it.data.startPointData[0].salesRptDate.take(10)).toString()
                             DATE = it.data.startPointData[0].salesRptDate.take(10)
                             shift = shiftName
 
@@ -418,12 +374,13 @@ class ReportFragment : BaseFragment<FragmentReportBinding>(), InvoiceTypsAdapter
                 0 -> {
 
 
-                    Observable.just(true).delay(1000, TimeUnit.MILLISECONDS)
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe({
-                            ProgressLoading.dismiss()
-                            viewModel.getAllByDateAndShift(DATE, shift, "4")
-                        }, {});
+                    Observable.just(true).delay(1000, TimeUnit.MILLISECONDS).observeOn(AndroidSchedulers.mainThread()).subscribe({
+                                                                                                                                     ProgressLoading.dismiss()
+                                                                                                                                     viewModel.getAllByDateAndShift(
+                                                                                                                                         DATE,
+                                                                                                                                         shift,
+                                                                                                                                         "4")
+                                                                                                                                 }, {});
 
 
                 }
@@ -434,7 +391,8 @@ class ReportFragment : BaseFragment<FragmentReportBinding>(), InvoiceTypsAdapter
 
             try {
                 Toast.makeText(baseActivity, it, Toast.LENGTH_SHORT).show()
-            } catch (e: java.lang.Exception) {
+            }
+            catch (e: java.lang.Exception) {
             }
 
 
@@ -456,57 +414,48 @@ class ReportFragment : BaseFragment<FragmentReportBinding>(), InvoiceTypsAdapter
                     builder.setPositiveButton(getString(R.string.yes)) { dialog, which ->
 
                         dialog.dismiss()
+
+
+
                         if (LocationUtils.checkPermission(baseActivity)) {
-                            ProgressLoading.showWithText(
-                                baseActivity,
-                                getString(R.string.fetching_your_location)
-                            )
-                            val myLocation = MyLocation(baseActivity, true)
-                            myLocation.getLocation(
-                                baseActivity,
-                                object : MyLocation.LocationResult() {
-                                    override fun gotLocation(
-                                        location: Location?,
-                                        type: String?,
-                                        msg: String?
-                                    ) {
+                            ProgressLoading.showWithText(baseActivity, resources.getString(R.string.fetching_your_location))
+                            val getMyLocation = GetMyLocation(baseActivity)
+                            getMyLocation.getLocation(baseActivity, object : GetMyLocation.LocationResult() {
+                                override fun gotLocation(location: Location?, msg: String?) {
+                                    ProgressLoading.dismiss()
+                                    if (location != null) {
 
                                         ProgressLoading.dismiss()
                                         if (location != null) {
 
                                             if (CommonUtilities.isFake(baseActivity, location)) {
-                                                viewModel.uploadReport(
-                                                    DATE,
-                                                    shift,
-                                                    1.toDouble(),
-                                                    1.toDouble(),
-                                                    shiftID.toInt()
-                                                )
+                                                viewModel.uploadReport(DATE, shift, 1.toDouble(), 1.toDouble(), shiftID.toInt())
 
-                                            } else {
-                                                viewModel.uploadReport(
-                                                    DATE,
-                                                    shift,
-                                                    location?.latitude!!,
-                                                    location?.longitude!!,
-                                                    shiftID.toInt()
-                                                )
+                                            }
+                                            else {
+                                                viewModel.uploadReport(DATE, shift, location?.latitude!!, location?.longitude!!, shiftID.toInt())
                                             }
 
-                                        } else {
+                                        }
+                                        else {
 
                                             baseActivity.runOnUiThread {
-                                                Toast.makeText(
-                                                    baseActivity,
-                                                    getString(R.string.error_location_try_again),
-                                                    Toast.LENGTH_LONG
-                                                ).show()
+                                                Toast.makeText(baseActivity, getString(R.string.error_location_try_again), Toast.LENGTH_LONG).show()
                                             }
 
 
                                         }
                                     }
-                                })
+                                    else {
+                                        baseActivity.runOnUiThread {
+                                            Toast.makeText(baseActivity, resources.getString(R.string.error_location_try_again), Toast.LENGTH_SHORT)
+                                                .show()
+                                        }
+                                    }
+                                }
+
+                            })
+
                         }
 
 
@@ -518,7 +467,8 @@ class ReportFragment : BaseFragment<FragmentReportBinding>(), InvoiceTypsAdapter
                     val alert = builder.create()
                     alert.show()
 
-                } else {
+                }
+                else {
 
 
                     val builder = AlertDialog.Builder(baseActivity)
@@ -528,84 +478,64 @@ class ReportFragment : BaseFragment<FragmentReportBinding>(), InvoiceTypsAdapter
 
                         dialog.dismiss()
 
+
+
                         if (LocationUtils.checkPermission(baseActivity)) {
-                            ProgressLoading.showWithText(
-                                baseActivity,
-                                getString(R.string.fetching_location)
-                            )
-                            val myLocation = MyLocation(baseActivity, true)
-                            myLocation.getLocation(
-                                baseActivity,
-                                object : MyLocation.LocationResult() {
-                                    override fun gotLocation(
-                                        location: Location?,
-                                        type: String?,
-                                        msg: String?
-                                    ) {
-
-                                        ProgressLoading.dismiss()
-                                        if (location != null) {
+                            ProgressLoading.showWithText(baseActivity, resources.getString(R.string.fetching_your_location))
+                            val getMyLocation = GetMyLocation(baseActivity)
+                            getMyLocation.getLocation(baseActivity, object : GetMyLocation.LocationResult() {
+                                override fun gotLocation(location: Location?, msg: String?) {
+                                    ProgressLoading.dismiss()
+                                    if (location != null) {
 
 
-                                            if (fullList.isNullOrEmpty()) {
+                                        if (fullList.isNullOrEmpty()) {
 
 
-                                                Toast.makeText(
-                                                    baseActivity,
-                                                    "Cant Start empty shift , please sync plan or add extra",
-                                                    Toast.LENGTH_LONG
-                                                ).show()
-
-                                            } else {
-                                                if (CommonUtilities.isFake(
-                                                        baseActivity,
-                                                        location
-                                                    )
-                                                ) {
-
-                                                    viewModel.confirmStartPoint(
-                                                        CommonUtilities.convertDateToMillis(DATE)
-                                                            .toString(),
-                                                        shiftID,
-                                                        CommonUtilities.currentToMillis.toString(),
-                                                        model?.startPointId.toString(),
-                                                        "0",
-                                                        "1",
-                                                        "1",
-                                                        true,
-                                                        startTime
-                                                    )
-                                                } else {
-                                                    viewModel.confirmStartPoint(
-                                                        CommonUtilities.convertDateToMillis(DATE)
-                                                            .toString(),
-                                                        shiftID,
-                                                        CommonUtilities.currentToMillis.toString(),
-                                                        model?.startPointId.toString(),
-                                                        "0",
-                                                        location?.latitude.toString(),
-                                                        location?.longitude.toString(),
-                                                        true,
-                                                        startTime
-                                                    )
-                                                }
-                                            }
-
-
-                                        } else {
-                                            baseActivity.runOnUiThread {
-                                                Toast.makeText(
-                                                    baseActivity,
-                                                    getString(R.string.error_location_try_again),
-                                                    Toast.LENGTH_LONG
-                                                ).show()
-                                            }
+                                            Toast.makeText(baseActivity, "Cant Start empty shift , please sync plan or add extra", Toast.LENGTH_LONG)
+                                                .show()
 
                                         }
+                                        else {
+                                            if (CommonUtilities.isFake(baseActivity, location)) {
+
+                                                viewModel.confirmStartPoint(CommonUtilities.convertDateToMillis(DATE).toString(),
+                                                                            shiftID,
+                                                                            CommonUtilities.currentToMillis.toString(),
+                                                                            model?.startPointId.toString(),
+                                                                            "0",
+                                                                            "1",
+                                                                            "1",
+                                                                            true,
+                                                                            startTime)
+                                            }
+                                            else {
+                                                viewModel.confirmStartPoint(CommonUtilities.convertDateToMillis(DATE).toString(),
+                                                                            shiftID,
+                                                                            CommonUtilities.currentToMillis.toString(),
+                                                                            model?.startPointId.toString(),
+                                                                            "0",
+                                                                            location?.latitude.toString(),
+                                                                            location?.longitude.toString(),
+                                                                            true,
+                                                                            startTime)
+                                            }
+                                        }
+
+
                                     }
-                                })
+                                    else {
+                                        baseActivity.runOnUiThread {
+                                            Toast.makeText(baseActivity, resources.getString(R.string.error_location_try_again), Toast.LENGTH_SHORT)
+                                                .show()
+                                        }
+                                    }
+                                }
+
+                            })
 
                         }
+
 
                     }
                     builder.setNegativeButton(getString(R.string.no)) { dialog, which ->
@@ -622,24 +552,15 @@ class ReportFragment : BaseFragment<FragmentReportBinding>(), InvoiceTypsAdapter
 
 
                 if (model != null) {
-                    val startpoint =
-                        StartPoint(model?.startPointId!!, model?.startAt, model?.startPoint)
+                    val startpoint = StartPoint(model?.startPointId!!, model?.startAt, model?.startPoint)
                     viewModel.dataManager.saveStartPoint(startpoint)
 
-                    val cycle = Cycle(
-                        model?.planId,
-                        model?.planCycleId,
-                        model?.fromDate,
-                        model?.toDate,
-                        model?.planAccountId,
-                        model?.cycleArName,
-                        true,
-                        0,
-                        0
-                    )
+                    val cycle =
+                        Cycle(model?.planId, model?.planCycleId, model?.fromDate, model?.toDate, model?.planAccountId, model?.cycleArName, true, 0, 0)
                     viewModel.dataManager.saveCycle(cycle)
 
-                } else {
+                }
+                else {
 
                     val startpoint = StartPoint(0, "", "")
                     viewModel.dataManager.saveStartPoint(startpoint)
@@ -650,7 +571,8 @@ class ReportFragment : BaseFragment<FragmentReportBinding>(), InvoiceTypsAdapter
                 }
                 if (shift.equals("All Day")) {
                     Toast.makeText(baseActivity, "Choose Shift First", Toast.LENGTH_SHORT).show()
-                } else {
+                }
+                else {
                     chooseActivity()
                 }
 
@@ -677,10 +599,8 @@ class ReportFragment : BaseFragment<FragmentReportBinding>(), InvoiceTypsAdapter
             DATE_IN_MILLIS = viewModel.dataManager.shift.startedAt
             if (spinner != null) {
 
-                if (viewModel.dataManager.shift.id == 8)
-                    spinner?.setSelection(0)
-                else
-                    spinner?.setSelection(1)
+                if (viewModel.dataManager.shift.id == 8) spinner?.setSelection(0)
+                else spinner?.setSelection(1)
 
                 spinner?.isEnabled = false
 
@@ -691,15 +611,13 @@ class ReportFragment : BaseFragment<FragmentReportBinding>(), InvoiceTypsAdapter
             startDate?.timeInMillis = DATE_IN_MILLIS!!.toLong()
             endDate?.timeInMillis = DATE_IN_MILLIS!!.toLong()
 
-            horizontalCalendar = HorizontalCalendar.Builder(binding.root, R.id.calendarView)
-                .range(startDate, endDate)
-                .datesNumberOnScreen(5)
-                .build();
+            horizontalCalendar = HorizontalCalendar.Builder(binding.root, R.id.calendarView).range(startDate, endDate).datesNumberOnScreen(5).build();
 
             viewModel.getAllByDateAndShift(DATE, shift, "2")
 
             setButtonStarted()
-        } else {
+        }
+        else {
             setButtonReady()
             DATE = fmt?.format(CommonUtilities.currentToMillis)
             DATE_IN_MILLIS = CommonUtilities.currentToMillis.toString()
@@ -711,19 +629,16 @@ class ReportFragment : BaseFragment<FragmentReportBinding>(), InvoiceTypsAdapter
                 startDate?.timeInMillis = viewModel.dataManager.user?.minDate?.toLong()!!
                 endDate?.timeInMillis = viewModel.dataManager.user?.maxDate?.toLong()!!
 
-                horizontalCalendar = HorizontalCalendar.Builder(binding.root, R.id.calendarView)
-                    .range(startDate, endDate)
-                    .datesNumberOnScreen(5)
-                    .build();
-            } else {
+                horizontalCalendar =
+                    HorizontalCalendar.Builder(binding.root, R.id.calendarView).range(startDate, endDate).datesNumberOnScreen(5).build();
+            }
+            else {
 
                 startDate?.timeInMillis = viewModel.dataManager.cycle?.fromDateMs?.toLong()!!
                 endDate?.timeInMillis = viewModel.dataManager.user?.maxDate?.toLong()!!
 
-                horizontalCalendar = HorizontalCalendar.Builder(binding.root, R.id.calendarView)
-                    .range(startDate, endDate)
-                    .datesNumberOnScreen(5)
-                    .build();
+                horizontalCalendar =
+                    HorizontalCalendar.Builder(binding.root, R.id.calendarView).range(startDate, endDate).datesNumberOnScreen(5).build();
 
 
             }
@@ -789,8 +704,7 @@ class ReportFragment : BaseFragment<FragmentReportBinding>(), InvoiceTypsAdapter
             viewModel.delete(planEntity, DATE, shift)
             dialog.dismiss()
         }
-        builder.setNegativeButton(getString(R.string.no)) { dialog, which ->
-            // Do nothing
+        builder.setNegativeButton(getString(R.string.no)) { dialog, which -> // Do nothing
             dialog.dismiss()
         }
         val alert = builder.create()
@@ -805,8 +719,7 @@ class ReportFragment : BaseFragment<FragmentReportBinding>(), InvoiceTypsAdapter
         if (!planEntity?.visit!!) {
 
 
-            val dialogBuilder = android.app.AlertDialog.Builder(baseActivity)
-            // ...Irrelevant code for customizing the buttons and title
+            val dialogBuilder = android.app.AlertDialog.Builder(baseActivity) // ...Irrelevant code for customizing the buttons and title
             val inflater = this.layoutInflater
             val dialogView = inflater.inflate(R.layout.finish_visit, null)
             dialogBuilder.setView(dialogView)
@@ -867,8 +780,7 @@ class ReportFragment : BaseFragment<FragmentReportBinding>(), InvoiceTypsAdapter
         alertDialog?.getWindow()?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         alertDialog?.show()
 
-        var activitiesRecyclerView: RecyclerView =
-            choose_activity_type.findViewById(R.id.activitiesRecyclerView)
+        var activitiesRecyclerView: RecyclerView = choose_activity_type.findViewById(R.id.activitiesRecyclerView)
         var close: ImageView = choose_activity_type.findViewById(R.id.close)
 
         var adapter = InvoiceTypsAdapter(baseActivity, this)
@@ -890,13 +802,10 @@ class ReportFragment : BaseFragment<FragmentReportBinding>(), InvoiceTypsAdapter
             if (m.pageCode?.toInt() == Constants.CREATE_PLAN) {
                 model = m
                 constrAds.setVisibility(View.VISIBLE)
-                if (model.resourceLink.equals(null)
-                    && model.paragraph.equals(null)
-                    && model.slideImages == null) {
+                if (model.resourceLink.equals(null) && model.paragraph.equals(null) && model.slideImages == null) {
                     constrAds.setVisibility(View.VISIBLE)
                     imageView.visibility = View.VISIBLE
-                    Glide.with(this).load(model.default_ad_image)
-                        .centerCrop().placeholder(R.drawable.dr_hussain).into(imageView)
+                    Glide.with(this).load(model.default_ad_image).centerCrop().placeholder(R.drawable.dr_hussain).into(imageView)
                 }
                 break
             }
@@ -916,28 +825,23 @@ class ReportFragment : BaseFragment<FragmentReportBinding>(), InvoiceTypsAdapter
             "Image" -> {
 
                 imageView.visibility = View.VISIBLE
-                Glide.with(this).load(model.resourceLink)
-                    .centerCrop().placeholder(R.drawable.dr_hussain).into(imageView)
+                Glide.with(this).load(model.resourceLink).centerCrop().placeholder(R.drawable.dr_hussain).into(imageView)
             }
             "GIF" -> {
                 imageView.visibility = View.VISIBLE
-                Glide.with(this).asGif().load(model.resourceLink)
-                    .centerCrop().placeholder(R.drawable.dr_hussain).into(imageView);
+                Glide.with(this).asGif().load(model.resourceLink).centerCrop().placeholder(R.drawable.dr_hussain).into(imageView);
             }
             "Paragraph" -> {
-                textView.visibility = View.VISIBLE
-//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-//                    textView.setText(
-//                        Html.fromHtml(
-//                            model.paragraph,
-//                            Html.FROM_HTML_MODE_LEGACY
-//                        )
-//                    );
-//                } else
-//                    textView.setText(Html.fromHtml(model.paragraph))
-                textView.loadDataWithBaseURL(
-                    null, model.paragraph!!, "text/html", "utf-8", null
-                )
+                textView.visibility = View.VISIBLE //                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                //                    textView.setText(
+                //                        Html.fromHtml(
+                //                            model.paragraph,
+                //                            Html.FROM_HTML_MODE_LEGACY
+                //                        )
+                //                    );
+                //                } else
+                //                    textView.setText(Html.fromHtml(model.paragraph))
+                textView.loadDataWithBaseURL(null, model.paragraph!!, "text/html", "utf-8", null)
             }
             "Slider" -> {
                 bannerslider.visibility = View.VISIBLE
@@ -957,7 +861,8 @@ class ReportFragment : BaseFragment<FragmentReportBinding>(), InvoiceTypsAdapter
                 if (constrAds.visibility == View.VISIBLE) {
                     constrAds.setVisibility(View.GONE)
                     btnHideShowAds.setImageResource(R.drawable.ic_show_hide_ads)
-                } else {
+                }
+                else {
                     constrAds.setVisibility(View.VISIBLE)
                     btnHideShowAds.setImageResource(R.drawable.ic_hide_show_ads)
                 }
@@ -997,7 +902,8 @@ class ReportFragment : BaseFragment<FragmentReportBinding>(), InvoiceTypsAdapter
             Log.d("CallsActivity", "startVisit: " + planEntity.toString())
             intent.putExtra("PlanVisitModel", planEntity);
             baseActivity.startActivity(intent);
-        } else {
+        }
+        else {
 
             val builder = AlertDialog.Builder(baseActivity)
             builder.setTitle(getString(R.string.confirm))
@@ -1007,14 +913,10 @@ class ReportFragment : BaseFragment<FragmentReportBinding>(), InvoiceTypsAdapter
                 dialog.dismiss()
 
                 if (LocationUtils.checkPermission(baseActivity)) {
-                    ProgressLoading.showWithText(
-                        baseActivity,
-                        getString(R.string.fetching_location)
-                    )
-                    val myLocation = MyLocation(baseActivity, false)
-                    myLocation.getLocation(baseActivity, object : MyLocation.LocationResult() {
-                        override fun gotLocation(location: Location?, type: String?, msg: String?) {
-
+                    ProgressLoading.showWithText(baseActivity, resources.getString(R.string.fetching_your_location))
+                    val getMyLocation = GetMyLocation(baseActivity)
+                    getMyLocation.getLocation(baseActivity, object : GetMyLocation.LocationResult() {
+                        override fun gotLocation(location: Location?, msg: String?) {
                             ProgressLoading.dismiss()
                             if (location != null) {
 
@@ -1022,7 +924,8 @@ class ReportFragment : BaseFragment<FragmentReportBinding>(), InvoiceTypsAdapter
                                 if (CommonUtilities.isFake(baseActivity, location)) {
                                     planEntity.cusLat = "1"
                                     planEntity.cusLang = "1"
-                                } else {
+                                }
+                                else {
                                     planEntity.cusLat = location?.latitude.toString()
                                     planEntity.cusLang = location?.longitude.toString()
                                 }
@@ -1036,35 +939,21 @@ class ReportFragment : BaseFragment<FragmentReportBinding>(), InvoiceTypsAdapter
                                 baseActivity.startActivity(intent)
 
 
-                            } else {
+                            }
+                            else {
                                 baseActivity.runOnUiThread {
-                                    Toast.makeText(
-                                        baseActivity,
-                                        "Field to get Location",
-                                        Toast.LENGTH_LONG
-                                    ).show()
+                                    Toast.makeText(baseActivity, resources.getString(R.string.error_location_try_again), Toast.LENGTH_SHORT).show()
                                 }
-                                planEntity.cusLat = "0"
-                                planEntity.cusLang = "0"
-
-                                planEntity.isStarted = true
-                                planEntity.startAt = CommonUtilities.currentToMillis.toString()
-
-                                viewModel.update(planEntity)
-
-                                val intent = Intent(baseActivity, CallsActivity::class.java);
-                                intent.putExtra("PlanVisitModel", planEntity);
-                                baseActivity.startActivity(intent)
-
                             }
                         }
+
                     })
+
                 }
 
 
             }
-            builder.setNegativeButton(getString(R.string.no)) { dialog, which ->
-                // Do nothing
+            builder.setNegativeButton(getString(R.string.no)) { dialog, which -> // Do nothing
                 dialog.dismiss()
             }
             val alert = builder.create()
@@ -1082,10 +971,7 @@ class ReportFragment : BaseFragment<FragmentReportBinding>(), InvoiceTypsAdapter
         sync?.setVisible(false)
 
         spinner = item?.actionView as Spinner
-        val adapter = ArrayAdapter.createFromResource(
-            requireActivity(),
-            R.array.spinner_list_item_array, R.layout.spinner_item
-        )
+        val adapter = ArrayAdapter.createFromResource(requireActivity(), R.array.spinner_list_item_array, R.layout.spinner_item)
         adapter.setDropDownViewResource(R.layout.spinner_item)
         spinner?.adapter = adapter
         spinner?.onItemSelectedListener = this
@@ -1095,8 +981,7 @@ class ReportFragment : BaseFragment<FragmentReportBinding>(), InvoiceTypsAdapter
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item?.itemId) {
-            R.id.sync -> {
-                // slideshowviewModel.syncReport(DATE)
+            R.id.sync -> { // slideshowviewModel.syncReport(DATE)
                 true
             }
             else -> super.onOptionsItemSelected(item)
@@ -1122,7 +1007,8 @@ class ReportFragment : BaseFragment<FragmentReportBinding>(), InvoiceTypsAdapter
 
         if (x[p2].equals("AM Shift")) {
             shiftID = "8"
-        } else {
+        }
+        else {
             shiftID = "9"
         }
     }
@@ -1132,12 +1018,14 @@ class ReportFragment : BaseFragment<FragmentReportBinding>(), InvoiceTypsAdapter
         try {
             (activity as AppCompatActivity?)!!.supportActionBar!!.title = getString(R.string.report)
 
-        } catch (e: Exception) {
+        }
+        catch (e: Exception) {
         }
 
         try {
             CommonUtilities.sendMessage(baseActivity, false)
-        } catch (e: Exception) {
+        }
+        catch (e: Exception) {
         }
 
     }
@@ -1170,8 +1058,7 @@ class ReportFragment : BaseFragment<FragmentReportBinding>(), InvoiceTypsAdapter
         alertDialog?.getWindow()?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         alertDialog?.show()
 
-        var activitiesRecyclerView: RecyclerView =
-            choose_activity_type.findViewById(R.id.activitiesRecyclerView)
+        var activitiesRecyclerView: RecyclerView = choose_activity_type.findViewById(R.id.activitiesRecyclerView)
         var close: ImageView = choose_activity_type.findViewById(R.id.close)
 
         var activitiesAdapter = ActivitiesAdapter(baseActivity, this)
@@ -1194,13 +1081,10 @@ class ReportFragment : BaseFragment<FragmentReportBinding>(), InvoiceTypsAdapter
             if (m.pageCode?.toInt() == Constants.CREATE_PLAN) {
                 model = m
                 constrAds.setVisibility(View.VISIBLE)
-                if (model.resourceLink.equals(null)
-                    && model.paragraph.equals(null)
-                    && model.slideImages == null) {
+                if (model.resourceLink.equals(null) && model.paragraph.equals(null) && model.slideImages == null) {
                     constrAds.setVisibility(View.VISIBLE)
                     imageView.visibility = View.VISIBLE
-                    Glide.with(this).load(model.default_ad_image)
-                        .centerCrop().placeholder(R.drawable.dr_hussain).into(imageView)
+                    Glide.with(this).load(model.default_ad_image).centerCrop().placeholder(R.drawable.dr_hussain).into(imageView)
                 }
                 break
             }
@@ -1220,28 +1104,23 @@ class ReportFragment : BaseFragment<FragmentReportBinding>(), InvoiceTypsAdapter
             "Image" -> {
 
                 imageView.visibility = View.VISIBLE
-                Glide.with(this).load(model.resourceLink)
-                    .centerCrop().placeholder(R.drawable.dr_hussain).into(imageView)
+                Glide.with(this).load(model.resourceLink).centerCrop().placeholder(R.drawable.dr_hussain).into(imageView)
             }
             "GIF" -> {
                 imageView.visibility = View.VISIBLE
-                Glide.with(this).asGif().load(model.resourceLink)
-                    .centerCrop().placeholder(R.drawable.dr_hussain).into(imageView);
+                Glide.with(this).asGif().load(model.resourceLink).centerCrop().placeholder(R.drawable.dr_hussain).into(imageView);
             }
             "Paragraph" -> {
-                textView.visibility = View.VISIBLE
-//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-//                    textView.setText(
-//                        Html.fromHtml(
-//                            model.paragraph,
-//                            Html.FROM_HTML_MODE_LEGACY
-//                        )
-//                    );
-//                } else
-//                    textView.setText(Html.fromHtml(model.paragraph))
-                textView.loadDataWithBaseURL(
-                    null, model.paragraph!!, "text/html", "utf-8", null
-                )
+                textView.visibility = View.VISIBLE //                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                //                    textView.setText(
+                //                        Html.fromHtml(
+                //                            model.paragraph,
+                //                            Html.FROM_HTML_MODE_LEGACY
+                //                        )
+                //                    );
+                //                } else
+                //                    textView.setText(Html.fromHtml(model.paragraph))
+                textView.loadDataWithBaseURL(null, model.paragraph!!, "text/html", "utf-8", null)
             }
             "Slider" -> {
                 bannerslider.visibility = View.VISIBLE
@@ -1261,7 +1140,8 @@ class ReportFragment : BaseFragment<FragmentReportBinding>(), InvoiceTypsAdapter
                 if (constrAds.visibility == View.VISIBLE) {
                     constrAds.setVisibility(View.GONE)
                     btnHideShowAds.setImageResource(R.drawable.ic_show_hide_ads)
-                } else {
+                }
+                else {
                     constrAds.setVisibility(View.VISIBLE)
                     btnHideShowAds.setImageResource(R.drawable.ic_hide_show_ads)
                 }
@@ -1288,26 +1168,15 @@ class ReportFragment : BaseFragment<FragmentReportBinding>(), InvoiceTypsAdapter
 
 
             if (fullList.isNullOrEmpty()) {
-                dialog = ChooseStartPoint(
-                    baseActivity,
-                    this@ReportFragment,
-                    viewModel.dataManager!!,
-                    activities?.typeId!!,
-                    activities,
-                    DATE,
-                    0
-                );
+                dialog = ChooseStartPoint(baseActivity, this@ReportFragment, viewModel.dataManager!!, activities?.typeId!!, activities, DATE, 0);
                 dialog.setCanceledOnTouchOutside(true);
                 val window = dialog.getWindow();
-                window?.setLayout(
-                    WindowManager.LayoutParams.MATCH_PARENT,
-                    WindowManager.LayoutParams.MATCH_PARENT
-                );
+                window?.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
                 dialog.getWindow()?.setBackgroundDrawableResource(android.R.color.transparent);
-                dialog.getWindow()
-                    ?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+                dialog.getWindow()?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
                 dialog.show();
-            } else {
+            }
+            else {
 
                 for (m in fullList!!) {
 
@@ -1318,61 +1187,50 @@ class ReportFragment : BaseFragment<FragmentReportBinding>(), InvoiceTypsAdapter
                     }
                 }
 
-                dialog = ChooseStartPoint(
-                    baseActivity,
-                    this@ReportFragment,
-                    viewModel?.dataManager!!,
-                    activities?.typeId!!,
-                    activities,
-                    DATE,
-                    0
-                );
+                dialog = ChooseStartPoint(baseActivity, this@ReportFragment, viewModel?.dataManager!!, activities?.typeId!!, activities, DATE, 0);
                 dialog.setCanceledOnTouchOutside(true);
                 val window = dialog.getWindow();
-                window?.setLayout(
-                    WindowManager.LayoutParams.MATCH_PARENT,
-                    WindowManager.LayoutParams.MATCH_PARENT
-                );
+                window?.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
                 dialog.getWindow()?.setBackgroundDrawableResource(android.R.color.transparent);
-                dialog.getWindow()
-                    ?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+                dialog.getWindow()?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
                 dialog.show();
 
             }
 
 
-        } else if (activities?.typeId?.equals(2)!!) {
+        }
+        else if (activities?.typeId?.equals(2)!!) {
 
             activitiesModel = activities!!
             chooseEmployee = ChooseEmployee(baseActivity, this, viewModel?.dataManager!!);
             chooseEmployee.setCanceledOnTouchOutside(true);
             val window = chooseEmployee.getWindow();
-            window?.setLayout(
-                WindowManager.LayoutParams.MATCH_PARENT,
-                WindowManager.LayoutParams.MATCH_PARENT
-            );
+            window?.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
             chooseEmployee.getWindow()?.setBackgroundDrawableResource(android.R.color.transparent);
-            chooseEmployee.getWindow()
-                ?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+            chooseEmployee.getWindow()?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
             chooseEmployee.show();
-            activities!!
-            //  openSingleActivity(activities!!, DoubleActivity::class.java)
+            activities!! //  openSingleActivity(activities!!, DoubleActivity::class.java)
 
-        } else if (activities?.typeId?.equals(3)!!) {
+        }
+        else if (activities?.typeId?.equals(3)!!) {
 
-        } else if (activities?.typeId?.equals(4)!!) {
+        }
+        else if (activities?.typeId?.equals(4)!!) {
             openSingleActivity(activities!!, AddOfficeActivity::class.java)
 
 
-        } else if (activities?.typeId?.equals(5)!!) {
+        }
+        else if (activities?.typeId?.equals(5)!!) {
             openSingleActivity(activities!!, AddOfficeActivity::class.java)
 
-        } else if (activities?.typeId?.equals(6)!!) {
+        }
+        else if (activities?.typeId?.equals(6)!!) {
 
             openSingleActivity(activities!!, AddMeetingActivity::class.java)
 
 
-        } else {
+        }
+        else {
 
             openSingleActivity(activities!!, AddPlanSingleActivity::class.java)
 
@@ -1385,13 +1243,7 @@ class ReportFragment : BaseFragment<FragmentReportBinding>(), InvoiceTypsAdapter
     /**
      * save start point which selected into data manager
      */
-    override fun chooseStartPoint(
-        id: Int,
-        date: String?,
-        name: String?,
-        type: Int,
-        activities: ActivityEntity?
-    ) {
+    override fun chooseStartPoint(id: Int, date: String?, name: String?, type: Int, activities: ActivityEntity?) {
 
 
         dialog.dismiss()
@@ -1408,13 +1260,7 @@ class ReportFragment : BaseFragment<FragmentReportBinding>(), InvoiceTypsAdapter
         }
     }
 
-    override fun editStartPoint(
-        id: Int,
-        date: String?,
-        name: String?,
-        type: Int,
-        activities: ActivityEntity?
-    ) {
+    override fun editStartPoint(id: Int, date: String?, name: String?, type: Int, activities: ActivityEntity?) {
         TODO("Not yet implemented")
     }
 
@@ -1428,10 +1274,7 @@ class ReportFragment : BaseFragment<FragmentReportBinding>(), InvoiceTypsAdapter
         intent.putExtra("ShiftId", shiftID)
         intent.putExtra("Date", DATE)
         intent.putExtra("DATE_IN_MILLIS", DATE_IN_MILLIS)
-        intent.putExtra(
-            "Day",
-            CommonUtilities.getDayName(horizontalCalendar?.selectedDate?.timeInMillis!!)
-        )
+        intent.putExtra("Day", CommonUtilities.getDayName(horizontalCalendar?.selectedDate?.timeInMillis!!))
         intent.putExtra("EXTRA", true)
         intent.putExtra("cusIdes", CommonUtilities.getCusIdes(fullList))
         intent.putExtra("cusBranchIds", CommonUtilities.getBranchIdes(fullList))
@@ -1485,13 +1328,10 @@ class ReportFragment : BaseFragment<FragmentReportBinding>(), InvoiceTypsAdapter
         }
     }
 
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        //   airLocation.onRequestPermissionsResult(requestCode, permissions, grantResults)
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode,
+                                         permissions,
+                                         grantResults) //   airLocation.onRequestPermissionsResult(requestCode, permissions, grantResults)
 
 
     }
@@ -1508,10 +1348,7 @@ class ReportFragment : BaseFragment<FragmentReportBinding>(), InvoiceTypsAdapter
         intent.putExtra("Date", DATE)
         intent.putExtra("EMPLOYEE_ID", model)
         intent.putExtra("DATE_IN_MILLIS", DATE_IN_MILLIS)
-        intent.putExtra(
-            "Day",
-            CommonUtilities.getDayName(horizontalCalendar?.selectedDate?.timeInMillis!!)
-        )
+        intent.putExtra("Day", CommonUtilities.getDayName(horizontalCalendar?.selectedDate?.timeInMillis!!))
         intent.putExtra("EXTRA", true)
         intent.putExtra("cusIdes", CommonUtilities.getCusIdes(fullList))
         intent.putExtra("cusBranchIds", CommonUtilities.getBranchIdes(fullList))
@@ -1532,94 +1369,94 @@ class ReportFragment : BaseFragment<FragmentReportBinding>(), InvoiceTypsAdapter
         super.onDestroy()
     }
 
-/*    fun ads() {
-        var model = AdModel()
-        for (m in viewModel.dataManager.ads.ads!!) {
-            if (m.pageCode?.toInt() == Constants.REPORT_RECYCLER) {
-                model = m
-                binding.constrAds.setVisibility(View.VISIBLE)
-                if (model.resourceLink.equals(null)
-                    && model.paragraph.equals(null)
-                    && model.slideImages == null) {
+    /*    fun ads() {
+            var model = AdModel()
+            for (m in viewModel.dataManager.ads.ads!!) {
+                if (m.pageCode?.toInt() == Constants.REPORT_RECYCLER) {
+                    model = m
                     binding.constrAds.setVisibility(View.VISIBLE)
+                    if (model.resourceLink.equals(null)
+                        && model.paragraph.equals(null)
+                        && model.slideImages == null) {
+                        binding.constrAds.setVisibility(View.VISIBLE)
+                        binding.imageView.visibility = View.VISIBLE
+                        Glide.with(this).load(model.default_ad_image)
+                            .centerCrop().placeholder(R.drawable.dr_hussain).into(binding.imageView)
+                    }
+                    break
+                }
+            }
+
+            if (!model.webPageLink.equals("")) {
+                binding.cardviewAds.setOnClickListener {
+                    openWebPage(model.webPageLink)
+                }
+            }
+            when (model.type) {
+                "Video" -> {
+                    binding.videoView.visibility = View.VISIBLE
+                    mediaSource = SimpleMediaSource(model.resourceLink)
+                    binding.videoView.play(mediaSource);
+                }
+                "Image" -> {
+
                     binding.imageView.visibility = View.VISIBLE
-                    Glide.with(this).load(model.default_ad_image)
+                    Glide.with(this).load(model.resourceLink)
                         .centerCrop().placeholder(R.drawable.dr_hussain).into(binding.imageView)
                 }
-                break
-            }
-        }
-
-        if (!model.webPageLink.equals("")) {
-            binding.cardviewAds.setOnClickListener {
-                openWebPage(model.webPageLink)
-            }
-        }
-        when (model.type) {
-            "Video" -> {
-                binding.videoView.visibility = View.VISIBLE
-                mediaSource = SimpleMediaSource(model.resourceLink)
-                binding.videoView.play(mediaSource);
-            }
-            "Image" -> {
-
-                binding.imageView.visibility = View.VISIBLE
-                Glide.with(this).load(model.resourceLink)
-                    .centerCrop().placeholder(R.drawable.dr_hussain).into(binding.imageView)
-            }
-            "GIF" -> {
-                binding.imageView.visibility = View.VISIBLE
-                Glide.with(this).asGif().load(model.resourceLink)
-                    .centerCrop().placeholder(R.drawable.dr_hussain).into(binding.imageView);
-            }
-            "Paragraph" -> {
-                binding.textView.visibility = View.VISIBLE
-//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-//                    binding.textView.setText(
-//                        Html.fromHtml(
-//                            model.paragraph,
-//                            Html.FROM_HTML_MODE_LEGACY
-//                        )
-//                    );
-//                } else
-//                    binding.textView.setText(Html.fromHtml(model.paragraph))
-                binding.textView.loadDataWithBaseURL(
-                    null, model.paragraph!!, "text/html", "utf-8", null
-                )
-            }
-            "Slider" -> {
-                binding.bannerSlider.visibility = View.VISIBLE
-                Slider.init(PicassoImageLoadingService(context))
-                binding.bannerSlider?.setInterval(5000)
-
-                val list = ArrayList<String>()
-                for (i in model.slideImages!!) {
-                    list.add(i?.link!!)
+                "GIF" -> {
+                    binding.imageView.visibility = View.VISIBLE
+                    Glide.with(this).asGif().load(model.resourceLink)
+                        .centerCrop().placeholder(R.drawable.dr_hussain).into(binding.imageView);
                 }
-                binding.bannerSlider?.setAdapter(MainSliderAdapter(list))
-            }
-        }
-        if (model.show_ad == true) {
-            binding.btnHideShowAds.setVisibility(View.VISIBLE)
-            binding.btnHideShowAds.setOnClickListener {
-                if (binding.constrAds.visibility == View.VISIBLE) {
-                    binding.constrAds.setVisibility(View.GONE)
-                    binding.btnHideShowAds.setImageResource(R.drawable.ic_show_hide_ads)
-                } else {
-                    binding.constrAds.setVisibility(View.VISIBLE)
-                    binding.btnHideShowAds.setImageResource(R.drawable.ic_hide_show_ads)
+                "Paragraph" -> {
+                    binding.textView.visibility = View.VISIBLE
+    //                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+    //                    binding.textView.setText(
+    //                        Html.fromHtml(
+    //                            model.paragraph,
+    //                            Html.FROM_HTML_MODE_LEGACY
+    //                        )
+    //                    );
+    //                } else
+    //                    binding.textView.setText(Html.fromHtml(model.paragraph))
+                    binding.textView.loadDataWithBaseURL(
+                        null, model.paragraph!!, "text/html", "utf-8", null
+                    )
+                }
+                "Slider" -> {
+                    binding.bannerSlider.visibility = View.VISIBLE
+                    Slider.init(PicassoImageLoadingService(context))
+                    binding.bannerSlider?.setInterval(5000)
+
+                    val list = ArrayList<String>()
+                    for (i in model.slideImages!!) {
+                        list.add(i?.link!!)
+                    }
+                    binding.bannerSlider?.setAdapter(MainSliderAdapter(list))
                 }
             }
-        }
-        if (model.show_more == true) {
-            binding.tvMoreThanAds.setVisibility(View.VISIBLE)
-            binding.tvMoreThanAds.setOnClickListener {
-                val intent = Intent(getActivity(), MoreDetailsAdsActivity::class.java)
-                intent.putExtra("pageCode", model.pageCode)
-                getActivity()?.startActivity(intent)
+            if (model.show_ad == true) {
+                binding.btnHideShowAds.setVisibility(View.VISIBLE)
+                binding.btnHideShowAds.setOnClickListener {
+                    if (binding.constrAds.visibility == View.VISIBLE) {
+                        binding.constrAds.setVisibility(View.GONE)
+                        binding.btnHideShowAds.setImageResource(R.drawable.ic_show_hide_ads)
+                    } else {
+                        binding.constrAds.setVisibility(View.VISIBLE)
+                        binding.btnHideShowAds.setImageResource(R.drawable.ic_hide_show_ads)
+                    }
+                }
             }
-        }
-    }*/
+            if (model.show_more == true) {
+                binding.tvMoreThanAds.setVisibility(View.VISIBLE)
+                binding.tvMoreThanAds.setOnClickListener {
+                    val intent = Intent(getActivity(), MoreDetailsAdsActivity::class.java)
+                    intent.putExtra("pageCode", model.pageCode)
+                    getActivity()?.startActivity(intent)
+                }
+            }
+        }*/
 
 }
 
