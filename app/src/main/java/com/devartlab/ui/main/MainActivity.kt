@@ -228,7 +228,9 @@ class MainActivity : BaseActivity<ActivityMainBinding?>(), View.OnClickListener,
         list.add(CardModel(1, resources.getString(R.string.call_management), R.drawable.call_managment_icon))
         list.add(CardModel(2, resources.getString(R.string.self_service), R.drawable.self_service))
         list.add(CardModel(3, resources.getString(R.string.my_profile), R.drawable.employee))
-        list.add(CardModel(4, resources.getString(R.string.market_request), R.drawable.money)) //   list.add(CardModel(5, "DevartLink", R.drawable.devartlink))
+        list.add(CardModel(4,
+                           resources.getString(R.string.market_request),
+                           R.drawable.money)) //   list.add(CardModel(5, "DevartLink", R.drawable.devartlink))
 
         adapter = MenuListAdapter(this, list, this)
         val layoutManager = GridLayoutManager(this, 2)
@@ -569,6 +571,7 @@ class MainActivity : BaseActivity<ActivityMainBinding?>(), View.OnClickListener,
 
                 val intent = Intent(this@MainActivity, DevartLinkActivity::class.java)
                 startActivity(intent)
+
 
             }
         }

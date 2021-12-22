@@ -1,6 +1,7 @@
 package com.devartlab
 
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProviders
 import com.devartlab.base.BaseActivity
@@ -23,6 +24,8 @@ import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 
+
+private const val TAG = "UpdatePlan"
 class UpdatePlan : BaseActivity<ActivityUpdatePlanBinding>() {
     lateinit var binding: ActivityUpdatePlanBinding
     lateinit var viewModel: PlanViewModel
@@ -116,7 +119,7 @@ class UpdatePlan : BaseActivity<ActivityUpdatePlanBinding>() {
             }
 
 
-          /*  list.add(PlanJson(
+          list.add(PlanJson(
                 binding.newValue.text.toString().toInt(),
                 model.date + "",
                 model.customerid + 0,
@@ -147,7 +150,7 @@ class UpdatePlan : BaseActivity<ActivityUpdatePlanBinding>() {
                 0,
                 false,
                 false,
-                0));*/
+                0))
 
             list.add(PlanJson(
                 model.planId + 0,
@@ -157,7 +160,7 @@ class UpdatePlan : BaseActivity<ActivityUpdatePlanBinding>() {
                 model.branchPlaceId + 0,
                 model.shiftId + 0,
                 model.activityId + 0,
-                model.startPoint + "",
+                x,
                 true,
                 model.terriotryEmpId + 0,
                 model.territoryId + 0,
@@ -184,6 +187,9 @@ class UpdatePlan : BaseActivity<ActivityUpdatePlanBinding>() {
 
         }
         val jsonArray1 = Gson().toJsonTree(list).asJsonArray
+
+        Log.d(TAG, "updatePlan: $jsonArray1")
+
         myAPI.updatePlan(id, "Android", jsonArray1)!!
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
@@ -205,7 +211,6 @@ class UpdatePlan : BaseActivity<ActivityUpdatePlanBinding>() {
 
                 }
             })
-
 
     }
 

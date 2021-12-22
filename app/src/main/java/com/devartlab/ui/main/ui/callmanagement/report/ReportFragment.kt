@@ -50,6 +50,7 @@ import com.devartlab.ui.main.ui.callmanagement.trade.printer.OrderPrintActivity
 import com.devartlab.ui.main.ui.callmanagement.trade.selectProductContract.SelectProductsActivity
 import com.devartlab.ui.main.ui.moreDetailsAds.MoreDetailsAdsActivity
 import com.devartlab.utils.*
+import com.google.gson.Gson
 import com.jarvanmo.exoplayerview.media.SimpleMediaSource
 import com.jarvanmo.exoplayerview.ui.ExoVideoView
 import devs.mulham.horizontalcalendar.HorizontalCalendar
@@ -60,6 +61,7 @@ import ss.com.bannerslider.Slider
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
+import kotlin.collections.ArrayList
 
 private const val TAG = "ReportFragment"
 
@@ -73,7 +75,7 @@ class ReportFragment : BaseFragment<FragmentReportBinding>(), InvoiceTypsAdapter
     private var DATE_IN_MILLIS: String? = null
     private var shift: String = "AM Shift"
     private var shiftID: String = "8"
-    private var fullList: List<PlanEntity?>? = null
+    private var fullList: ArrayList<PlanEntity?>? = null
     lateinit var dialog: ChooseStartPoint
     private var model: PlanEntity? = null
     private var modelOrder: PlanEntity? = null
@@ -94,7 +96,7 @@ class ReportFragment : BaseFragment<FragmentReportBinding>(), InvoiceTypsAdapter
 
     var startTime = ""
     var locationFlag: Int = 0
-
+    var adList = ArrayList<AdModel>()
     override fun getLayoutId(): Int {
         return R.layout.fragment_report
     }
@@ -113,6 +115,14 @@ class ReportFragment : BaseFragment<FragmentReportBinding>(), InvoiceTypsAdapter
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = viewDataBinding
+
+        for (m in viewModel.dataManager.ads.ads!!) {
+            if (m.pageCode?.toInt() == Constants.PLAN_RECYCLER) {
+                adList?.add(m)
+            }
+        }
+
+
         setHasOptionsMenu(true);
         setRecyclerView()
         setHorizontalCalendar()
@@ -126,21 +136,43 @@ class ReportFragment : BaseFragment<FragmentReportBinding>(), InvoiceTypsAdapter
         viewModel.allPlansByDate.observe(viewLifecycleOwner, Observer<List<PlanEntity?>?> {
 
 
-            fullList = it
+            fullList = it as ArrayList
             binding.startPoint.text = ""
+            for (m in adList!!) {
 
+                val model = PlanEntity()
+                model.isAd = true
+                model.adModel = Gson().toJson(m as Any?)
+                if (m.recyclerPosition?.toInt()!! > 0) {
+                    if (fullList?.size!! > m.recyclerPosition?.toInt()!!) {
+                        fullList?.add(m.recyclerPosition?.toInt()!!, model)
+                    }
+                    else
+                    {
+                        fullList?.add(fullList?.size!!, model)
+                    }
+                }
+                else {
+                    fullList?.add(m.recyclerPosition?.toInt()!!, model)
+                }
+
+
+            }
             if (!it.isNullOrEmpty()) {
                 binding.emptyList.visibility = View.GONE
 
-                this.model = it[0]
+
 
                 for (model in it) {
+                    if (!model?.isAd!!) {
+                        this.model = model
 
-                    if (!model?.startPoint.isNullOrEmpty() && model?.startPointId != 0) {
+                        if (!model?.startPoint.isNullOrEmpty() && model?.startPointId != 0) {
 
-                        this.modelWithStartPoint = model
-                        break
+                            this.modelWithStartPoint = model
+                            break
 
+                        }
                     }
                 }
 

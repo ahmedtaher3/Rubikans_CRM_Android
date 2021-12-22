@@ -405,11 +405,6 @@ object PlanUtlis {
                             if (body.table1.get(0).status) {
 
 
-                                val newOldCycle = dataManager?.newOldCycle
-                                newOldCycle.currentCyclePlanId = body.table[0].planId
-                                dataManager?.saveNewOldCycle(newOldCycle)
-
-
                                 dataManager?.saveSyncAble(true)
                                 planDao?.deleteTableAfterUpdate(date)
                                 val list = ArrayList<PlanEntity>()
@@ -504,7 +499,6 @@ object PlanUtlis {
                 onPlanData.onFailure("Cannot Update Empty Plan")
 
             }
-
 
         }.subscribeOn(Schedulers.io())
             .subscribe()

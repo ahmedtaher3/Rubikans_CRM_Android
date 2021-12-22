@@ -20,8 +20,7 @@ import com.google.gson.Gson
 
 private const val TAG = "PlansAdapter"
 
-class PlansAdapter(context: Context, dataManager: DataManager) :
-    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class PlansAdapter(context: Context, dataManager: DataManager) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private val myData: ArrayList<PlanEntity>
     private val context: Context
     private var mDrawableBuilder: TextDrawable? = null
@@ -337,13 +336,33 @@ class PlansAdapter(context: Context, dataManager: DataManager) :
             this._binding = binding;
         }
 
+
         fun bind(model: PlanEntity) {
 
-            val ad = Gson().fromJson(model.adModel, AdModel::class.java) as AdModel
-            Glide.with(context).asGif().load("https://media.giphy.com/media/xUPGGDNsLvqsBOhuU0/giphy.gif").centerCrop().placeholder(R.drawable.devart_logo).into(_binding.imageAd);
-            Log.d(TAG, "bind: ${ad.resourceLink}")
-        }
 
+            val ad = Gson().fromJson(model.adModel, AdModel::class.java) as AdModel
+            Log.d(TAG, "bind: ${ad.resourceLink}")
+            Log.d(TAG, "bind: ${ad.type}")
+
+            when (ad.type) {
+
+                "Image" -> {
+                    Glide.with(context).load(ad.resourceLink).fitCenter().placeholder(R.drawable.devart_logo).into(_binding.imageAd)
+
+                }
+
+                "GIF" -> {
+                    Glide.with(context).asGif().load(ad.resourceLink).fitCenter().placeholder(R.drawable.devart_logo).into(_binding.imageAd)
+
+                }
+                else -> {
+                    Glide.with(context).load(ad.resourceLink).fitCenter().placeholder(R.drawable.devart_logo).into(_binding.imageAd)
+
+                }
+
+            }
+
+        }
 
     }
 

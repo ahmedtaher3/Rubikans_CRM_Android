@@ -59,8 +59,7 @@
 
             android:id="@+id/rowFG"
             android:layout_width="match_parent"
-            android:layout_height="130dp"
-            android:visibility="gone">
+            android:layout_height="130dp">
 
             <ImageView
                 android:id="@+id/imageAd"
