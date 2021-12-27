@@ -1,31 +1,14 @@
 package com.devartlab
 
-import android.app.Notification
-import android.app.Notification.DEFAULT_VIBRATE
-import android.app.NotificationChannel
-import android.app.NotificationManager
-import android.app.PendingIntent
-import android.content.Context
-import android.content.Intent
-import android.media.RingtoneManager
-import android.os.Build
-import android.util.Log
-import androidx.core.app.NotificationCompat
-import com.devartlab.base.BaseApplication
-import com.devartlab.data.shared.DataManager
-import com.devartlab.ui.main.ui.devartlink.DevartLinkWebView
-import com.google.firebase.messaging.FirebaseMessagingService
-import com.google.firebase.messaging.RemoteMessage
 
+class myFirebaseMessagingService {/* var dataManager: DataManager? = null
 
-class myFirebaseMessagingService : FirebaseMessagingService() {
-    var dataManager: DataManager? = null
-
+    */
     /**
      * Called when message is received.
      *
      * @param remoteMessage Object representing the message received from Firebase Cloud Messaging.
-     */
+     *//*
     // [START receive_message]
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
         dataManager = (getApplication() as BaseApplication).dataManager!!
@@ -44,7 +27,7 @@ class myFirebaseMessagingService : FirebaseMessagingService() {
         if (remoteMessage.data.isNotEmpty()) {
             Log.d(TAG, "Message data payload: ${remoteMessage.data}")
 
-            if (/* Check if data needs to be processed by long running job */ true) {
+            if (*//* Check if data needs to be processed by long running job *//* true) {
                 // For long-running tasks (10 seconds or more) use WorkManager.
                 scheduleJob()
             } else {
@@ -64,11 +47,12 @@ class myFirebaseMessagingService : FirebaseMessagingService() {
     // [END receive_message]
 
     // [START on_new_token]
+    */
     /**
      * Called if the FCM registration token is updated. This may occur if the security of
      * the previous token had been compromised. Note that this is called when the
      * FCM registration token is initially generated so this is where you would retrieve the token.
-     */
+     *//*
     override fun onNewToken(token: String) {
         Log.d(TAG, "Refreshed token: $token")
 
@@ -79,23 +63,26 @@ class myFirebaseMessagingService : FirebaseMessagingService() {
     }
     // [END on_new_token]
 
+    */
     /**
      * Schedule async work using WorkManager.
-     */
+     *//*
     private fun scheduleJob() {
-        /*    // [START dispatch_job]
+        *//*    // [START dispatch_job]
             val work = OneTimeWorkRequest.Builder(MyWorker::class.java).build()
             WorkManager.getInstance().beginWith(work).enqueue()
-            // [END dispatch_job]*/
+            // [END dispatch_job]*//*
     }
 
+    */
     /**
      * Handle time allotted to BroadcastReceivers.
-     */
+     *//*
     private fun handleNow() {
         Log.d(TAG, "Short lived task is done.")
     }
 
+    */
     /**
      * Persist token to third-party servers.
      *
@@ -103,7 +90,7 @@ class myFirebaseMessagingService : FirebaseMessagingService() {
      * maintained by your application.
      *
      * @param token The new token.
-     */
+     *//*
     private fun sendRegistrationToServer(token: String?) {
 
         dataManager = (getApplication() as BaseApplication).dataManager!!
@@ -116,16 +103,17 @@ class myFirebaseMessagingService : FirebaseMessagingService() {
 
     }
 
+    */
     /**
      * Create and show a simple notification containing the received FCM message.
      *
      * @param messageBody FCM message body received.
-     */
+     *//*
     private fun sendNotification(messageTitle: String, messageBody: String) {
         val intent = Intent(this, DevartLinkWebView::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
         val pendingIntent = PendingIntent.getActivity(
-            this, System.currentTimeMillis().toInt()/* Request code */, intent,
+            this, System.currentTimeMillis().toInt()*//* Request code *//*, intent,
             PendingIntent.FLAG_ONE_SHOT
         )
         val DEFAULT_VIBRATE_PATTERN = longArrayOf(0, 250, 250, 250)
@@ -171,7 +159,7 @@ class myFirebaseMessagingService : FirebaseMessagingService() {
     companion object {
 
         private const val TAG = "MyFirebaseMsgService"
-    }
+    }*/
 
 
 }

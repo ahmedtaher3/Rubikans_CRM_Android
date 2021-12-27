@@ -167,7 +167,7 @@ class DVReportFragment : BaseFragment<DvReportFragmentBinding>(), DVReportAdapte
         if (model?.fileImage != null)
         {
             Glide.with(baseActivity)
-                    .load(ApiServices.ImageBaseURL + "ImageUpload/Employee/" + model.fileImage)
+                    .load(com.devartlab.BuildConfig.ImageBaseURL + "ImageUpload/Employee/" + model.fileImage)
                     .placeholder(binding.empImage?.drawable)
                     .into(binding.empImage!!)
         }
@@ -175,7 +175,7 @@ class DVReportFragment : BaseFragment<DvReportFragmentBinding>(), DVReportAdapte
 
         {
             Glide.with(baseActivity)
-                    .load(ApiServices.ImageBaseURL + "ImageUpload/Employee/DefaultEmpImage.jpg")
+                    .load(com.devartlab.BuildConfig.ImageBaseURL + "ImageUpload/Employee/DefaultEmpImage.jpg")
                     .placeholder(binding.empImage?.drawable)
                     .into(binding.empImage!!)
         }

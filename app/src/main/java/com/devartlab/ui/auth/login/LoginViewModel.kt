@@ -18,8 +18,7 @@ import com.devartlab.model.AuthorityDatum
 import com.devartlab.utils.CommonUtilities
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.messaging.FirebaseMessaging
-import io.reactivex.Completable
+ import io.reactivex.Completable
 import io.reactivex.Observer
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable

@@ -273,12 +273,12 @@ class EmployeeSalaryFragment : BaseFragment<FragmentEmployeeSalaryBinding>(),
         binding.empImage.setImageResource(R.drawable.user_logo)
         if (model?.fileImage != null) {
             Glide.with(baseActivity)
-                .load(ApiServices.ImageBaseURL + "ImageUpload/Employee/" + model.fileImage)
+                .load(com.devartlab.BuildConfig.ImageBaseURL + "ImageUpload/Employee/" + model.fileImage)
                 .placeholder(binding.empImage?.drawable)
                 .into(binding.empImage!!)
         } else {
             Glide.with(baseActivity)
-                .load(ApiServices.ImageBaseURL + "ImageUpload/Employee/DefaultEmpImage.jpg")
+                .load(com.devartlab.BuildConfig.ImageBaseURL + "ImageUpload/Employee/DefaultEmpImage.jpg")
                 .placeholder(binding.empImage?.drawable)
                 .into(binding.empImage!!)
         }

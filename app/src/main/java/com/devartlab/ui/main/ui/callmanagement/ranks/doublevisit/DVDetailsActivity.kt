@@ -44,11 +44,11 @@ class DVDetailsActivity : BaseActivity<ActivityDoubleVisitReportDetailsBinding>(
 
         if (model?.employeeImage != null) {
             Glide.with(this)
-                .load(ApiServices.ImageBaseURL + "ImageUpload/Employee/" + model?.employeeImage)
+                .load(com.devartlab.BuildConfig.ImageBaseURL + "ImageUpload/Employee/" + model?.employeeImage)
                 .placeholder(binding.empImage.drawable).into(binding.empImage)
         } else {
             Glide.with(this)
-                .load(ApiServices.ImageBaseURL + "ImageUpload/Employee/DefaultEmpImage.jpg")
+                .load(com.devartlab.BuildConfig.ImageBaseURL + "ImageUpload/Employee/DefaultEmpImage.jpg")
                 .placeholder(binding.empImage.drawable).into(binding.empImage)
         }
 
@@ -56,11 +56,11 @@ class DVDetailsActivity : BaseActivity<ActivityDoubleVisitReportDetailsBinding>(
 
         if (model?.managerImage != null) {
             Glide.with(this)
-                .load(ApiServices.ImageBaseURL + "ImageUpload/Employee/" + model?.managerImage)
+                .load(com.devartlab.BuildConfig.ImageBaseURL + "ImageUpload/Employee/" + model?.managerImage)
                 .placeholder(binding.empImage.drawable).into(binding.managerImage)
         } else {
             Glide.with(this)
-                .load(ApiServices.ImageBaseURL + "ImageUpload/Employee/DefaultEmpImage.jpg")
+                .load(com.devartlab.BuildConfig.ImageBaseURL + "ImageUpload/Employee/DefaultEmpImage.jpg")
                 .placeholder(binding.empImage.drawable).into(binding.managerImage)
         }
 

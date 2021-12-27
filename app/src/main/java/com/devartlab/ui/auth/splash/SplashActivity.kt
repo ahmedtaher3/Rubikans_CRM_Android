@@ -25,8 +25,7 @@ import com.devartlab.utils.CommonUtilities
 import com.devartlab.utils.ProgressLoading
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.messaging.FirebaseMessaging
-import io.reactivex.Completable
+ import io.reactivex.Completable
 import io.reactivex.Single
 import io.reactivex.SingleObserver
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -442,39 +441,6 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
                         }
 
                     }.addOnFailureListener {}
-
-                    reference.child("Tokens").get().addOnSuccessListener {
-
-                        try {
-                            viewModel.dataManager.saveToken(
-                                it.child(viewModel.dataManager.user.empId.toString()).value as String
-                            )
-
-                        } catch (e: Exception) {
-
-
-                            FirebaseMessaging.getInstance().token.addOnCompleteListener {
-                                if (it.isComplete) {
-                                    val token = it.result.toString()
-                                    Log.d(" FirebaseMessaging ", token)
-
-                                    reference.child(viewModel.dataManager.user.empId.toString())
-                                        .setValue(token)
-
-                                    viewModel.dataManager.saveToken(token)
-                                }
-                            }
-
-
-                        }
-
-
-                    }.addOnFailureListener {}
-
-
-
-
-
 
                     Single.timer(2, TimeUnit.SECONDS)
                         .subscribeOn(Schedulers.io())

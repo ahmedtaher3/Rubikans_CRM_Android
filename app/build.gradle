@@ -17,7 +17,7 @@ android {
         minSdkVersion 21
         targetSdkVersion 29
         versionCode 46
-        versionName "1.1.17"
+        versionName "1.1.18"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -35,6 +35,9 @@ android {
         }
 
         huawei {
+        }
+
+        prelive {
         }
 
     }
@@ -169,7 +172,7 @@ dependencies {
 
     // Declare the dependencies for the Firebase Cloud Messaging and Analytics libraries
     // When using the BoM, you don't specify versions in Firebase library dependencies
-    implementation 'com.google.firebase:firebase-messaging-ktx'
+
     implementation 'com.google.firebase:firebase-crashlytics-ktx'
     implementation 'com.google.firebase:firebase-analytics-ktx'
     implementation 'com.google.firebase:firebase-database-ktx'
@@ -213,5 +216,6 @@ dependencies {
 
 
     implementation 'com.github.travijuu:numberpicker:1.0.7'
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.9.0'
 
 }

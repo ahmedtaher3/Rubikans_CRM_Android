@@ -79,7 +79,7 @@ class DVReportAdapter(private val context: Context, private var myData: ArrayLis
         if (model.employeeImage != null)
         {
             Glide.with(context)
-                    .load(ApiServices.ImageBaseURL + "ImageUpload/Employee/" + model.employeeImage)
+                    .load(com.devartlab.BuildConfig.ImageBaseURL + "ImageUpload/Employee/" + model.employeeImage)
                     .placeholder(holder._binding?.empImage?.drawable)
                     .into(holder._binding?.empImage!!)
         }
@@ -87,7 +87,7 @@ class DVReportAdapter(private val context: Context, private var myData: ArrayLis
 
         {
             Glide.with(context)
-                    .load(ApiServices.ImageBaseURL + "ImageUpload/Employee/DefaultEmpImage.jpg")
+                    .load(com.devartlab.BuildConfig.ImageBaseURL + "ImageUpload/Employee/DefaultEmpImage.jpg")
                     .placeholder(holder._binding?.empImage?.drawable)
                     .into(holder._binding?.empImage!!)
         }

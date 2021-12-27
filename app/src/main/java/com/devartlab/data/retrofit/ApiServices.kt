@@ -649,8 +649,6 @@ interface ApiServices {
         @Query("IsApproved") isApprove: Boolean,
         @Body array: JsonArray
     ): Call<ResponseModel>
-
-
  
 
     @POST("InventoryTransaction/GetAllInvnetoryTrxByOption")
@@ -668,14 +666,8 @@ interface ApiServices {
     ): Observable<ResponseModel>
 
 
-
-
     @GET("api/ads")
     fun getAds(): Observable<ResponseModel>
 
-    companion object {
 
-        const val  BaseURL = "http://devartlabcrm.com/api/V1/"
-        const val ImageBaseURL = "http://devartlabcrm.com/"
-    }
 }
