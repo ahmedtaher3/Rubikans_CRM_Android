@@ -11,8 +11,8 @@ dependencyResolutionManagement {
             allowInsecureProtocol = true}
         maven {  url  "http://dl.bintray.com/piasy/maven"
             allowInsecureProtocol = true}
-        maven {url 'https://developer.huawei.com/repo/'
-            allowInsecureProtocol = true}
+       // maven {url 'https://developer.huawei.com/repo/'
+         //   allowInsecureProtocol = true}
         maven {
             url 'https://api.mapbox.com/downloads/v2/releases/maven'
             authentication {

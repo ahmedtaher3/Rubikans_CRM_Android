@@ -30,7 +30,6 @@ import com.google.android.gms.common.GoogleApiAvailability
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException
 import com.google.android.gms.common.GooglePlayServicesRepairableException
 import com.google.android.gms.security.ProviderInstaller
-import com.huawei.hms.api.HuaweiApiAvailability
 import java.io.*
 import java.security.NoSuchAlgorithmException
 import java.text.ParseException
@@ -363,14 +362,6 @@ object CommonUtilities {
         val googleApiAvailability = GoogleApiAvailability.getInstance()
         val status = googleApiAvailability.isGooglePlayServicesAvailable(activity!!)
         return status == ConnectionResult.SUCCESS
-
-    }
-
-    fun isHuaweiServicesAvailable(activity: Activity?): Boolean {
-
-        val googleApiAvailability = HuaweiApiAvailability.getInstance()
-        val status = googleApiAvailability.isHuaweiMobileServicesAvailable(activity)
-        return status == com.huawei.hms.api.ConnectionResult.SUCCESS
 
     }
 

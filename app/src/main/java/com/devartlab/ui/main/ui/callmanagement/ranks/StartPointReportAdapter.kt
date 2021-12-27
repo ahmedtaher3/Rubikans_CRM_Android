@@ -112,12 +112,12 @@ class StartPointReportAdapter(private val context: Context, private var myData: 
 
         if (model.imagePath != null) {
             Glide.with(context)
-                    .load(com.devartlab.BuildConfig.ImageBaseURL + "ImageUpload/Employee/" + model.imagePath)
+                    .load(com.devartlab.AppConstants.ImageBaseURL + "ImageUpload/Employee/" + model.imagePath)
                     .placeholder(holder._binding?.empImage?.drawable)
                     .into(holder._binding?.empImage!!)
         } else {
             Glide.with(context)
-                    .load(com.devartlab.BuildConfig.ImageBaseURL + "ImageUpload/Employee/DefaultEmpImage.jpg")
+                    .load(com.devartlab.AppConstants.ImageBaseURL + "ImageUpload/Employee/DefaultEmpImage.jpg")
                     .placeholder(holder._binding?.empImage?.drawable)
                     .into(holder._binding?.empImage!!)
         }

@@ -54,7 +54,7 @@ class EmployeeSearchAdapter constructor(context: Context, chooseEmployeeInterFac
         if (model.fileImage != null)
         {
             Glide.with(context)
-                    .load(com.devartlab.BuildConfig.ImageBaseURL + "ImageUpload/Employee/" + model.fileImage)
+                    .load(com.devartlab.AppConstants.ImageBaseURL + "ImageUpload/Employee/" + model.fileImage)
                     .placeholder(holder.empImage?.drawable)
                     .into(holder.empImage!!)
         }
@@ -62,7 +62,7 @@ class EmployeeSearchAdapter constructor(context: Context, chooseEmployeeInterFac
 
         {
             Glide.with(context)
-                    .load(com.devartlab.BuildConfig.ImageBaseURL + "ImageUpload/Employee/DefaultEmpImage.jpg")
+                    .load(com.devartlab.AppConstants.ImageBaseURL + "ImageUpload/Employee/DefaultEmpImage.jpg")
                     .placeholder(holder.empImage?.drawable)
                     .into(holder.empImage!!)
         }

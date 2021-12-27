@@ -1,5 +1,6 @@
 package com.devartlab.data.retrofit;
 
+import com.devartlab.AppConstants;
 import com.devartlab.BuildConfig;
 
 import java.util.concurrent.TimeUnit;
@@ -40,7 +41,7 @@ public class RetrofitClient {
 
         if (ourInstance == null)
             ourInstance = new Retrofit.Builder()
-                    .baseUrl(BuildConfig.BASE_URL)//alaa
+                    .baseUrl(AppConstants.BaseURL)//alaa
                     .client(okHttpClient)
                     .addConverterFactory(GsonConverterFactory.create())
                     .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
