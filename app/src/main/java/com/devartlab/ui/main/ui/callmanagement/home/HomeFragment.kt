@@ -486,7 +486,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ChooseEmployeeInterFac
             }
             "Slider" -> {
                 binding.bannerSlider.visibility = View.VISIBLE
-                Slider.init(PicassoImageLoadingService(context))
+                Slider.init(PicassoImageLoadingService(baseActivity.applicationContext))
                 binding.bannerSlider?.setInterval(5000)
 
                 val list = ArrayList<String>()

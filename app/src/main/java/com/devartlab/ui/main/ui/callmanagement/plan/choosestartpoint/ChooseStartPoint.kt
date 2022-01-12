@@ -229,7 +229,7 @@ fun ads(){
         }
         "Slider" -> {
             bannerslider.visibility = View.VISIBLE
-            Slider.init(PicassoImageLoadingService(context))
+            Slider.init(PicassoImageLoadingService(context.applicationContext))
             bannerslider?.setInterval(5000)
 
             val list = ArrayList<String>()
