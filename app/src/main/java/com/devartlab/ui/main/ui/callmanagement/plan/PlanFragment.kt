@@ -155,8 +155,7 @@ class PlanFragment : BaseFragment<FragmentPlanBinding?>(), ActivitiesAdapter.Cho
                                 chooseActivityType()
                             } else {
 
-                                //edit
-                                  chooseActivityType()
+
                                 viewModel.getEditPermission(
                                     (CommonUtilities.convertToMillis(DATE)!!
                                         .toLong() + 7200000).toString(), 1

@@ -90,6 +90,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding?>(), View.OnClickListene
                 user.accId = t.data.loginData[0].userId
                 user.empId = t.data.loginData[0].userEmpId
                 user.image = t.data.loginData[0].fileImage
+                user.managerId = t.data.loginData[0].managerId
                 try {
                     user.storeId = t.data.userStores[0].storeId!!
                 } catch (e: Exception) {

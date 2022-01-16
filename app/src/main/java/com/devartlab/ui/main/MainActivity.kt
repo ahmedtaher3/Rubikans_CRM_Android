@@ -1,11 +1,9 @@
 package com.devartlab.ui.main
 
-import android.Manifest
 import android.app.job.JobScheduler
 import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
@@ -17,7 +15,6 @@ import android.view.WindowManager
 import android.widget.RelativeLayout
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
-import androidx.core.app.ActivityCompat
 import androidx.core.view.GravityCompat
 import androidx.core.view.MenuItemCompat
 import androidx.databinding.DataBindingUtil
@@ -65,10 +62,10 @@ import java.util.*
 import java.util.concurrent.TimeUnit
 import kotlin.collections.ArrayList
 
-
 private const val TAG = "MainActivity"
 
-class MainActivity : BaseActivity<ActivityMainBinding?>(), View.OnClickListener, MenuListAdapter.OnHomeItemClick {
+class MainActivity : BaseActivity<ActivityMainBinding?>(), View.OnClickListener,
+    MenuListAdapter.OnHomeItemClick {
     lateinit var binding: ActivityMainBinding
     lateinit var viewModel: MainViewModel
     lateinit var adapter: MenuListAdapter
@@ -103,26 +100,38 @@ class MainActivity : BaseActivity<ActivityMainBinding?>(), View.OnClickListener,
             @Throws(Exception::class)
             override fun run() {
                 run {
-                    if (!viewModel!!.authorityDao.getById("61").allowBrowseRecord && !viewModel!!.authorityDao.getById("1125").allowBrowseRecord && !viewModel!!.authorityDao.getById(
-                            "1126").allowBrowseRecord
+                    if (!viewModel!!.authorityDao.getById("61").allowBrowseRecord && !viewModel!!.authorityDao.getById(
+                            "1125"
+                        ).allowBrowseRecord && !viewModel!!.authorityDao.getById(
+                            "1126"
+                        ).allowBrowseRecord
                     ) {
                         callManagementPermission = false
-                    }
-                    else {
+                    } else {
 
                         if (viewModel!!.dataManager.sFirstTime) {
 
-                            Single.timer(1, TimeUnit.SECONDS).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+                            Single.timer(1, TimeUnit.SECONDS).subscribeOn(Schedulers.io())
+                                .observeOn(AndroidSchedulers.mainThread())
                                 .subscribe(object : SingleObserver<Long?> {
                                     override fun onSubscribe(d: Disposable) {}
                                     override fun onSuccess(aLong: Long) {
                                         if (!viewModel!!.dataManager.startShift) {
-                                            dialog = SyncDataDialog(this@MainActivity, this@MainActivity, viewModel?.dataManager!!);
+                                            dialog = SyncDataDialog(
+                                                this@MainActivity,
+                                                this@MainActivity,
+                                                viewModel?.dataManager!!
+                                            );
                                             dialog.setCanceledOnTouchOutside(false);
                                             val window = dialog.getWindow();
-                                            window?.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
-                                            dialog.getWindow()?.setBackgroundDrawableResource(android.R.color.transparent);
-                                            dialog.getWindow()?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+                                            window?.setLayout(
+                                                WindowManager.LayoutParams.MATCH_PARENT,
+                                                WindowManager.LayoutParams.MATCH_PARENT
+                                            );
+                                            dialog.getWindow()
+                                                ?.setBackgroundDrawableResource(android.R.color.transparent);
+                                            dialog.getWindow()
+                                                ?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
                                             dialog.show();
                                         }
 
@@ -146,8 +155,7 @@ class MainActivity : BaseActivity<ActivityMainBinding?>(), View.OnClickListener,
                         if (!viewModel!!.authorityDao.getById("1157").allowBrowseRecord) {
                             tradePermission = false
                         }
-                    }
-                    catch (e: java.lang.Exception) {
+                    } catch (e: java.lang.Exception) {
                         tradePermission = false
                     }
 
@@ -155,8 +163,6 @@ class MainActivity : BaseActivity<ActivityMainBinding?>(), View.OnClickListener,
                 }
             }
         }).subscribeOn(Schedulers.io()).subscribe()
-
-
 
         setLiseners()
         setObservers()
@@ -169,15 +175,13 @@ class MainActivity : BaseActivity<ActivityMainBinding?>(), View.OnClickListener,
         viewModel!!.getAllPending("allPending", "")
     }
 
-
     private fun setObservers() {
         viewModel.progress.observe(this, Observer { integer ->
             when (integer) {
                 0 -> {
                     try {
                         ProgressLoading.dismiss()
-                    }
-                    catch (e: Exception) {
+                    } catch (e: Exception) {
 
                     }
 
@@ -191,7 +195,7 @@ class MainActivity : BaseActivity<ActivityMainBinding?>(), View.OnClickListener,
         })
 
         viewModel!!.responseLiveRequests.observe(this,
-                                                 Observer { googleRequestResponse -> setupBadge(googleRequestResponse.hrRequests?.size!! + googleRequestResponse.penaltiesGoogle?.size!! + googleRequestResponse.workFromHomelist?.size!!) })
+            Observer { googleRequestResponse -> setupBadge(googleRequestResponse.hrRequests?.size!! + googleRequestResponse.penaltiesGoogle?.size!! + googleRequestResponse.workFromHomelist?.size!!) })
 
         viewModel!!.randomLive.observe(this, Observer {
             Toast.makeText(this@MainActivity, it.size.toString(), Toast.LENGTH_SHORT).show()
@@ -209,13 +213,11 @@ class MainActivity : BaseActivity<ActivityMainBinding?>(), View.OnClickListener,
 
                 try {
                     ProgressLoading.dismiss()
-                }
-                catch (e: Exception) {
+                } catch (e: Exception) {
 
                 }
 
-            }
-            else {
+            } else {
                 Toast.makeText(this, it.rerurnMessage, Toast.LENGTH_SHORT).show()
             }
 
@@ -225,12 +227,22 @@ class MainActivity : BaseActivity<ActivityMainBinding?>(), View.OnClickListener,
 
     private fun setUpRecycler() {
         val list = ArrayList<CardModel>()
-        list.add(CardModel(1, resources.getString(R.string.call_management), R.drawable.call_managment_icon))
+        list.add(
+            CardModel(
+                1,
+                resources.getString(R.string.call_management),
+                R.drawable.call_managment_icon
+            )
+        )
         list.add(CardModel(2, resources.getString(R.string.self_service), R.drawable.self_service))
         list.add(CardModel(3, resources.getString(R.string.my_profile), R.drawable.employee))
-        list.add(CardModel(4,
-                           resources.getString(R.string.market_request),
-                           R.drawable.money)) //   list.add(CardModel(5, "DevartLink", R.drawable.devartlink))
+        list.add(
+            CardModel(
+                4,
+                resources.getString(R.string.market_request),
+                R.drawable.money
+            )
+        ) //   list.add(CardModel(5, "DevartLink", R.drawable.devartlink))
 
         adapter = MenuListAdapter(this, list, this)
         val layoutManager = GridLayoutManager(this, 2)
@@ -243,7 +255,13 @@ class MainActivity : BaseActivity<ActivityMainBinding?>(), View.OnClickListener,
     private fun setUpNavDrawer() {
 
         toggle = object :
-            ActionBarDrawerToggle(this, binding.drawerLayout, binding!!.toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close) {
+            ActionBarDrawerToggle(
+                this,
+                binding.drawerLayout,
+                binding!!.toolbar,
+                R.string.navigation_drawer_open,
+                R.string.navigation_drawer_close
+            ) {
             override fun onDrawerClosed(drawerView: View) {
                 super.onDrawerClosed(drawerView)
             }
@@ -262,38 +280,37 @@ class MainActivity : BaseActivity<ActivityMainBinding?>(), View.OnClickListener,
                 R.id.List -> if (callManagementPermission) {
                     intent.putExtra("CALL_MANAGEMENT_FLAG", 1)
                     startActivity(intent)
-                }
-                else {
-                    Toast.makeText(this@MainActivity, "You haven't permission", Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(this@MainActivity, "You haven't permission", Toast.LENGTH_SHORT)
+                        .show()
                 }
                 R.id.Plan -> if (callManagementPermission) {
                     intent.putExtra("CALL_MANAGEMENT_FLAG", 2)
                     startActivity(intent)
-                }
-                else {
-                    Toast.makeText(this@MainActivity, "You haven't permission", Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(this@MainActivity, "You haven't permission", Toast.LENGTH_SHORT)
+                        .show()
                 }
                 R.id.Report -> if (callManagementPermission) {
                     if (viewModel?.dataManager?.isSupervisor!!) {
                         intent.putExtra("CALL_MANAGEMENT_FLAG", 4)
                         startActivity(intent)
-                    }
-                    else {
+                    } else {
                         intent.putExtra("CALL_MANAGEMENT_FLAG", 3)
                         startActivity(intent)
                     }
 
-                }
-                else {
-                    Toast.makeText(this@MainActivity, "You haven't permission", Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(this@MainActivity, "You haven't permission", Toast.LENGTH_SHORT)
+                        .show()
                 }
 
                 R.id.DailyReport -> if (callManagementPermission) {
                     intent.putExtra("CALL_MANAGEMENT_FLAG", 5)
                     startActivity(intent)
-                }
-                else {
-                    Toast.makeText(this@MainActivity, "You haven't permission", Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(this@MainActivity, "You haven't permission", Toast.LENGTH_SHORT)
+                        .show()
                 }
                 R.id.selfService -> {
                     startActivity(intent2)
@@ -355,58 +372,48 @@ class MainActivity : BaseActivity<ActivityMainBinding?>(), View.OnClickListener,
 
 
                 }
-                R.id.rateUs -> {/*   try {
-                           startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=$packageName")))
-                       } catch (e: ActivityNotFoundException) {
-                           startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=$packageName")))
-                       }*/
-
-
-                    if (ActivityCompat.checkSelfPermission(this,
-                                                           Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
-                            this,
-                            Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED
-                    ) {
-
-                        if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.CAMERA)) {
-                            android.app.AlertDialog.Builder(this).setTitle("permission denied").setMessage("ask for permission again")
-                                .setPositiveButton("ok") { dialog, which ->
-                                    ActivityCompat.requestPermissions(this,
-                                                                      arrayOf(Manifest.permission.ACCESS_FINE_LOCATION,
-                                                                              Manifest.permission.ACCESS_COARSE_LOCATION),
-                                                                      22)
-                                }.setNegativeButton("cancel") { dialog, which -> dialog.dismiss() }.create().show()
-                        }
-                        else {
-                            ActivityCompat.requestPermissions(this,
-                                                              arrayOf(Manifest.permission.ACCESS_FINE_LOCATION,
-                                                                      Manifest.permission.ACCESS_COARSE_LOCATION),
-                                                              22)
-
-
-                        }
-
-                    }
-                    else {
-
-
+                R.id.rateUs -> {
+                    try {
+                        startActivity(
+                            Intent(
+                                Intent.ACTION_VIEW,
+                                Uri.parse("market://details?id=$packageName")
+                            )
+                        )
+                    } catch (e: ActivityNotFoundException) {
+                        startActivity(
+                            Intent(
+                                Intent.ACTION_VIEW,
+                                Uri.parse("https://play.google.com/store/apps/details?id=$packageName")
+                            )
+                        )
                     }
 
 
                 }
                 R.id.searchForUpdate -> {
                     try {
-                        startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=$packageName")))
-                    }
-                    catch (e: ActivityNotFoundException) {
-                        startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=$packageName")))
+                        startActivity(
+                            Intent(
+                                Intent.ACTION_VIEW,
+                                Uri.parse("market://details?id=$packageName")
+                            )
+                        )
+                    } catch (e: ActivityNotFoundException) {
+                        startActivity(
+                            Intent(
+                                Intent.ACTION_VIEW,
+                                Uri.parse("https://play.google.com/store/apps/details?id=$packageName")
+                            )
+                        )
                     }
                 }
                 R.id.shareApp -> {
 
                     // startActivity(Intent(this@MainActivity , UpdatePlan::class.java))
                     val intent = Intent(Intent.ACTION_SEND)
-                    val shareBody = "Download Devartlab CRM" + "\n" + "\n" + "https://play.google.com/store/apps/details?id=$packageName"
+                    val shareBody =
+                        "Download Devartlab CRM" + "\n" + "\n" + "https://play.google.com/store/apps/details?id=$packageName"
                     intent.type = "text/plain"
 
                     intent.putExtra(Intent.EXTRA_TEXT, shareBody)
@@ -422,7 +429,12 @@ class MainActivity : BaseActivity<ActivityMainBinding?>(), View.OnClickListener,
     }
 
     private fun setUpNavHeader() {
-        val headerMainBinding: NavHeaderMainBinding = DataBindingUtil.inflate(layoutInflater, R.layout.nav_header_main, binding!!.navView, false)
+        val headerMainBinding: NavHeaderMainBinding = DataBindingUtil.inflate(
+            layoutInflater,
+            R.layout.nav_header_main,
+            binding!!.navView,
+            false
+        )
         if (viewModel!!.dataManager.user.image != null) {
             val decodedString = Base64.decode(viewModel!!.dataManager.user.image, Base64.DEFAULT)
             val decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.size)
@@ -441,8 +453,7 @@ class MainActivity : BaseActivity<ActivityMainBinding?>(), View.OnClickListener,
                 viewModel.onlineBoolean.set(true)
                 viewModel.onlineText.set("Online")
 
-            }
-            else {
+            } else {
                 viewModel.syncOfflineData()
 
             }
@@ -464,11 +475,14 @@ class MainActivity : BaseActivity<ActivityMainBinding?>(), View.OnClickListener,
             R.id.facebook -> {
                 try {
                     packageManager.getPackageInfo("com.facebook.katana", 0)
-                    val intent = Intent(Intent.ACTION_VIEW, Uri.parse("fb://page/" + "112487374437269"))
+                    val intent =
+                        Intent(Intent.ACTION_VIEW, Uri.parse("fb://page/" + "112487374437269"))
                     startActivity(intent)
-                }
-                catch (e: Exception) {
-                    val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.facebook.com/devartlabofficial"))
+                } catch (e: Exception) {
+                    val intent = Intent(
+                        Intent.ACTION_VIEW,
+                        Uri.parse("https://www.facebook.com/devartlabofficial")
+                    )
                     startActivity(intent)
                 }
             }
@@ -489,12 +503,13 @@ class MainActivity : BaseActivity<ActivityMainBinding?>(), View.OnClickListener,
                 try {
                     intent = Intent(Intent.ACTION_VIEW)
                     intent.setPackage("com.google.android.youtube")
-                    intent.data = Uri.parse("https://www.youtube.com/channel/UC7bij5Sn6vGCtxC3vPkSuwA")
+                    intent.data =
+                        Uri.parse("https://www.youtube.com/channel/UC7bij5Sn6vGCtxC3vPkSuwA")
                     startActivity(intent)
-                }
-                catch (e: ActivityNotFoundException) {
+                } catch (e: ActivityNotFoundException) {
                     intent = Intent(Intent.ACTION_VIEW)
-                    intent.data = Uri.parse("https://www.youtube.com/channel/UC7bij5Sn6vGCtxC3vPkSuwA")
+                    intent.data =
+                        Uri.parse("https://www.youtube.com/channel/UC7bij5Sn6vGCtxC3vPkSuwA")
                     startActivity(intent)
                 }
             }
@@ -505,7 +520,12 @@ class MainActivity : BaseActivity<ActivityMainBinding?>(), View.OnClickListener,
     fun replace_fragment(fragment: Fragment?, tag: String?) {
         supportFragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
         supportFragmentManager.beginTransaction()
-            .setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_left, R.anim.slide_in_left, R.anim.slide_out_left)
+            .setCustomAnimations(
+                R.anim.slide_in_left,
+                R.anim.slide_out_left,
+                R.anim.slide_in_left,
+                R.anim.slide_out_left
+            )
             .add(R.id.main_container, fragment!!).addToBackStack(tag).commit()
     }
 
@@ -530,8 +550,7 @@ class MainActivity : BaseActivity<ActivityMainBinding?>(), View.OnClickListener,
                 if (textCartItemCount != null) {
                     textCartItemCount!!.visibility = View.VISIBLE
                 }
-            }
-            else {
+            } else {
                 textCartItemCount!!.visibility = View.GONE
             }
         }
@@ -545,9 +564,9 @@ class MainActivity : BaseActivity<ActivityMainBinding?>(), View.OnClickListener,
                     val intent = Intent(this@MainActivity, CallManagementActivity::class.java)
                     intent.putExtra("CALL_MANAGEMENT_FLAG", 0)
                     startActivity(intent)
-                }
-                else {
-                    Toast.makeText(this@MainActivity, "You haven't permission", Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(this@MainActivity, "You haven't permission", Toast.LENGTH_SHORT)
+                        .show()
                 }
             }
             2 -> {
@@ -562,9 +581,9 @@ class MainActivity : BaseActivity<ActivityMainBinding?>(), View.OnClickListener,
                 if (marketRequestPermission) {
                     val intent = Intent(this@MainActivity, MarketRequestTypesActivity::class.java)
                     startActivity(intent)
-                }
-                else {
-                    Toast.makeText(this@MainActivity, "You haven't permission", Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(this@MainActivity, "You haven't permission", Toast.LENGTH_SHORT)
+                        .show()
                 }
             }
             5 -> {
@@ -586,7 +605,8 @@ class MainActivity : BaseActivity<ActivityMainBinding?>(), View.OnClickListener,
                 if (model.resourceLink.equals(null) && model.paragraph.equals(null) && model.slideImages == null) {
                     binding.constrAds.setVisibility(View.VISIBLE)
                     binding.imageView.visibility = View.VISIBLE
-                    Glide.with(this).load(model.default_ad_image).centerCrop().placeholder(R.drawable.dr_hussain).into(binding.imageView)
+                    Glide.with(this).load(model.default_ad_image).centerCrop()
+                        .placeholder(R.drawable.dr_hussain).into(binding.imageView)
                 }
                 break
             }
@@ -608,15 +628,23 @@ class MainActivity : BaseActivity<ActivityMainBinding?>(), View.OnClickListener,
                 "Image" -> {
 
                     binding.imageView.visibility = View.VISIBLE
-                    Glide.with(this).load(model.resourceLink).centerCrop().placeholder(R.drawable.dr_hussain).into(binding.imageView)
+                    Glide.with(this).load(model.resourceLink).centerCrop()
+                        .placeholder(R.drawable.dr_hussain).into(binding.imageView)
                 }
                 "GIF" -> {
                     binding.imageView.visibility = View.VISIBLE
-                    Glide.with(this).asGif().load(model.resourceLink).centerCrop().placeholder(R.drawable.dr_hussain).into(binding.imageView);
+                    Glide.with(this).asGif().load(model.resourceLink).centerCrop()
+                        .placeholder(R.drawable.dr_hussain).into(binding.imageView);
                 }
                 "Paragraph" -> {
                     binding.textView.visibility = View.VISIBLE
-                    binding.textView.loadDataWithBaseURL(null, model.paragraph!!, "text/html", "utf-8", null)
+                    binding.textView.loadDataWithBaseURL(
+                        null,
+                        model.paragraph!!,
+                        "text/html",
+                        "utf-8",
+                        null
+                    )
                 }
                 "Slider" -> {
                     binding.bannerSlider.visibility = View.VISIBLE
@@ -636,8 +664,7 @@ class MainActivity : BaseActivity<ActivityMainBinding?>(), View.OnClickListener,
                     if (binding.constrAds.visibility == View.VISIBLE) {
                         binding.constrAds.setVisibility(View.GONE)
                         binding.btnHideShowAds.setImageResource(R.drawable.ic_show_hide_ads)
-                    }
-                    else {
+                    } else {
                         binding.constrAds.setVisibility(View.VISIBLE)
                         binding.btnHideShowAds.setImageResource(R.drawable.ic_hide_show_ads)
                     }

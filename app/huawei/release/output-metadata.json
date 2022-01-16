@@ -10,8 +10,8 @@
     {
       "type": "SINGLE",
       "filters": [],
-      "versionCode": 46,
-      "versionName": "1.1.18",
+      "versionCode": 51,
+      "versionName": "1.1.19",
       "outputFile": "app-huawei-release.apk"
     }
   ]

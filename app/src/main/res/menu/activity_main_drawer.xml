@@ -95,7 +95,7 @@
                 android:id="@+id/updatePlan"
                 android:icon="@drawable/ic_floor_plan_grey600_24dp"
                 android:title="@string/update_plan"
-                android:visible="true" />
+                android:visible="false" />
 
             <item
                 android:id="@+id/Logout"

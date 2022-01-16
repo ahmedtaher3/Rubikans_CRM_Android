@@ -160,6 +160,8 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
                 user.password = t.data.loginData[0].userPassword
                 user.accId = t.data.loginData[0].userId
                 user.empId = t.data.loginData[0].userEmpId
+                user.managerId = t.data.loginData[0].managerId
+
                 try {
                     user.storeId = t.data.userStores[0].storeId!!
                 } catch (e: Exception) {
