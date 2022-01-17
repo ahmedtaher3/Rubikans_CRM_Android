@@ -117,7 +117,7 @@ class ReportFragment : BaseFragment<FragmentReportBinding>(), InvoiceTypsAdapter
         binding = viewDataBinding
 
         for (m in viewModel.dataManager.ads.ads!!) {
-            if (m.pageCode?.toInt() == Constants.PLAN_RECYCLER) {
+            if (m.pageCode?.toInt() == Constants.REPORT_RECYCLER) {
                 adList?.add(m)
             }
         }
