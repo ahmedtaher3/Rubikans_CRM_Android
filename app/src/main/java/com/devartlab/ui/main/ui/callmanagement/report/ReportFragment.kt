@@ -164,16 +164,24 @@ class ReportFragment : BaseFragment<FragmentReportBinding>(), InvoiceTypsAdapter
 
 
                 for (model in it) {
-                    if (!model?.isAd!!) {
-                        this.model = model
 
-                        if (!model?.startPoint.isNullOrEmpty() && model?.startPointId != 0) {
+                    try {
+                        if (!model?.isAd!!) {
+                            this.model = model
 
-                            this.modelWithStartPoint = model
-                            break
+                            if (!model?.startPoint.isNullOrEmpty() && model?.startPointId != 0) {
 
+                                this.modelWithStartPoint = model
+                                break
+
+                            }
                         }
                     }
+                    catch (e:Exception)
+                    {
+
+                    }
+
                 }
 
                 if (modelWithStartPoint != null) {
