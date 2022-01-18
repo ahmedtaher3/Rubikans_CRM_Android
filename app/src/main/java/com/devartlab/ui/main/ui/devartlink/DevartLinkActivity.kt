@@ -7,17 +7,25 @@ import android.text.Html
 import android.util.Log
 import android.view.MenuItem
 import android.view.View
+import android.widget.Toast
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.devartlab.R
 import com.devartlab.base.BaseActivity
+import com.devartlab.base.BaseApplication
+import com.devartlab.data.shared.DataManager
 import com.devartlab.databinding.ActivityDevartLinkBinding
 import com.devartlab.model.AdModel
 import com.devartlab.model.CardModel
 import com.devartlab.ui.main.ui.callmanagement.home.MenuListAdapter
+import com.devartlab.ui.main.ui.devartlink.letsTalk.LetsTalkActivity
+import com.devartlab.ui.main.ui.devartlink.letsTalk.model.user.UserResponse
+import com.devartlab.ui.main.ui.eShopping.utils.UserPreferenceHelper
 import com.devartlab.ui.main.ui.moreDetailsAds.MoreDetailsAdsActivity
+import com.devartlab.ui.main.ui.profile.ProfileActivity
 import com.devartlab.utils.Constants
 import com.devartlab.utils.MainSliderAdapter
 import com.devartlab.utils.PicassoImageLoadingService
@@ -34,6 +42,10 @@ class DevartLinkActivity : BaseActivity<ActivityDevartLinkBinding>(),
     lateinit var adapter: MenuListAdapter
     lateinit var viewModel: DevartLinkViewModel
     lateinit var mediaSource: SimpleMediaSource
+    var dataManager: DataManager? = null
+    var name: String? = null
+    var pass: String? = null
+    var token: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,6 +54,12 @@ class DevartLinkActivity : BaseActivity<ActivityDevartLinkBinding>(),
         supportActionBar!!.title = "Devart Link"
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         viewModel = ViewModelProviders.of(this).get(DevartLinkViewModel::class.java)
+
+        dataManager = (application as BaseApplication).dataManager
+        name = dataManager!!.user.userName
+        pass = dataManager!!.user.password
+        token = dataManager!!.token
+        viewModel.getUserModel(name, pass, token)
 
 
         val list = ArrayList<CardModel>()
@@ -55,6 +73,7 @@ class DevartLinkActivity : BaseActivity<ActivityDevartLinkBinding>(),
         binding?.recycler?.layoutManager = layoutManager
         binding.recycler.adapter = adapter
         ads()//fun to show ads
+        handleObserver()//observer
     }
 
     override fun getLayoutId(): Int {
@@ -65,7 +84,7 @@ class DevartLinkActivity : BaseActivity<ActivityDevartLinkBinding>(),
 
         when (model.id) {
             1 -> {
-                startActivity(Intent(this, DevartLinkWebView::class.java))
+                startActivity(Intent(this, LetsTalkActivity::class.java))
             }
         }
     }
@@ -84,7 +103,20 @@ class DevartLinkActivity : BaseActivity<ActivityDevartLinkBinding>(),
         super.onStop()
         binding.videoView.stop()
     }
-
+    fun handleObserver() {
+        viewModel!!.errorMessage.observe(this, { integer: Int ->
+            if (integer == 1) {
+                Log.e("xxx", "error")
+                Toast.makeText(this, "error in response data", Toast.LENGTH_SHORT)
+                    .show()
+            } else {
+                Toast.makeText(this, "error in Network", Toast.LENGTH_SHORT).show()
+            }
+        })
+        viewModel.userResponse.observe(this, Observer {
+            UserPreferenceHelper.saveUserProfileChat(it!!)
+        })
+    }
     //
 //    override fun onResume() {
 //        super.onResume()

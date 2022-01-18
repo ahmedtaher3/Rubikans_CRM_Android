@@ -229,7 +229,16 @@ dependencies {
     implementation 'com.squareup.okhttp3:logging-interceptor:4.9.0'
 
 
+    implementation 'com.pusher:pusher-java-client:2.2.7'
+    // smart tab layout
+    implementation 'com.ogaclejapan.smarttablayout:library:2.0.0@aar'
+    implementation 'com.ogaclejapan.smarttablayout:utils-v4:2.0.0@aar'
+    //pusher
     implementation 'com.github.chivorns:smartmaterialspinner:1.5.0'
+    //image
+    implementation 'com.squareup.picasso:picasso:2.71828'
+    //show video youtube
+    implementation 'com.pierfrancescosoffritti.androidyoutubeplayer:core:10.0.5'
 
     implementation 'com.huawei.hms:push:6.1.0.300'
 

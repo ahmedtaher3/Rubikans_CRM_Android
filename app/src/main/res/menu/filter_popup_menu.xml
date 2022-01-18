@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/action_all"
+        android:title="@string/action_all"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/action_open"
+        android:title="@string/action_open"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/action_inreview"
+        android:title="@string/action_inreview"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/action_close"
+        android:title="@string/action_close"
+        app:showAsAction="never"/>
+</menu>

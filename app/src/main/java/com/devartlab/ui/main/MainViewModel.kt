@@ -10,6 +10,8 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
+import com.devartlab.a4eshopping.PharmacyBinding.model.searchForPharmacy.ConnetctedPharmaciesResponse
+import com.devartlab.a4eshopping.main.model.login4EShopping.Login4EShoppingRequest
 import com.devartlab.base.BaseApplication
 import com.devartlab.data.retrofit.ApiServices
 import com.devartlab.data.retrofit.ApiServicesGoogle
@@ -44,6 +46,8 @@ import com.devartlab.data.source.values.ValuesRepository
 import com.devartlab.model.GoogleRequestResponse
 import com.devartlab.model.ProductTable
 import com.devartlab.ui.auth.login.LoginActivity
+import com.devartlab.ui.main.ui.devartlink.letsTalk.model.user.UserResponse
+import com.devartlab.ui.main.ui.eShopping.main.model.login4EShopping.Login4EShoppingResponse
 import com.devartlab.utils.CommonUtilities
 import com.google.gson.Gson
 import io.reactivex.Completable
@@ -51,6 +55,9 @@ import io.reactivex.Observer
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import retrofit2.Retrofit
 
 class MainViewModel(application: Application) : AndroidViewModel(application) {
@@ -66,7 +73,10 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     val responseLiveRequests: MutableLiveData<GoogleRequestResponse>
     val syncOfflineData: MutableLiveData<ResponseModel>
     val allProducts: MutableLiveData<List<ProductEntity>>
-
+    var errorMessage: MutableLiveData<Int>
+        protected set
+    var login4EShoppingResponse: MutableLiveData<Login4EShoppingResponse?>
+        protected set
 
     var myAPI: ApiServices? = null
     var myAPI2: ApiServicesGoogle? = null
@@ -111,6 +121,8 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         retrofit2 = RetrofitClient.getInstanceGoogleSheet()
         myAPI = retrofit!!.create(ApiServices::class.java)
         myAPI2 = retrofit2!!.create(ApiServicesGoogle::class.java)
+        errorMessage = MutableLiveData()//error message
+        login4EShoppingResponse = MutableLiveData()//login 4eshopping
 
 
 
@@ -447,4 +459,25 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     }
 
+
+    //function login 4EShopping
+    fun getUserModel(login4EShoppingRequest: Login4EShoppingRequest) {
+        RetrofitClient.getApis4EShopping().LOGIN4ESHOPPING(login4EShoppingRequest)!!
+            .enqueue(object : Callback<Login4EShoppingResponse?> {
+                override fun onResponse(
+                    call: Call<Login4EShoppingResponse?>,
+                    response: Response<Login4EShoppingResponse?>
+                ) {
+                    if (response.isSuccessful) {
+                        login4EShoppingResponse.postValue(response.body())
+                    } else {
+                        login4EShoppingResponse.postValue(response.body())
+                    }
+                }
+
+                override fun onFailure(call: Call<Login4EShoppingResponse?>, t: Throwable) {
+                    errorMessage.postValue(1)
+                }
+            })
+    }
 }

@@ -1,56 +1,61 @@
-<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools" package="com.devartlab">
-    <uses-permission android:name="android.permission.BLUETOOTH" />
-    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-    <uses-permission android:name="android.permission.CAMERA2" />
-    <uses-permission android:name="android.permission.RECORD_AUDIO" />
-    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" tools:ignore="ScopedStorage" />
-    <uses-feature android:name="android.hardware.location.gps" />
-    <application android:name=".base.BaseApplication" android:fullBackupContent="false" android:hardwareAccelerated="true" android:icon="@mipmap/ic_launcher" android:label="@string/app_name" android:largeHeap="true" android:requestLegacyExternalStorage="true" android:roundIcon="@mipmap/ic_launcher_round" android:supportsRtl="true" android:theme="@style/AppTheme" android:usesCleartextTraffic="true">
-        <activity android:name=".ui.main.ui.devartlink.DevartLinkActivity" android:exported="true" />
-        <activity android:name=".ui.main.ui.callmanagement.list.create.CreateNewCustomerActivity" android:exported="true" />
-        <activity android:name=".ui.main.ui.callmanagement.inventory.balance.InventoryBalanceDetailsLayout" android:exported="true" />
-        <activity android:name=".ui.main.ui.callmanagement.inventory.balance.InventoryBalanceActivity" android:exported="true" />
-        <activity android:name=".ui.main.ui.callmanagement.inventory.status.InventoryStatusDetailsActivity" android:exported="true" />
-        <activity android:name=".ui.main.ui.callmanagement.inventory.status.InventoryRequestsStatusActivity" android:exported="true" />
-        <activity android:name=".ui.main.ui.callmanagement.trade.selectProductContract.SelectProductsActivity" android:exported="true" />
-        <activity android:name=".ui.main.ui.callmanagement.planListpermission.ListPermissionActivity" android:exported="true" />
-        <activity android:name=".ui.main.ui.callmanagement.ranks.doublevisit.DVDetailsActivity" android:exported="true" />
-        <activity android:name=".ui.main.ui.moreDetailsAds.MoreDetailsAdsActivity" android:exported="true" />
-        <activity android:name=".ui.main.ui.callmanagement.ranks.medicalriprank.MedicalRepReportActivity" android:exported="true" />
-        <activity android:name=".ui.main.ui.callmanagement.trade.TradeActivity" android:exported="true" />
-        <activity android:name=".ui.main.ui.trade.NewCustomerActivity" android:exported="true" />
-        <activity android:name=".ui.main.ui.trade.PrintActivity" android:exported="true" />
-        <activity android:name=".ui.main.ui.TestActivity" android:exported="true" />
-        <activity android:name=".ui.main.ui.employeeservices.SelfServiceActivity" android:exported="true" />
-        <activity android:name=".ui.main.ui.callmanagement.CallManagementActivity" android:exported="true" android:label="@string/title_activity_call_management" android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".ui.main.ui.employeeservices.hrrequest.AddNewRequest" android:exported="true" />
-        <activity android:name=".ui.main.ui.market.details.MarketRequestDetailsActivity" android:exported="true" />
-        <meta-data android:name="com.google.android.geo.API_KEY" android:exported="true" android:value="@string/google_maps_key" />
-        <meta-data android:name="com.google.android.gms.version" android:exported="true" android:value="@integer/google_play_services_version" />
-        <activity android:name=".ui.main.ui.callmanagement.employee.EmployeeReportActivity" android:exported="true" />
-        <activity android:name=".ui.main.ui.employeeservices.EmployeeServicesActivity" android:exported="true" />
-        <activity android:name=".ui.main.ui.callmanagement.list.addnewcus.AddNewCustomer" android:exported="true" />
-        <activity android:name=".ui.main.ui.site.SiteActivity" android:exported="true" />
-        <activity android:name=".ui.auth.devartsite.DevartActivity" android:exported="true" />
-        <activity android:name=".ui.main.ui.callmanagement.plan.addplan.meeting.AddMeetingActivity" android:exported="true" />
-        <activity android:name=".ui.main.ui.callmanagement.plan.addplan.doublee.DoubleActivity" android:exported="true" />
-        <activity android:name=".ui.main.ui.callmanagement.plan.addplan.office.AddOfficeActivity" android:exported="true" />
-        <activity android:name=".ui.main.ui.callmanagement.report.arrange.ArrangeActivity" android:exported="true" />
-        <activity android:name=".ui.main.ui.callmanagement.plan.addplan.single.AddPlanDoubleExtraActivity" android:exported="true" />
-        <activity android:name=".ui.main.MainActivity" android:configChanges="orientation|screenSize" android:exported="true" android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".ui.auth.splash.SplashActivity" android:exported="true">
+<?xml version="1.0" encoding="utf-8"?><manifest xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools" package="com.devartlab">
+
+    <uses-permission android:name="android.permission.BLUETOOTH"/>
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    <uses-permission android:name="android.permission.CAMERA2"/>
+    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" tools:ignore="ScopedStorage"/>
+
+    <uses-feature android:name="android.hardware.location.gps"/>
+
+    <application android:fullBackupContent="false" android:hardwareAccelerated="true" android:icon="@mipmap/ic_launcher" android:label="@string/app_name" android:largeHeap="true" android:name=".base.BaseApplication" android:requestLegacyExternalStorage="true" android:roundIcon="@mipmap/ic_launcher_round" android:supportsRtl="true" android:theme="@style/AppTheme" android:usesCleartextTraffic="true">
+        <activity android:exported="true" android:name=".ui.main.ui.devartlink.DevartLinkActivity"/>
+        <activity android:exported="true" android:name=".ui.main.ui.callmanagement.list.create.CreateNewCustomerActivity"/>
+        <activity android:exported="true" android:name=".ui.main.ui.callmanagement.inventory.balance.InventoryBalanceDetailsLayout"/>
+        <activity android:exported="true" android:name=".ui.main.ui.callmanagement.inventory.balance.InventoryBalanceActivity"/>
+        <activity android:exported="true" android:name=".ui.main.ui.callmanagement.inventory.status.InventoryStatusDetailsActivity"/>
+        <activity android:exported="true" android:name=".ui.main.ui.callmanagement.inventory.status.InventoryRequestsStatusActivity"/>
+        <activity android:exported="true" android:name=".ui.main.ui.callmanagement.trade.selectProductContract.SelectProductsActivity"/>
+        <activity android:exported="true" android:name=".ui.main.ui.callmanagement.planListpermission.ListPermissionActivity"/>
+        <activity android:exported="true" android:name=".ui.main.ui.callmanagement.ranks.doublevisit.DVDetailsActivity"/>
+        <activity android:exported="true" android:name=".ui.main.ui.moreDetailsAds.MoreDetailsAdsActivity"/>
+        <activity android:exported="true" android:name=".ui.main.ui.callmanagement.ranks.medicalriprank.MedicalRepReportActivity"/>
+        <activity android:exported="true" android:name=".ui.main.ui.callmanagement.trade.TradeActivity"/>
+        <activity android:exported="true" android:name=".ui.main.ui.trade.NewCustomerActivity"/>
+        <activity android:exported="true" android:name=".ui.main.ui.trade.PrintActivity"/>
+        <activity android:exported="true" android:name=".ui.main.ui.TestActivity"/>
+        <activity android:exported="true" android:name=".ui.main.ui.employeeservices.SelfServiceActivity"/>
+        <activity android:exported="true" android:label="@string/title_activity_call_management" android:name=".ui.main.ui.callmanagement.CallManagementActivity" android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:exported="true" android:name=".ui.main.ui.employeeservices.hrrequest.AddNewRequest"/>
+        <activity android:exported="true" android:name=".ui.main.ui.market.details.MarketRequestDetailsActivity"/>
+
+        <meta-data android:exported="true" android:name="com.google.android.geo.API_KEY" android:value="@string/google_maps_key"/>
+        <meta-data android:exported="true" android:name="com.google.android.gms.version" android:value="@integer/google_play_services_version"/>
+
+        <activity android:exported="true" android:name=".ui.main.ui.callmanagement.employee.EmployeeReportActivity"/>
+        <activity android:exported="true" android:name=".ui.main.ui.employeeservices.EmployeeServicesActivity"/>
+        <activity android:exported="true" android:name=".ui.main.ui.callmanagement.list.addnewcus.AddNewCustomer"/>
+        <activity android:exported="true" android:name=".ui.main.ui.site.SiteActivity"/>
+        <activity android:exported="true" android:name=".ui.auth.devartsite.DevartActivity"/>
+        <activity android:exported="true" android:name=".ui.main.ui.callmanagement.plan.addplan.meeting.AddMeetingActivity"/>
+        <activity android:exported="true" android:name=".ui.main.ui.callmanagement.plan.addplan.doublee.DoubleActivity"/>
+        <activity android:exported="true" android:name=".ui.main.ui.callmanagement.plan.addplan.office.AddOfficeActivity"/>
+        <activity android:exported="true" android:name=".ui.main.ui.callmanagement.report.arrange.ArrangeActivity"/>
+        <activity android:exported="true" android:name=".ui.main.ui.callmanagement.plan.addplan.single.AddPlanDoubleExtraActivity"/>
+        <activity android:configChanges="orientation|screenSize" android:exported="true" android:name=".ui.main.MainActivity" android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:exported="true" android:name=".ui.auth.splash.SplashActivity">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
         <activity android:name=".ui.slider.ImagesSlider" android:exported="true" android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen" />
@@ -114,4 +119,3 @@
         </intent>
     </queries>
 </manifest>
-

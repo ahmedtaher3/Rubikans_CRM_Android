@@ -1,14 +1,56 @@
 package com.devartlab.data.retrofit
 
+import com.devartlab.a4eshopping.PharmacyBinding.addLocation.model.areas.AreasResponse
+import com.devartlab.a4eshopping.PharmacyBinding.addLocation.model.cities.CitiesResponse
+import com.devartlab.a4eshopping.PharmacyBinding.addLocation.model.country.CountryResponse
+import com.devartlab.a4eshopping.PharmacyBinding.addLocation.model.districts.DistrictsResponse
+import com.devartlab.a4eshopping.PharmacyBinding.addLocation.model.getUserAddress.GetUserAddressResponse
+import com.devartlab.a4eshopping.PharmacyBinding.addLocation.model.updateAddress.UpdateAddressRequest
+import com.devartlab.a4eshopping.PharmacyBinding.addLocation.model.updateAddress.UpdateAddressResponse
+import com.devartlab.a4eshopping.PharmacyBinding.allComments.model.AllCommentsResponse
+import com.devartlab.a4eshopping.PharmacyBinding.model.connectPharmacy.ConnectPharmacyResponse
+import com.devartlab.a4eshopping.PharmacyBinding.model.searchForPharmacy.ConnetctedPharmaciesResponse
+import com.devartlab.a4eshopping.PharmacyBinding.model.searchForPharmacy.SearchForPharmacyRequest
+import com.devartlab.a4eshopping.PharmacyBinding.model.searchForPharmacy.SearchForPharmacyResponse
+import com.devartlab.a4eshopping.PharmacyBinding.uploadPharmacyFiles.model.updatePharmacyDetails
+import com.devartlab.a4eshopping.addProductsToThePharmacy.model.Pharmacy.CategoryPharmacyResponse
+import com.devartlab.a4eshopping.addProductsToThePharmacy.model.addOrderToCart.AddOrderToCartRequest
+import com.devartlab.a4eshopping.addProductsToThePharmacy.model.addOrderToCart.AddOrderToCartResponse
+import com.devartlab.a4eshopping.addProductsToThePharmacy.model.addProduct.AddToCardRequest
+import com.devartlab.a4eshopping.addProductsToThePharmacy.model.addProduct.AddToCardResponse
+import com.devartlab.a4eshopping.addProductsToThePharmacy.model.searchAllPharmacy.SearchAllPharmacyResponse
+import com.devartlab.a4eshopping.main.model.login4EShopping.Login4EShoppingRequest
+import com.devartlab.a4eshopping.orientationVideos.model.ResponseVideos
+import com.devartlab.a4eshopping.pharmacySales.model.PharmacySalesResponse
+import com.devartlab.a4eshopping.pharmacySales.model.detailsPharmacySales.DetailsPharmacySalesResponse
+import com.devartlab.a4eshopping.ticket.model.addRate.AddRateRequest
+import com.devartlab.a4eshopping.ticket.model.addRate.AddRateResponse
+import com.devartlab.a4eshopping.ticket.model.addTicket.AddTicketRequest
+import com.devartlab.a4eshopping.ticket.model.addTicket.AddTicketRsponse
+import com.devartlab.a4eshopping.ticket.model.deleteMessages.DeleteMessagesResponse
+import com.devartlab.a4eshopping.ticket.model.deleteTickets.DeleteTicketsResponse
+import com.devartlab.a4eshopping.ticket.model.fetchMessages.FetchMessagesResponse
+import com.devartlab.a4eshopping.ticket.model.getContacts.GetContactsResponse
 import com.devartlab.data.room.activity.ActivityEntity
 import com.devartlab.data.room.filterdata.FilterDataEntity
 import com.devartlab.data.room.list.ListEntity
 import com.devartlab.data.room.specialty.SpecialtyParentEntity
 import com.devartlab.model.*
+import com.devartlab.ui.main.ui.devartlink.letsTalk.ChatThread.model.ChatListResponse
+import com.devartlab.ui.main.ui.devartlink.letsTalk.ChatThread.model.sendMessages.SendMessagesResponse
+import com.devartlab.ui.main.ui.devartlink.letsTalk.home.model.ImageModel.ImageProfileResponse
+import com.devartlab.ui.main.ui.devartlink.letsTalk.home.model.mareSeen.MarkSeenRequest
+import com.devartlab.ui.main.ui.devartlink.letsTalk.home.model.mareSeen.MarkSeenResponse
+import com.devartlab.ui.main.ui.devartlink.letsTalk.home.model.peopleList.PeopleListResponse
+import com.devartlab.ui.main.ui.devartlink.letsTalk.model.searchPeople.SearchPeapleResponse
+import com.devartlab.ui.main.ui.devartlink.letsTalk.model.user.UserResponse
+import com.devartlab.ui.main.ui.devartlink.letsTalk.model.userID.UserIDResponse
+import com.devartlab.ui.main.ui.eShopping.main.model.login4EShopping.Login4EShoppingResponse
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import io.reactivex.Observable
 import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.http.*
@@ -669,5 +711,202 @@ interface ApiServices {
     @GET("api/ads")
     fun getAds(): Observable<ResponseModel>
 
+    ///////////////////chat let's talk//////////////
+    @GET("search-users")
+    open fun getSearchPeaple(): Call<SearchPeapleResponse?>?
 
+    @GET("crm-chat")
+    fun getModelUser(
+        @Query("u") userName: String?,
+        @Query("p") password: String?,
+        @Query("fcm") fcm: String?
+    ): Call<UserResponse?>?
+
+    @GET("people_list")
+    fun getPeopleList(@Query("id") id: String?): Call<PeopleListResponse?>?
+
+    @GET("fetchmessages")
+    fun getChatList(@Query("id") id: String?): Call<ChatListResponse?>?
+
+    @GET("get-chat")
+    fun getUserID(
+        @Query("id") id: String?,
+        @Query("user_id") user_id: String?
+    ): Call<UserIDResponse?>?
+
+    @GET("image")
+    fun getImageProfile(@Query("id") user_id: String?): Call<ImageProfileResponse?>?
+
+    @Multipart
+    @POST("sendmessage")
+    fun SEND_MESSAGES(
+        @Part file: MultipartBody.Part,
+        @PartMap send: MutableMap<String, RequestBody>
+    ): Call<SendMessagesResponse?>?
+
+    @POST("makeSeen")
+    fun MARK_SEEN(@Body markSeenRequest: MarkSeenRequest?): Call<MarkSeenResponse?>?
+
+    ///////////////////4eshopping//////////////
+    @POST("login")
+    fun LOGIN4ESHOPPING(@Body login4EShoppingRequest: Login4EShoppingRequest?): Call<Login4EShoppingResponse?>?
+
+    @GET("connetctedPharmacies")
+    fun getConnetctedPharmacies(
+        @Header("Authorization") token: String?,
+        @Query("q") q: String?
+    ): Call<ConnetctedPharmaciesResponse?>?
+
+    @GET("searchForPharmacy")
+    fun getSearchForPharmacy(
+        @Header("Authorization") token: String?,
+        @Query("q") q: String?
+    ): Call<SearchForPharmacyResponse?>?
+
+    @POST("connectPharmacy")
+    fun connetctedPharmacies(
+        @Header("Authorization") token: String?,
+        @Body request: SearchForPharmacyRequest?
+    ): Call<ConnectPharmacyResponse?>?
+
+    @GET("getAllComments")
+    fun getAllComments(
+        @Header("Authorization") token: String?,
+        @Query("id") id: String?
+    ): Call<AllCommentsResponse?>?
+
+    @GET("countries")
+    fun getCountry(): Call<CountryResponse?>?
+
+    @GET("get_cities")
+    fun getCities(@Query("country_id") country_id: String?): Call<CitiesResponse?>?
+
+    @GET("get_areas")
+    fun getAreas(@Query("city_id") city_id: String?): Call<AreasResponse?>?
+
+    @GET("get_districts")
+    fun getDistricts(@Query("area_id") area_id: String?): Call<DistrictsResponse?>?
+
+    @POST("updateAddress")
+    fun updateAddress(
+        @Header("Authorization") token: String?,
+        @Body request: UpdateAddressRequest?
+    ): Call<UpdateAddressResponse?>?
+
+    @GET("getUserAddress")
+    fun getUserAddress(
+        @Header("Authorization") token: String?,
+        @Query("id") id: String?
+    ): Call<GetUserAddressResponse?>?
+
+    @Multipart
+    @POST("updatePharmacyDetails")
+    fun updatePharmacyDetails(
+        @Header("Authorization") token: String?,
+        @Part file: MultipartBody.Part,
+        @Part file2: MultipartBody.Part,
+        @Part file3: MultipartBody.Part,
+        @PartMap send: MutableMap<String, RequestBody>
+    ): Call<updatePharmacyDetails?>?
+
+    @GET("pharmacySales")
+    fun getPharmacySales(
+        @Header("Authorization") token: String?,
+        @Query("q") q: String?
+    ): Call<PharmacySalesResponse?>?
+
+    @GET("order-details")
+    fun getOrderDetails(
+        @Header("Authorization") token: String?,
+        @Query("order_number") order_number: String?
+    ): Call<DetailsPharmacySalesResponse?>?
+
+    @GET("searchAllPharmacy")
+    fun getSearchAllPharmacy(
+        @Header("Authorization") token: String?,
+        @Query("q") q: String?
+    ): Call<SearchAllPharmacyResponse?>?
+
+
+    @GET("categoryv2/Pharmacy")
+    fun getCategoryv2Pharmacy(
+        @Header("Authorization") token: String?
+    ): Call<CategoryPharmacyResponse?>?
+
+
+    @POST("addtocart/{id}/{amount}")
+    fun getAddToCard(
+        @Header("Authorization") token: String?, @Path("id") id: Int,
+        @Path("amount") amount: Int,
+        @Body request: AddToCardRequest?
+    ): Call<AddToCardResponse?>?
+
+    @POST("removefromcart/{id}")
+    fun getRemoveToCard(
+        @Header("Authorization") token: String?, @Path("id") id: Int,
+        @Body request: AddToCardRequest?
+    ): Call<AddToCardResponse?>?
+
+    @POST("add-order-to-cart")
+    fun getAddOrderToCart(
+        @Header("Authorization") token: String?,
+        @Body request: AddOrderToCartRequest?
+    ): Call<AddOrderToCartResponse?>?
+
+    @GET("getContacts")
+    fun getGetContacts(
+        @Header("Authorization") token: String?,
+        @Query("status") status: String?,
+        @Query("q") q: String?
+    ): Call<GetContactsResponse?>?
+
+    @GET("fetchmessagesapi")
+    fun getChatList(
+        @Header("Authorization") token: String?,
+        @Query("id") id: String?
+    ): Call<FetchMessagesResponse?>?
+
+    @POST("addTickets")
+    fun addTicket(
+        @Header("Authorization") token: String?,
+        @Body request: AddTicketRequest?
+    ): Call<AddTicketRsponse?>?
+
+    @Multipart
+    @POST("sendmesage")
+    fun SEND_MESSAGES(
+        @Header("Authorization") token: String?,
+        @Part file: MultipartBody.Part,
+        @PartMap send: MutableMap<String, RequestBody>
+    ): Call<com.devartlab.a4eshopping.ticket.model.sendMessages.SendMessagesResponse?>?
+
+    @Multipart
+    @POST("sendmesage")
+    fun SEND_MESSAGES(
+        @Header("Authorization") token: String?,
+        @PartMap send: MutableMap<String, RequestBody>
+    ): Call<com.devartlab.a4eshopping.ticket.model.sendMessages.SendMessagesResponse?>?
+
+    @POST("ratetickets")
+    fun addRate(
+        @Header("Authorization") token: String?,
+        @Body request: AddRateRequest?
+    ): Call<AddRateResponse?>?
+
+    @GET("deleteTickets")
+    fun deleteTicket(
+        @Header("Authorization") token: String?,
+        @Query("id") id: String?
+    ): Call<DeleteTicketsResponse?>?
+
+    @GET("deleteMessages")
+    fun deleteMessages(
+        @Header("Authorization") token: String?,
+        @Query("message_id") message_id: String?
+    ): Call<DeleteMessagesResponse?>?
+
+    @GET("videos")
+    fun getVideos(
+        @Header("Authorization") token: String?
+    ): Call<ResponseVideos?>?
 }

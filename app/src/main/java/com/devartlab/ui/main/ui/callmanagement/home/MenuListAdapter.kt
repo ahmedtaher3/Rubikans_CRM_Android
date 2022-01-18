@@ -32,6 +32,7 @@ class MenuListAdapter(context: Context, private val myData: List<CardModel>, pri
         holder._binding?.image?.setBackgroundResource(model.image);
 
         holder.itemView.setOnClickListener { onHomeItemClick.setOnHomeItemClick(model) }
+        holder.itemView.setOnClickListener { onHomeItemClick.setOnHomeItemClick(model) }
     }
 
     // Return the size of your dataset (invoked by the layout manager)

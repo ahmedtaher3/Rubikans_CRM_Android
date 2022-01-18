@@ -44,6 +44,7 @@ import com.devartlab.data.source.values.ValuesRepository
 import com.devartlab.model.GoogleRequestResponse
 import com.devartlab.model.ProductTable
 import com.devartlab.ui.auth.login.LoginActivity
+import com.devartlab.ui.main.ui.devartlink.letsTalk.model.user.UserResponse
 import com.devartlab.utils.CommonUtilities
 import com.google.gson.Gson
 import io.reactivex.Completable
@@ -51,6 +52,9 @@ import io.reactivex.Observer
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import retrofit2.Retrofit
 
 class DevartLinkViewModel(application: Application) : AndroidViewModel(application) {
@@ -63,8 +67,30 @@ class DevartLinkViewModel(application: Application) : AndroidViewModel(applicati
     var dataManager: DataManager
     var retrofit: Retrofit? = null
     var retrofit2: Retrofit? = null
+    var errorMessage: MutableLiveData<Int>
+        protected set
+    var userResponse: MutableLiveData<UserResponse?>
+        protected set
 
+    fun getUserModel(u: String?, p: String?, fcm: String?) {
+        RetrofitClient.getApis().getModelUser(u, p, fcm)!!
+            .enqueue(object : Callback<UserResponse?> {
+                override fun onResponse(
+                    call: Call<UserResponse?>,
+                    response: Response<UserResponse?>
+                ) {
+                    if (response.isSuccessful) {
+                        userResponse.postValue(response.body())
+                    } else {
+                        userResponse.postValue(response.body())
+                    }
+                }
 
+                override fun onFailure(call: Call<UserResponse?>, t: Throwable) {
+                    errorMessage.postValue(1)
+                }
+            })
+    }
 
     init {
         dataManager = (getApplication() as BaseApplication).dataManager!!
@@ -72,7 +98,8 @@ class DevartLinkViewModel(application: Application) : AndroidViewModel(applicati
         retrofit2 = RetrofitClient.getInstanceGoogleSheet()
         myAPI = retrofit!!.create(ApiServices::class.java)
         myAPI2 = retrofit2!!.create(ApiServicesGoogle::class.java)
-
+        errorMessage = MutableLiveData()
+        userResponse= MutableLiveData()
 
 
 

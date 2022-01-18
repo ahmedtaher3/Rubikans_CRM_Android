@@ -1,0 +1,141 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constr_approval_is_pending"
+        android:layout_width="wrap_content"
+        android:background="@drawable/custom_bg_curve_left_right_color_white"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tv_label_no_pharmacy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/label_no_pharmacy"
+            android:textColor="@color/blue"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:layout_margin="10dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_no_pharmacy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="مروة السعيد رزق السعيد موسي"
+            android:textColor="@color/color_142c48"
+            android:textSize="14sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_label_no_pharmacy"
+            app:layout_constraintTop_toTopOf="@+id/tv_label_no_pharmacy"
+            app:layout_constraintEnd_toStartOf="@+id/tv_label_no_pharmacy" />
+
+
+        <TextView
+            android:id="@+id/tv_label_name_pharmacy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/customer"
+            android:textColor="@color/blue"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:layout_marginTop="10dp"
+            app:layout_constraintTop_toBottomOf="@+id/tv_label_no_pharmacy"
+            app:layout_constraintEnd_toEndOf="@+id/tv_label_no_pharmacy" />
+
+        <TextView
+            android:id="@+id/tv_name_pharmacy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="صيدليه"
+            android:textColor="@color/color_142c48"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_label_name_pharmacy"
+            app:layout_constraintTop_toTopOf="@+id/tv_label_name_pharmacy"
+            app:layout_constraintEnd_toEndOf="@id/tv_no_pharmacy" />
+
+        <TextView
+            android:id="@+id/tv_label_start_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="@string/no_phone_customer"
+            android:textColor="@color/blue"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@+id/tv_label_no_pharmacy"
+            app:layout_constraintTop_toBottomOf="@+id/tv_label_name_pharmacy" />
+
+        <TextView
+            android:id="@+id/tv_start_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="01064453554"
+            android:textColor="@color/color_142c48"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_label_start_date"
+            app:layout_constraintEnd_toEndOf="@+id/tv_no_pharmacy"
+            app:layout_constraintTop_toTopOf="@+id/tv_label_start_date" />
+
+
+        <TextView
+            android:id="@+id/tv_label_update_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/customer_email"
+            android:textColor="@color/blue"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:paddingBottom="5dp"
+            android:layout_marginTop="10dp"
+            app:layout_constraintTop_toBottomOf="@+id/tv_label_start_date"
+            app:layout_constraintEnd_toEndOf="@+id/tv_label_no_pharmacy" />
+
+        <TextView
+            android:id="@+id/tv_update_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ahmed.ibraheem.11111ai@gmail.com"
+            android:textColor="@color/color_142c48"
+            android:textSize="14sp"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_margin="5dp"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_label_update_date"
+            app:layout_constraintTop_toTopOf="@+id/tv_label_update_date"
+            app:layout_constraintEnd_toStartOf="@+id/tv_label_update_date" />
+
+        <Button
+            android:id="@+id/btn_connect_now"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/connect_now"
+            android:textColor="@color/white"
+            android:background="@drawable/bg_blue"
+            android:textAllCaps="false"
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/tv_label_no_pharmacy"
+            app:layout_constraintTop_toBottomOf="@+id/tv_label_update_date" />
+
+        <Button
+            android:id="@+id/btn_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/cancel"
+            android:textColor="@color/white"
+            android:background="@color/colorRed"
+            android:textAllCaps="false"
+            android:layout_marginStart="10dp"
+            app:layout_constraintBottom_toBottomOf="@+id/btn_connect_now"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/btn_connect_now" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -14,5 +14,25 @@
     <color name="green">#4CAF50</color>
     <color name="text_dark_grey">#353535</color>
     <color name="primaryColorAlpha">#B4254E6F</color>
+    /////color lat's talk///////
+    <color name="colorLightBluelevel1">#E9F2FF</color>
+    <color name="colorBlueDeep">#116eb5</color>
+    ///////////4eshopping////////
+    <color name="colorGray">#A1A1A1</color>
+    <color name="colorGray2">#e5e5e5</color>
+    <color name="colorGray3">#989a9c</color>
+    <color name="colorGray4">#aaabaf</color>
+    <color name="blue">#2376bc</color>
+    <color name="colorRed">#F44336</color>
+    <color name="colorGreen">#4CAF50</color>
+    <color name="colorOrange">#f26522</color>
+    <color name="blueGray">#778799</color>
+    <color name="color_e0e9ef">#e0e9ef</color>
+    <color name="color_7fd3ff">#7fd3ff</color>
+    <color name="color_142c48">#142c48</color>
+    <color name="color_bfc5cd">#bfc5cd</color>
+    <color name="color_00a7ff">#00a7ff</color>
+    <color name="color_20F109">#20F109</color>
+    <color name="color_F1DA09">#F1DA09</color>
 
 </resources>

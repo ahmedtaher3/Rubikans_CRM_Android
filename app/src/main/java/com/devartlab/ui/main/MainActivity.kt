@@ -28,16 +28,19 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.devartlab.R
 import com.devartlab.UpdatePlan
+import com.devartlab.a4eshopping.main.model.login4EShopping.Login4EShoppingRequest
 import com.devartlab.base.BaseActivity
 import com.devartlab.databinding.ActivityMainBinding
 import com.devartlab.databinding.NavHeaderMainBinding
 import com.devartlab.model.AdModel
 import com.devartlab.model.CardModel
+import com.devartlab.ui.main.ui.a4eshopping.main.Home4EShoppingActivity
 import com.devartlab.ui.main.ui.callmanagement.CallManagementActivity
 import com.devartlab.ui.main.ui.callmanagement.home.MenuListAdapter
 import com.devartlab.ui.main.ui.callmanagement.syncdata.SyncDataDialog
 import com.devartlab.ui.main.ui.contactlist.ui.main.ContactsActivity
 import com.devartlab.ui.main.ui.devartlink.DevartLinkActivity
+import com.devartlab.ui.main.ui.eShopping.utils.UserPreferenceHelper
 import com.devartlab.ui.main.ui.employeeservices.SelfServiceActivity
 import com.devartlab.ui.main.ui.employeeservices.approval.ApprovalRequestsFragment
 import com.devartlab.ui.main.ui.market.MarketRequestTypesActivity
@@ -71,6 +74,9 @@ class MainActivity : BaseActivity<ActivityMainBinding?>(), View.OnClickListener,
     lateinit var viewModel: MainViewModel
     lateinit var adapter: MenuListAdapter
     lateinit var mediaSource: SimpleMediaSource
+    var name: String? = null
+    var pass: String? = null
+    lateinit var login4EShoppingRequest: Login4EShoppingRequest//request login 4EShopping
 
     private var toggle: ActionBarDrawerToggle? = null
     var textCartItemCount: RelativeLayout? = null
@@ -172,6 +178,11 @@ class MainActivity : BaseActivity<ActivityMainBinding?>(), View.OnClickListener,
         setUpRecycler()
         ads()
 
+        //login 4EShopping
+        name = viewModel.dataManager.user.userName
+        pass = viewModel.dataManager.user.password
+        login4EShoppingRequest = Login4EShoppingRequest(name!!, pass!!, "mr")
+        viewModel!!.getUserModel(login4EShoppingRequest)
 
         val getToken = GetDeviceToken(this)
         getToken.getToken(object : GetDeviceToken.TokenResult() {
@@ -236,6 +247,19 @@ class MainActivity : BaseActivity<ActivityMainBinding?>(), View.OnClickListener,
 
         })
 
+        //login 4EShopping
+        viewModel!!.errorMessage.observe(this, { integer: Int ->
+            if (integer == 1) {
+                Log.e("xxx", "error")
+                Toast.makeText(this, "error in response data", Toast.LENGTH_SHORT)
+                    .show()
+            } else {
+                Toast.makeText(this, "error in Network", Toast.LENGTH_SHORT).show()
+            }
+        })
+        viewModel!!.login4EShoppingResponse.observe(this, Observer {
+            UserPreferenceHelper.saveUserProfile(it)
+        })
     }
 
     private fun setUpRecycler() {
@@ -255,7 +279,9 @@ class MainActivity : BaseActivity<ActivityMainBinding?>(), View.OnClickListener,
                 resources.getString(R.string.market_request),
                 R.drawable.money
             )
-        ) //   list.add(CardModel(5, "DevartLink", R.drawable.devartlink))
+        )
+        list.add(CardModel(5, "DevartLink", R.drawable.devartlink))
+        list.add(CardModel(6, "4EShopping", R.drawable.e_shopping))
 
         adapter = MenuListAdapter(this, list, this)
         val layoutManager = GridLayoutManager(this, 2)
@@ -604,7 +630,15 @@ class MainActivity : BaseActivity<ActivityMainBinding?>(), View.OnClickListener,
                 val intent = Intent(this@MainActivity, DevartLinkActivity::class.java)
                 startActivity(intent)
 
-
+            }
+            6 -> {
+                if (UserPreferenceHelper.getUser().type_code == "pv#s7#w?x") {
+                    val intent = Intent(this@MainActivity, Home4EShoppingActivity::class.java)
+                    startActivity(intent)
+                } else {
+                    Toast.makeText(this@MainActivity, "You haven't permission", Toast.LENGTH_SHORT)
+                        .show()
+                }
             }
         }
     }

@@ -1,7 +1,12 @@
 package com.devartlab.data.retrofit;
 
+import android.app.Application;
+import android.util.Log;
+
 import com.devartlab.AppConstants;
 import com.devartlab.BuildConfig;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.concurrent.TimeUnit;
 
@@ -15,11 +20,13 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * Created by Ahmed Taher on 10/20/2018.
  */
 
-public class RetrofitClient {
+public class RetrofitClient extends Application {
 
     private static Retrofit ourInstance;
     private static Retrofit ourInstance2;
-    private static Retrofit ourInstance3;
+    private static Retrofit ourInstance3;// to save at shard Preference
+    private static Retrofit retrofit = null;//lat's talk
+    private static Retrofit retrofit1 = null;//4eshopping
     private static HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
 
     public static Retrofit getInstance() {
@@ -109,6 +116,58 @@ public class RetrofitClient {
 
 
         return ourInstance3;
+    }
+    public static Retrofit getClient() {
+        if (retrofit==null){
+            HttpLoggingInterceptor logging =
+                    new HttpLoggingInterceptor(new HttpLoggingInterceptor.Logger() {
+                        @Override public void log(@NotNull String message) {
+                            Log.e("retrofit",message);
+                        }
+                    });
+            logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+            OkHttpClient client = new OkHttpClient.Builder()
+                    .addInterceptor(logging)
+                    .build();
+
+            retrofit = new Retrofit.Builder()
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                    .baseUrl("https://devartlink.devartlab.com/api/")
+                    .client(client)
+                    .build();
+        }
+        return retrofit;
+    }
+    public static ApiServices getApis (){
+        return getClient().create(ApiServices.class);
+    }
+
+
+    public static Retrofit getClient4EShopping() {
+        if (retrofit1==null){
+            HttpLoggingInterceptor logging =
+                    new HttpLoggingInterceptor(new HttpLoggingInterceptor.Logger() {
+                        @Override public void log(@NotNull String message) {
+                            Log.e("retrofit",message);
+                        }
+                    });
+            logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+            OkHttpClient client = new OkHttpClient.Builder()
+                    .addInterceptor(logging)
+                    .build();
+
+            retrofit1 = new Retrofit.Builder()
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                    .baseUrl("https://t4e.4eshopping.com/api/")
+                    .client(client)
+                    .build();
+        }
+        return retrofit1;
+    }
+    public static ApiServices getApis4EShopping (){
+        return getClient4EShopping().create(ApiServices.class);
     }
 
 
