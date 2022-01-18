@@ -1,0 +1,532 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            tools:context=".PharmacyBinding.uploadPharmacyFiles.UploadPharmacyFilesActivity">
+
+            <com.google.android.material.appbar.AppBarLayout
+                android:id="@+id/back"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:theme="@style/AppTheme.AppBarOverlay"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <androidx.appcompat.widget.Toolbar
+                    android:id="@+id/toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize" />
+
+            </com.google.android.material.appbar.AppBarLayout>
+            <TextView
+                android:id="@+id/tv_the_tax_card_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="10dp"
+                android:text="@string/the_tax_card_number"
+                android:textColor="@color/blue"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/ed_the_tax_card_number"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/ed_the_tax_card_number" />
+
+            <EditText
+                android:id="@+id/ed_the_tax_card_number"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="5dp"
+                android:background="@drawable/bg_search"
+                android:gravity="start"
+                android:hint="@string/the_tax_card_number"
+                android:inputType="phone"
+                android:padding="5dp"
+                android:textColor="@color/color_142c48"
+                android:textSize="12sp"
+                app:layout_constraintEnd_toEndOf="@+id/ed_commercial_register_number"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/back" />
+
+            <TextView
+                android:id="@+id/tv_pharmacy_legal_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="10dp"
+                android:gravity="end"
+                android:text="@string/pharmacy_legal_name"
+                android:textColor="@color/blue"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/ed_pharmacy_legal_name"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/ed_pharmacy_legal_name" />
+
+            <EditText
+                android:id="@+id/ed_pharmacy_legal_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="5dp"
+                android:background="@drawable/bg_search"
+                android:hint="@string/label_pharmacy_legal_name"
+                android:inputType="text"
+                android:padding="5dp"
+                android:textColor="@color/color_142c48"
+                android:textSize="12sp"
+                app:layout_constraintEnd_toEndOf="@+id/ed_commercial_register_number"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ed_the_tax_card_number" />
+
+            <TextView
+                android:id="@+id/tv_commercial_register_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="10dp"
+                android:text="@string/commercial_register_number"
+                android:textColor="@color/blue"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/ed_commercial_register_number"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/ed_commercial_register_number" />
+
+            <EditText
+                android:id="@+id/ed_commercial_register_number"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="5dp"
+                android:background="@drawable/bg_search"
+                android:gravity="start"
+                android:hint="@string/commercial_register_number"
+                android:inputType="phone"
+                android:keyboardNavigationCluster="false"
+                android:padding="5dp"
+                android:textColor="@color/color_142c48"
+                android:textSize="12sp"
+                app:layout_constraintEnd_toStartOf="@+id/tv_commercial_register_number"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ed_pharmacy_legal_name" />
+
+            <TextView
+                android:id="@+id/tv_phone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="10dp"
+                android:text="@string/phone"
+                android:textColor="@color/blue"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/ed_phone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/ed_phone" />
+
+            <EditText
+                android:id="@+id/ed_phone"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/bg_search"
+                android:gravity="start"
+                android:hint="@string/phone"
+                android:inputType="phone"
+                android:padding="5dp"
+                android:textColor="@color/color_142c48"
+                android:textSize="12sp"
+                app:layout_constraintEnd_toEndOf="@+id/ed_commercial_register_number"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ed_commercial_register_number" />
+
+            <View
+                android:id="@+id/view1"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/colorGray"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ed_phone" />
+
+
+            <TextView
+                android:id="@+id/tv_label_pay_get_way"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:text="@string/pay_get_way"
+                android:textColor="@color/color_142c48"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/view1" />
+
+            <RadioGroup
+                android:id="@+id/rad_gro_payment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="end"
+                android:orientation="horizontal"
+                android:text="@string/address"
+                android:textColor="@color/blue"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@+id/tv_label_pay_get_way"
+                app:layout_constraintTop_toBottomOf="@+id/tv_label_pay_get_way">
+
+                <RadioButton
+                    android:id="@+id/PayMob"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:layout_marginTop="10dp"
+                    android:layoutDirection="rtl"
+                    android:padding="5dp"
+                    android:text="@string/PayMob"
+                    android:textColor="@color/blue"
+                    android:textStyle="bold" />
+
+                <RadioButton
+                    android:id="@+id/Fawry"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:layout_marginTop="10dp"
+                    android:layoutDirection="rtl"
+                    android:padding="5dp"
+                    android:text="@string/Fawry"
+                    android:textColor="@color/blue"
+                    android:textStyle="bold" />
+
+                <RadioButton
+                    android:id="@+id/Aman"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:layout_marginTop="10dp"
+                    android:layoutDirection="rtl"
+                    android:padding="5dp"
+                    android:text="@string/Aman"
+                    android:textColor="@color/blue"
+                    android:textStyle="bold" />
+
+                <RadioButton
+                    android:id="@+id/other"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:layout_marginTop="10dp"
+                    android:layoutDirection="rtl"
+                    android:padding="5dp"
+                    android:text="@string/other"
+                    android:textColor="@color/blue"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/ed_other"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/bg_search"
+                    android:hint="@string/other"
+                    android:padding="5dp"
+                    android:visibility="gone" />
+
+            </RadioGroup>
+
+            <View
+                android:id="@+id/view2"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/colorGray"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/rad_gro_payment" />
+
+
+            <TextView
+                android:id="@+id/tv_label_working_hours"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:text="@string/working_hours"
+                android:textColor="@color/color_142c48"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/view2" />
+
+            <RadioGroup
+                android:id="@+id/rad_gro_working_hours"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="end"
+                android:orientation="horizontal"
+                android:textColor="@color/blue"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@id/tv_label_working_hours"
+                app:layout_constraintTop_toBottomOf="@+id/tv_label_working_hours">
+
+                <RadioButton
+                    android:id="@+id/h12"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:layout_marginTop="10dp"
+                    android:layoutDirection="rtl"
+                    android:padding="5dp"
+                    android:text="@string/h12"
+                    android:textColor="@color/blue"
+                    android:textStyle="bold" />
+
+                <RadioButton
+                    android:id="@+id/h18"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:layout_marginTop="10dp"
+                    android:layoutDirection="rtl"
+                    android:padding="5dp"
+                    android:text="@string/h18"
+                    android:textColor="@color/blue"
+                    android:textStyle="bold" />
+
+                <RadioButton
+                    android:id="@+id/h24"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:layout_marginTop="10dp"
+                    android:layoutDirection="rtl"
+                    android:padding="5dp"
+                    android:text="@string/h24"
+                    android:textColor="@color/blue"
+                    android:textStyle="bold" />
+            </RadioGroup>
+
+            <View
+                android:id="@+id/view3"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/colorGray"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/rad_gro_working_hours" />
+
+
+            <TextView
+                android:id="@+id/tv_label_delivery"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:text="@string/delivery"
+                android:textColor="@color/color_142c48"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/view3" />
+
+            <RadioGroup
+                android:id="@+id/rad_gro_delivery"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="end"
+                android:orientation="horizontal"
+                android:textColor="@color/blue"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@id/tv_label_delivery"
+                app:layout_constraintTop_toBottomOf="@+id/tv_label_delivery">
+
+                <RadioButton
+                    android:id="@+id/yes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:layout_marginTop="10dp"
+                    android:layoutDirection="rtl"
+                    android:padding="5dp"
+                    android:text="@string/yes"
+                    android:textColor="@color/blue"
+                    android:textStyle="bold" />
+
+                <RadioButton
+                    android:id="@+id/no"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:layout_marginTop="10dp"
+                    android:layoutDirection="rtl"
+                    android:padding="5dp"
+                    android:text="@string/no"
+                    android:textColor="@color/blue"
+                    android:textStyle="bold" />
+            </RadioGroup>
+
+            <View
+                android:id="@+id/view4"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/colorGray"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/rad_gro_delivery" />
+
+            <TextView
+                android:id="@+id/tv_image_file"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_margin="10dp"
+                android:text="@string/file"
+                android:textColor="@color/color_142c48"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/view4" />
+
+            <TextView
+                android:id="@+id/tv_commercial_register"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_margin="10dp"
+                android:text="@string/commercial_register"
+                android:textColor="@color/color_142c48"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_image_file" />
+
+            <ImageView
+                android:id="@+id/iv_commercial_register"
+                android:layout_width="150dp"
+                android:layout_height="60dp"
+                android:layout_margin="10dp"
+                android:src="@drawable/licence_personal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_commercial_register" />
+
+            <ImageView
+                android:id="@+id/iv_del_commercial_register"
+                android:layout_width="12dp"
+                android:layout_height="12dp"
+                android:visibility="gone"
+                android:src="@drawable/ic_pre_declined"
+                app:layout_constraintStart_toStartOf="@id/iv_commercial_register"
+                app:layout_constraintTop_toTopOf="@+id/iv_commercial_register"/>
+
+            <TextView
+                android:id="@+id/tv_commercial_register_two"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_margin="10dp"
+                android:text="@string/commercial_register2"
+                android:textColor="@color/color_142c48"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/iv_commercial_register" />
+
+            <ImageView
+                android:id="@+id/iv_commercial_register_two"
+                android:layout_width="150dp"
+                android:layout_height="60dp"
+                android:layout_margin="10dp"
+                android:src="@drawable/licence_personal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_commercial_register_two" />
+            <ImageView
+                android:id="@+id/iv_del_commercial_register_two"
+                android:layout_width="12dp"
+                android:layout_height="12dp"
+                android:visibility="gone"
+                android:src="@drawable/ic_pre_declined"
+                app:layout_constraintStart_toStartOf="@id/iv_commercial_register_two"
+                app:layout_constraintTop_toTopOf="@+id/iv_commercial_register_two"/>
+            <TextView
+                android:id="@+id/tv_the_tax_card"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_margin="10dp"
+                android:text="@string/the_tax_card"
+                android:textColor="@color/color_142c48"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/iv_commercial_register_two" />
+
+            <ImageView
+                android:id="@+id/iv_the_tax_card"
+                android:layout_width="150dp"
+                android:layout_height="60dp"
+                android:layout_margin="10dp"
+                android:src="@drawable/licence_personal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_the_tax_card" />
+            <ImageView
+                android:id="@+id/iv_del_the_tax_card"
+                android:layout_width="12dp"
+                android:layout_height="12dp"
+                android:visibility="gone"
+                android:src="@drawable/ic_pre_declined"
+                app:layout_constraintStart_toStartOf="@id/iv_the_tax_card"
+                app:layout_constraintTop_toTopOf="@+id/iv_the_tax_card"/>
+            <Button
+                android:id="@+id/btn_update"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/bg_blue"
+                android:text="@string/update"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/iv_the_tax_card" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+</layout>

@@ -16,7 +16,7 @@
 
     <uses-feature android:name="android.hardware.location.gps"/>
 
-    <application android:fullBackupContent="false" android:hardwareAccelerated="true" android:icon="@mipmap/ic_launcher" android:label="@string/app_name" android:largeHeap="true" android:name=".base.BaseApplication" android:requestLegacyExternalStorage="true" android:roundIcon="@mipmap/ic_launcher_round" android:supportsRtl="true" android:theme="@style/AppTheme" android:usesCleartextTraffic="true">
+    <application  android:fullBackupContent="false" android:hardwareAccelerated="true" android:icon="@mipmap/ic_launcher" android:label="@string/app_name" android:largeHeap="true" android:name=".base.BaseApplication" android:requestLegacyExternalStorage="true" android:roundIcon="@mipmap/ic_launcher_round" android:supportsRtl="true" android:theme="@style/AppTheme" android:usesCleartextTraffic="true">
         <activity android:exported="true" android:name=".ui.main.ui.devartlink.DevartLinkActivity"/>
         <activity android:exported="true" android:name=".ui.main.ui.callmanagement.list.create.CreateNewCustomerActivity"/>
         <activity android:exported="true" android:name=".ui.main.ui.callmanagement.inventory.balance.InventoryBalanceDetailsLayout"/>
@@ -90,7 +90,48 @@
         <activity android:exported="true" android:name=".ui.main.ui.employeeservices.businessCard.BusinessCardActivity"/>
         <activity android:exported="true" android:name=".ui.trade.InventoryTransferDetailsActivity"/>
         <activity android:exported="true" android:name=".ui.main.ui.devartlink.DevartLinkWebView"/>
-
+        <activity
+            android:name=".a4eshopping.orientationVideos.videoActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.main.ui.eShopping.ticket.ChatThread4EShoppingActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.main.ui.eShopping.ticket.TicketActivity"
+            android:exported="true"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".a4eshopping.addProductsToThePharmacy.AddProductsPharmacyActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.main.ui.eShopping.pharmacySales.DetailsPharmacySalesActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.main.ui.eShopping.pharmacySales.PharmacySalesActivity"
+            android:exported="false" />
+        <activity
+            android:name=".a4eshopping.PharmacyBinding.uploadPharmacyFiles.UploadPharmacyFilesActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.main.ui.a4eshopping.main.Home4EShoppingActivity"
+            android:exported="true"/>
+        <activity
+            android:name=".ui.main.ui.eShopping.PharmacyBinding.addLocation.AddLocationActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.main.ui.eShopping.PharmacyBinding.allComments.AllCommentsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.main.ui.eShopping.PharmacyBinding.PharmacyBindingActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.main.ui.eshopping.orientationVideos.OrientationVideosActivity"
+            android:windowSoftInputMode="stateHidden" />
+        <activity android:name=".ui.main.ui.devartlink.letsTalk.ChatThread.ChatThreadActivity" android:exported="false" />
+        <activity
+            android:name=".ui.main.ui.devartlink.letsTalk.LetsTalkActivity"
+            android:windowSoftInputMode="stateHidden"
+            android:exported="true"/>
         <provider android:authorities="com.devartlab.provider" android:exported="false" android:grantUriPermissions="true" android:name="androidx.core.content.FileProvider">
 
             <!-- ressource file to create -->

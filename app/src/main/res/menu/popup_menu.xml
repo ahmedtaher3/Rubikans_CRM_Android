@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/action_problem_register"
+        android:title="@string/action_problem_register"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/action_active_customer"
+        android:title="@string/action_active_customer"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/action_order_problem"
+        android:title="@string/action_order_problem"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/action_problem_old_ticket"
+        android:title="@string/action_problem_old_ticket"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/other"
+        android:title="@string/action_other"
+        app:showAsAction="never"/>
+</menu>

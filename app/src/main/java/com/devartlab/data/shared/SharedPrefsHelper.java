@@ -289,5 +289,4 @@ public class SharedPrefsHelper {
     public String getLang() {
         return mSharedPreferences.getString(LANG, "en");
     }
-
 }

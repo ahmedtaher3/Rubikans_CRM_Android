@@ -102,4 +102,9 @@ class MoreDetailsAdsActivity : AppCompatActivity() {
             ,  "text/html", "utf-8", null)
 
     }
+
+    override fun onSupportNavigateUp(): Boolean {
+        finish()
+        return true
+    }
 }

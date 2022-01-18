@@ -67,15 +67,46 @@
         <entry key="..\:/work/DevartLab/DevartLabCRM/app/src/main/res/layout/fragment_work_from_home.xml" value="0.2421875" />
         <entry key="..\:/work/DevartLab/DevartLabCRM/app/src/main/res/layout/sync_fragment.xml" value="0.2421875" />
         <entry key="..\:/work/DevartLab/DevartLabCRM/app/src/main/res/layout/types_fragment.xml" value="0.2421875" />
+        <entry key="..\:/work/DevartLab/DevartLabCRMproject/app/src/main/res/drawable/check_status_trip_green.xml" value="0.20833333333333334" />
+        <entry key="..\:/work/DevartLab/DevartLabCRMproject/app/src/main/res/layout/activity_4eshopping.xml" value="0.1648148148148148" />
+        <entry key="..\:/work/DevartLab/DevartLabCRMproject/app/src/main/res/layout/activity_add_location.xml" value="0.25" />
+        <entry key="..\:/work/DevartLab/DevartLabCRMproject/app/src/main/res/layout/activity_add_products_pharmacy.xml" value="0.1648148148148148" />
+        <entry key="..\:/work/DevartLab/DevartLabCRMproject/app/src/main/res/layout/activity_all_comments.xml" value="0.1921875" />
         <entry key="..\:/work/DevartLab/DevartLabCRMproject/app/src/main/res/layout/activity_calls.xml" value="0.1921875" />
+        <entry key="..\:/work/DevartLab/DevartLabCRMproject/app/src/main/res/layout/activity_chat_e_shopping_thread.xml" value="0.1921875" />
+        <entry key="..\:/work/DevartLab/DevartLabCRMproject/app/src/main/res/layout/activity_chat_thread.xml" value="0.1638888888888889" />
         <entry key="..\:/work/DevartLab/DevartLabCRMproject/app/src/main/res/layout/activity_choose_employee.xml" value="0.1921875" />
         <entry key="..\:/work/DevartLab/DevartLabCRMproject/app/src/main/res/layout/activity_choose_start_point.xml" value="0.1921875" />
+        <entry key="..\:/work/DevartLab/DevartLabCRMproject/app/src/main/res/layout/activity_details_pharmacy_sales.xml" value="0.25" />
         <entry key="..\:/work/DevartLab/DevartLabCRMproject/app/src/main/res/layout/activity_devart_link.xml" value="0.1921875" />
         <entry key="..\:/work/DevartLab/DevartLabCRMproject/app/src/main/res/layout/activity_employee_report.xml" value="0.1921875" />
+        <entry key="..\:/work/DevartLab/DevartLabCRMproject/app/src/main/res/layout/activity_lets_talk.xml" value="0.1638888888888889" />
         <entry key="..\:/work/DevartLab/DevartLabCRMproject/app/src/main/res/layout/activity_main.xml" value="0.1921875" />
         <entry key="..\:/work/DevartLab/DevartLabCRMproject/app/src/main/res/layout/activity_main_contacts.xml" value="0.1921875" />
         <entry key="..\:/work/DevartLab/DevartLabCRMproject/app/src/main/res/layout/activity_more_details_ads.xml" value="0.125" />
+        <entry key="..\:/work/DevartLab/DevartLabCRMproject/app/src/main/res/layout/activity_orientation_videos.xml" value="0.1921875" />
+        <entry key="..\:/work/DevartLab/DevartLabCRMproject/app/src/main/res/layout/activity_pharmacy_binding.xml" value="0.25" />
+        <entry key="..\:/work/DevartLab/DevartLabCRMproject/app/src/main/res/layout/activity_pharmacy_sales.xml" value="0.1921875" />
+        <entry key="..\:/work/DevartLab/DevartLabCRMproject/app/src/main/res/layout/activity_ticket.xml" value="0.1921875" />
+        <entry key="..\:/work/DevartLab/DevartLabCRMproject/app/src/main/res/layout/activity_upload_pharmacy_files.xml" value="0.1921875" />
+        <entry key="..\:/work/DevartLab/DevartLabCRMproject/app/src/main/res/layout/activity_video.xml" value="0.1921875" />
+        <entry key="..\:/work/DevartLab/DevartLabCRMproject/app/src/main/res/layout/add_products_pharmacy_item.xml" value="0.5" />
+        <entry key="..\:/work/DevartLab/DevartLabCRMproject/app/src/main/res/layout/all_comments_item.xml" value="0.16" />
+        <entry key="..\:/work/DevartLab/DevartLabCRMproject/app/src/main/res/layout/card_item_message_incoming.xml" value="0.1638888888888889" />
+        <entry key="..\:/work/DevartLab/DevartLabCRMproject/app/src/main/res/layout/card_item_message_incoming_e_shopping.xml" value="0.1921875" />
+        <entry key="..\:/work/DevartLab/DevartLabCRMproject/app/src/main/res/layout/card_item_message_incoming_img.xml" value="0.1638888888888889" />
+        <entry key="..\:/work/DevartLab/DevartLabCRMproject/app/src/main/res/layout/card_item_message_incoming_img_e_shopping.xml" value="0.1921875" />
+        <entry key="..\:/work/DevartLab/DevartLabCRMproject/app/src/main/res/layout/card_item_message_outgoing.xml" value="0.1638888888888889" />
+        <entry key="..\:/work/DevartLab/DevartLabCRMproject/app/src/main/res/layout/card_item_message_outgoing_e_shopping.xml" value="0.1921875" />
+        <entry key="..\:/work/DevartLab/DevartLabCRMproject/app/src/main/res/layout/card_item_message_outgoing_img.xml" value="0.25" />
+        <entry key="..\:/work/DevartLab/DevartLabCRMproject/app/src/main/res/layout/card_item_message_outgoing_img_e_shopping.xml" value="0.1921875" />
         <entry key="..\:/work/DevartLab/DevartLabCRMproject/app/src/main/res/layout/choose_activity_type.xml" value="0.1921875" />
+        <entry key="..\:/work/DevartLab/DevartLabCRMproject/app/src/main/res/layout/details_pharmacy_sales_item.xml" value="0.33" />
+        <entry key="..\:/work/DevartLab/DevartLabCRMproject/app/src/main/res/layout/dialog_add_ticket.xml" value="0.1921875" />
+        <entry key="..\:/work/DevartLab/DevartLabCRMproject/app/src/main/res/layout/dialog_delete_message.xml" value="0.2874743326488706" />
+        <entry key="..\:/work/DevartLab/DevartLabCRMproject/app/src/main/res/layout/dialog_diatails_pharmacy.xml" value="0.1921875" />
+        <entry key="..\:/work/DevartLab/DevartLabCRMproject/app/src/main/res/layout/dialog_rate.xml" value="0.1921875" />
+        <entry key="..\:/work/DevartLab/DevartLabCRMproject/app/src/main/res/layout/dialog_ticket_details.xml" value="0.1921875" />
         <entry key="..\:/work/DevartLab/DevartLabCRMproject/app/src/main/res/layout/dv_report_fragment.xml" value="0.1921875" />
         <entry key="..\:/work/DevartLab/DevartLabCRMproject/app/src/main/res/layout/fragment_all_work_from_home.xml" value="0.1921875" />
         <entry key="..\:/work/DevartLab/DevartLabCRMproject/app/src/main/res/layout/fragment_attendance.xml" value="0.1921875" />
@@ -87,9 +118,18 @@
         <entry key="..\:/work/DevartLab/DevartLabCRMproject/app/src/main/res/layout/fragment_report.xml" value="0.1921875" />
         <entry key="..\:/work/DevartLab/DevartLabCRMproject/app/src/main/res/layout/fragment_self_service_home.xml" value="0.1921875" />
         <entry key="..\:/work/DevartLab/DevartLabCRMproject/app/src/main/res/layout/fragment_super_report.xml" value="0.1921875" />
+        <entry key="..\:/work/DevartLab/DevartLabCRMproject/app/src/main/res/layout/fragment_t_r.xml" value="0.1638888888888889" />
         <entry key="..\:/work/DevartLab/DevartLabCRMproject/app/src/main/res/layout/fragment_work_from_home.xml" value="0.1921875" />
+        <entry key="..\:/work/DevartLab/DevartLabCRMproject/app/src/main/res/layout/home_4eshopping_item.xml" value="0.1921875" />
+        <entry key="..\:/work/DevartLab/DevartLabCRMproject/app/src/main/res/layout/item_chat_user.xml" value="0.1921875" />
+        <entry key="..\:/work/DevartLab/DevartLabCRMproject/app/src/main/res/layout/item_ticket.xml" value="0.13" />
+        <entry key="..\:/work/DevartLab/DevartLabCRMproject/app/src/main/res/layout/list_video_item.xml" value="0.1921875" />
+        <entry key="..\:/work/DevartLab/DevartLabCRMproject/app/src/main/res/layout/pharmacy_binging_item.xml" value="0.1921875" />
+        <entry key="..\:/work/DevartLab/DevartLabCRMproject/app/src/main/res/layout/pharmacy_sales_item.xml" value="0.1921875" />
         <entry key="..\:/work/DevartLab/DevartLabCRMproject/app/src/main/res/layout/sync_fragment.xml" value="0.1921875" />
         <entry key="..\:/work/DevartLab/DevartLabCRMproject/app/src/main/res/layout/types_fragment.xml" value="0.1921875" />
+        <entry key="..\:/work/DevartLab/DevartLabCRMproject/app/src/main/res/menu/filter_popup_menu.xml" value="0.1921875" />
+        <entry key="..\:/work/DevartLab/DevartLabCRMproject/app/src/main/res/menu/popup_menu.xml" value="0.1921875" />
       </map>
     </option>
   </component>
