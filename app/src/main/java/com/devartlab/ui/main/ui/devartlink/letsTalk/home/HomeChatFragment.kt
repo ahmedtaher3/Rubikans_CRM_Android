@@ -115,6 +115,7 @@ class HomeChatFragment : Fragment() {
                     viewModel!!.markSeen(markSeenRequest)
                     val intent = Intent(requireContext(), ChatThreadActivity::class.java)
                     intent.putExtra("people_id", dataItem.id)
+                    intent.putExtra("people_name", dataItem.userapi.name)
                     startActivity(intent)
                 })
             }

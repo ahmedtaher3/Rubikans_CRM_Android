@@ -46,6 +46,7 @@ class ChatThread4EShoppingActivity : AppCompatActivity() {
     private var viewModel: TicketViewModel? = null
     var ticket_id: String? = null
     var status: String? = null
+    var subject: String? = null
     var adapter: ChatListAdapter? = null
     var volleyFileObjs: List<VolleyFileObj> = ArrayList<VolleyFileObj>()
     var pusher: Pusher? = null
@@ -55,7 +56,6 @@ class ChatThread4EShoppingActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_chat_e_shopping_thread)
         setSupportActionBar(binding.toolbar)
-        supportActionBar!!.title = getString(R.string.chat)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         viewModel = ViewModelProvider(this).get(TicketViewModel::class.java)
         if (intent.hasExtra("ticket_id")) {
@@ -64,6 +64,10 @@ class ChatThread4EShoppingActivity : AppCompatActivity() {
         }
         if (intent.hasExtra("status")) {
             status = intent.getStringExtra("status")
+        }
+        if (intent.hasExtra("subject")) {
+            subject = intent.getStringExtra("subject")
+            supportActionBar!!.title = subject
         }
 
         pusher()
@@ -186,6 +190,10 @@ class ChatThread4EShoppingActivity : AppCompatActivity() {
             Log.i("Pusher", "Received event with data: $event")
             val intent = Intent(this, TicketActivity::class.java)
             startActivity(intent)
+        }
+        channel!!.bind("client-seen") { event ->
+            Log.i("Pusher", "client-seen: $event")
+            viewModel!!.getChatList(ticket_id!!)
         }
         channel!!.bind("client-delete-message") { event ->
             android.util.Log.i("Pusher", "Received event with data: $event")

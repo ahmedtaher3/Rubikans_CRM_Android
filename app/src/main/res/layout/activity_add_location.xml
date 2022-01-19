@@ -38,14 +38,13 @@
             android:textSize="14sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@+id/ed_country"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/ed_country" />
 
         <TextView
             android:id="@+id/ed_country"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
             android:layout_marginTop="20dp"
             android:background="@drawable/bg_search"
             android:hint="@string/select"
@@ -53,8 +52,8 @@
             android:textColor="@color/color_142c48"
             android:keyboardNavigationCluster="false"
             android:padding="5dp"
-            app:layout_constraintEnd_toEndOf="@+id/ed_area"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="@id/ed_area"
+            app:layout_constraintEnd_toEndOf="@id/ed_area"
             app:layout_constraintTop_toBottomOf="@+id/back" />
 
         <TextView
@@ -69,14 +68,13 @@
             android:textSize="14sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@+id/ed_city"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/ed_city" />
 
         <TextView
             android:id="@+id/ed_city"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
             android:layout_marginTop="20dp"
             android:textSize="12sp"
             android:background="@drawable/bg_search"
@@ -84,8 +82,8 @@
             android:textColor="@color/color_142c48"
             android:keyboardNavigationCluster="false"
             android:padding="5dp"
-            app:layout_constraintEnd_toEndOf="@+id/ed_area"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="@id/ed_area"
+            app:layout_constraintEnd_toEndOf="@id/ed_area"
             app:layout_constraintTop_toBottomOf="@+id/ed_country" />
         <TextView
             android:id="@+id/tv_area"
@@ -99,24 +97,24 @@
             android:textSize="14sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@+id/ed_area"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/ed_area" />
 
         <TextView
             android:id="@+id/ed_area"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
+            android:layout_marginStart="30dp"
             android:layout_marginTop="20dp"
-            android:layout_marginEnd="25dp"
+            android:layout_marginEnd="10dp"
             android:textSize="12sp"
             android:background="@drawable/bg_search"
             android:hint="@string/select"
             android:textColor="@color/color_142c48"
             android:keyboardNavigationCluster="false"
             android:padding="5dp"
-            app:layout_constraintEnd_toStartOf="@+id/tv_area"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/tv_area"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/ed_city" />
         <TextView
             android:id="@+id/tv_district"
@@ -130,22 +128,21 @@
             android:textSize="14sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@+id/ed_district"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/ed_district" />
 
         <TextView
             android:id="@+id/ed_district"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
             android:layout_marginTop="20dp"
             android:background="@drawable/bg_search"
             android:hint="@string/select"
             android:textColor="@color/color_142c48"
             android:keyboardNavigationCluster="false"
             android:padding="5dp"
-            app:layout_constraintEnd_toEndOf="@+id/ed_area"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="@id/ed_area"
+            app:layout_constraintEnd_toEndOf="@id/ed_area"
             app:layout_constraintTop_toBottomOf="@+id/ed_area" />
         <TextView
             android:id="@+id/tv_address"
@@ -159,14 +156,13 @@
             android:textSize="14sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@+id/ed_address"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/ed_address" />
 
         <EditText
             android:id="@+id/ed_address"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
             android:layout_marginTop="20dp"
             android:textSize="12sp"
             android:background="@drawable/bg_search"
@@ -174,8 +170,8 @@
             android:textColor="@color/color_142c48"
             android:keyboardNavigationCluster="false"
             android:padding="5dp"
-            app:layout_constraintEnd_toEndOf="@+id/ed_area"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="@id/ed_area"
+            app:layout_constraintEnd_toEndOf="@id/ed_area"
             app:layout_constraintTop_toBottomOf="@+id/ed_district" />
         <ProgressBar
             android:id="@+id/progressBar"

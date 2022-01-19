@@ -44,7 +44,7 @@
             app:drawableEndCompat="@drawable/ic_search"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/back" />
+            app:layout_constraintTop_toBottomOf="@+id/ed_filter" />
 
         <TextView
             android:id="@+id/tv_label_filter"
@@ -52,13 +52,13 @@
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:layout_marginTop="20dp"
-            android:layout_marginEnd="10dp"
-            android:text="@string/filter"
+            android:layout_marginStart="10dp"
+            android:text="@string/select_ticket"
             android:textColor="@color/color_142c48"
             android:textSize="14sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@+id/ed_filter"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/ed_filter" />
 
         <TextView
@@ -66,15 +66,15 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:layout_marginEnd="5dp"
+            android:layout_marginStart="10dp"
             android:background="@drawable/bg_search"
             android:drawableStart="@drawable/ic_drop_down"
             android:hint="@string/select"
             android:padding="10dp"
             android:textSize="12dp"
-            app:layout_constraintEnd_toStartOf="@+id/tv_label_filter"
-            app:layout_constraintStart_toStartOf="@+id/tv_people_search"
-            app:layout_constraintTop_toBottomOf="@+id/tv_people_search" />
+            app:layout_constraintStart_toEndOf="@+id/tv_label_filter"
+            app:layout_constraintEnd_toEndOf="@+id/tv_people_search"
+            app:layout_constraintTop_toBottomOf="@+id/back" />
 
 
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -86,7 +86,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/tv_people_search"
             app:layout_constraintStart_toStartOf="@id/tv_people_search"
-            app:layout_constraintTop_toBottomOf="@+id/ed_filter">
+            app:layout_constraintTop_toBottomOf="@+id/tv_people_search">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -130,7 +130,7 @@
                     android:layout_marginBottom="10dp"
                     android:background="@drawable/send_btn_bg"
                     android:padding="5dp"
-                    android:src="@drawable/ic_add"
+                    android:src="@drawable/ic_add_ticket"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>

@@ -42,25 +42,23 @@
                 android:textSize="14sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@+id/ed_the_tax_card_number"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/ed_the_tax_card_number" />
 
             <EditText
                 android:id="@+id/ed_the_tax_card_number"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
                 android:layout_marginTop="20dp"
-                android:layout_marginEnd="5dp"
                 android:background="@drawable/bg_search"
-                android:gravity="start"
+                android:gravity="center"
                 android:hint="@string/the_tax_card_number"
                 android:inputType="phone"
                 android:padding="5dp"
                 android:textColor="@color/color_142c48"
                 android:textSize="12sp"
-                app:layout_constraintEnd_toEndOf="@+id/ed_commercial_register_number"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/ed_commercial_register_number"
+                app:layout_constraintEnd_toEndOf="@id/ed_commercial_register_number"
                 app:layout_constraintTop_toBottomOf="@+id/back" />
 
             <TextView
@@ -76,24 +74,23 @@
                 android:textSize="14sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@+id/ed_pharmacy_legal_name"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/ed_pharmacy_legal_name" />
 
             <EditText
                 android:id="@+id/ed_pharmacy_legal_name"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
                 android:layout_marginTop="20dp"
-                android:layout_marginEnd="5dp"
                 android:background="@drawable/bg_search"
                 android:hint="@string/label_pharmacy_legal_name"
                 android:inputType="text"
+                android:gravity="center"
                 android:padding="5dp"
                 android:textColor="@color/color_142c48"
                 android:textSize="12sp"
-                app:layout_constraintEnd_toEndOf="@+id/ed_commercial_register_number"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/ed_commercial_register_number"
+                app:layout_constraintEnd_toEndOf="@id/ed_commercial_register_number"
                 app:layout_constraintTop_toBottomOf="@+id/ed_the_tax_card_number" />
 
             <TextView
@@ -108,7 +105,7 @@
                 android:textSize="14sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@+id/ed_commercial_register_number"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/ed_commercial_register_number" />
 
             <EditText
@@ -117,17 +114,17 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="20dp"
-                android:layout_marginEnd="5dp"
+                android:layout_marginEnd="10dp"
                 android:background="@drawable/bg_search"
-                android:gravity="start"
+                android:gravity="center"
                 android:hint="@string/commercial_register_number"
                 android:inputType="phone"
                 android:keyboardNavigationCluster="false"
                 android:padding="5dp"
                 android:textColor="@color/color_142c48"
                 android:textSize="12sp"
-                app:layout_constraintEnd_toStartOf="@+id/tv_commercial_register_number"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/tv_commercial_register_number"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/ed_pharmacy_legal_name" />
 
             <TextView
@@ -142,24 +139,23 @@
                 android:textSize="14sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@+id/ed_phone"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/ed_phone" />
 
             <EditText
                 android:id="@+id/ed_phone"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
                 android:layout_marginTop="20dp"
                 android:background="@drawable/bg_search"
-                android:gravity="start"
+                android:gravity="center"
                 android:hint="@string/phone"
                 android:inputType="phone"
                 android:padding="5dp"
                 android:textColor="@color/color_142c48"
                 android:textSize="12sp"
-                app:layout_constraintEnd_toEndOf="@+id/ed_commercial_register_number"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/ed_commercial_register_number"
+                app:layout_constraintEnd_toEndOf="@id/ed_commercial_register_number"
                 app:layout_constraintTop_toBottomOf="@+id/ed_commercial_register_number" />
 
             <View
@@ -178,12 +174,12 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
                 android:layout_marginTop="10dp"
-                android:layout_marginEnd="10dp"
+                android:layout_marginStart="10dp"
                 android:text="@string/pay_get_way"
                 android:textColor="@color/color_142c48"
                 android:textSize="14sp"
                 android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/view1" />
 
             <RadioGroup
@@ -197,7 +193,7 @@
                 android:textColor="@color/blue"
                 android:textSize="14sp"
                 android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="@+id/tv_label_pay_get_way"
+                app:layout_constraintStart_toStartOf="@+id/tv_label_pay_get_way"
                 app:layout_constraintTop_toBottomOf="@+id/tv_label_pay_get_way">
 
                 <RadioButton
@@ -277,12 +273,12 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
                 android:layout_marginTop="10dp"
-                android:layout_marginEnd="10dp"
+                android:layout_marginStart="10dp"
                 android:text="@string/working_hours"
                 android:textColor="@color/color_142c48"
                 android:textSize="14sp"
                 android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/view2" />
 
             <RadioGroup
@@ -295,7 +291,7 @@
                 android:textColor="@color/blue"
                 android:textSize="14sp"
                 android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="@id/tv_label_working_hours"
+                app:layout_constraintStart_toStartOf="@id/tv_label_working_hours"
                 app:layout_constraintTop_toBottomOf="@+id/tv_label_working_hours">
 
                 <RadioButton
@@ -351,12 +347,12 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
                 android:layout_marginTop="10dp"
-                android:layout_marginEnd="10dp"
+                android:layout_marginStart="10dp"
                 android:text="@string/delivery"
                 android:textColor="@color/color_142c48"
                 android:textSize="14sp"
                 android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/view3" />
 
             <RadioGroup
@@ -369,7 +365,7 @@
                 android:textColor="@color/blue"
                 android:textSize="14sp"
                 android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="@id/tv_label_delivery"
+                app:layout_constraintStart_toStartOf="@id/tv_label_delivery"
                 app:layout_constraintTop_toBottomOf="@+id/tv_label_delivery">
 
                 <RadioButton
@@ -414,9 +410,9 @@
                 android:layout_margin="10dp"
                 android:text="@string/file"
                 android:textColor="@color/color_142c48"
-                android:textSize="14sp"
+                android:textSize="18sp"
                 android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/view4" />
 
             <TextView
@@ -429,7 +425,7 @@
                 android:textColor="@color/color_142c48"
                 android:textSize="14sp"
                 android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_image_file" />
 
             <ImageView
@@ -461,7 +457,7 @@
                 android:textColor="@color/color_142c48"
                 android:textSize="14sp"
                 android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/iv_commercial_register" />
 
             <ImageView
@@ -491,7 +487,7 @@
                 android:textColor="@color/color_142c48"
                 android:textSize="14sp"
                 android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/iv_commercial_register_two" />
 
             <ImageView

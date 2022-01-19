@@ -98,7 +98,6 @@ class TicketActivity : AppCompatActivity() {
     fun handleObserver() {
         viewModel!!.errorMessage.observe(this, { integer: Int ->
             if (integer == 1) {
-                Log.e("xxx", "error")
                 Toast.makeText(this, "error in response data", Toast.LENGTH_SHORT)
                     .show()
             } else {
@@ -110,8 +109,6 @@ class TicketActivity : AppCompatActivity() {
             startActivity(getIntent())
         })
         viewModel!!.getContactsResponse.observe(this, Observer {
-
-
             if (it!!.data == null) {
                 //errorMessage if data coming is null;
                 binding.tvEmptyList.setVisibility(View.VISIBLE)
@@ -125,6 +122,7 @@ class TicketActivity : AppCompatActivity() {
                     val intent = Intent(this, ChatThread4EShoppingActivity::class.java)
                     intent.putExtra("ticket_id", dataItem.id.toString())
                     intent.putExtra("status", dataItem.status.toString())
+                    intent.putExtra("subject", dataItem.subject)
                     startActivity(intent)
                 })
 
@@ -137,6 +135,8 @@ class TicketActivity : AppCompatActivity() {
         })
         viewModel!!.addTicketRsponse.observe(this, Observer {
             viewModel!!.getGetContacts("", "")
+            Toast.makeText(this, "تم اضافة التيكيت بنجاح", Toast.LENGTH_SHORT)
+                .show()
         })
     }
 

@@ -11,6 +11,7 @@
         android:id="@+id/layout_rate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="20dp"
         android:background="@drawable/custom_bg_curve_left_right_color_white">
 
 
@@ -79,7 +80,7 @@
             app:layout_constraintTop_toBottomOf="@+id/tv_rate_rating" />
 
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_rate_submit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
