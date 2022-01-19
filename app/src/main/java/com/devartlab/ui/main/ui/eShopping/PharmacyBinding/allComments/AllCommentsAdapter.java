@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
@@ -13,6 +14,9 @@ import com.devartlab.R;
 import com.devartlab.a4eshopping.PharmacyBinding.allComments.model.Data;
 import com.devartlab.databinding.AllCommentsItemBinding;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 public class AllCommentsAdapter extends RecyclerView.Adapter<AllCommentsAdapter.ViewHolder> {
@@ -36,10 +40,9 @@ public class AllCommentsAdapter extends RecyclerView.Adapter<AllCommentsAdapter.
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, final int position) {
         final Data dataItem = dataItems.get(position);
-
-        viewHolder.binding.tvNoPharmacy.setText(dataItem.getCreated_at());
         viewHolder.binding.tvNamePharmacy.setText(dataItem.getName());
         viewHolder.binding.tvStartDate.setText(dataItem.getComment());
+        convertDateTime(dataItem.getCreated_at(), viewHolder.binding.tvNoPharmacy);
     }
 
     @Override
@@ -71,5 +74,18 @@ public class AllCommentsAdapter extends RecyclerView.Adapter<AllCommentsAdapter.
             }
         }
 
+    }
+    public void convertDateTime(String format, TextView date) {
+        SimpleDateFormat input = new SimpleDateFormat("yyyy-MM-dd' 'HH:mm:ss");
+        SimpleDateFormat output = new SimpleDateFormat("dd/MM/yyyy");
+
+        Date d = null;
+        try {
+            d = input.parse(format);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        String formatted = output.format(d);
+        date.setText(formatted);
     }
 }

@@ -29,18 +29,21 @@
                 android:textColor="@color/blue"
                 android:textSize="14sp"
                 android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/tv_no_pharmacy"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="مروة السعيد رزق السعيد موسي"
+                android:text="mostafa kamel kamel"
                 android:textColor="@color/color_142c48"
                 android:textSize="12sp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginStart="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintBottom_toBottomOf="@+id/tv_label_no_pharmacy"
-                app:layout_constraintEnd_toEndOf="@+id/tv_name_pharmacy"
+                app:layout_constraintStart_toEndOf="@+id/tv_label_no_pharmacy"
                 app:layout_constraintTop_toTopOf="@+id/tv_label_no_pharmacy" />
 
 
@@ -53,19 +56,19 @@
                 android:textColor="@color/blue"
                 android:textSize="14sp"
                 android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="@+id/tv_label_no_pharmacy"
+                app:layout_constraintStart_toStartOf="@+id/tv_label_no_pharmacy"
                 app:layout_constraintTop_toBottomOf="@+id/tv_label_no_pharmacy" />
 
             <TextView
                 android:id="@+id/tv_name_pharmacy"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="40dp"
                 android:text="صيدليه"
                 android:textColor="@color/color_142c48"
                 android:textSize="12sp"
+                app:layout_constraintEnd_toEndOf="@+id/tv_no_pharmacy"
                 app:layout_constraintBottom_toBottomOf="@+id/tv_label_name_pharmacy"
-                app:layout_constraintEnd_toStartOf="@+id/tv_label_name_pharmacy"
+                app:layout_constraintStart_toStartOf="@+id/tv_no_pharmacy"
                 app:layout_constraintTop_toTopOf="@+id/tv_label_name_pharmacy" />
 
             <TextView
@@ -78,22 +81,21 @@
                 android:textColor="@color/blue"
                 android:textSize="14sp"
                 android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="@+id/tv_label_no_pharmacy"
+                app:layout_constraintStart_toStartOf="@+id/tv_label_no_pharmacy"
                 app:layout_constraintTop_toBottomOf="@+id/tv_label_name_pharmacy" />
 
             <TextView
                 android:id="@+id/tv_start_date"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp"
                 android:text="برجار ارسال البطاقه الضريبية او رخصة الصيدليه وتكون نفس الاسم الذي في البطاقه الشخصية"
                 android:textColor="@color/color_142c48"
                 android:textSize="12sp"
+                app:layout_constraintStart_toStartOf="@id/tv_no_pharmacy"
+                app:layout_constraintEnd_toEndOf="@id/tv_no_pharmacy"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/tv_label_start_date"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_label_start_date" />
+                app:layout_constraintTop_toTopOf="@+id/tv_label_start_date"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>

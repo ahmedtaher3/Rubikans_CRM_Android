@@ -7,6 +7,7 @@ import com.devartlab.R
 import com.devartlab.databinding.ActivityVideoBinding
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
+import kotlinx.android.synthetic.main.exo_playback_control_view.view.*
 
 class videoActivity : AppCompatActivity() {
     lateinit var binding: ActivityVideoBinding
@@ -28,7 +29,7 @@ class videoActivity : AppCompatActivity() {
             binding.youtubePlayerView.addYouTubePlayerListener(object :
                 AbstractYouTubePlayerListener() {
                 override fun onReady(youTubePlayer: YouTubePlayer) {
-                    youTubePlayer.loadVideo(_id!!, 0f)
+                    youTubePlayer.cueVideo(_id!!, 0f)
                 }
             })
         }
@@ -51,6 +52,10 @@ class videoActivity : AppCompatActivity() {
         binding.youtubePlayerView.enableBackgroundPlayback(false)
     }
 
+    override fun onPause() {
+        super.onPause()
+        binding.youtubePlayerView.enableBackgroundPlayback(false)
+    }
     override fun onSupportNavigateUp(): Boolean {
         binding.youtubePlayerView.enableBackgroundPlayback(false)
         finish()

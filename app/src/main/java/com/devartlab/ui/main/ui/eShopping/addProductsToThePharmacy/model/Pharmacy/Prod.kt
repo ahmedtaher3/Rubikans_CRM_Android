@@ -16,6 +16,7 @@ data class Prod(
     val processingstock: Any,
     val slug: String,
     val sku: String,
+    var flag: Boolean=false,
     val subcats: List<Subcat>,
     val thumbnail: String
 )

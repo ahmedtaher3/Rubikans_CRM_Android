@@ -2,6 +2,7 @@ package com.devartlab.ui.main.ui.eShopping.addProductsToThePharmacy;
 
 import android.content.Context;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,8 +13,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.devartlab.R;
 import com.devartlab.a4eshopping.addProductsToThePharmacy.model.Pharmacy.Prod;
+import com.devartlab.a4eshopping.orientationVideos.model.Item;
 import com.devartlab.databinding.AddProductsPharmacyItemBinding;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class AddProductsPharmaciesAdapter extends RecyclerView.Adapter<AddProductsPharmaciesAdapter.ViewHolder> {
@@ -50,17 +53,19 @@ public class AddProductsPharmaciesAdapter extends RecyclerView.Adapter<AddProduc
                 if (TextUtils.isEmpty(viewHolder.binding.edPharmacySearch.getText().toString())) {
                     viewHolder.binding.edPharmacySearch.setError("please enter amount");
                 } else {
-                    if (removeOrAdd == 0) {
+                    if (!dataItem.getFlag()) {
+                        Log.e("ccc", String.valueOf(dataItem.getFlag()));
                         amount = Float.parseFloat(viewHolder.binding.edPharmacySearch.getText().toString());
                         viewHolder.binding.tvTotal.setText(String.format("%.2f", amount * dataItem.getPrice()));
-                        removeOrAdd = 1;
+                        dataItem.setFlag(true);
                         viewHolder.binding.edPharmacySearch.setEnabled(false);
                         viewHolder.binding.btnAdd.setText("remove");
                         viewHolder.binding.btnAdd.setBackgroundResource(R.drawable.bg_red);
                         onItemClickListener.onItemClick(position,  dataItem.getId(), Integer.parseInt(viewHolder.binding.edPharmacySearch.getText().toString()));
-                    } else if (removeOrAdd == 1) {
+                    } else {
+                        Log.e("ccc", String.valueOf(dataItem.getFlag()));
                         onItemClickListener2.onItemClick2(position, dataItem.getId(), Integer.parseInt(viewHolder.binding.edPharmacySearch.getText().toString()));
-                        removeOrAdd = 0;
+                        dataItem.setFlag(false);
                         viewHolder.binding.edPharmacySearch.setEnabled(true);
                         viewHolder.binding.btnAdd.setText("Add");
                         viewHolder.binding.btnAdd.setBackgroundResource(R.drawable.check_status_trip_green);
@@ -122,6 +127,10 @@ public class AddProductsPharmaciesAdapter extends RecyclerView.Adapter<AddProduc
 
     public interface OnItemClickListener2 {
         void onItemClick2(int pos, int id, int amount);
+    }
+    public void filterData(ArrayList<Prod> newList ){
+        this.dataItems = newList;
+        notifyDataSetChanged(); // refresh
     }
 
 

@@ -23,9 +23,10 @@
             android:background="@drawable/message_outgoing_bg"
             android:padding="8dp"
             android:visibility="gone"
+            android:layout_marginStart="5dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/seen"
             app:layout_constraintTop_toTopOf="parent">
 
             <TextView

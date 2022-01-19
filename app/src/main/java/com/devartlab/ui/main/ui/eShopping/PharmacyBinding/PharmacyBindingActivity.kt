@@ -127,7 +127,7 @@ class PharmacyBindingActivity : AppCompatActivity() {
         dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         val window = dialog.window
         window!!.setLayout(
-            WindowManager.LayoutParams.WRAP_CONTENT,
+            WindowManager.LayoutParams.MATCH_PARENT,
             WindowManager.LayoutParams.WRAP_CONTENT
         )
         val BtnConnect = dialog.findViewById<Button>(R.id.btn_connect_now)

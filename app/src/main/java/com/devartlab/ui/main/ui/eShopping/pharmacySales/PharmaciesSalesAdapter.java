@@ -42,11 +42,11 @@ public class PharmaciesSalesAdapter extends RecyclerView.Adapter<PharmaciesSales
         final Data dataItem = dataItems.get(position);
 
         if (dataItem.getStatus().equals("completed")) {
-            viewHolder.binding.ivStatus.setImageResource(R.drawable.ic_verified);
+            viewHolder.binding.ivStatus.setImageResource(R.drawable.ic_verified_sales_pharmacies);
         } else if (dataItem.getStatus().equals("declined")) {
-            viewHolder.binding.ivStatus.setImageResource(R.drawable.ic_error);
+            viewHolder.binding.ivStatus.setImageResource(R.drawable.ic_error_sales);
         } else if (dataItem.getStatus().equals("pending")) {
-            viewHolder.binding.ivStatus.setImageResource(R.drawable.ic_preview);
+            viewHolder.binding.ivStatus.setImageResource(R.drawable.ic_preview_sales);
         } else if (dataItem.getStatus().equals("processing")) {
             viewHolder.binding.ivStatus.setImageResource(R.drawable.ic_process);
         } else if (dataItem.getStatus().equals("on delivery")) {

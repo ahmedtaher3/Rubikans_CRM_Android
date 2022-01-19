@@ -28,7 +28,7 @@
                 android:textColor="@color/blue"
                 android:textSize="14sp"
                 android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
@@ -39,7 +39,7 @@
                 android:textColor="@color/color_142c48"
                 android:textSize="12sp"
                 app:layout_constraintBottom_toBottomOf="@+id/tv_label_no_ticket"
-                app:layout_constraintEnd_toStartOf="@+id/tv_label_no_ticket"
+                app:layout_constraintStart_toEndOf="@+id/tv_label_no_ticket"
                 app:layout_constraintTop_toTopOf="@+id/tv_label_no_ticket" />
 
 
@@ -52,9 +52,10 @@
                 android:textColor="@color/blue"
                 android:textSize="14sp"
                 android:textStyle="bold"
+                android:visibility="gone"
                 android:layout_marginBottom="10dp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@id/tv_label_no_ticket"
+                app:layout_constraintStart_toStartOf="@id/tv_label_no_ticket"
                 app:layout_constraintTop_toBottomOf="@+id/tv_label_no_ticket" />
             <TextView
                 android:id="@+id/tv_dec_ticket"
@@ -64,25 +65,21 @@
                 android:text="sadfadfadsfasdfasdfsdf"
                 android:textColor="@color/color_142c48"
                 android:textSize="12sp"
-                android:gravity="right"
-                android:layout_marginStart="5dp"
-                app:layout_constraintStart_toEndOf="@+id/tv_start_date"
-                app:layout_constraintEnd_toStartOf="@+id/tv_label_dec_ticket"
-                app:layout_constraintTop_toTopOf="@+id/tv_label_dec_ticket"
-                app:layout_constraintBottom_toBottomOf="@id/tv_label_dec_ticket"/>
+                android:layout_marginEnd="10dp"
+                android:layout_marginTop="5dp"
+                app:layout_constraintStart_toStartOf="@id/tv_label_no_ticket"
+                app:layout_constraintTop_toBottomOf="@+id/tv_label_no_ticket"/>
 
             <TextView
                 android:id="@+id/tv_start_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
+                android:layout_marginTop="5dp"
                 android:text="2021-11-20 22:31:56"
                 android:textColor="@color/color_bfc5cd"
                 android:textSize="10sp"
-                android:layout_marginStart="5dp"
-                android:layout_marginTop="5dp"
-                app:layout_constraintStart_toStartOf="@id/tv_condition_ticket"
-                app:layout_constraintTop_toTopOf="@+id/tv_label_dec_ticket"/>
+                app:layout_constraintEnd_toEndOf="@id/tv_condition_ticket"
+                app:layout_constraintTop_toBottomOf="@id/tv_condition_ticket"/>
 
             <TextView
                 android:id="@+id/tv_condition_ticket"
@@ -90,11 +87,11 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/check_status_trip_orange"
                 android:padding="5dp"
-                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
                 android:text="قيد المراجعة"
                 android:textColor="@android:color/white"
                 android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@id/tv_label_no_ticket"/>
 
             <Button
@@ -133,7 +130,7 @@
                 android:layout_marginBottom="5dp"
                 android:layout_marginTop="5dp"
                 android:text="@string/label_more_than"
-                app:layout_constraintStart_toStartOf="@+id/tv_start_date"
+                app:layout_constraintEnd_toEndOf="@+id/tv_start_date"
                 app:layout_constraintTop_toBottomOf="@+id/tv_start_date"
                 app:layout_constraintBottom_toBottomOf="parent"/>
 

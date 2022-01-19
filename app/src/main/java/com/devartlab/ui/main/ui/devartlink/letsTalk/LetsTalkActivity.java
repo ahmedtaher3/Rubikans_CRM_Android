@@ -36,6 +36,7 @@ public class LetsTalkActivity extends AppCompatActivity {
     LetsTalkViewModel viewModel;
     FragmentPagerItemAdapter adapter;
     DataManager dataManager;
+    String name;
 
     private List<String> people = new ArrayList<>();
     private ArrayAdapter<String> adapterPeople;
@@ -91,6 +92,7 @@ public class LetsTalkActivity extends AppCompatActivity {
                         if (people.contains(String.valueOf(charSequence))) {
                             int index = people.indexOf(String.valueOf(charSequence));
                             viewModel.getUserID(searchPeapleResponse.getData().get(index).getId());
+                             name=searchPeapleResponse.getData().get(index).getName();
                         } else {
                             Toast.makeText(LetsTalkActivity.this
                                     , "please choose right name", Toast.LENGTH_SHORT).show();
@@ -109,6 +111,7 @@ public class LetsTalkActivity extends AppCompatActivity {
             public void onChanged(UserIDResponse userIDResponse) {
                 Intent intent = new Intent(LetsTalkActivity.this, ChatThreadActivity.class);
                 intent.putExtra("peopleItem", userIDResponse.getId());
+                intent.putExtra("people_name", name);
                 startActivity(intent);
             }
         });

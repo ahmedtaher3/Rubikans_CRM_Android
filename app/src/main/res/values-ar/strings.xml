@@ -536,20 +536,22 @@
     <string name="orientation_videos">الفيديوهات الاسترشادية</string>
     <string name="id_pharmacy">كود المنتج</string>
     <string name="action_all">الكل</string>
-    <string name="action_open">مفتوح</string>
+    <string name="action_open">المفتوح</string>
     <string name="action_inreview">تحت المراجعة</string>
-    <string name="action_close">مغلق</string>
+    <string name="action_close">المغلق</string>
     <string name="label_dec_ticket">عنوان المشكلة</string>
     <string name="hint_bar_video">بحث</string>
     <string name="hint_search_connect_pharmacy">برجاء كتابة رقم الصدليه المطلوب</string>
     <string name="name_no_pharmacy_search">بحث عن الصيدلية بالرقم و الاسم</string>
     <string name="label_amount">الكمية</string>
     <string name="enter_amount">ادخل الكمية</string>
-    <string name="label_more_than"><u>اقراء المزيد</u></string>
+    <string name="label_more_than"><u>عرض المزيد</u></string>
     <string name="_add_problem">ارسل</string>
     <string name="action_other">اخر</string>
     <string name="label_comment">التعليق</string>
     <string name="hint_search_ticket">البحث بالرقم التيكيت</string>
     <string name="add_location">إضافة الموقع</string>
     <string name="upload_pharmacy_files">رفع مستندات الصيدلية</string>
+    <string name="action_pending">قيد الانتظار</string>
+    <string name="select_ticket">اختار الحاله</string>
 </resources>

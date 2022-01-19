@@ -44,19 +44,19 @@ public class GetContactsAdapter extends RecyclerView.Adapter<GetContactsAdapter.
         viewHolder.binding.tvDecTicket.setText(dataItem.getSubject());
         convertDateTime(dataItem.getCreated_at(), viewHolder.binding.tvStartDate);
         if (dataItem.getStatus() == 0) {
-            viewHolder.binding.tvConditionTicket.setText("All");
+            viewHolder.binding.tvConditionTicket.setText(R.string.action_all);
             viewHolder.binding.tvConditionTicket.setBackgroundResource(R.drawable.check_status_trip_orange);
         } else if (dataItem.getStatus() == 1) {
-            viewHolder.binding.tvConditionTicket.setText("Opened");
+            viewHolder.binding.tvConditionTicket.setText(R.string.action_open);
             viewHolder.binding.tvConditionTicket.setBackgroundResource(R.drawable.check_status_trip_green);
         } else if (dataItem.getStatus() == 2) {
-            viewHolder.binding.tvConditionTicket.setText("Processing");
+            viewHolder.binding.tvConditionTicket.setText(R.string.action_inreview);
             viewHolder.binding.tvConditionTicket.setBackgroundResource(R.drawable.check_status_trip_yellow);
         } else if (dataItem.getStatus() == 3) {
-            viewHolder.binding.tvConditionTicket.setText("Closed");
+            viewHolder.binding.tvConditionTicket.setText(R.string.action_close);
             viewHolder.binding.tvConditionTicket.setBackgroundResource(R.drawable.check_status_trip_red);
         } else if (dataItem.getStatus() == 4) {
-            viewHolder.binding.tvConditionTicket.setText("Pending");
+            viewHolder.binding.tvConditionTicket.setText(R.string.action_pending);
             viewHolder.binding.tvConditionTicket.setBackgroundResource(R.drawable.check_status_trip_gray);
         }
         if (onItemClickListener != null) {

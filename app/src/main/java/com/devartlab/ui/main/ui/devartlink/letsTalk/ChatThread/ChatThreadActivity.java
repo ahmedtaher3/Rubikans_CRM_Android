@@ -54,6 +54,7 @@ import okhttp3.RequestBody;
 public class ChatThreadActivity extends AppCompatActivity {
     String peopleItem;
     String idUser;
+    String people_name;
     ActivityChatThreadBinding binding;
     private ChatListViewModel viewModel;
     ChatListAdapter adapter;
@@ -67,7 +68,6 @@ public class ChatThreadActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_chat_thread);
         setSupportActionBar(binding.toolbar);
-        getSupportActionBar().setTitle(R.string.chat);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         viewModel = new ViewModelProvider(this).get(ChatListViewModel.class);
 
@@ -78,6 +78,10 @@ public class ChatThreadActivity extends AppCompatActivity {
         } else if (getIntent().hasExtra("people_id")) {
             idUser = getIntent().getStringExtra("people_id");
             viewModel.getChatList(idUser);
+        }
+        if (getIntent().hasExtra("people_name")) {
+            people_name = getIntent().getStringExtra("people_name");
+            getSupportActionBar().setTitle(people_name);
         }
         pusher();
         onClickListener();
