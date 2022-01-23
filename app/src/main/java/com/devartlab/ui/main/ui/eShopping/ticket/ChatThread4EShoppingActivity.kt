@@ -1,8 +1,10 @@
 package com.devartlab.ui.main.ui.eShopping.ticket
 
+import android.Manifest
 import android.app.Dialog
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Color
@@ -19,6 +21,8 @@ import android.view.WindowManager
 import android.view.animation.AnimationUtils
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -26,7 +30,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.devartlab.R
 import com.devartlab.a4eshopping.ticket.model.addRate.AddRateRequest
 import com.devartlab.databinding.ActivityChatEShoppingThreadBinding
-import com.devartlab.ui.main.ui.devartlink.letsTalk.filesUpload.VolleyFileObj
+import com.devartlab.ui.main.ui.eShopping.utils.filesUpload.VolleyFileObj
 import com.pusher.client.Pusher
 import com.pusher.client.PusherOptions
 import com.pusher.client.channel.Channel
@@ -87,6 +91,12 @@ class ChatThread4EShoppingActivity : AppCompatActivity() {
         binding.recyclerView.adapter = adapter
         binding.sendIMG.setOnClickListener {
             selectImage()
+            if (ContextCompat.checkSelfPermission(this@ChatThread4EShoppingActivity, Manifest.permission.CAMERA) ==
+                PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(this@ChatThread4EShoppingActivity, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(this@ChatThread4EShoppingActivity, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+                selectImage()
+            } else {
+                requestCameraPermission()
+            }
         }
         binding.send.setOnClickListener(View.OnClickListener {
             if (TextUtils.isEmpty(binding.message.text.toString())) {
@@ -384,5 +394,18 @@ class ChatThread4EShoppingActivity : AppCompatActivity() {
     override fun onSupportNavigateUp(): Boolean {
         finish()
         return true
+    }
+    fun requestCameraPermission() {
+        if (ActivityCompat.shouldShowRequestPermissionRationale(this@ChatThread4EShoppingActivity, Manifest.permission.CAMERA)) {
+            android.app.AlertDialog.Builder(this@ChatThread4EShoppingActivity)
+                .setTitle("permission denied")
+                .setMessage("ask for permission again")
+                .setPositiveButton("ok") { dialog, which -> ActivityCompat.requestPermissions(this@ChatThread4EShoppingActivity, arrayOf(
+                    Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE), 22) }
+                .setNegativeButton("cancel") { dialog, which -> dialog.dismiss() }
+                .create().show()
+        } else {
+            ActivityCompat.requestPermissions(this@ChatThread4EShoppingActivity, arrayOf(Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE), 22)
+        }
     }
 }

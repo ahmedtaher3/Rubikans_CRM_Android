@@ -4,7 +4,9 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import com.devartlab.a4eshopping.orientationVideos.model.ResponseVideos
+import com.devartlab.base.BaseApplication
 import com.devartlab.data.retrofit.RetrofitClient
+import com.devartlab.data.shared.DataManager
 import com.devartlab.ui.main.ui.eShopping.utils.UserPreferenceHelper
 import retrofit2.Call
 import retrofit2.Callback
@@ -15,7 +17,7 @@ class VideosViewModel(application: Application) : AndroidViewModel(application) 
         protected set
     var responseVideos: MutableLiveData<ResponseVideos?>
         protected set
-
+    var dataManager: DataManager
     fun getVideos() {
         RetrofitClient.getApis4EShopping().getVideos("Bearer "+ UserPreferenceHelper.getUser().token)!!
             .enqueue(object : Callback<ResponseVideos?> {
@@ -39,5 +41,6 @@ class VideosViewModel(application: Application) : AndroidViewModel(application) 
     init {
         responseVideos = MutableLiveData()
         errorMessage = MutableLiveData()
+        dataManager = (getApplication() as BaseApplication).dataManager!!
     }
 }

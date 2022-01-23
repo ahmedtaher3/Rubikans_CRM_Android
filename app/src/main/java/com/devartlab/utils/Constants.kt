@@ -24,4 +24,12 @@ object Constants {
     const val SHOW_ALL_WORK_FROM_HOME = 20
     const val SYNC = 21
     const val WORK_FROM_HOME = 22
+    const val HOME_4ESHOPPING = 23
+    const val PHARMACY_SALES = 24
+    const val CONNECT_PHARMACY = 25
+    const val FAQ_TUTORIAL = 26
+    const val VIDEO_FAQ_TUTORIAL = 27
+    const val ADD_LOCATION_4ESHOPPING = 28
+    const val ALL_COMMENTS_4ESHOPPING = 29
+    const val UPLOAD_PHARMACY_4ESHOPPING = 30
 }

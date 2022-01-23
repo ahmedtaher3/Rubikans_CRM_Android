@@ -1,4 +1,4 @@
-package com.devartlab.ui.main.ui.devartlink.letsTalk.filesUpload;
+package com.devartlab.ui.main.ui.eShopping.utils.filesUpload;
 
 
 import android.graphics.Bitmap;

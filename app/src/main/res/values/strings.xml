@@ -544,7 +544,7 @@
     <string name="action_close">Closed</string>
     <string name="label_dec_ticket">problem title</string>
     <string name="hint_bar_video">search</string>
-    <string name="hint_search_connect_pharmacy">Type ID of pharmacy</string>
+    <string name="hint_search_connect_pharmacy">Search to connect pharmacy</string>
     <string name="name_no_pharmacy_search">Pharmacy search</string>
     <string name="label_amount">Amount</string>
     <string name="enter_amount">Enter amount</string>

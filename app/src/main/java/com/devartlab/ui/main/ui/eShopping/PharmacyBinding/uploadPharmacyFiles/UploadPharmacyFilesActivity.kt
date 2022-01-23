@@ -1,7 +1,9 @@
 package com.devartlab.a4eshopping.PharmacyBinding.uploadPharmacyFiles
 
+import android.Manifest
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
@@ -21,12 +23,13 @@ import java.util.ArrayList
 import java.util.HashMap
 import android.widget.RadioGroup
 import android.widget.Toast
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import com.devartlab.R
 import com.devartlab.databinding.ActivityUploadPharmacyFilesBinding
 import com.devartlab.ui.main.ui.a4eshopping.main.Home4EShoppingActivity
-import com.devartlab.ui.main.ui.devartlink.letsTalk.filesUpload.VolleyFileObj
-import okhttp3.MediaType
+import com.devartlab.ui.main.ui.eShopping.utils.filesUpload.VolleyFileObj
 import okhttp3.MultipartBody
 
 
@@ -73,13 +76,28 @@ class UploadPharmacyFilesActivity : AppCompatActivity() {
             binding.ivDelTheTaxCard.setVisibility(View.GONE)
         }
         binding.ivCommercialRegister.setOnClickListener {
-            selectImage()
+            if (ContextCompat.checkSelfPermission(this@UploadPharmacyFilesActivity, Manifest.permission.CAMERA) ==
+                PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(this@UploadPharmacyFilesActivity, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(this@UploadPharmacyFilesActivity, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+                selectImage()
+            } else {
+                requestCameraPermission()
+            }
         }
         binding.ivCommercialRegisterTwo.setOnClickListener {
-            selectImageCommercialRegisterTwo()
+            if (ContextCompat.checkSelfPermission(this@UploadPharmacyFilesActivity, Manifest.permission.CAMERA) ==
+                PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(this@UploadPharmacyFilesActivity, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(this@UploadPharmacyFilesActivity, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+                selectImageCommercialRegisterTwo()
+            } else {
+                requestCameraPermission()
+            }
         }
         binding.ivTheTaxCard.setOnClickListener {
-            selectImageTheTaxCard()
+            if (ContextCompat.checkSelfPermission(this@UploadPharmacyFilesActivity, Manifest.permission.CAMERA) ==
+                PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(this@UploadPharmacyFilesActivity, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(this@UploadPharmacyFilesActivity, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+                selectImageTheTaxCard()
+            } else {
+                requestCameraPermission()
+            }
         }
         binding.radGroPayment.setOnCheckedChangeListener(RadioGroup.OnCheckedChangeListener { radioGroup, i ->
             if (binding.PayMob.isChecked()) {
@@ -150,8 +168,14 @@ class UploadPharmacyFilesActivity : AppCompatActivity() {
             }
         })
         viewModel!!.updatePharmacyDetails.observe(this, Observer {
-            val intent = Intent(this, Home4EShoppingActivity::class.java)
-            startActivity(intent)
+            if(it!!.message){
+                Toast.makeText(this, " تمت رفع بيانات الصيدلية بنجاح", Toast.LENGTH_SHORT)
+                    .show()
+                val intent = Intent(this, Home4EShoppingActivity::class.java)
+                startActivity(intent)
+            }else{
+                Toast.makeText(this, "error in Network", Toast.LENGTH_SHORT).show()
+            }
         })
     }
 
@@ -442,5 +466,19 @@ class UploadPharmacyFilesActivity : AppCompatActivity() {
     override fun onSupportNavigateUp(): Boolean {
         finish()
         return true
+    }
+
+    fun requestCameraPermission() {
+        if (ActivityCompat.shouldShowRequestPermissionRationale(this@UploadPharmacyFilesActivity, Manifest.permission.CAMERA)) {
+            android.app.AlertDialog.Builder(this@UploadPharmacyFilesActivity)
+                .setTitle("permission denied")
+                .setMessage("ask for permission again")
+                .setPositiveButton("ok") { dialog, which -> ActivityCompat.requestPermissions(this@UploadPharmacyFilesActivity, arrayOf(
+                    Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE), 22) }
+                .setNegativeButton("cancel") { dialog, which -> dialog.dismiss() }
+                .create().show()
+        } else {
+            ActivityCompat.requestPermissions(this@UploadPharmacyFilesActivity, arrayOf(Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE), 22)
+        }
     }
 }
