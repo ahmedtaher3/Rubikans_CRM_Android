@@ -234,6 +234,8 @@ dependencies {
     implementation 'com.ogaclejapan.smarttablayout:utils-v4:2.0.0@aar'
     //pusher
     implementation 'com.github.chivorns:smartmaterialspinner:1.5.0'
+    // dexter permissions
+    implementation 'com.karumi:dexter:6.1.0'
     //image
     implementation 'com.squareup.picasso:picasso:2.71828'
     //show video youtube

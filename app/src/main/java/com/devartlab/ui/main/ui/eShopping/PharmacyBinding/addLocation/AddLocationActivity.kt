@@ -25,6 +25,7 @@ class AddLocationActivity : AppCompatActivity() {
     var cityID: Int = 0
     var areaID: Int = 0
     var districtID: Int = 0
+    var lng_lat: String? =null
     lateinit var updateAddressRequest: UpdateAddressRequest
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -68,6 +69,8 @@ class AddLocationActivity : AppCompatActivity() {
                 binding.edCity.setError("please enter district")
             } else if (TextUtils.isEmpty(binding.edAddress.getText().toString())) {
                 binding.edCity.setError("please enter address")
+            } else if (lng_lat == null) {
+                binding.edLanLng.setError("please click to get current location")
             } else {
                 updateAddressRequest = UpdateAddressRequest(
                     idPharmacies,
@@ -75,8 +78,8 @@ class AddLocationActivity : AppCompatActivity() {
                     cityID,
                     areaID,
                     districtID,
-                    binding.edAddress.getText().toString()
-                )
+                    binding.edAddress.getText().toString(),
+                    lng_lat!!)
                 viewModel!!.updateAddress(updateAddressRequest)
             }
         }

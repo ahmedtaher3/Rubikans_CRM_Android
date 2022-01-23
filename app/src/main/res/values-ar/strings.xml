@@ -554,4 +554,5 @@
     <string name="upload_pharmacy_files">رفع مستندات الصيدلية</string>
     <string name="action_pending">قيد الانتظار</string>
     <string name="select_ticket">اختار الحاله</string>
+    <string name="current_location">الموقع الحالي</string>
 </resources>
