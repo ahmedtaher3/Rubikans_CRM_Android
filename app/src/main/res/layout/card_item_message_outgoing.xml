@@ -34,8 +34,7 @@
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/img_user"
-            android:layout_marginStart="5dp"
-            app:layout_constraintStart_toEndOf="@+id/seen"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
             <TextView
@@ -48,14 +47,7 @@
                 android:text="@string/deleted" />
 
         </LinearLayout>
-        <ImageView
-            android:id="@+id/seen"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/unseen"
-            app:layout_constraintBottom_toBottomOf="@+id/conlay_message"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/conlay_message" />
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/conlay_message"
             android:layout_width="0dp"
@@ -63,10 +55,9 @@
             android:layout_marginEnd="2dp"
             android:background="@drawable/message_outgoing_bg"
             android:padding="8dp"
-            android:layout_marginStart="5dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/img_user"
-            app:layout_constraintStart_toEndOf="@+id/seen"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
 
@@ -90,6 +81,15 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/content"
                 tools:text="2:30pm" />
+
+            <ImageView
+                android:id="@+id/seen"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/unseen"
+                app:layout_constraintBottom_toBottomOf="@+id/time"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/time" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>

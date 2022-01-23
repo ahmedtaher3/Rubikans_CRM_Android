@@ -60,17 +60,26 @@ class AddProductsPharmacyActivity : AppCompatActivity() {
     }
 
     private fun onClickListener() {
+        viewModel!!.getCategoryv2Pharmacy()
+        viewModel!!.getSearchAllPharmacy("")
         binding.searchBarVideo.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
             override fun afterTextChanged(s: Editable) {
                 filter(s.toString())
+                binding.ivRemoveSearch.setVisibility(View.VISIBLE)
             }
         })
+        binding.ivRemoveSearch.setOnClickListener {
+            binding.edPharmacyNo.setHint("...............")
+            binding.edPharmacyName.setHint("...............")
+            binding.tvTotalMoney.setText("0")
+            binding.tvTotalCoinssss.setText("0")
+            viewModel!!.getSearchAllPharmacy("")
+        }
         binding.swipeRefreshLayout.setOnRefreshListener {
             refresh()
         }
-        viewModel!!.getCategoryv2Pharmacy()
         binding.edPharmacySearch.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {}
             override fun onTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {
@@ -113,6 +122,11 @@ class AddProductsPharmacyActivity : AppCompatActivity() {
                 pharmacyID = it.data.get(item.getItemId()).id.toInt()
                 binding.btnAddToPharmacy.setVisibility(View.VISIBLE)
                 binding.searchBarVideo.setVisibility(View.VISIBLE)
+                binding.edPharmacyNo.setHint("...............")
+                binding.edPharmacyName.setHint("...............")
+                binding.tvTotalMoney.setText("0")
+                binding.tvTotalCoinssss.setText("0")
+                viewModel!!.getSearchAllPharmacy("")
                 binding.recyclerDetailsPharmacies.setVisibility(View.VISIBLE)
                 countryBrandsPopUp.dismiss()
                 Log.e("popupCarBrands", "onMenuItemClick: $pharmacyID")

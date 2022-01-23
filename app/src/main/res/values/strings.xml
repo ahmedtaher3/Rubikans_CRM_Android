@@ -560,7 +560,7 @@
     <string name="upload_pharmacy_files">Upload pharmacy files</string>
     <string name="details_pharmacy_sales">Details pharmacy sales</string>
     <string name="action_pending">Pending</string>
-    <string name="select_ticket">select status</string>
+    <string name="select_ticket">select ticket status</string>
     <string name="current_location">Current location</string>
 
 

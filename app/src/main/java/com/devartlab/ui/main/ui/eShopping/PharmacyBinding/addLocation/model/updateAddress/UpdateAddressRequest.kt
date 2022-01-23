@@ -7,5 +7,5 @@ data class UpdateAddressRequest(
     val area_id: Int,
     val district_id: Int,
     val fulladdress: String,
-    val lng_lat: String?
+    val lat_lng: String?
 )

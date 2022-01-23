@@ -1,6 +1,9 @@
 package com.devartlab.ui.main.ui.eShopping.PharmacyBinding.addLocation
 
+import android.content.Context
 import android.content.Intent
+import android.location.Address
+import android.location.Location
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
@@ -11,11 +14,20 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.devartlab.GetMyLocation
 import com.devartlab.R
 import com.devartlab.a4eshopping.PharmacyBinding.addLocation.AddLocationViewModel
 import com.devartlab.a4eshopping.PharmacyBinding.addLocation.model.updateAddress.UpdateAddressRequest
 import com.devartlab.databinding.ActivityAddLocationBinding
 import com.devartlab.ui.main.ui.a4eshopping.main.Home4EShoppingActivity
+import com.devartlab.utils.CommonUtilities
+import com.devartlab.utils.LocationUtils
+import com.devartlab.utils.ProgressLoading
+import kotlinx.android.synthetic.main.plan_item.*
+import android.location.Geocoder
+import java.lang.Exception
+import java.util.*
+
 
 class AddLocationActivity : AppCompatActivity() {
     var idPharmacies: String? = null
@@ -25,7 +37,7 @@ class AddLocationActivity : AppCompatActivity() {
     var cityID: Int = 0
     var areaID: Int = 0
     var districtID: Int = 0
-    var lng_lat: String? =null
+    var lat_lng: String? = null
     lateinit var updateAddressRequest: UpdateAddressRequest
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,6 +70,39 @@ class AddLocationActivity : AppCompatActivity() {
         binding.edDistrict.setOnClickListener {
             viewModel!!.getDistricts(areaID.toString())
         }
+        binding.edLanLng.setOnClickListener {
+            if (LocationUtils.checkPermission(this)) {
+                ProgressLoading.showWithText(
+                    this,
+                    resources.getString(R.string.fetching_your_location)
+                )
+                val getMyLocation = GetMyLocation(this)
+                getMyLocation.getLocation(this, object : GetMyLocation.LocationResult() {
+                    override fun gotLocation(location: Location?, msg: String?) {
+                        ProgressLoading.dismiss()
+                        if (location != null) {
+
+                            if (CommonUtilities.isFake(this@AddLocationActivity, location)) {
+                                lat_lng = "1" + "," + "1"
+                            } else {
+                                lat_lng = location?.latitude.toString() + "," + location?.longitude.toString()
+                                binding.edLanLng.setText(getAddressFromLatLng(this@AddLocationActivity,location?.latitude,location?.longitude))
+                            }
+                        } else {
+                            runOnUiThread {
+                                Toast.makeText(
+                                    this@AddLocationActivity,
+                                    resources.getString(R.string.error_location_try_again),
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
+                        }
+                    }
+
+                })
+
+            }
+        }
         binding.btnUpdate.setOnClickListener {
             if (countryID == 0) {
                 binding.edCountry.setError("please enter country")
@@ -69,7 +114,7 @@ class AddLocationActivity : AppCompatActivity() {
                 binding.edCity.setError("please enter district")
             } else if (TextUtils.isEmpty(binding.edAddress.getText().toString())) {
                 binding.edCity.setError("please enter address")
-            } else if (lng_lat == null) {
+            } else if (lat_lng == null) {
                 binding.edLanLng.setError("please click to get current location")
             } else {
                 updateAddressRequest = UpdateAddressRequest(
@@ -79,7 +124,8 @@ class AddLocationActivity : AppCompatActivity() {
                     areaID,
                     districtID,
                     binding.edAddress.getText().toString(),
-                    lng_lat!!)
+                    lat_lng!!
+                )
                 viewModel!!.updateAddress(updateAddressRequest)
             }
         }
@@ -162,12 +208,12 @@ class AddLocationActivity : AppCompatActivity() {
             districtsBrandsPopUp.show()
         })
         viewModel!!.UpdateAddressResponse.observe(this, Observer {
-            if(it!!.message){
+            if (it!!.message) {
                 Toast.makeText(this, " تمت اضافة بنجاح", Toast.LENGTH_SHORT)
                     .show()
                 val intent = Intent(this, Home4EShoppingActivity::class.java)
                 startActivity(intent)
-            }else{
+            } else {
                 Toast.makeText(this, "error in Network", Toast.LENGTH_SHORT).show()
             }
         })
@@ -191,5 +237,26 @@ class AddLocationActivity : AppCompatActivity() {
         finish()
         return true
     }
-
+    fun getAddressFromLatLng(context: Context?, lat: Double, lng: Double): String? {
+        val geocoder: Geocoder
+        val addresses: List<Address>
+        geocoder = Geocoder(context, Locale.getDefault())
+        return try {
+            addresses = geocoder.getFromLocation(lat, lng, 1)
+            if (addresses[0].getSubThoroughfare() == null && addresses[0].getThoroughfare() == null) {
+                Log.e("TAG", "getAddressLine: ")
+                addresses[0].getAddressLine(0)
+            } else if (addresses[0].getSubThoroughfare() == null) {
+                Log.e("TAG", "getSubThoroughfare: ")
+                addresses[0].getThoroughfare().toString() + ", " + addresses[0].getAdminArea()
+            } else {
+                Log.e("TAG", "getAddressFromLatLng: ")
+                addresses[0].getSubThoroughfare()
+                    .toString() + " " + addresses[0].getThoroughfare() + ", " + addresses[0].getAdminArea()
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+            ""
+        }
+    }
 }
