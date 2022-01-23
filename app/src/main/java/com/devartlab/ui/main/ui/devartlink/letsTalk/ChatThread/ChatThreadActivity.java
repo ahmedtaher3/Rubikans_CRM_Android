@@ -25,12 +25,10 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.devartlab.R;
-import com.devartlab.base.BaseApplication;
-import com.devartlab.data.shared.DataManager;
 import com.devartlab.databinding.ActivityChatThreadBinding;
 import com.devartlab.ui.main.ui.devartlink.letsTalk.ChatThread.model.ChatListResponse;
 import com.devartlab.ui.main.ui.devartlink.letsTalk.ChatThread.model.sendMessages.SendMessagesResponse;
-import com.devartlab.ui.main.ui.devartlink.letsTalk.filesUpload.VolleyFileObj;
+import com.devartlab.ui.main.ui.eShopping.utils.filesUpload.VolleyFileObj;
 import com.devartlab.ui.main.ui.eShopping.utils.UserPreferenceHelper;
 import com.pusher.client.Pusher;
 import com.pusher.client.PusherOptions;

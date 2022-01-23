@@ -30,7 +30,8 @@ class AddLocationActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(
             this,
-            R.layout.activity_add_location)
+            R.layout.activity_add_location
+        )
         setSupportActionBar(binding.toolbar)
         supportActionBar!!.title = getString(R.string.add_location)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
@@ -45,18 +46,12 @@ class AddLocationActivity : AppCompatActivity() {
     private fun onClickListener() {
         viewModel!!.getUserAddress(idPharmacies!!)
         binding.edCountry.setOnClickListener {
-            binding.edCity.setText("")
-            binding.edArea.setText("")
-            binding.edDistrict.setText("")
             viewModel!!.getCountry()
         }
         binding.edCity.setOnClickListener {
-            binding.edArea.setText("")
-            binding.edDistrict.setText("")
             viewModel!!.getCities(countryID.toString())
         }
         binding.edArea.setOnClickListener {
-            binding.edDistrict.setText("")
             viewModel!!.getAreas(cityID.toString())
         }
         binding.edDistrict.setOnClickListener {
@@ -107,6 +102,9 @@ class AddLocationActivity : AppCompatActivity() {
                 binding.edCountry
                     .setText(it.get(item.getItemId()).country_name)
                 countryID = it.get(item.getItemId()).id.toInt()
+                binding.edCity.setText(R.string.select)
+                binding.edArea.setText(R.string.select)
+                binding.edDistrict.setText(R.string.select)
                 Log.e("popupCarBrands", "onMenuItemClick: $countryID")
                 return@OnMenuItemClickListener false
             })
@@ -122,6 +120,8 @@ class AddLocationActivity : AppCompatActivity() {
                 binding.edCity
                     .setText(it.data.get(item.getItemId()).name)
                 cityID = it.data.get(item.getItemId()).id.toInt()
+                binding.edArea.setText(R.string.select)
+                binding.edDistrict.setText(R.string.select)
                 Log.e("popupCarBrands", "onMenuItemClick: $cityID")
                 return@OnMenuItemClickListener false
             })
@@ -137,6 +137,7 @@ class AddLocationActivity : AppCompatActivity() {
                 binding.edArea
                     .setText(it.data.get(item.getItemId()).name)
                 areaID = it.data.get(item.getItemId()).id.toInt()
+                binding.edDistrict.setText(R.string.select)
                 Log.e("popupCarBrands", "onMenuItemClick: $areaID")
                 return@OnMenuItemClickListener false
             })
@@ -158,8 +159,14 @@ class AddLocationActivity : AppCompatActivity() {
             districtsBrandsPopUp.show()
         })
         viewModel!!.UpdateAddressResponse.observe(this, Observer {
-            val intent = Intent(this, Home4EShoppingActivity::class.java)
-            startActivity(intent)
+            if(it!!.message){
+                Toast.makeText(this, " تمت اضافة بنجاح", Toast.LENGTH_SHORT)
+                    .show()
+                val intent = Intent(this, Home4EShoppingActivity::class.java)
+                startActivity(intent)
+            }else{
+                Toast.makeText(this, "error in Network", Toast.LENGTH_SHORT).show()
+            }
         })
         viewModel!!.getUserAddressResponse.observe(this, Observer {
             binding.progressBar.setVisibility(View.GONE)
@@ -169,6 +176,10 @@ class AddLocationActivity : AppCompatActivity() {
                 binding.edArea.setText(it.area_name)
                 binding.edDistrict.setText(it.district_name)
                 binding.edAddress.setText(it.fulladdress)
+                countryID = it.country_id
+                cityID = it.city_id
+                areaID = it.area_id
+                districtID = it.district_id
             }
         })
     }
