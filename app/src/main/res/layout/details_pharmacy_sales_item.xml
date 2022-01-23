@@ -19,23 +19,22 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-
             <TextView
                 android:id="@+id/tv_label_no_pharmacy"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/id_pharmacy"
+                android:text="@string/discount"
                 android:textColor="@color/blue"
                 android:textSize="14sp"
                 android:textStyle="bold"
-                android:layout_margin="10dp"
-                app:layout_constraintTop_toBottomOf="@+id/tv_name_pharmacy"
+                android:layout_marginEnd="8dp"
+                app:layout_constraintTop_toBottomOf="@+id/tv_label_update_date"
                 app:layout_constraintEnd_toStartOf="@id/tv_no_pharmacy"/>
             <TextView
                 android:id="@+id/tv_no_pharmacy"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="231"
+                android:text="9.12%"
                 android:textColor="@color/color_142c48"
                 android:textSize="12sp"
                 android:layout_marginEnd="10dp"
@@ -62,14 +61,14 @@
                 android:id="@+id/tv_label_start_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/quantitative_details"
+                android:text="@string/quantity"
                 android:textColor="@color/blue"
                 android:textSize="14sp"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/tv_no_pharmacy"
-                app:layout_constraintBottom_toBottomOf="@+id/tv_no_pharmacy"/>
+                app:layout_constraintTop_toTopOf="@+id/tv_update_date"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_update_date"/>
 
             <TextView
                 android:id="@+id/tv_start_date"
@@ -82,7 +81,6 @@
                 app:layout_constraintBottom_toBottomOf="@+id/tv_label_start_date"
                 app:layout_constraintTop_toTopOf="@+id/tv_label_start_date" />
 
-
             <TextView
                 android:id="@+id/tv_label_update_date"
                 android:layout_width="wrap_content"
@@ -91,15 +89,14 @@
                 android:textColor="@color/blue"
                 android:textSize="14sp"
                 android:textStyle="bold"
-                android:layout_marginTop="10dp"
                 android:layout_marginEnd="5dp"
                 app:layout_constraintStart_toStartOf="@+id/tv_label_no_pharmacy"
-                app:layout_constraintTop_toBottomOf="@+id/tv_no_pharmacy"/>
+                app:layout_constraintTop_toBottomOf="@+id/tv_name_pharmacy"/>
             <TextView
                 android:id="@+id/tv_update_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="msotafasf"
+                android:text="1250egp"
                 android:textColor="@color/color_142c48"
                 android:textSize="12sp"
                 android:layout_marginStart="6dp"
@@ -117,7 +114,6 @@
                 android:textSize="14sp"
                 android:textStyle="bold"
                 android:layout_marginBottom="10dp"
-                android:layout_marginTop="10dp"
                 app:layout_constraintStart_toStartOf="@id/tv_label_start_date"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_label_start_date"/>
@@ -125,10 +121,10 @@
                 android:id="@+id/tv_total"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="4500"
+                android:text="4500egp"
                 android:textColor="@color/color_142c48"
                 android:textSize="12sp"
-                android:layout_marginStart="20dp"
+                android:layout_marginStart="25dp"
                 app:layout_constraintBottom_toBottomOf="@+id/tv_label_total"
                 app:layout_constraintTop_toTopOf="@+id/tv_label_total"
                 app:layout_constraintStart_toEndOf="@id/tv_label_total"/>

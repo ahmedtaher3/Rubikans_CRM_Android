@@ -29,11 +29,11 @@
             android:id="@+id/tv_no_pharmacy"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="مروة السعيد رزق السعيد موسي"
+            android:text="10234"
             android:textColor="@color/color_142c48"
             android:textSize="14sp"
             android:layout_marginEnd="10dp"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/tv_start_date"
             app:layout_constraintBottom_toBottomOf="@+id/tv_label_no_pharmacy"
             app:layout_constraintTop_toTopOf="@+id/tv_label_no_pharmacy" />
 
@@ -59,7 +59,7 @@
             android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="@+id/tv_label_name_pharmacy"
             app:layout_constraintTop_toTopOf="@+id/tv_label_name_pharmacy"
-            app:layout_constraintStart_toStartOf="@id/tv_no_pharmacy" />
+            app:layout_constraintStart_toStartOf="@id/tv_start_date" />
 
         <TextView
             android:id="@+id/tv_label_start_date"
@@ -81,7 +81,8 @@
             android:textColor="@color/color_142c48"
             android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="@+id/tv_label_start_date"
-            app:layout_constraintStart_toStartOf="@+id/tv_no_pharmacy"
+            app:layout_constraintStart_toEndOf="@id/tv_label_start_date"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/tv_label_start_date" />
 
 

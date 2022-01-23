@@ -37,8 +37,9 @@ public class DetailsPharmaciesSalesAdapter extends RecyclerView.Adapter<DetailsP
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, final int position) {
         final Detail dataItem = dataItems.get(position);
 
-        viewHolder.binding.tvNoPharmacy.setText(String.valueOf(dataItem.getId()));
-        viewHolder.binding.tvNamePharmacy.setText(dataItem.getProduct_name());
+        Double discount = (1 - dataItem.getProduct().getPrevious_price()) / dataItem.getProduct().getPrice();
+        viewHolder.binding.tvNoPharmacy.setText(String.format("%.2f",discount)+"%");
+        viewHolder.binding.tvNamePharmacy.setText(dataItem.getProduct().getSku()+dataItem.getProduct_name());
         viewHolder.binding.tvStartDate.setText(String.valueOf(dataItem.getProduct_qty()));
         viewHolder.binding.tvUpdateDate.setText(String.format("%.2f", dataItem.getProduct_price())+"EGP");
         viewHolder.binding.tvTotal.setText(String.format("%.2f",dataItem.getTotal_price())+"EGP");
