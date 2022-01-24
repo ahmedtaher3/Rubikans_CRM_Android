@@ -123,7 +123,7 @@
     <string name="expense_type">Expense Type</string>
     <string name="previous_km_value">Previous Km Value</string>
     <string name="current_km_value">Current Km Value</string>
-    <string name="quantity">Quantity</string>
+    <string name="quantity">Qty</string>
     <string name="value">Value</string>
     <string name="add">Add</string>
     <string name="new_experience">New Experience</string>
@@ -520,7 +520,7 @@
     <string name="label_order_number">order no.</string>
     <string name="label_pay_amount">Total</string>
     <string name="public_price">Public price</string>
-    <string name="product_name">Product name</string>
+    <string name="product_name">Name</string>
     <string name="added_by">Added by</string>
     <string name="date_of_additions">Additional date</string>
     <string name="quantitative_details">amount</string>
@@ -532,12 +532,12 @@
     <string name="close_date">أغلقت فى</string>
     <string name="rate_mgs">رسالة التقييم</string>
     <string name="label_rate_rider">Review Us !</string>
-    <string name="label_rate_rider2">ما مدى رضاك عن دعم العملاء لدينا؟</string>
+    <string name="label_rate_rider2">How satisfied are you with our customer support?</string>
     <string name="label_type_your_message_here">Add message</string>
     <string name="label_submit">Rate Us</string>
     <string name="label_delete_txt">Delete?</string>
     <string name="orientation_videos">FAQ tutorial</string>
-    <string name="id_pharmacy">Product Code</string>
+    <string name="id_pharmacy">SKU</string>
     <string name="action_all">all</string>
     <string name="action_open">Open</string>
     <string name="action_inreview">Processing</string>
@@ -547,7 +547,7 @@
     <string name="hint_search_connect_pharmacy">Search to connect pharmacy</string>
     <string name="name_no_pharmacy_search">Pharmacy search</string>
     <string name="label_amount">Amount</string>
-    <string name="enter_amount">Enter amount</string>
+    <string name="enter_amount">Enter quantity</string>
     <string name="label_more_than"><u>More details</u></string>
     <string name="_add_problem">send</string>
     <string name="label_comment">Comment</string>
@@ -562,6 +562,7 @@
     <string name="action_pending">Pending</string>
     <string name="select_ticket">select ticket status</string>
     <string name="current_location">Current location</string>
+    <string name="label_total_roi">ROI</string>
 
 
 </resources>

@@ -42,10 +42,10 @@ public class AddProductsPharmaciesAdapter extends RecyclerView.Adapter<AddProduc
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, final int position) {
         final Prod dataItem = dataItems.get(position);
-        Double discount = (1 - dataItem.getPrevious_price()) / dataItem.getPrice();
+        Double discount = (1 - dataItem.getPrevious_price()) / dataItem.getPrice()*100;
         viewHolder.binding.tvNamePharmacy.setText(dataItem.getName());
         viewHolder.binding.tvIdPharmacy.setText(dataItem.getSku());
-        viewHolder.binding.tvUpdateDate.setText(String.valueOf(dataItem.getPrice()));
+        viewHolder.binding.tvUpdateDate.setText(dataItem.getPrice()+" EGP");
 
         viewHolder.binding.btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -56,7 +56,7 @@ public class AddProductsPharmaciesAdapter extends RecyclerView.Adapter<AddProduc
                     if (!dataItem.getFlag()) {
                         Log.e("ccc", String.valueOf(dataItem.getFlag()));
                         amount = Float.parseFloat(viewHolder.binding.pharmacySearch.getText().toString());
-                        viewHolder.binding.tvTotal.setText(String.format("%.2f", amount * dataItem.getPrice()));
+                        viewHolder.binding.tvTotal.setText(String.format("%.2f", amount * dataItem.getPrice())+" EGP");
                         dataItem.setFlag(true);
                         viewHolder.binding.pharmacySearch.setEnabled(false);
                         viewHolder.binding.btnAdd.setText("remove");
