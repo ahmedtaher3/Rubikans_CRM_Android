@@ -1,5 +1,6 @@
 package com.devartlab.ui.main
 
+import com.devartlab.GetDeviceToken
 import android.app.job.JobScheduler
 import android.content.ActivityNotFoundException
 import android.content.Context
@@ -171,6 +172,18 @@ class MainActivity : BaseActivity<ActivityMainBinding?>(), View.OnClickListener,
         setUpRecycler()
         ads()
 
+
+        val getToken = GetDeviceToken(this)
+        getToken.getToken(object : GetDeviceToken.TokenResult() {
+            override fun success(token: String?) {
+                viewModel.dataManager.saveHuaweiToken(token!!)
+            }
+
+            override fun failure(msg: String?) {
+
+            }
+
+        })
 
         viewModel!!.getAllPending("allPending", "")
     }

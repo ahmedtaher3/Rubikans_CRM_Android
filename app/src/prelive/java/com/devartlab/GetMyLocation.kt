@@ -6,10 +6,11 @@ import android.location.Location
 import android.os.Looper
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import com.huawei.hms.location.FusedLocationProviderClient
-import com.huawei.hms.location.LocationCallback
-import com.huawei.hms.location.LocationRequest
-import com.huawei.hms.location.LocationServices
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationCallback
+import com.google.android.gms.location.LocationRequest
+import com.google.android.gms.location.LocationServices
+
 
 import java.util.*
 
@@ -36,10 +37,9 @@ class GetMyLocation(private val activity: AppCompatActivity) {
         }
 
         mLocationCallback = object : LocationCallback() {
-            override fun onLocationResult(locationResult:  com.huawei.hms.location.LocationResult) {
+            override fun onLocationResult(locationResult: com.google.android.gms.location.LocationResult) {
                 super.onLocationResult(locationResult)
-
-                val location =locationResult.lastLocation
+                val location = locationResult.lastLocation
                 Log.d(TAG, "Location data: ${location.latitude},${location.longitude}")
                 Log.d(TAG, "Location accuracy: ${location.accuracy}")
                 var differenceMillis = System.currentTimeMillis() - location.time;
@@ -55,7 +55,11 @@ class GetMyLocation(private val activity: AppCompatActivity) {
         }
 
 
-        fusedLocationProviderClient!!.requestLocationUpdates(locationRequest, mLocationCallback!!, Looper.myLooper()!!)
+        fusedLocationProviderClient!!.requestLocationUpdates(
+            locationRequest,
+            mLocationCallback!!,
+            Looper.myLooper()!!
+        )
 
         timer1 = Timer()
         timer1!!.schedule(SetNullLocation(), 30000)
@@ -99,7 +103,7 @@ class GetMyLocation(private val activity: AppCompatActivity) {
 
         if (checkLocation(location)) {
 
-            locationResult!!.gotLocation(location,   " huawei ")
+            locationResult!!.gotLocation(location, " google ")
 
             if (location != null) {
                 Log.d(TAG, "Location data: ${location.latitude},${location.longitude}")
@@ -111,10 +115,8 @@ class GetMyLocation(private val activity: AppCompatActivity) {
             }
 
 
-        }
-        else {
-
-            locationResult!!.gotLocation(null,   " huawei ")
+        } else {
+            locationResult!!.gotLocation(null, " huawei ")
         }
 
     }

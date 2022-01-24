@@ -1,293 +1,265 @@
-package com.devartlab.data.shared;
+package com.devartlab.data.shared
 
-import android.content.Context;
-import android.content.SharedPreferences;
+import android.content.Context
+import android.content.SharedPreferences
 
-public class SharedPrefsHelper {
-    public static final String CLevelName = "CLevelName";
-    public static final String CYCLE = "CYCLE";
-    public static final String ADS = "ADS";
-    public static final String GoogleService = "GoogleService";
-    public static final String DEVICE_TYPE = "DEVICE_TYPE";
-    public static final String DisplayName = "DisplayName";
-    public static final String EmpId = "EmpId";
-    public static final String FIRST_TIME = "FIRST_TIME";
-    public static final String IS_LOGGED = "IS_LOGGED";
-    public static final String Supervisor = "Supervisor";
-    public static final String MY_PREFS = "MY_PREFS";
-    public static final String NewOldCycle = "NewOldCycle";
-    public static final String OfflineMood = "OfflineMood";
-    public static final String SERVER_DATE = "SERVER_DATE";
-    public static final String SHIFT = "SHIFT";
-    public static final String START_POINT = "START_POINT";
-    public static final String START_SHIFT = "START_SHIFT";
-    public static final String SavedData = "SavedData";
-    public static final String MobileData = "MobileData";
-    public static final String UpdatePlan = "UpdatePlan";
-    public static final String UpdateDeletedPlan = "UpdateDeletedPlan";
-    public static final String NewCycle = "SavedData";
-    public static final String SyncAble = "SyncAble";
-    public static final String Title = "Title";
-    public static final String TitleID = "TitleID";
-    public static final String USER = "USER";
-    public static final String UserName = "UserName";
-    public static final String UserPassword = "UserPassword";
-    private static final String LANG = "LANG";
-    private static final String Token = "Token";
-
-    SharedPreferences mSharedPreferences;
-
-    public SharedPrefsHelper(Context context) {
-        this.mSharedPreferences = context.getSharedPreferences(MY_PREFS, 0);
+class SharedPrefsHelper(context: Context) {
+    var mSharedPreferences: SharedPreferences
+    fun clear() {
+        mSharedPreferences.edit().clear().apply()
     }
 
-    public void clear() {
-        this.mSharedPreferences.edit().clear().apply();
+    fun putEmpId(s: Int) {
+        mSharedPreferences.edit().putInt(TitleID, s).apply()
     }
 
-    public void putEmpId(int s) {
-        this.mSharedPreferences.edit().putInt(TitleID, s).apply();
+    val empId: Int
+        get() = mSharedPreferences.getInt(EmpId, 0)
+
+    fun putNewCycle(b: Boolean) {
+        mSharedPreferences.edit().putBoolean(NewCycle, b).apply()
     }
 
-    public int getEmpId() {
-        return this.mSharedPreferences.getInt(EmpId, 0);
+    val newCycle: Boolean
+        get() = mSharedPreferences.getBoolean(NewCycle, false)
+
+    fun putSavedData(b: Boolean) {
+        mSharedPreferences.edit().putBoolean(SavedData, b).apply()
     }
 
+    val savedData: Boolean
+        get() = mSharedPreferences.getBoolean(SavedData, false)
 
-    public void putNewCycle(boolean b) {
-        this.mSharedPreferences.edit().putBoolean(NewCycle, b).apply();
+    fun putToken(b: String?) {
+        mSharedPreferences.edit().putString(Token, b).apply()
     }
 
-    public Boolean getNewCycle() {
-        return this.mSharedPreferences.getBoolean(NewCycle, false);
+    val token: String?
+        get() = mSharedPreferences.getString(Token, "")
+
+    fun putMobileData(b: Boolean) {
+        mSharedPreferences.edit().putBoolean(MobileData, b).apply()
     }
 
+    val mobileData: Boolean
+        get() = mSharedPreferences.getBoolean(MobileData, false)
 
-    public void putSavedData(boolean b) {
-        this.mSharedPreferences.edit().putBoolean(SavedData, b).apply();
+    fun putUpdatePlan(b: Boolean) {
+        mSharedPreferences.edit().putBoolean(UpdatePlan, b).apply()
     }
 
-    public Boolean getSavedData() {
-        return this.mSharedPreferences.getBoolean(SavedData, false);
+    val updatePlan: Boolean
+        get() = mSharedPreferences.getBoolean(UpdatePlan, false)
+
+    fun putUpdateDeletedPlan(b: Boolean) {
+        mSharedPreferences.edit().putBoolean(UpdateDeletedPlan, b).apply()
     }
 
+    val updateDeletedPlan: Boolean
+        get() = mSharedPreferences.getBoolean(UpdateDeletedPlan, false)
 
-    public void putToken(String b) {
-        this.mSharedPreferences.edit().putString(Token, b).apply();
+    fun putDeviceType(b: Boolean) {
+        mSharedPreferences.edit().putBoolean(DEVICE_TYPE, b).apply()
     }
 
-    public String getToken() {
-        return this.mSharedPreferences.getString(Token, "");
+    val deviceType: Boolean
+        get() = mSharedPreferences.getBoolean(DEVICE_TYPE, false)
+
+    fun putGoogleService(b: Boolean) {
+        mSharedPreferences.edit().putBoolean(GoogleService, b).apply()
     }
 
+    //////////////////////////////////////////////////////////////////////////////////
 
-    public void putMobileData(boolean b) {
-        this.mSharedPreferences.edit().putBoolean(MobileData, b).apply();
+    fun putHuaweiToken(s: String) {
+        mSharedPreferences!!.edit().putString(HuaweiToken, s).apply()
     }
 
-    public Boolean getMobileData() {
-        return this.mSharedPreferences.getBoolean(MobileData, false);
+    val huaweiToken: String?
+        get() = mSharedPreferences!!.getString(HuaweiToken , "")
+    //////////////////////////////////////////////////////////////////////////////////
+
+    val googleService: Boolean
+        get() = mSharedPreferences.getBoolean(GoogleService, false)
+
+    fun putIsLogin(b: Boolean) {
+        mSharedPreferences.edit().putBoolean(IS_LOGGED, b).apply()
     }
 
+    val isLogin: Boolean
+        get() = mSharedPreferences.getBoolean(IS_LOGGED, false)
 
-    public void putUpdatePlan(boolean b) {
-        this.mSharedPreferences.edit().putBoolean(UpdatePlan, b).apply();
+    fun putSupervisor(b: Boolean) {
+        mSharedPreferences.edit().putBoolean(Supervisor, b).apply()
     }
 
-    public Boolean getUpdatePlan() {
-        return this.mSharedPreferences.getBoolean(UpdatePlan, false);
+    val supervisor: Boolean
+        get() = mSharedPreferences.getBoolean(Supervisor, false)
+
+    fun putUser(s: String?) {
+        mSharedPreferences.edit().putString(USER, s).apply()
     }
 
+    val user: String?
+        get() = mSharedPreferences.getString(USER, null)
 
-    public void putUpdateDeletedPlan(boolean b) {
-        this.mSharedPreferences.edit().putBoolean(UpdateDeletedPlan, b).apply();
+    fun putUserName(s: String?) {
+        mSharedPreferences.edit().putString(UserName, s).apply()
     }
 
-    public Boolean getUpdateDeletedPlan() {
-        return this.mSharedPreferences.getBoolean(UpdateDeletedPlan, false);
+    val userName: String?
+        get() = mSharedPreferences.getString(UserName, null)
+
+    fun putUserTitle(s: String?) {
+        mSharedPreferences.edit().putString(Title, s).apply()
     }
 
-    public void putDeviceType(boolean b) {
-        this.mSharedPreferences.edit().putBoolean(DEVICE_TYPE, b).apply();
+    val userTitle: String?
+        get() = mSharedPreferences.getString(Title, null)
+
+    fun putUserTitleID(s: String?) {
+        mSharedPreferences.edit().putString(TitleID, s).apply()
     }
 
-    public Boolean getDeviceType() {
-        return this.mSharedPreferences.getBoolean(DEVICE_TYPE, false);
+    val userTitleID: String?
+        get() = mSharedPreferences.getString(TitleID, null)
+
+    fun putCLevelName(s: String?) {
+        mSharedPreferences.edit().putString(CLevelName, s).apply()
     }
 
+    val cLevelName: String?
+        get() = mSharedPreferences.getString(CLevelName, null)
 
-    public void putGoogleService(boolean b) {
-        this.mSharedPreferences.edit().putBoolean(GoogleService, b).apply();
+    fun putDisplayName(s: String?) {
+        mSharedPreferences.edit().putString(DisplayName, s).apply()
     }
 
-    public Boolean getGoogleService() {
-        return this.mSharedPreferences.getBoolean(GoogleService, false);
+    val displayName: String?
+        get() = mSharedPreferences.getString(DisplayName, null)
+
+    fun putUserPassword(s: String?) {
+        mSharedPreferences.edit().putString(UserPassword, s).apply()
     }
 
+    val userPassword: String?
+        get() = mSharedPreferences.getString(UserPassword, null)
 
-    public void putIsLogin(boolean b) {
-        this.mSharedPreferences.edit().putBoolean(IS_LOGGED, b).apply();
+    fun putServerTime(s: String?) {
+        mSharedPreferences.edit().putString(SERVER_DATE, s).apply()
     }
 
-    public Boolean getIsLogin() {
-        return this.mSharedPreferences.getBoolean(IS_LOGGED, false);
+    val serverTime: String?
+        get() = mSharedPreferences.getString(SERVER_DATE, null)
+
+    fun putStartShift(b: Boolean) {
+        mSharedPreferences.edit().putBoolean(START_SHIFT, b).apply()
     }
 
-    public void putSupervisor(boolean b) {
-        this.mSharedPreferences.edit().putBoolean(Supervisor, b).apply();
+    val startShift: Boolean
+        get() = mSharedPreferences.getBoolean(START_SHIFT, false)
+
+    fun putFirstTime(b: Boolean) {
+        mSharedPreferences.edit().putBoolean(FIRST_TIME, b).apply()
     }
 
-    public Boolean getSupervisor() {
-        return this.mSharedPreferences.getBoolean(Supervisor, false);
+    val firstTime: Boolean
+        get() = mSharedPreferences.getBoolean(FIRST_TIME, true)
+
+    fun putShift(shift: String?) {
+        mSharedPreferences.edit().putString(SHIFT, shift).apply()
     }
 
-    public void putUser(String s) {
-        this.mSharedPreferences.edit().putString(USER, s).apply();
-    }
-
-    public String getUser() {
-        return this.mSharedPreferences.getString(USER, null);
-    }
-
-    public void putUserName(String s) {
-        this.mSharedPreferences.edit().putString(UserName, s).apply();
-    }
-
-    public String getUserName() {
-        return this.mSharedPreferences.getString(UserName, null);
-    }
-
-    public void putUserTitle(String s) {
-        this.mSharedPreferences.edit().putString(Title, s).apply();
-    }
-
-    public String getUserTitle() {
-        return this.mSharedPreferences.getString(Title, null);
-    }
-
-    public void putUserTitleID(String s) {
-        this.mSharedPreferences.edit().putString(TitleID, s).apply();
-    }
-
-    public String getUserTitleID() {
-        return this.mSharedPreferences.getString(TitleID, null);
-    }
-
-    public void putCLevelName(String s) {
-        this.mSharedPreferences.edit().putString(CLevelName, s).apply();
-    }
-
-    public String getCLevelName() {
-        return this.mSharedPreferences.getString(CLevelName, null);
-    }
-
-    public void putDisplayName(String s) {
-        this.mSharedPreferences.edit().putString(DisplayName, s).apply();
-    }
-
-    public String getDisplayName() {
-        return this.mSharedPreferences.getString(DisplayName, null);
-    }
-
-    public void putUserPassword(String s) {
-        this.mSharedPreferences.edit().putString(UserPassword, s).apply();
-    }
-
-    public String getUserPassword() {
-        return this.mSharedPreferences.getString(UserPassword, null);
-    }
-
-    public void putServerTime(String s) {
-        this.mSharedPreferences.edit().putString(SERVER_DATE, s).apply();
-    }
-
-    public String getServerTime() {
-        return this.mSharedPreferences.getString(SERVER_DATE, null);
-    }
-
-    public void putStartShift(boolean b) {
-        this.mSharedPreferences.edit().putBoolean(START_SHIFT, b).apply();
-    }
-
-    public Boolean getStartShift() {
-        return this.mSharedPreferences.getBoolean(START_SHIFT, false);
-    }
-
-    public void putFirstTime(boolean b) {
-        this.mSharedPreferences.edit().putBoolean(FIRST_TIME, b).apply();
-    }
-
-    public Boolean getFirstTime() {
-        return this.mSharedPreferences.getBoolean(FIRST_TIME, true);
-    }
-
-    public void putShift(String shift) {
-        this.mSharedPreferences.edit().putString(SHIFT, shift).apply();
-    }
-
-    public String getShift() {
-        return this.mSharedPreferences.getString(SHIFT, null);
-    }
-    //////////////////////////////////////////////////////////////////////////////////////////////////
-
-    public void putCycle(String cycle) {
-        this.mSharedPreferences.edit().putString(CYCLE, cycle).apply();
-    }
-
-    public String getCycle() {
-        return this.mSharedPreferences.getString(CYCLE, null);
-    }
-    //////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-    public void putAds(String cycle) {
-        this.mSharedPreferences.edit().putString(ADS, cycle).apply();
-    }
-
-    public String getAds() {
-        return this.mSharedPreferences.getString(ADS, null);
-    }
+    val shift: String?
+        get() = mSharedPreferences.getString(SHIFT, null)
 
     //////////////////////////////////////////////////////////////////////////////////////////////////
-
-    public void putStartPoint(String startPoint) {
-        this.mSharedPreferences.edit().putString(START_POINT, startPoint).apply();
+    fun putCycle(cycle: String?) {
+        mSharedPreferences.edit().putString(CYCLE, cycle).apply()
     }
 
-    public String getStartPoint() {
-        return this.mSharedPreferences.getString(START_POINT, null);
+    val cycle: String?
+        get() = mSharedPreferences.getString(CYCLE, null)
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////
+    fun putAds(cycle: String?) {
+        mSharedPreferences.edit().putString(ADS, cycle).apply()
     }
 
-    public void putNewOldCycle(String startPoint) {
-        this.mSharedPreferences.edit().putString(NewOldCycle, startPoint).apply();
+    val ads: String?
+        get() = mSharedPreferences.getString(ADS, null)
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////
+    fun putStartPoint(startPoint: String?) {
+        mSharedPreferences.edit().putString(START_POINT, startPoint).apply()
     }
 
-    public String getNewOldCycle() {
-        return this.mSharedPreferences.getString(NewOldCycle, null);
+    val startPoint: String?
+        get() = mSharedPreferences.getString(START_POINT, null)
+
+    fun putNewOldCycle(startPoint: String?) {
+        mSharedPreferences.edit().putString(NewOldCycle, startPoint).apply()
     }
 
-    public void putSyncAble(boolean b) {
-        this.mSharedPreferences.edit().putBoolean(SyncAble, b).apply();
+    val newOldCycle: String?
+        get() = mSharedPreferences.getString(NewOldCycle, null)
+
+    fun putSyncAble(b: Boolean) {
+        mSharedPreferences.edit().putBoolean(SyncAble, b).apply()
     }
 
-    public Boolean getSyncAble() {
-        return Boolean.valueOf(this.mSharedPreferences.getBoolean(SyncAble, true));
+    val syncAble: Boolean
+        get() = java.lang.Boolean.valueOf(mSharedPreferences.getBoolean(SyncAble, true))
+
+    fun putOfflineMood(b: Boolean) {
+        mSharedPreferences.edit().putBoolean(OfflineMood, b).apply()
     }
 
-    public void putOfflineMood(boolean b) {
-        this.mSharedPreferences.edit().putBoolean(OfflineMood, b).apply();
+    val offlineMood: Boolean
+        get() = java.lang.Boolean.valueOf(mSharedPreferences.getBoolean(OfflineMood, false))
+
+    fun putLang(name: String?) {
+        mSharedPreferences.edit().putString(LANG, name).apply()
     }
 
-    public Boolean getOfflineMood() {
-        return Boolean.valueOf(this.mSharedPreferences.getBoolean(OfflineMood, false));
+    val lang: String?
+        get() = mSharedPreferences.getString(LANG, "en")
+
+    companion object {
+        const val CLevelName = "CLevelName"
+        const val CYCLE = "CYCLE"
+        const val ADS = "ADS"
+        const val GoogleService = "GoogleService"
+        const val DEVICE_TYPE = "DEVICE_TYPE"
+        const val DisplayName = "DisplayName"
+        const val EmpId = "EmpId"
+        const val FIRST_TIME = "FIRST_TIME"
+        const val IS_LOGGED = "IS_LOGGED"
+        const val Supervisor = "Supervisor"
+        const val MY_PREFS = "MY_PREFS"
+        const val NewOldCycle = "NewOldCycle"
+        const val OfflineMood = "OfflineMood"
+        const val SERVER_DATE = "SERVER_DATE"
+        const val SHIFT = "SHIFT"
+        const val START_POINT = "START_POINT"
+        const val START_SHIFT = "START_SHIFT"
+        const val SavedData = "SavedData"
+        const val MobileData = "MobileData"
+        const val UpdatePlan = "UpdatePlan"
+        const val UpdateDeletedPlan = "UpdateDeletedPlan"
+        const val NewCycle = "SavedData"
+        const val SyncAble = "SyncAble"
+        const val Title = "Title"
+        const val TitleID = "TitleID"
+        const val USER = "USER"
+        const val UserName = "UserName"
+        const val UserPassword = "UserPassword"
+        private const val LANG = "LANG"
+        private const val Token = "Token"
+        private const val HuaweiToken = "HuaweiToken"
     }
 
-    public void putLang(String name) {
-        mSharedPreferences.edit().putString(LANG, name).apply();
+    init {
+        mSharedPreferences = context.getSharedPreferences(MY_PREFS, 0)
     }
-
-    public String getLang() {
-        return mSharedPreferences.getString(LANG, "en");
-    }
-
 }

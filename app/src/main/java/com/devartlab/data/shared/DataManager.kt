@@ -2,7 +2,6 @@ package com.devartlab.data.shared
 
 import com.devartlab.model.*
 import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 
 class DataManager(var mSharedPrefsHelper: SharedPrefsHelper) {
     fun clear() {
@@ -24,10 +23,21 @@ class DataManager(var mSharedPrefsHelper: SharedPrefsHelper) {
     }
 
     val token: String
-        get() = mSharedPrefsHelper.token
+        get() = mSharedPrefsHelper.token!!
 
 
 
+    ////////////////////////////////////////////////////////////////////////////////
+
+
+    fun saveHuaweiToken(b: String) {
+        mSharedPrefsHelper.putHuaweiToken(b)
+    }
+
+    val huaweiToken: String?
+        get() = mSharedPrefsHelper.huaweiToken
+
+    ////////////////////////////////////////////////////////////////////////////////
 
 
     fun isMobileData(b: Boolean) {
@@ -113,7 +123,7 @@ class DataManager(var mSharedPrefsHelper: SharedPrefsHelper) {
     }
 
     val serverTime: String
-        get() = mSharedPrefsHelper.serverTime
+        get() = mSharedPrefsHelper.serverTime!!
 
     fun saveStartShift(b: Boolean , t:Int) {
         mSharedPrefsHelper.putStartShift(b)
@@ -199,6 +209,6 @@ class DataManager(var mSharedPrefsHelper: SharedPrefsHelper) {
     }
 
     fun getLang(): String? {
-        return mSharedPrefsHelper.getLang()
+        return mSharedPrefsHelper.lang
     }
 }

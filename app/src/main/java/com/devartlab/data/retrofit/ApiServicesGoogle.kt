@@ -1,7 +1,7 @@
 package com.devartlab.data.retrofit
 
+import com.devartlab.AppConstants
 import com.devartlab.model.GoogleRequestResponse
-import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import io.reactivex.Observable
 import retrofit2.http.Body
@@ -11,7 +11,7 @@ import retrofit2.http.Query
 
 interface ApiServicesGoogle {
  
-    @GET("AKfycbyplpNFJQZl8XCjIokxB95Eky6EKxqal_9aRnkmzhxYqyYfs028FOgEKEIhBX_O48D2/exec")
+    @GET("${AppConstants.GoogleSheetApiKey}/exec")
     fun googleSheetRequest(@Query("sheet") sheet: String,
                            @Query("action") action: String,
                            @Query("date") date: String,
@@ -28,11 +28,11 @@ interface ApiServicesGoogle {
                            @Query("code") code: String): Observable<GoogleRequestResponse>
 
 
-    @POST("AKfycbyplpNFJQZl8XCjIokxB95Eky6EKxqal_9aRnkmzhxYqyYfs028FOgEKEIhBX_O48D2/exec")
+    @POST("${AppConstants.GoogleSheetApiKey}/exec")
     fun approveAll(@Body objects: JsonObject): Observable<GoogleRequestResponse>
 
 
-    @GET("AKfycbyplpNFJQZl8XCjIokxB95Eky6EKxqal_9aRnkmzhxYqyYfs028FOgEKEIhBX_O48D2/exec")
+    @GET("${AppConstants.GoogleSheetApiKey}/exec")
     fun meals(@Query("sheet") sheet: String,
               @Query("action") action: String,
               @Query("id") id: String,
@@ -48,7 +48,7 @@ interface ApiServicesGoogle {
               @Query("receivedAt") receivedAt: String,
               @Query("receivedID") receivedID: String): Observable<GoogleRequestResponse>
 
-    @GET("AKfycbyplpNFJQZl8XCjIokxB95Eky6EKxqal_9aRnkmzhxYqyYfs028FOgEKEIhBX_O48D2/exec")
+    @GET("${AppConstants.GoogleSheetApiKey}/exec")
     fun workFromHome(@Query("sheet") sheet: String,
                      @Query("action") action: String,
                      @Query("id") id: String,
@@ -61,7 +61,7 @@ interface ApiServicesGoogle {
                      @Query("code") code: String,
                      @Query("endedAt") endedAt: String): Observable<GoogleRequestResponse>
 
-    @GET("AKfycbyplpNFJQZl8XCjIokxB95Eky6EKxqal_9aRnkmzhxYqyYfs028FOgEKEIhBX_O48D2/exec")
+    @GET("${AppConstants.GoogleSheetApiKey}/exec")
     fun penalties(@Query("sheet") sheet: String,
                   @Query("action") action: String,
                   @Query("id") id: String,
@@ -78,7 +78,7 @@ interface ApiServicesGoogle {
                   @Query("approveDate") approveDate: String,
                   @Query("code") code: String): Observable<GoogleRequestResponse>
 
-    @GET("AKfycbyplpNFJQZl8XCjIokxB95Eky6EKxqal_9aRnkmzhxYqyYfs028FOgEKEIhBX_O48D2/exec")
+    @GET("${AppConstants.GoogleSheetApiKey}/exec")
     fun room(@Query("sheet") sheet: String,
              @Query("action") action: String,
              @Query("id") id: String,
@@ -108,7 +108,7 @@ interface ApiServicesGoogle {
              @Query("sixHalf") sixHalf: String,
              @Query("code") code: String): Observable<GoogleRequestResponse>
 
-    @GET("AKfycbyplpNFJQZl8XCjIokxB95Eky6EKxqal_9aRnkmzhxYqyYfs028FOgEKEIhBX_O48D2/exec")
+    @GET("${AppConstants.GoogleSheetApiKey}/exec")
     fun trade(@Query("sheet") sheet: String,
               @Query("action") action: String,
               @Query("governmentId") governmentId: String,
@@ -124,13 +124,13 @@ interface ApiServicesGoogle {
               @Query("totalPrice") totalPrice: String,
               @Query("notes") notes: String): Observable<GoogleRequestResponse>
 
-    @GET("AKfycbyplpNFJQZl8XCjIokxB95Eky6EKxqal_9aRnkmzhxYqyYfs028FOgEKEIhBX_O48D2/exec")
+    @GET("${AppConstants.GoogleSheetApiKey}/exec")
     fun tradeGetCustomers(@Query("sheet") sheet: String,
                           @Query("action") action: String,
                           @Query("empId") empId: String,
                           @Query("areaId") areaId: String): Observable<GoogleRequestResponse>
 
-    @GET("AKfycbyplpNFJQZl8XCjIokxB95Eky6EKxqal_9aRnkmzhxYqyYfs028FOgEKEIhBX_O48D2/exec")
+    @GET("${AppConstants.GoogleSheetApiKey}/exec")
     fun tradeAddNewPlace(@Query("sheet") sheet: String,
                          @Query("action") action: String,
                          @Query("governmentId") governmentId: String,
@@ -139,7 +139,7 @@ interface ApiServicesGoogle {
                          @Query("cityName") cityName: String,
                          @Query("areaName") areaName: String): Observable<GoogleRequestResponse>
 
-    @GET("AKfycbyplpNFJQZl8XCjIokxB95Eky6EKxqal_9aRnkmzhxYqyYfs028FOgEKEIhBX_O48D2/exec")
+    @GET("${AppConstants.GoogleSheetApiKey}/exec")
     fun tradeReport(@Query("sheet") sheet: String,
                     @Query("action") action: String,
                     @Query("empId") empId: String,
@@ -154,7 +154,7 @@ interface ApiServicesGoogle {
                     @Query("code") code: String): Observable<GoogleRequestResponse>
 
 
-    @GET("AKfycbyplpNFJQZl8XCjIokxB95Eky6EKxqal_9aRnkmzhxYqyYfs028FOgEKEIhBX_O48D2/exec")
+    @GET("${AppConstants.GoogleSheetApiKey}/exec")
     fun leaveWork(@Query("sheet") sheet: String,
                   @Query("action") action: String,
                   @Query("id") id: String,
@@ -167,7 +167,7 @@ interface ApiServicesGoogle {
     ): Observable<GoogleRequestResponse>
 
 
-    @GET("AKfycbyplpNFJQZl8XCjIokxB95Eky6EKxqal_9aRnkmzhxYqyYfs028FOgEKEIhBX_O48D2/exec")
+    @GET("${AppConstants.GoogleSheetApiKey}/exec")
     fun businessCard(@Query("sheet") sheet: String,
                      @Query("action") action: String,
                      @Query("id") id: String,

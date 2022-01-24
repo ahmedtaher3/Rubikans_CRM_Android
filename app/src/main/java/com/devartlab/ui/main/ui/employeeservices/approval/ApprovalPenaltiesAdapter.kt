@@ -126,7 +126,7 @@ class ApprovalPenaltiesAdapter(
                         "",
                         "",
                         "",
-                        "Approved",
+                        "PENDING",
                         "",
                         simpleDateFormat?.format(System.currentTimeMillis()),
                         model.code!!

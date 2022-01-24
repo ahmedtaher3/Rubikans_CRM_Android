@@ -23,6 +23,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.devartlab.AppConstants
 import com.devartlab.GetMyLocation
 import com.devartlab.R
 import com.devartlab.base.BaseFragment
@@ -60,8 +61,10 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 
-class ManagerReportFragment : BaseFragment<FragmentSuperReportBinding>(), ReportInterface, ChooseEmployeeInterFace, ChooseStartPointInterFace,
-    ActivitiesAdapter.ChooseActivity, ManagerReportListener, SuperReportAdapter.UpdatePlan, AdapterView.OnItemSelectedListener, View.OnClickListener {
+class ManagerReportFragment : BaseFragment<FragmentSuperReportBinding>(), ReportInterface,
+    ChooseEmployeeInterFace, ChooseStartPointInterFace,
+    ActivitiesAdapter.ChooseActivity, ManagerReportListener, SuperReportAdapter.UpdatePlan,
+    AdapterView.OnItemSelectedListener, View.OnClickListener {
 
     // TODO: Rename and change types of parameters
     private var param1: String? = null
@@ -119,19 +122,25 @@ class ManagerReportFragment : BaseFragment<FragmentSuperReportBinding>(), Report
         binding = viewDataBinding
         setHasOptionsMenu(true);
 
-        if (viewModel.dataManager.user.isOpenReportLimit) {
-
-            startDate?.timeInMillis = viewModel.dataManager.user?.minDate?.toLong()!!
-            endDate?.timeInMillis = viewModel.dataManager.user?.maxDate?.toLong()!!
-
-        }
-        else {
+        if (!AppConstants.ReportLimit) {
             startDate?.timeInMillis = viewModel.dataManager.cycle?.fromDateMs?.toLong()!!
-            endDate?.timeInMillis = viewModel.dataManager.user?.maxDate?.toLong()!!
+            endDate?.timeInMillis = viewModel.dataManager.cycle?.toDateMs?.toLong()!!
+        } else {
+            if (viewModel.dataManager.user.isOpenReportLimit) {
+
+                startDate?.timeInMillis = viewModel.dataManager.user?.minDate?.toLong()!!
+                endDate?.timeInMillis = viewModel.dataManager.user?.maxDate?.toLong()!!
+
+            } else {
+                startDate?.timeInMillis = viewModel.dataManager.cycle?.fromDateMs?.toLong()!!
+                endDate?.timeInMillis = viewModel.dataManager.user?.maxDate?.toLong()!!
+
+            }
 
         }
-
-        horizontalCalendar = HorizontalCalendar.Builder(binding.root, R.id.calendarView).range(startDate, endDate).datesNumberOnScreen(5).build();
+        horizontalCalendar =
+            HorizontalCalendar.Builder(binding.root, R.id.calendarView).range(startDate, endDate)
+                .datesNumberOnScreen(5).build();
         horizontalCalendar?.calendarListener = object : HorizontalCalendarListener() {
             override fun onDateSelected(date: Calendar?, position: Int) {
                 DATE = fmt?.format(date?.timeInMillis)
@@ -150,170 +159,213 @@ class ManagerReportFragment : BaseFragment<FragmentSuperReportBinding>(), Report
     private fun setObservers() {
 
 
-        viewModel.allPlansByDate.observe(viewLifecycleOwner, androidx.lifecycle.Observer<List<PlanEntity?>?> {
+        viewModel.allPlansByDate.observe(
+            viewLifecycleOwner,
+            androidx.lifecycle.Observer<List<PlanEntity?>?> {
 
-            fullList = it
-            if (!it.isNullOrEmpty()) {
+                fullList = it
+                if (!it.isNullOrEmpty()) {
 
-                binding.emptyList.visibility = View.GONE
-                model = it[0]
-                for (model in it) {
+                    binding.emptyList.visibility = View.GONE
+                    model = it[0]
+                    for (model in it) {
 
-                    if (!model?.startPoint.isNullOrEmpty() && model?.startPointId != 0) {
-                        this.modelWithStartPoint = model
-                        break
-                    }
-                }
-
-                if (modelWithStartPoint != null) {
-                    binding.startPoint.text = modelWithStartPoint?.startPoint
-                    startTime = CommonUtilities.getTextAfterSlash(modelWithStartPoint?.startPoint!!)
-
-                }
-
-                if (model!!.reported!!) {
-                    setButtonReported()
-                    adapter?.setCheckEnable(false)
-                }
-                else {
-                    viewModel.isStarted(DATE, shift, 239)
-                }
-            }
-            else {
-                binding.emptyList.visibility = View.VISIBLE
-                viewModel.isStarted(DATE, shift, 244)
-            }
-
-            adapter?.updateData(ArrayList<PlanEntity>(it!!))
-
-        })
-
-        viewModel.responseLiveConfiermShift.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
-
-            if (it.isSuccesed) {
-
-
-                val componentName = ComponentName(baseActivity, ExampleJobService::class.java)
-                val info: JobInfo = JobInfo.Builder(123, componentName).setPersisted(true).setPeriodic(30 * 60 * 1000).build()
-                val scheduler: JobScheduler = baseActivity.getSystemService(Context.JOB_SCHEDULER_SERVICE) as JobScheduler
-                val resultCode: Int = scheduler.schedule(info)
-                if (resultCode == JobScheduler.RESULT_SUCCESS) {
-
-                }
-                else {
-                }
-
-
-                viewModel.dataManager.saveStartShift(true, 7)
-                viewModel.dataManager.saveShift(Shift(shiftID.toInt(), shift, DATE_IN_MILLIS?.toLong().toString(), DATE, false))
-
-                val valuesEntity = ValuesEntity(1, true, false, "", DATE_IN_MILLIS?.toLong(), shift, shiftID.toInt(), DATE)
-                viewModel.valuesRepository?.insert(valuesEntity)
-
-                viewModel.saveStartShift(DATE, shift, false, false)
-
-                viewModel.getAllByDateAndShift(DATE, shift, "1");
-
-            }
-            else {
-                Toast.makeText(baseActivity, it.rerurnMessage, Toast.LENGTH_SHORT).show()
-
-
-                if (it.data.startPointData != null) {
-                    if (it.data.startPointData.size == 2) {
-
-
-                        var shiftName = ""
-                        when (it.data.startPointData[0].shiftId) {
-                            8 -> {
-                                shiftName = "AM Shift"
-                            }
-                            9 -> {
-                                shiftName = "PM Shift"
-                            }
+                        if (!model?.startPoint.isNullOrEmpty() && model?.startPointId != 0) {
+                            this.modelWithStartPoint = model
+                            break
                         }
-
-                        DATE_IN_MILLIS = CommonUtilities.convertDateToMillis(it.data.startPointData[0].salesRptDate.take(10)).toString()
-                        DATE = it.data.startPointData[0].salesRptDate.take(10)
-                        shift = shiftName
-
-
-                        viewModel.dataManager.saveStartShift(false, 8)
-
-                        viewModel.saveStartShift(DATE, shift, true, false)
-
-                        viewModel.getAllByDateAndShift(DATE, shift, "1");
-
-
                     }
-                    else if (it.data.startPointData.size == 1) {
 
-                        var shiftName = ""
-                        when (it.data.startPointData[0].shiftId) {
-                            8 -> {
-                                shiftName = "AM Shift"
+                    if (modelWithStartPoint != null) {
+                        binding.startPoint.text = modelWithStartPoint?.startPoint?.replace("null","")
+                        startTime = CommonUtilities.getTextAfterSlash(modelWithStartPoint?.startPoint!!)
+                    }
+
+                    if (model!!.reported!!) {
+                        setButtonReported()
+                        adapter?.setCheckEnable(false)
+                    } else {
+                        viewModel.isStarted(DATE, shift, 239)
+                    }
+                } else {
+                    binding.emptyList.visibility = View.VISIBLE
+                    viewModel.isStarted(DATE, shift, 244)
+                }
+
+                adapter?.updateData(ArrayList<PlanEntity>(it!!))
+
+            })
+
+        viewModel.responseLiveConfiermShift.observe(
+            viewLifecycleOwner,
+            androidx.lifecycle.Observer {
+
+                if (it.isSuccesed) {
+
+                    val componentName = ComponentName(baseActivity, ExampleJobService::class.java)
+                    val info: JobInfo = JobInfo.Builder(123, componentName).setPersisted(true)
+                        .setPeriodic(30 * 60 * 1000).build()
+                    val scheduler: JobScheduler =
+                        baseActivity.getSystemService(Context.JOB_SCHEDULER_SERVICE) as JobScheduler
+                    val resultCode: Int = scheduler.schedule(info)
+                    if (resultCode == JobScheduler.RESULT_SUCCESS) {
+
+                    } else {
+                    }
+
+
+                    viewModel.dataManager.saveStartShift(true, 7)
+                    viewModel.dataManager.saveShift(
+                        Shift(
+                            shiftID.toInt(),
+                            shift,
+                            DATE_IN_MILLIS?.toLong().toString(),
+                            DATE,
+                            false
+                        )
+                    )
+
+                    val valuesEntity = ValuesEntity(
+                        1,
+                        true,
+                        false,
+                        "",
+                        DATE_IN_MILLIS?.toLong(),
+                        shift,
+                        shiftID.toInt(),
+                        DATE
+                    )
+                    viewModel.valuesRepository?.insert(valuesEntity)
+
+                    viewModel.saveStartShift(DATE, shift, false, false)
+
+                    viewModel.getAllByDateAndShift(DATE, shift, "1");
+
+                } else {
+                    Toast.makeText(baseActivity, it.rerurnMessage, Toast.LENGTH_SHORT).show()
+
+
+                    if (it.data.startPointData != null) {
+                        if (it.data.startPointData.size == 2) {
+
+
+                            var shiftName = ""
+                            when (it.data.startPointData[0].shiftId) {
+                                8 -> {
+                                    shiftName = "AM Shift"
+                                }
+                                9 -> {
+                                    shiftName = "PM Shift"
+                                }
                             }
-                            9 -> {
-                                shiftName = "PM Shift"
+
+                            DATE_IN_MILLIS = CommonUtilities.convertDateToMillis(
+                                it.data.startPointData[0].salesRptDate.take(10)
+                            ).toString()
+                            DATE = it.data.startPointData[0].salesRptDate.take(10)
+                            shift = shiftName
+
+
+                            viewModel.dataManager.saveStartShift(false, 8)
+
+                            viewModel.saveStartShift(DATE, shift, true, false)
+
+                            viewModel.getAllByDateAndShift(DATE, shift, "1");
+
+
+                        } else if (it.data.startPointData.size == 1) {
+
+                            var shiftName = ""
+                            when (it.data.startPointData[0].shiftId) {
+                                8 -> {
+                                    shiftName = "AM Shift"
+                                }
+                                9 -> {
+                                    shiftName = "PM Shift"
+                                }
                             }
+
+                            DATE_IN_MILLIS = CommonUtilities.convertDateToMillis(
+                                it.data.startPointData[0].salesRptDate.take(10)
+                            ).toString()
+                            DATE = it.data.startPointData[0].salesRptDate.take(10)
+                            shift = shiftName
+
+
+                            viewModel.dataManager.saveStartShift(true, 9)
+                            viewModel.dataManager.saveShift(
+                                Shift(
+                                    it.data.startPointData[0].shiftId,
+                                    shiftName,
+                                    CommonUtilities.convertDateToMillis(
+                                        it.data.startPointData[0].salesRptDate.take(
+                                            10
+                                        )
+                                    )
+                                        .toString(),
+                                    it.data.startPointData[0].salesRptDate.take(10),
+                                    false
+                                )
+                            )
+
+                            val valuesEntity = ValuesEntity(
+                                1,
+                                true,
+                                false,
+                                "",
+                                CommonUtilities.convertDateToMillis(
+                                    it.data.startPointData[0].salesRptDate.take(
+                                        10
+                                    )
+                                ),
+                                shiftName,
+                                it.data.startPointData[0].shiftId,
+                                it.data.startPointData[0].salesRptDate.take(10)
+                            )
+                            viewModel.valuesRepository?.insert(valuesEntity)
+
+                            viewModel.saveStartShift(DATE, shift, false, false)
+
+
+                            viewModel.getAllByDateAndShift(DATE, shift, "1");
+
+
                         }
-
-                        DATE_IN_MILLIS = CommonUtilities.convertDateToMillis(it.data.startPointData[0].salesRptDate.take(10)).toString()
-                        DATE = it.data.startPointData[0].salesRptDate.take(10)
-                        shift = shiftName
-
-
-                        viewModel.dataManager.saveStartShift(true, 9)
-                        viewModel.dataManager.saveShift(Shift(it.data.startPointData[0].shiftId,
-                                                              shiftName,
-                                                              CommonUtilities.convertDateToMillis(it.data.startPointData[0].salesRptDate.take(10))
-                                                                  .toString(),
-                                                              it.data.startPointData[0].salesRptDate.take(10),
-                                                              false))
-
-                        val valuesEntity = ValuesEntity(1,
-                                                        true,
-                                                        false,
-                                                        "",
-                                                        CommonUtilities.convertDateToMillis(it.data.startPointData[0].salesRptDate.take(10)),
-                                                        shiftName,
-                                                        it.data.startPointData[0].shiftId,
-                                                        it.data.startPointData[0].salesRptDate.take(10))
-                        viewModel.valuesRepository?.insert(valuesEntity)
-
-                        viewModel.saveStartShift(DATE, shift, false, false)
-
-
-                        viewModel.getAllByDateAndShift(DATE, shift, "1");
-
-
                     }
                 }
-            }
 
-        })
+            })
 
         viewModel.responseLiveEndShift.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
 
             if (it.isSuccesed) {
 
 
-                val scheduler = baseActivity.getSystemService(Context.JOB_SCHEDULER_SERVICE) as JobScheduler
+                val scheduler =
+                    baseActivity.getSystemService(Context.JOB_SCHEDULER_SERVICE) as JobScheduler
                 scheduler.cancel(123)
 
 
 
                 viewModel.dataManager.saveStartShift(false, 10)
 
-                val valuesEntity = ValuesEntity(1, false, true, "", DATE_IN_MILLIS?.toLong(), shift, shiftID.toInt(), DATE)
+                val valuesEntity = ValuesEntity(
+                    1,
+                    false,
+                    true,
+                    "",
+                    DATE_IN_MILLIS?.toLong(),
+                    shift,
+                    shiftID.toInt(),
+                    DATE
+                )
                 viewModel.valuesRepository?.insert(valuesEntity)
 
                 viewModel.updateIsStarted(DATE, shift, true, false)
 
                 viewModel.getAllByDateAndShift(DATE, shift, "1");
 
-            }
-            else {
+            } else {
                 Toast.makeText(baseActivity, it.rerurnMessage, Toast.LENGTH_SHORT).show()
 
                 if (it.data.startPointData != null) {
@@ -330,7 +382,9 @@ class ManagerReportFragment : BaseFragment<FragmentSuperReportBinding>(), Report
                             }
                         }
 
-                        DATE_IN_MILLIS = CommonUtilities.convertDateToMillis(it.data.startPointData[0].salesRptDate.take(10)).toString()
+                        DATE_IN_MILLIS = CommonUtilities.convertDateToMillis(
+                            it.data.startPointData[0].salesRptDate.take(10)
+                        ).toString()
                         DATE = it.data.startPointData[0].salesRptDate.take(10)
                         shift = shiftName
 
@@ -342,8 +396,7 @@ class ManagerReportFragment : BaseFragment<FragmentSuperReportBinding>(), Report
                         viewModel.getAllByDateAndShift(DATE, shift, "1");
 
 
-                    }
-                    else if (it.data.startPointData.size == 1) {
+                    } else if (it.data.startPointData.size == 1) {
 
                         var shiftName = ""
                         when (it.data.startPointData[0].shiftId) {
@@ -355,27 +408,43 @@ class ManagerReportFragment : BaseFragment<FragmentSuperReportBinding>(), Report
                             }
                         }
 
-                        DATE_IN_MILLIS = CommonUtilities.convertDateToMillis(it.data.startPointData[0].salesRptDate.take(10)).toString()
+                        DATE_IN_MILLIS = CommonUtilities.convertDateToMillis(
+                            it.data.startPointData[0].salesRptDate.take(10)
+                        ).toString()
                         DATE = it.data.startPointData[0].salesRptDate.take(10)
                         shift = shiftName
 
 
                         viewModel.dataManager.saveStartShift(true, 9)
-                        viewModel.dataManager.saveShift(Shift(it.data.startPointData[0].shiftId,
-                                                              shiftName,
-                                                              CommonUtilities.convertDateToMillis(it.data.startPointData[0].salesRptDate.take(10))
-                                                                  .toString(),
-                                                              it.data.startPointData[0].salesRptDate.take(10),
-                                                              false))
+                        viewModel.dataManager.saveShift(
+                            Shift(
+                                it.data.startPointData[0].shiftId,
+                                shiftName,
+                                CommonUtilities.convertDateToMillis(
+                                    it.data.startPointData[0].salesRptDate.take(
+                                        10
+                                    )
+                                )
+                                    .toString(),
+                                it.data.startPointData[0].salesRptDate.take(10),
+                                false
+                            )
+                        )
 
-                        val valuesEntity = ValuesEntity(1,
-                                                        true,
-                                                        false,
-                                                        "",
-                                                        CommonUtilities.convertDateToMillis(it.data.startPointData[0].salesRptDate.take(10)),
-                                                        shiftName,
-                                                        it.data.startPointData[0].shiftId,
-                                                        it.data.startPointData[0].salesRptDate.take(10))
+                        val valuesEntity = ValuesEntity(
+                            1,
+                            true,
+                            false,
+                            "",
+                            CommonUtilities.convertDateToMillis(
+                                it.data.startPointData[0].salesRptDate.take(
+                                    10
+                                )
+                            ),
+                            shiftName,
+                            it.data.startPointData[0].shiftId,
+                            it.data.startPointData[0].salesRptDate.take(10)
+                        )
                         viewModel.valuesRepository?.insert(valuesEntity)
 
                         viewModel.saveStartShift(DATE, shift, false, false)
@@ -391,58 +460,57 @@ class ManagerReportFragment : BaseFragment<FragmentSuperReportBinding>(), Report
             viewModel.isStarted(DATE, shift, 364)
         })
 
-        viewModel.responseLiveIsStarted.observe(viewLifecycleOwner, androidx.lifecycle.Observer<StartPointEntity?> {
+        viewModel.responseLiveIsStarted.observe(
+            viewLifecycleOwner,
+            androidx.lifecycle.Observer<StartPointEntity?> {
 
 
-            if (it != null) {
+                if (it != null) {
 
 
-                if (it.isUploaded) { // shift uploaded
-                    setButtonReported()
-                    adapter?.setCheckEnable(false)
-                }
-                else {
-                    if (it.isEnded) { // shift  started and ended
+                    if (it.isUploaded) { // shift uploaded
+                        setButtonReported()
+                        adapter?.setCheckEnable(false)
+                    } else {
+                        if (it.isEnded) { // shift  started and ended
 
-                        setButtonEnded()
-                        adapter?.setCheckEnable(true)
-                    }
-                    else { // shift  started and not ended yet
-                        setButtonStarted()
-                        adapter?.setCheckEnable(true)
-                        shiftID = viewModel.dataManager.shift.id.toString()
-                        shift = viewModel.dataManager.shift.name
-                        DATE = fmt?.format(viewModel.dataManager.shift.startedAt.toLong())
-                        DATE_IN_MILLIS = viewModel.dataManager.shift.startedAt
+                            setButtonEnded()
+                            adapter?.setCheckEnable(true)
+                        } else { // shift  started and not ended yet
+                            setButtonStarted()
+                            adapter?.setCheckEnable(true)
+                            shiftID = viewModel.dataManager.shift.id.toString()
+                            shift = viewModel.dataManager.shift.name
+                            DATE = fmt?.format(viewModel.dataManager.shift.startedAt.toLong())
+                            DATE_IN_MILLIS = viewModel.dataManager.shift.startedAt
 
-                        if (spinner != null) {
+                            if (spinner != null) {
 
-                            if (viewModel.dataManager.shift.id == 8) spinner?.setSelection(0)
-                            else spinner?.setSelection(1)
+                                if (viewModel.dataManager.shift.id == 8) spinner?.setSelection(0)
+                                else spinner?.setSelection(1)
 
-                            spinner?.isEnabled = false
+                                spinner?.isEnabled = false
+
+                            }
+
+                            startDate?.timeInMillis = DATE_IN_MILLIS!!.toLong()
+                            endDate?.timeInMillis = DATE_IN_MILLIS!!.toLong()
+                            horizontalCalendar?.setRange(startDate, endDate)
+                            horizontalCalendar?.refresh()
+
 
                         }
 
-                        startDate?.timeInMillis = DATE_IN_MILLIS!!.toLong()
-                        endDate?.timeInMillis = DATE_IN_MILLIS!!.toLong()
-                        horizontalCalendar?.setRange(startDate, endDate)
-                        horizontalCalendar?.refresh()
-
-
                     }
 
+
+                } else { // shift not started yet
+                    setButtonReady()
+                    adapter?.setCheckEnable(false)
                 }
 
 
-            }
-            else { // shift not started yet
-                setButtonReady()
-                adapter?.setCheckEnable(false)
-            }
-
-
-        })
+            })
 
         viewModel.progress?.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
 
@@ -462,8 +530,7 @@ class ManagerReportFragment : BaseFragment<FragmentSuperReportBinding>(), Report
 
             try {
                 Toast.makeText(baseActivity, it, Toast.LENGTH_SHORT).show()
-            }
-            catch (e: java.lang.Exception) {
+            } catch (e: java.lang.Exception) {
             }
 
 
@@ -493,56 +560,72 @@ class ManagerReportFragment : BaseFragment<FragmentSuperReportBinding>(), Report
                     if (fullList.isNullOrEmpty()) {
 
                         baseActivity.runOnUiThread {
-                            Toast.makeText(baseActivity, getString(R.string.cant_start_empty_shift), Toast.LENGTH_LONG).show()
+                            Toast.makeText(
+                                baseActivity,
+                                getString(R.string.cant_start_empty_shift),
+                                Toast.LENGTH_LONG
+                            ).show()
                         }
 
-                    }
-                    else {
+                    } else {
 
 
                         if (LocationUtils.checkPermission(baseActivity)) {
-                            ProgressLoading.showWithText(baseActivity, resources.getString(R.string.fetching_your_location))
+                            ProgressLoading.showWithText(
+                                baseActivity,
+                                resources.getString(R.string.fetching_your_location)
+                            )
                             val getMyLocation = GetMyLocation(baseActivity)
-                            getMyLocation.getLocation(baseActivity, object : GetMyLocation.LocationResult() {
-                                override fun gotLocation(location: Location?, msg: String?) {
-                                    ProgressLoading.dismiss()
-                                    if (location != null) {
+                            getMyLocation.getLocation(
+                                baseActivity,
+                                object : GetMyLocation.LocationResult() {
+                                    override fun gotLocation(location: Location?, msg: String?) {
+                                        ProgressLoading.dismiss()
+                                        if (location != null) {
 
 
-                                        if (CommonUtilities.isFake(baseActivity, location)) {
-                                            viewModel.confirmStartPoint(CommonUtilities.convertDateToMillis(DATE).toString(),
-                                                                        shiftID,
-                                                                        CommonUtilities.currentToMillis.toString(),
-                                                                        model?.startPointId.toString(),
-                                                                        "0",
-                                                                        "1",
-                                                                        "1",
-                                                                        true,
-                                                                        startTime)
+                                            if (CommonUtilities.isFake(baseActivity, location)) {
+                                                viewModel.confirmStartPoint(
+                                                    CommonUtilities.convertDateToMillis(DATE)
+                                                        .toString(),
+                                                    shiftID,
+                                                    CommonUtilities.currentToMillis.toString(),
+                                                    model?.startPointId.toString(),
+                                                    "0",
+                                                    "1",
+                                                    "1",
+                                                    true,
+                                                    startTime.replace("null","")
+                                                )
+                                            } else {
+                                                viewModel.confirmStartPoint(
+                                                    CommonUtilities.convertDateToMillis(DATE)
+                                                        .toString(),
+                                                    shiftID,
+                                                    CommonUtilities.currentToMillis.toString(),
+                                                    model?.startPointId.toString(),
+                                                    "0",
+                                                    location?.latitude.toString(),
+                                                    location?.longitude.toString(),
+                                                    true,
+                                                    startTime.replace("null","")
+                                                )
+                                            }
+
+
+                                        } else {
+                                            baseActivity.runOnUiThread {
+                                                Toast.makeText(
+                                                    baseActivity,
+                                                    resources.getString(R.string.error_location_try_again),
+                                                    Toast.LENGTH_SHORT
+                                                )
+                                                    .show()
+                                            }
                                         }
-                                        else {
-                                            viewModel.confirmStartPoint(CommonUtilities.convertDateToMillis(DATE).toString(),
-                                                                        shiftID,
-                                                                        CommonUtilities.currentToMillis.toString(),
-                                                                        model?.startPointId.toString(),
-                                                                        "0",
-                                                                        location?.latitude.toString(),
-                                                                        location?.longitude.toString(),
-                                                                        true,
-                                                                        startTime)
-                                        }
-
-
                                     }
-                                    else {
-                                        baseActivity.runOnUiThread {
-                                            Toast.makeText(baseActivity, resources.getString(R.string.error_location_try_again), Toast.LENGTH_SHORT)
-                                                .show()
-                                        }
-                                    }
-                                }
 
-                            })
+                                })
 
                         }
 
@@ -571,60 +654,76 @@ class ManagerReportFragment : BaseFragment<FragmentSuperReportBinding>(), Report
                     dialog.dismiss()
 
                     if (LocationUtils.checkPermission(baseActivity)) {
-                        ProgressLoading.showWithText(baseActivity, resources.getString(R.string.fetching_your_location))
+                        ProgressLoading.showWithText(
+                            baseActivity,
+                            resources.getString(R.string.fetching_your_location)
+                        )
                         val getMyLocation = GetMyLocation(baseActivity)
-                        getMyLocation.getLocation(baseActivity, object : GetMyLocation.LocationResult() {
-                            override fun gotLocation(location: Location?, msg: String?) {
-                                ProgressLoading.dismiss()
-                                if (location != null) {
+                        getMyLocation.getLocation(
+                            baseActivity,
+                            object : GetMyLocation.LocationResult() {
+                                override fun gotLocation(location: Location?, msg: String?) {
+                                    ProgressLoading.dismiss()
+                                    if (location != null) {
 
 
-                                    if (fullList.isNullOrEmpty()) {
+                                        if (fullList.isNullOrEmpty()) {
 
+                                            baseActivity.runOnUiThread {
+                                                Toast.makeText(
+                                                    baseActivity,
+                                                    getString(R.string.cant_start_empty_shift),
+                                                    Toast.LENGTH_LONG
+                                                ).show()
+                                            }
+
+                                        } else {
+
+                                            if (CommonUtilities.isFake(baseActivity, location)) {
+                                                viewModel.confirmStartPoint(
+                                                    CommonUtilities.convertDateToMillis(DATE)
+                                                        .toString(),
+                                                    shiftID,
+                                                    CommonUtilities.currentToMillis.toString(),
+                                                    model?.startPointId.toString(),
+                                                    "0",
+                                                    "1",
+                                                    "1",
+                                                    false,
+                                                    startTime.replace("null","")
+                                                )
+                                            } else {
+                                                viewModel.confirmStartPoint(
+                                                    CommonUtilities.convertDateToMillis(DATE)
+                                                        .toString(),
+                                                    shiftID,
+                                                    CommonUtilities.currentToMillis.toString(),
+                                                    model?.startPointId.toString(),
+                                                    "0",
+                                                    location?.latitude.toString(),
+                                                    location?.longitude.toString(),
+                                                    false,
+                                                    startTime.replace("null","")
+                                                )
+                                            }
+
+
+                                        }
+
+
+                                    } else {
                                         baseActivity.runOnUiThread {
-                                            Toast.makeText(baseActivity, getString(R.string.cant_start_empty_shift), Toast.LENGTH_LONG).show()
+                                            Toast.makeText(
+                                                baseActivity,
+                                                resources.getString(R.string.error_location_try_again),
+                                                Toast.LENGTH_SHORT
+                                            )
+                                                .show()
                                         }
-
-                                    }
-                                    else {
-
-                                        if (CommonUtilities.isFake(baseActivity, location)) {
-                                            viewModel.confirmStartPoint(CommonUtilities.convertDateToMillis(DATE).toString(),
-                                                                        shiftID,
-                                                                        CommonUtilities.currentToMillis.toString(),
-                                                                        model?.startPointId.toString(),
-                                                                        "0",
-                                                                        "1",
-                                                                        "1",
-                                                                        false,
-                                                                        startTime)
-                                        }
-                                        else {
-                                            viewModel.confirmStartPoint(CommonUtilities.convertDateToMillis(DATE).toString(),
-                                                                        shiftID,
-                                                                        CommonUtilities.currentToMillis.toString(),
-                                                                        model?.startPointId.toString(),
-                                                                        "0",
-                                                                        location?.latitude.toString(),
-                                                                        location?.longitude.toString(),
-                                                                        false,
-                                                                        startTime)
-                                        }
-
-
-                                    }
-
-
-                                }
-                                else {
-                                    baseActivity.runOnUiThread {
-                                        Toast.makeText(baseActivity, resources.getString(R.string.error_location_try_again), Toast.LENGTH_SHORT)
-                                            .show()
                                     }
                                 }
-                            }
 
-                        })
+                            })
 
                     }
 
@@ -644,15 +743,25 @@ class ManagerReportFragment : BaseFragment<FragmentSuperReportBinding>(), Report
 
 
                 if (model != null) {
-                    val startpoint = StartPoint(model?.startPointId!!, model?.startAt, model?.startPoint)
+                    val startpoint =
+                        StartPoint(model?.startPointId!!, model?.startAt, model?.startPoint)
                     viewModel.dataManager.saveStartPoint(startpoint)
 
                     val cycle =
-                        Cycle(model?.planId, model?.planCycleId, model?.fromDate, model?.toDate, model?.planAccountId, model?.cycleArName, true, 0, 0)
+                        Cycle(
+                            model?.planId,
+                            model?.planCycleId,
+                            model?.fromDate,
+                            model?.toDate,
+                            model?.planAccountId,
+                            model?.cycleArName,
+                            true,
+                            0,
+                            0
+                        )
                     viewModel.dataManager.saveCycle(cycle)
 
-                }
-                else {
+                } else {
                     val startpoint = StartPoint(0, "", "")
                     viewModel.dataManager.saveStartPoint(startpoint)
 
@@ -661,9 +770,12 @@ class ManagerReportFragment : BaseFragment<FragmentSuperReportBinding>(), Report
 
                 }
                 if (shift.equals("All Day")) {
-                    Toast.makeText(baseActivity, getString(R.string.choose_shift_first), Toast.LENGTH_SHORT).show()
-                }
-                else {
+                    Toast.makeText(
+                        baseActivity,
+                        getString(R.string.choose_shift_first),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                } else {
                     chooseActivity()
                 }
 
@@ -678,8 +790,7 @@ class ManagerReportFragment : BaseFragment<FragmentSuperReportBinding>(), Report
             val intent = Intent(baseActivity, CallsActivity::class.java);
             intent.putExtra("PlanVisitModel", planEntity);
             baseActivity.startActivity(intent);
-        }
-        else {
+        } else {
 
             val builder = AlertDialog.Builder(baseActivity)
             builder.setTitle(getString(R.string.confirm))
@@ -688,47 +799,54 @@ class ManagerReportFragment : BaseFragment<FragmentSuperReportBinding>(), Report
 
 
                 if (LocationUtils.checkPermission(baseActivity)) {
-                    ProgressLoading.showWithText(baseActivity, resources.getString(R.string.fetching_your_location))
+                    ProgressLoading.showWithText(
+                        baseActivity,
+                        resources.getString(R.string.fetching_your_location)
+                    )
                     val getMyLocation = GetMyLocation(baseActivity)
-                    getMyLocation.getLocation(baseActivity, object : GetMyLocation.LocationResult() {
-                        override fun gotLocation(location: Location?, msg: String?) {
+                    getMyLocation.getLocation(
+                        baseActivity,
+                        object : GetMyLocation.LocationResult() {
+                            override fun gotLocation(location: Location?, msg: String?) {
 
 
-                            ProgressLoading.dismiss()
-                            if (location != null) {
+                                ProgressLoading.dismiss()
+                                if (location != null) {
 
 
-                                if (CommonUtilities.isFake(baseActivity, location)) {
-                                    planEntity.cusLat = "1"
-                                    planEntity.cusLang = "1"
+                                    if (CommonUtilities.isFake(baseActivity, location)) {
+                                        planEntity.cusLat = "1"
+                                        planEntity.cusLang = "1"
+                                    } else {
+                                        planEntity.cusLat = location?.latitude.toString()
+                                        planEntity.cusLang = location?.longitude.toString()
+                                    }
+                                    planEntity.isStarted = true
+                                    planEntity.startAt = CommonUtilities.currentToMillis.toString()
+
+                                    viewModel.update(planEntity)
+
+                                    val intent = Intent(baseActivity, CallsActivity::class.java);
+                                    intent.putExtra("PlanVisitModel", planEntity);
+                                    baseActivity.startActivity(intent)
+
+                                } else {
+
+                                    baseActivity.runOnUiThread {
+                                        Toast.makeText(
+                                            baseActivity,
+                                            getString(R.string.error_location_try_again),
+                                            Toast.LENGTH_LONG
+                                        ).show()
+                                    }
+
+
                                 }
-                                else {
-                                    planEntity.cusLat = location?.latitude.toString()
-                                    planEntity.cusLang = location?.longitude.toString()
-                                }
-                                planEntity.isStarted = true
-                                planEntity.startAt = CommonUtilities.currentToMillis.toString()
-
-                                viewModel.update(planEntity)
-
-                                val intent = Intent(baseActivity, CallsActivity::class.java);
-                                intent.putExtra("PlanVisitModel", planEntity);
-                                baseActivity.startActivity(intent)
 
                             }
-                            else {
-
-                                baseActivity.runOnUiThread {
-                                    Toast.makeText(baseActivity, getString(R.string.error_location_try_again), Toast.LENGTH_LONG).show()
-                                }
 
 
-                            }
-
-                        }
-
-
-                    })
+                        })
 
                 }
 
@@ -774,7 +892,8 @@ class ManagerReportFragment : BaseFragment<FragmentSuperReportBinding>(), Report
         if (!planEntity?.visit!!) {
 
 
-            val dialogBuilder = android.app.AlertDialog.Builder(baseActivity) // ...Irrelevant code for customizing the buttons and title
+            val dialogBuilder =
+                android.app.AlertDialog.Builder(baseActivity) // ...Irrelevant code for customizing the buttons and title
             val inflater = this.layoutInflater
             val dialogView = inflater.inflate(R.layout.finish_visit, null)
             dialogBuilder.setView(dialogView)
@@ -841,7 +960,11 @@ class ManagerReportFragment : BaseFragment<FragmentSuperReportBinding>(), Report
         sync?.setVisible(false)
 
         spinner = item?.actionView as Spinner
-        val adapter = ArrayAdapter.createFromResource(requireActivity(), R.array.spinner_list_item_array, R.layout.spinner_item)
+        val adapter = ArrayAdapter.createFromResource(
+            requireActivity(),
+            R.array.spinner_list_item_array,
+            R.layout.spinner_item
+        )
         adapter.setDropDownViewResource(R.layout.spinner_item)
         spinner?.adapter = adapter
         spinner?.onItemSelectedListener = this
@@ -857,7 +980,8 @@ class ManagerReportFragment : BaseFragment<FragmentSuperReportBinding>(), Report
             DATE = fmt?.format(viewModel.dataManager.shift.startedAt.toLong())
             DATE_IN_MILLIS = viewModel.dataManager.shift.startedAt
 
-            System.out.println(" shift info " + shiftID + "\n" + DATE_IN_MILLIS + "\n" + DATE + "\n"
+            System.out.println(
+                " shift info " + shiftID + "\n" + DATE_IN_MILLIS + "\n" + DATE + "\n"
 
             )
 
@@ -868,8 +992,7 @@ class ManagerReportFragment : BaseFragment<FragmentSuperReportBinding>(), Report
 
                 spinner?.isEnabled = false
 
-            }
-            else {
+            } else {
                 System.out.println(" spinner != null ")
             }
 
@@ -885,9 +1008,9 @@ class ManagerReportFragment : BaseFragment<FragmentSuperReportBinding>(), Report
             setButtonStarted()
 
 
-        }
-        else {
-            System.out.println(" shift info else "
+        } else {
+            System.out.println(
+                " shift info else "
 
             )
             viewModel.isStarted(DATE, shift, 183)
@@ -925,8 +1048,7 @@ class ManagerReportFragment : BaseFragment<FragmentSuperReportBinding>(), Report
 
         if (x[p2].equals("AM Shift")) {
             shiftID = "8"
-        }
-        else {
+        } else {
             shiftID = "9"
         }
 
@@ -1005,17 +1127,22 @@ class ManagerReportFragment : BaseFragment<FragmentSuperReportBinding>(), Report
 
 
     fun submitDialog() {
-        dialog = ConfirmDialog(baseActivity,
-                               baseActivity,
-                               viewModel.dataManager,
-                               CommonUtilities.getDoubleVisitsEmpsIdes(fullList),
-                               DATE!!,
-                               shift,
-                               shiftID.toInt(),
-                               this);
+        dialog = ConfirmDialog(
+            baseActivity,
+            baseActivity,
+            viewModel.dataManager,
+            CommonUtilities.getDoubleVisitsEmpsIdes(fullList),
+            DATE!!,
+            shift,
+            shiftID.toInt(),
+            this
+        );
         dialog.setCanceledOnTouchOutside(true);
         val window = dialog.getWindow();
-        window?.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
+        window?.setLayout(
+            WindowManager.LayoutParams.MATCH_PARENT,
+            WindowManager.LayoutParams.MATCH_PARENT
+        );
         dialog.getWindow()?.setBackgroundDrawableResource(android.R.color.transparent);
         dialog.getWindow()?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
         dialog.show();
@@ -1032,14 +1159,12 @@ class ManagerReportFragment : BaseFragment<FragmentSuperReportBinding>(), Report
         try {
             (activity as AppCompatActivity?)!!.supportActionBar!!.title = getString(R.string.report)
 
-        }
-        catch (e: Exception) {
+        } catch (e: Exception) {
         }
 
         try {
             CommonUtilities.sendMessage(baseActivity, false)
-        }
-        catch (e: Exception) {
+        } catch (e: Exception) {
         }
 
     }
@@ -1064,7 +1189,8 @@ class ManagerReportFragment : BaseFragment<FragmentSuperReportBinding>(), Report
         activityTypeDialog?.getWindow()?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         activityTypeDialog?.show()
 
-        var activitiesRecyclerView: RecyclerView = choose_activity_type.findViewById(R.id.activitiesRecyclerView)
+        var activitiesRecyclerView: RecyclerView =
+            choose_activity_type.findViewById(R.id.activitiesRecyclerView)
         var close: ImageView = choose_activity_type.findViewById(R.id.close)
         var videoView: ExoVideoView = choose_activity_type.findViewById(R.id.videoView)
         var imageView: ImageView = choose_activity_type.findViewById(R.id.imageView)
@@ -1097,7 +1223,8 @@ class ManagerReportFragment : BaseFragment<FragmentSuperReportBinding>(), Report
                 if (model.resourceLink.equals(null) && model.paragraph.equals(null) && model.slideImages == null) {
                     constrAds.setVisibility(View.VISIBLE)
                     imageView.visibility = View.VISIBLE
-                    Glide.with(this).load(model.default_ad_image).centerCrop().placeholder(R.drawable.dr_hussain).into(imageView)
+                    Glide.with(this).load(model.default_ad_image).centerCrop()
+                        .placeholder(R.drawable.dr_hussain).into(imageView)
                 }
                 break
             }
@@ -1117,14 +1244,17 @@ class ManagerReportFragment : BaseFragment<FragmentSuperReportBinding>(), Report
             "Image" -> {
 
                 imageView.visibility = View.VISIBLE
-                Glide.with(this).load(model.resourceLink).centerCrop().placeholder(R.drawable.dr_hussain).into(imageView)
+                Glide.with(this).load(model.resourceLink).centerCrop()
+                    .placeholder(R.drawable.dr_hussain).into(imageView)
             }
             "GIF" -> {
                 imageView.visibility = View.VISIBLE
-                Glide.with(this).asGif().load(model.resourceLink).centerCrop().placeholder(R.drawable.dr_hussain).into(imageView);
+                Glide.with(this).asGif().load(model.resourceLink).centerCrop()
+                    .placeholder(R.drawable.dr_hussain).into(imageView);
             }
             "Paragraph" -> {
-                textView.visibility = View.VISIBLE //                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                textView.visibility =
+                    View.VISIBLE //                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 //                    textView.setText(
                 //                        Html.fromHtml(
                 //                            model.paragraph,
@@ -1153,8 +1283,7 @@ class ManagerReportFragment : BaseFragment<FragmentSuperReportBinding>(), Report
                 if (constrAds.visibility == View.VISIBLE) {
                     constrAds.setVisibility(View.GONE)
                     btnHideShowAds.setImageResource(R.drawable.ic_show_hide_ads)
-                }
-                else {
+                } else {
                     constrAds.setVisibility(View.VISIBLE)
                     btnHideShowAds.setImageResource(R.drawable.ic_hide_show_ads)
                 }
@@ -1181,15 +1310,27 @@ class ManagerReportFragment : BaseFragment<FragmentSuperReportBinding>(), Report
 
             if (fullList.isNullOrEmpty()) {
                 chooseStartPointDialog =
-                    ChooseStartPoint(baseActivity, this@ManagerReportFragment, viewModel.dataManager!!, activities?.typeId!!, activities, DATE, 0);
+                    ChooseStartPoint(
+                        baseActivity,
+                        this@ManagerReportFragment,
+                        viewModel.dataManager!!,
+                        activities?.typeId!!,
+                        activities,
+                        DATE,
+                        0
+                    );
                 chooseStartPointDialog.setCanceledOnTouchOutside(true);
                 val window = chooseStartPointDialog.getWindow();
-                window?.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
-                chooseStartPointDialog.getWindow()?.setBackgroundDrawableResource(android.R.color.transparent);
-                chooseStartPointDialog.getWindow()?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+                window?.setLayout(
+                    WindowManager.LayoutParams.MATCH_PARENT,
+                    WindowManager.LayoutParams.MATCH_PARENT
+                );
+                chooseStartPointDialog.getWindow()
+                    ?.setBackgroundDrawableResource(android.R.color.transparent);
+                chooseStartPointDialog.getWindow()
+                    ?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
                 chooseStartPointDialog.show();
-            }
-            else {
+            } else {
 
                 for (m in fullList!!) {
 
@@ -1201,50 +1342,61 @@ class ManagerReportFragment : BaseFragment<FragmentSuperReportBinding>(), Report
                 }
 
                 chooseStartPointDialog =
-                    ChooseStartPoint(baseActivity, this@ManagerReportFragment, viewModel?.dataManager!!, activities?.typeId!!, activities, DATE, 0);
+                    ChooseStartPoint(
+                        baseActivity,
+                        this@ManagerReportFragment,
+                        viewModel?.dataManager!!,
+                        activities?.typeId!!,
+                        activities,
+                        DATE,
+                        0
+                    );
                 chooseStartPointDialog.setCanceledOnTouchOutside(true);
                 val window = chooseStartPointDialog.getWindow();
-                window?.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
-                chooseStartPointDialog.getWindow()?.setBackgroundDrawableResource(android.R.color.transparent);
-                chooseStartPointDialog.getWindow()?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+                window?.setLayout(
+                    WindowManager.LayoutParams.MATCH_PARENT,
+                    WindowManager.LayoutParams.MATCH_PARENT
+                );
+                chooseStartPointDialog.getWindow()
+                    ?.setBackgroundDrawableResource(android.R.color.transparent);
+                chooseStartPointDialog.getWindow()
+                    ?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
                 chooseStartPointDialog.show();
 
             }
 
 
-        }
-        else if (activities?.typeId?.equals(2)!!) {
+        } else if (activities?.typeId?.equals(2)!!) {
 
             activitiesModel = activities!!
             chooseEmployee = ChooseEmployee(baseActivity, this, viewModel?.dataManager!!);
             chooseEmployee.setCanceledOnTouchOutside(true);
             val window = chooseEmployee.getWindow();
-            window?.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
+            window?.setLayout(
+                WindowManager.LayoutParams.MATCH_PARENT,
+                WindowManager.LayoutParams.MATCH_PARENT
+            );
             chooseEmployee.getWindow()?.setBackgroundDrawableResource(android.R.color.transparent);
-            chooseEmployee.getWindow()?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+            chooseEmployee.getWindow()
+                ?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
             chooseEmployee.show();
             activities!! //  openSingleActivity(activities!!, DoubleActivity::class.java)
 
-        }
-        else if (activities?.typeId?.equals(3)!!) {
+        } else if (activities?.typeId?.equals(3)!!) {
 
-        }
-        else if (activities?.typeId?.equals(4)!!) {
+        } else if (activities?.typeId?.equals(4)!!) {
             openSingleActivity(activities!!, AddOfficeActivity::class.java)
 
 
-        }
-        else if (activities?.typeId?.equals(5)!!) {
+        } else if (activities?.typeId?.equals(5)!!) {
             openSingleActivity(activities!!, AddOfficeActivity::class.java)
 
-        }
-        else if (activities?.typeId?.equals(6)!!) {
+        } else if (activities?.typeId?.equals(6)!!) {
 
             openSingleActivity(activities!!, AddMeetingActivity::class.java)
 
 
-        }
-        else {
+        } else {
 
             openSingleActivity(activities!!, AddPlanSingleActivity::class.java)
 
@@ -1256,7 +1408,13 @@ class ManagerReportFragment : BaseFragment<FragmentSuperReportBinding>(), Report
     /**
      * save start point which selected into data manager
      */
-    override fun chooseStartPoint(id: Int, date: String?, name: String?, type: Int, activities: ActivityEntity?) {
+    override fun chooseStartPoint(
+        id: Int,
+        date: String?,
+        name: String?,
+        type: Int,
+        activities: ActivityEntity?
+    ) {
 
 
         chooseStartPointDialog.dismiss()
@@ -1273,7 +1431,13 @@ class ManagerReportFragment : BaseFragment<FragmentSuperReportBinding>(), Report
         }
     }
 
-    override fun editStartPoint(id: Int, date: String?, name: String?, type: Int, activities: ActivityEntity?) {
+    override fun editStartPoint(
+        id: Int,
+        date: String?,
+        name: String?,
+        type: Int,
+        activities: ActivityEntity?
+    ) {
         TODO("Not yet implemented")
     }
 
@@ -1287,7 +1451,10 @@ class ManagerReportFragment : BaseFragment<FragmentSuperReportBinding>(), Report
         intent.putExtra("ShiftId", shiftID)
         intent.putExtra("Date", DATE)
         intent.putExtra("DATE_IN_MILLIS", DATE_IN_MILLIS)
-        intent.putExtra("Day", CommonUtilities.getDayName(horizontalCalendar?.selectedDate?.timeInMillis!!))
+        intent.putExtra(
+            "Day",
+            CommonUtilities.getDayName(horizontalCalendar?.selectedDate?.timeInMillis!!)
+        )
         intent.putExtra("EXTRA", true)
         intent.putExtra("cusIdes", CommonUtilities.getCusIdes(fullList))
         intent.putExtra("cusBranchIds", CommonUtilities.getBranchIdes(fullList))
@@ -1306,7 +1473,10 @@ class ManagerReportFragment : BaseFragment<FragmentSuperReportBinding>(), Report
         intent.putExtra("Date", DATE)
         intent.putExtra("EMPLOYEE_ID", model)
         intent.putExtra("DATE_IN_MILLIS", DATE_IN_MILLIS)
-        intent.putExtra("Day", CommonUtilities.getDayName(horizontalCalendar?.selectedDate?.timeInMillis!!))
+        intent.putExtra(
+            "Day",
+            CommonUtilities.getDayName(horizontalCalendar?.selectedDate?.timeInMillis!!)
+        )
         intent.putExtra("EXTRA", true)
         intent.putExtra("cusIdes", CommonUtilities.getCusIdes(fullList))
         intent.putExtra("cusBranchIds", CommonUtilities.getBranchIdes(fullList))

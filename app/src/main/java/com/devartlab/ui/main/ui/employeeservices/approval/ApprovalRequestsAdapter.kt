@@ -97,6 +97,30 @@ class ApprovalRequestsAdapter(
         }
 
 
+
+        if (myData[position].checked!!)
+        {
+            approveInterface.addApprove(
+                ApproveModel(
+                    "HR Requests",
+                    "approve",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "PENDING",
+                    "",
+                    simpleDateFormat?.format(System.currentTimeMillis()),
+                    model.code!!
+                )
+            )
+        }
+
+
         holder.approveCheckbox?.setOnClickListener {
 
             myData[position].checked = holder.approveCheckbox!!.isChecked
@@ -115,7 +139,7 @@ class ApprovalRequestsAdapter(
                         "",
                         "",
                         "",
-                        "Approved",
+                        "PENDING",
                         "",
                         simpleDateFormat?.format(System.currentTimeMillis()),
                         model.code!!

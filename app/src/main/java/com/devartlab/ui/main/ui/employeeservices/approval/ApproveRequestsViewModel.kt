@@ -54,36 +54,40 @@ class ApproveRequestsViewModel(application: Application) : AndroidViewModel(appl
     /////////////////////////////////////////////////////////
 
 
-    fun getRequests(action: String?,
-                    date: String,
-                    id: String,
-                    name: String,
-                    typeRequest: String?,
-                    requestStartIn: String,
-                    requestEndIn: String?,
-                    notes: String,
-                    managerId: String,
-                    status: String,
-                    comment: String,
-                    approvalDate: String,
-                    code: String) {
+    fun getRequests(
+        action: String?,
+        date: String,
+        id: String,
+        name: String,
+        typeRequest: String?,
+        requestStartIn: String,
+        requestEndIn: String?,
+        notes: String,
+        managerId: String,
+        status: String,
+        comment: String,
+        approvalDate: String,
+        code: String
+    ) {
 
 
         progress.postValue(1)
-        myAPI?.googleSheetRequest("HR Requests",
-                                  action!!,
-                                  date,
-                                  id,
-                                  name,
-                                  typeRequest!!,
-                                  requestStartIn,
-                                  requestEndIn!!,
-                                  notes,
-                                  managerId,
-                                  status,
-                                  comment,
-                                  approvalDate,
-                                  code)!!.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+        myAPI?.googleSheetRequest(
+            "HR Requests",
+            action!!,
+            date,
+            id,
+            name,
+            typeRequest!!,
+            requestStartIn,
+            requestEndIn!!,
+            notes,
+            managerId,
+            status,
+            comment,
+            approvalDate,
+            code
+        )!!.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
             .subscribe(object : Observer<GoogleRequestResponse> {
                 override fun onSubscribe(d: Disposable) {}
                 override fun onNext(data: GoogleRequestResponse) {
@@ -91,13 +95,11 @@ class ApproveRequestsViewModel(application: Application) : AndroidViewModel(appl
                     progress.postValue(0)
                     if (action == "getAll" || action == "delete") {
                         responseLiveRequests.postValue(data)
-                    }
-                    else if (action == "getAllPending" || action == "update") {
+                    } else if (action == "getAllPending" || action == "update") {
 
                         PendingResponseLiveRequests.postValue(data)
 
-                    }
-                    else {
+                    } else {
                         responseLive.postValue(data)
 
                     }
@@ -115,36 +117,40 @@ class ApproveRequestsViewModel(application: Application) : AndroidViewModel(appl
     }
 
 
-    fun getPendingRequests(action: String?,
-                           date: String,
-                           id: String,
-                           name: String,
-                           typeRequest: String?,
-                           requestStartIn: String,
-                           requestEndIn: String?,
-                           notes: String,
-                           managerId: String,
-                           status: String,
-                           comment: String,
-                           approvalDate: String,
-                           code: String) {
+    fun getPendingRequests(
+        action: String?,
+        date: String,
+        id: String,
+        name: String,
+        typeRequest: String?,
+        requestStartIn: String,
+        requestEndIn: String?,
+        notes: String,
+        managerId: String,
+        status: String,
+        comment: String,
+        approvalDate: String,
+        code: String
+    ) {
 
 
         progressGoogle.postValue(1)
-        myAPI?.googleSheetRequest("HR Requests",
-                                  action!!,
-                                  date,
-                                  id,
-                                  name,
-                                  typeRequest!!,
-                                  requestStartIn,
-                                  requestEndIn!!,
-                                  notes,
-                                  managerId,
-                                  status,
-                                  comment,
-                                  approvalDate,
-                                  code)!!.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+        myAPI?.googleSheetRequest(
+            "HR Requests",
+            action!!,
+            date,
+            id,
+            name,
+            typeRequest!!,
+            requestStartIn,
+            requestEndIn!!,
+            notes,
+            managerId,
+            status,
+            comment,
+            approvalDate,
+            code
+        )!!.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
             .subscribe(object : Observer<GoogleRequestResponse> {
                 override fun onSubscribe(d: Disposable) {}
                 override fun onNext(data: GoogleRequestResponse) {
@@ -170,8 +176,24 @@ class ApproveRequestsViewModel(application: Application) : AndroidViewModel(appl
     fun getAll(action: String, empId: String) {
 
 
-        myAPI?.googleSheetRequest("All", action, "", empId, "", "", "", "", "", dataManager.user.empId.toString(), "", "", "", "")!!
-            .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(object : Observer<GoogleRequestResponse> {
+        myAPI?.googleSheetRequest(
+            "All",
+            action,
+            "",
+            empId,
+            "",
+            "",
+            "",
+            "",
+            "",
+            dataManager.user.empId.toString(),
+            "",
+            "",
+            "",
+            ""
+        )!!
+            .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+            .subscribe(object : Observer<GoogleRequestResponse> {
                 override fun onSubscribe(d: Disposable) {}
                 override fun onNext(data: GoogleRequestResponse) {
                     progress.postValue(0)
@@ -192,45 +214,48 @@ class ApproveRequestsViewModel(application: Application) : AndroidViewModel(appl
     }
 
 
-    fun approve(sheet: String?,
-                action: String?,
-                date: String,
-                id: String,
-                name: String,
-                typeRequest: String?,
-                requestStartIn: String,
-                requestEndIn: String?,
-                notes: String,
-                managerId: String,
-                status: String,
-                comment: String,
-                approvalDate: String,
-                code: String) {
+    fun approve(
+        sheet: String?,
+        action: String?,
+        date: String,
+        id: String,
+        name: String,
+        typeRequest: String?,
+        requestStartIn: String,
+        requestEndIn: String?,
+        notes: String,
+        managerId: String,
+        status: String,
+        comment: String,
+        approvalDate: String,
+        code: String
+    ) {
 
 
         progress.postValue(1)
-        myAPI?.googleSheetRequest(sheet!!,
-                                  action!!,
-                                  date,
-                                  id,
-                                  name,
-                                  typeRequest!!,
-                                  requestStartIn,
-                                  requestEndIn!!,
-                                  notes,
-                                  managerId,
-                                  status,
-                                  comment,
-                                  approvalDate,
-                                  code)!!.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+        myAPI?.googleSheetRequest(
+            sheet!!,
+            action!!,
+            date,
+            id,
+            name,
+            typeRequest!!,
+            requestStartIn,
+            requestEndIn!!,
+            notes,
+            managerId,
+            status,
+            comment,
+            approvalDate,
+            code
+        )!!.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
             .subscribe(object : Observer<GoogleRequestResponse> {
                 override fun onSubscribe(d: Disposable) {}
                 override fun onNext(data: GoogleRequestResponse) {
 
                     if (data.isSuccessful) {
                         getAll("allPending", "")
-                    }
-                    else {
+                    } else {
                         progress.postValue(0)
                     }
 
@@ -253,7 +278,7 @@ class ApproveRequestsViewModel(application: Application) : AndroidViewModel(appl
 
 
         val model = approveAllModel(
-            list , "All","approve"
+            list, "All", "approve"
         )
 
         val appraisalBuildsSchema = Gson().toJsonTree(model).asJsonObject
@@ -262,31 +287,31 @@ class ApproveRequestsViewModel(application: Application) : AndroidViewModel(appl
 
 
         Log.d(TAG, "approveAll: $appraisalBuildsSchema")
+        com.orhanobut.logger.Logger.d(appraisalBuildsSchema)
+               myAPI?.approveAll(appraisalBuildsSchema)!!.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+                  .subscribe(object : Observer<GoogleRequestResponse> {
+                      override fun onSubscribe(d: Disposable) {}
+                      override fun onNext(data: GoogleRequestResponse) {
 
-        myAPI?.approveAll(appraisalBuildsSchema)!!.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
-            .subscribe(object : Observer<GoogleRequestResponse> {
-                override fun onSubscribe(d: Disposable) {}
-                override fun onNext(data: GoogleRequestResponse) {
-
-                    if (data.isSuccessful) {
-                        getAll("allPending", "")
-                    }
-                    else {
-                        progress.postValue(0)
-                    }
+                          if (data.isSuccessful) {
+                              getAll("allPending", "")
+                          }
+                          else {
+                              progress.postValue(0)
+                          }
 
 
-                }
+                      }
 
-                override fun onError(e: Throwable) {
-                    progress.postValue(0)
-                    println(e.message)
-                    System.out.println(e.message)
-                    Toast.makeText(getApplication(), e.message, Toast.LENGTH_LONG).show()
-                }
+                      override fun onError(e: Throwable) {
+                          progress.postValue(0)
+                          println(e.message)
+                          System.out.println(e.message)
+                          Toast.makeText(getApplication(), e.message, Toast.LENGTH_LONG).show()
+                      }
 
-                override fun onComplete() {}
-            })
+                      override fun onComplete() {}
+                  })
 
 
     }
@@ -295,4 +320,5 @@ class ApproveRequestsViewModel(application: Application) : AndroidViewModel(appl
 
 data class approveAllModel(
 
-    var list: ArrayList<ApproveModel>, var sheet: String, var action: String)
+    var list: ArrayList<ApproveModel>, var sheet: String, var action: String
+)

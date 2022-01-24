@@ -52,6 +52,6 @@ data class GoogleSheetUser (
     @Expose
     var approvedDate: String? = null,
 
-    var checked: Boolean? = false
+    var checked: Boolean? = true
 
 )

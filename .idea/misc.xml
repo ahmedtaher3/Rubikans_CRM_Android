@@ -21,6 +21,7 @@
         <entry key="..\:/Users/Ahmed Taher/AndroidStudioProjects/DevartLabCRMproject/app/src/main/res/layout-sw600dp/competitor_report_activity.xml" value="0.190625" />
         <entry key="..\:/Users/Ahmed Taher/AndroidStudioProjects/DevartLabCRMproject/app/src/main/res/layout/activity_add_plan_single.xml" value="0.1875" />
         <entry key="..\:/Users/Ahmed Taher/AndroidStudioProjects/DevartLabCRMproject/app/src/main/res/layout/activity_create_new_customer.xml" value="0.2800729040097205" />
+        <entry key="..\:/Users/Ahmed Taher/AndroidStudioProjects/DevartLabCRMproject/app/src/main/res/layout/activity_devart_link_webview.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Ahmed Taher/AndroidStudioProjects/DevartLabCRMproject/app/src/main/res/layout/adapter_list_item.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Ahmed Taher/AndroidStudioProjects/DevartLabCRMproject/app/src/main/res/layout/add_compare_product.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Ahmed Taher/AndroidStudioProjects/DevartLabCRMproject/app/src/main/res/layout/add_new_address.xml" value="0.25416666666666665" />
@@ -39,10 +40,10 @@
         <entry key="..\:/Users/Ahmed Taher/AndroidStudioProjects/DevartLabCRMproject/app/src/main/res/layout/nav_header_main.xml" value="0.17300724637681159" />
         <entry key="..\:/Users/Ahmed Taher/AndroidStudioProjects/DevartLabCRMproject/app/src/main/res/layout/nested_recycler_item_child.xml" value="0.264" />
         <entry key="..\:/Users/Ahmed Taher/AndroidStudioProjects/DevartLabCRMproject/app/src/main/res/layout/nested_recycler_item_parent.xml" value="0.264" />
+        <entry key="..\:/Users/Ahmed Taher/AndroidStudioProjects/DevartLabCRMproject/app/src/main/res/layout/progress_layout.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Ahmed Taher/AndroidStudioProjects/DevartLabCRMproject/app/src/main/res/layout/request_approved_by_item.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Ahmed Taher/AndroidStudioProjects/DevartLabCRMproject/app/src/main/res/layout/select_product_item.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Ahmed Taher/AndroidStudioProjects/DevartLabCRMproject/app/src/main/res/layout/selected_items.xml" value="0.25416666666666665" />
-        <entry key="..\:/Users/Ahmed Taher/AndroidStudioProjects/DevartLabCRMproject/app/src/main/res/menu/activity_main_drawer.xml" value="0.2217687074829932" />
         <entry key="..\:/work/DevartLab/DevartLabCRM/app/src/main/res/layout/activity_calls.xml" value="0.2421875" />
         <entry key="..\:/work/DevartLab/DevartLabCRM/app/src/main/res/layout/activity_choose_employee.xml" value="0.2421875" />
         <entry key="..\:/work/DevartLab/DevartLabCRM/app/src/main/res/layout/activity_choose_start_point.xml" value="0.1921875" />
