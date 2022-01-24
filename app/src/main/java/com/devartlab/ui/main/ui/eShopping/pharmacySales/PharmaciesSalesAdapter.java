@@ -61,7 +61,7 @@ public class PharmaciesSalesAdapter extends RecyclerView.Adapter<PharmaciesSales
         convertDateTime(dataItem.getCreated_at(), viewHolder.binding.tvStartDate);
         viewHolder.binding.tvUpdateDate.setText(dataItem.getUpdated_at());
         viewHolder.binding.tvOrderNumber.setText(dataItem.getOrder_number());
-        viewHolder.binding.tvPayAmount.setText(String.valueOf(dataItem.getPay_amount()));
+        viewHolder.binding.tvPayAmount.setText(dataItem.getPay_amount()+" EGP");
 
         if (onItemClickListener != null) {
             viewHolder.itemView.setOnClickListener(new View.OnClickListener() {

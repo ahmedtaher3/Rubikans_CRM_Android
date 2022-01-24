@@ -7,10 +7,11 @@
 
     </data>
 
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:id="@+id/swipeRefreshLayout"
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
@@ -61,9 +62,9 @@
                     android:id="@+id/iv_remove_search"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginEnd="5dp"
                     android:src="@drawable/ic_pre_declined"
                     android:visibility="gone"
-                    android:layout_marginEnd="5dp"
                     app:layout_constraintBottom_toBottomOf="@id/ed_pharmacy_search"
                     app:layout_constraintEnd_toEndOf="@id/ed_pharmacy_search"
                     app:layout_constraintTop_toTopOf="@id/ed_pharmacy_search" />
@@ -85,7 +86,6 @@
                     android:id="@+id/ed_pharmacy_no"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
                     android:layout_marginEnd="10dp"
                     android:hint="..............."
                     android:padding="5dp"
@@ -112,8 +112,7 @@
                     android:id="@+id/ed_pharmacy_name"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginStart="10dp"
                     android:layout_marginEnd="10dp"
                     android:hint="..............."
                     android:padding="5dp"
@@ -137,7 +136,7 @@
                         android:id="@+id/iv_money"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
-                        android:layout_marginStart="50dp"
+                        android:layout_marginStart="20dp"
                         android:layout_marginTop="10dp"
                         android:src="@drawable/money_shopping"
                         app:layout_constraintStart_toStartOf="parent"
@@ -163,17 +162,53 @@
                         android:text="@string/label_total_money"
                         android:textColor="@color/white"
                         android:textSize="10sp"
+                        android:layout_marginStart="5dp"
                         android:textStyle="bold"
                         app:layout_constraintBottom_toBottomOf="@+id/tv_total_money"
                         app:layout_constraintStart_toEndOf="@+id/tv_total_money"
                         app:layout_constraintTop_toTopOf="@+id/tv_total_money" />
 
                     <ImageView
+                        android:id="@+id/iv_roi"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_marginTop="10dp"
+                        android:src="@drawable/ic_roi"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/tv_total_roi"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:text="0"
+                        android:textColor="@color/white"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toEndOf="@+id/iv_roi"
+                        app:layout_constraintStart_toStartOf="@+id/iv_roi"
+                        app:layout_constraintTop_toBottomOf="@+id/iv_roi" />
+
+                    <TextView
+                        android:id="@+id/tv_label_total_roi"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/label_total_roi"
+                        android:textColor="@color/white"
+                        android:textSize="10sp"
+                        android:layout_marginStart="5dp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="@+id/tv_total_roi"
+                        app:layout_constraintStart_toEndOf="@+id/tv_total_roi"
+                        app:layout_constraintTop_toTopOf="@+id/tv_total_roi" />
+                    <ImageView
                         android:id="@+id/iv_coinssss"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_marginTop="10dp"
-                        android:layout_marginEnd="50dp"
+                        android:layout_marginEnd="20dp"
                         android:src="@drawable/coinssss"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -199,6 +234,7 @@
                         android:textColor="@color/white"
                         android:textSize="10sp"
                         android:textStyle="bold"
+                        android:layout_marginStart="5dp"
                         app:layout_constraintBottom_toBottomOf="@+id/tv_total_coinssss"
                         app:layout_constraintStart_toEndOf="@+id/tv_total_coinssss"
                         app:layout_constraintTop_toTopOf="@+id/tv_total_coinssss" />
@@ -233,15 +269,16 @@
                     android:paddingEnd="20dp"
                     android:text="@string/add_to_pharmacy"
                     android:textAllCaps="false"
+                    app:layout_constraintTop_toBottomOf="@+id/search_bar_video"
                     android:textColor="@color/white"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"/>
+                    app:layout_constraintStart_toStartOf="parent" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recycler_details_pharmacies"
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:visibility="visible"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
@@ -273,5 +310,5 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="@id/constr_money" />
             </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+    </androidx.core.widget.NestedScrollView>
 </layout>

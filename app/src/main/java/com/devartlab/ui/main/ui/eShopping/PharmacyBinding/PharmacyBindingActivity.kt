@@ -149,6 +149,8 @@ class PharmacyBindingActivity : AppCompatActivity() {
         }
         viewModel!!.connectPharmacyResponse.observe(this, Observer {
             Toast.makeText(this, "تم ربط الصدليه بنجاح", Toast.LENGTH_SHORT).show()
+            viewModel!!.getConnetctedPharmacies("")
+            TvName.setText(null)
             dialog.dismiss()
         })
         dialog.show()

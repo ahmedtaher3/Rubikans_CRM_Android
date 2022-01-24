@@ -516,7 +516,7 @@
     <string name="label_order_number">رقم الطلب</string>
     <string name="label_pay_amount">الاجمالي</string>
     <string name="public_price">سعر الجمهور</string>
-    <string name="product_name">اسم المنتج</string>
+    <string name="product_name">الاسم</string>
     <string name="added_by">تم الاضافه بواسطة</string>
     <string name="date_of_additions">تاريخ الأضافه</string>
     <string name="quantitative_details">الكمية</string>

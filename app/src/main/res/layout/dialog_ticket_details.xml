@@ -33,7 +33,7 @@
                 android:id="@+id/tv_no_order"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="مروة السعيد رزق السعيد موسي"
+                android:text="312321"
                 android:textColor="@color/color_142c48"
                 android:textSize="14sp"
                 app:layout_constraintStart_toStartOf="@+id/tv_ticket_title"

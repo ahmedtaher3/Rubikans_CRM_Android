@@ -52,8 +52,8 @@ class AddProductsPharmacyActivity : AppCompatActivity() {
         supportActionBar!!.title = getString(R.string.Add_products_to_Pharmacy)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         adapter = AddProductsPharmaciesAdapter(null)
-        binding.recyclerDetailsPharmacies.setNestedScrollingEnabled(false)
-        binding.recyclerDetailsPharmacies.setHasFixedSize(false)
+//        binding.recyclerDetailsPharmacies.setNestedScrollingEnabled(false)
+//        binding.recyclerDetailsPharmacies.setHasFixedSize(false)
         viewModel = ViewModelProvider(this).get(SearchAllPharmacyViewModel::class.java)
         onClickListener()
         handleObserver()
@@ -69,9 +69,9 @@ class AddProductsPharmacyActivity : AppCompatActivity() {
                 filter(s.toString())
             }
         })
-        binding.swipeRefreshLayout.setOnRefreshListener {
-            refresh()
-        }
+//        binding.swipeRefreshLayout.setOnRefreshListener {
+//            refresh()
+//        }
         binding.edPharmacySearch.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {}
             override fun onTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {
@@ -97,6 +97,9 @@ class AddProductsPharmacyActivity : AppCompatActivity() {
         binding.btnAddToPharmacy.setOnClickListener {
             if (cart.size == 0) {
                 Toast.makeText(this, "please add product", Toast.LENGTH_SHORT)
+                    .show()
+            }else if (pharmacyID==0){
+                Toast.makeText(this, "please choose pharmacy", Toast.LENGTH_SHORT)
                     .show()
             } else {
                 request = AddOrderToCartRequest(cart, pharmacyID)
@@ -127,10 +130,6 @@ class AddProductsPharmacyActivity : AppCompatActivity() {
                     binding.edPharmacyName.setText(it.data.get(item.getItemId()).name)
                     binding.edPharmacyNo.setText(it.data.get(item.getItemId()).id.toString())
                     pharmacyID = it.data.get(item.getItemId()).id
-//                    binding.btnAddToPharmacy.setVisibility(View.VISIBLE)
-//                    binding.searchBarVideo.setVisibility(View.VISIBLE)
-//                    binding.recyclerDetailsPharmacies.setVisibility(View.VISIBLE)
-//                    countryBrandsPopUp.dismiss()
                     return@OnMenuItemClickListener false;
                 })
                 countryBrandsPopUp.show()
@@ -162,6 +161,7 @@ class AddProductsPharmacyActivity : AppCompatActivity() {
                                 if (response.isSuccessful) {
                                     binding.tvTotalMoney.setText(response.body()!!.totalPrice.toString())
                                     binding.tvTotalCoinssss.setText(response.body()!!.totalCoins.toString())
+                                    binding.tvTotalRoi.setText(response.body()!!.roi.toString())
                                     (cart as ArrayList<Cart>).add(Cart(id, amount))
                                 }
                             }
@@ -184,6 +184,7 @@ class AddProductsPharmacyActivity : AppCompatActivity() {
                             if (response.isSuccessful) {
                                 binding.tvTotalMoney.setText(response.body()!!.totalPrice.toString())
                                 binding.tvTotalCoinssss.setText(response.body()!!.totalCoins.toString())
+                                binding.tvTotalRoi.setText(response.body()!!.roi.toString())
                                 (cart as ArrayList<Cart>).remove(Cart(id, amount))
                             }
                         }
@@ -209,13 +210,13 @@ class AddProductsPharmacyActivity : AppCompatActivity() {
     }
 
 
-    private fun refresh() {
-        synchronized(this) {
-            viewModel!!.getCategoryv2Pharmacy()
-            binding.swipeRefreshLayout.isRefreshing = false
-            binding.progressBar.setVisibility(View.VISIBLE)
-        }
-    }
+//    private fun refresh() {
+//        synchronized(this) {
+//            viewModel!!.getCategoryv2Pharmacy()
+//            binding.swipeRefreshLayout.isRefreshing = false
+//            binding.progressBar.setVisibility(View.VISIBLE)
+//        }
+//    }
 
     override fun onSupportNavigateUp(): Boolean {
         finish()
