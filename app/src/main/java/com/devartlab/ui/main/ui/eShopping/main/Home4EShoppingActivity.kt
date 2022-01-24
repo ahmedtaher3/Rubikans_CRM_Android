@@ -42,11 +42,11 @@ class Home4EShoppingActivity : AppCompatActivity() ,
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this,
             R.layout.activity_4eshopping)
-        dataManager = (getApplication() as BaseApplication).dataManager!!
         setSupportActionBar(binding.toolbar)
         supportActionBar!!.title = getString(R.string.eshopping)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         viewModel = ViewModelProvider(this).get(Home4EShoppingViewModel::class.java)
+        dataManager = (getApplication() as BaseApplication).dataManager!!
         setUpRecycler()
         ads()
     }

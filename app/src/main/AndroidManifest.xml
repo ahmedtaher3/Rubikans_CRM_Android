@@ -92,7 +92,7 @@
         <activity android:exported="true" android:name=".ui.main.ui.devartlink.DevartLinkWebView"/>
         <activity
             android:name=".a4eshopping.orientationVideos.videoActivity"
-            android:exported="false" />
+            android:configChanges="orientation|screenSize" />
         <activity
             android:name=".ui.main.ui.eShopping.ticket.ChatThread4EShoppingActivity"
             android:exported="false" />

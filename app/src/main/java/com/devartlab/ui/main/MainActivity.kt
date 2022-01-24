@@ -268,7 +268,7 @@ class MainActivity : BaseActivity<ActivityMainBinding?>(), View.OnClickListener,
             )
         )
         list.add(CardModel(5, "DevartLink", R.drawable.devartlink))
-        list.add(CardModel(6, "4EShopping", R.drawable.e_shopping))
+        list.add(CardModel(6, "4eShopping", R.drawable.e_shopping))
 
         adapter = MenuListAdapter(this, list, this)
         val layoutManager = GridLayoutManager(this, 2)

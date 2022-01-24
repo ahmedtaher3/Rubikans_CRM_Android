@@ -161,7 +161,7 @@ class AddProductsPharmacyActivity : AppCompatActivity() {
                                 if (response.isSuccessful) {
                                     binding.tvTotalMoney.setText(response.body()!!.totalPrice.toString())
                                     binding.tvTotalCoinssss.setText(response.body()!!.totalCoins.toString())
-                                    binding.tvTotalRoi.setText(response.body()!!.roi.toString())
+                                    binding.tvTotalRoi.setText(response.body()!!.roi.toString()+"%")
                                     (cart as ArrayList<Cart>).add(Cart(id, amount))
                                 }
                             }
@@ -184,7 +184,7 @@ class AddProductsPharmacyActivity : AppCompatActivity() {
                             if (response.isSuccessful) {
                                 binding.tvTotalMoney.setText(response.body()!!.totalPrice.toString())
                                 binding.tvTotalCoinssss.setText(response.body()!!.totalCoins.toString())
-                                binding.tvTotalRoi.setText(response.body()!!.roi.toString())
+                                binding.tvTotalRoi.setText(response.body()!!.roi.toString()+"%")
                                 (cart as ArrayList<Cart>).remove(Cart(id, amount))
                             }
                         }
