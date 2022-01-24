@@ -70,7 +70,7 @@ class AddLocationActivity : AppCompatActivity() {
         binding.edDistrict.setOnClickListener {
             viewModel!!.getDistricts(areaID.toString())
         }
-        binding.edLanLng.setOnClickListener {
+        binding.tvLanLng.setOnClickListener {
             if (LocationUtils.checkPermission(this)) {
                 ProgressLoading.showWithText(
                     this,

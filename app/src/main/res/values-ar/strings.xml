@@ -125,7 +125,7 @@
     <string name="expense_type">نوع المصاريف</string>
     <string name="previous_km_value">Previous Km Value</string>
     <string name="current_km_value">Current Km Value</string>
-    <string name="quantity">كميه</string>
+    <string name="quantity">الكميه</string>
     <string name="value">قيمه</string>
     <string name="add">اضافه</string>
     <string name="new_experience">خبره جديده</string>
