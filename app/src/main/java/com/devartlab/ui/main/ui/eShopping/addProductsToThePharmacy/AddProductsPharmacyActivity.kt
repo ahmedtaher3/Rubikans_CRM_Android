@@ -53,7 +53,7 @@ class AddProductsPharmacyActivity : AppCompatActivity() {
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         adapter = AddProductsPharmaciesAdapter(null)
         binding.recyclerDetailsPharmacies.setNestedScrollingEnabled(false)
-        binding.recyclerDetailsPharmacies.setHasFixedSize(false);
+        binding.recyclerDetailsPharmacies.setHasFixedSize(false)
         viewModel = ViewModelProvider(this).get(SearchAllPharmacyViewModel::class.java)
         onClickListener()
         handleObserver()
@@ -67,27 +67,33 @@ class AddProductsPharmacyActivity : AppCompatActivity() {
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
             override fun afterTextChanged(s: Editable) {
                 filter(s.toString())
-                binding.ivRemoveSearch.setVisibility(View.VISIBLE)
             }
         })
-        binding.ivRemoveSearch.setOnClickListener {
-            binding.edPharmacyNo.setHint("...............")
-            binding.edPharmacyName.setHint("...............")
-            binding.tvTotalMoney.setText("0")
-            binding.tvTotalCoinssss.setText("0")
-            viewModel!!.getSearchAllPharmacy("")
-        }
         binding.swipeRefreshLayout.setOnRefreshListener {
             refresh()
         }
         binding.edPharmacySearch.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {}
             override fun onTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {
-                viewModel!!.getSearchAllPharmacy(binding.edPharmacySearch.text.toString())
             }
+
             override fun afterTextChanged(editable: Editable) {
+                viewModel!!.getSearchAllPharmacy(binding.edPharmacySearch.text.toString())
+                binding.ivRemoveSearch.setVisibility(View.VISIBLE)
             }
         })
+
+        binding.ivRemoveSearch.setOnClickListener {
+            binding.edPharmacyNo.setHint("...............")
+            binding.edPharmacyName.setHint("...............")
+            binding.edPharmacyNo.setText(null)
+            binding.edPharmacyName.setText(null)
+            binding.tvTotalMoney.setText("0")
+            binding.tvTotalCoinssss.setText("0")
+            binding.edPharmacySearch.setHint(R.string.name_no_pharmacy_search)
+            binding.edPharmacySearch.setText(null)
+            viewModel!!.getCategoryv2Pharmacy()
+        }
         binding.btnAddToPharmacy.setOnClickListener {
             if (cart.size == 0) {
                 Toast.makeText(this, "please add product", Toast.LENGTH_SHORT)
@@ -109,30 +115,26 @@ class AddProductsPharmacyActivity : AppCompatActivity() {
             }
         })
         viewModel!!.SearchAllPharmacyResponse.observe(this, Observer {
-            val countryBrandsPopUp = PopupMenu(this, binding.edPharmacySearch)
-            for (i in 0 until it!!.data.size) {
-                countryBrandsPopUp.getMenu()
-                    .add(i, i, i, it.data.get(i).id.toString() + it.data.get(i).name)
+            if (it!!.data == null) {
+                Toast.makeText(this, "not Authorized", Toast.LENGTH_SHORT).show()
+            } else {
+                val countryBrandsPopUp = PopupMenu(this, binding.edPharmacySearch)
+                for (i in 0 until it!!.data.size) {
+                    countryBrandsPopUp.getMenu()
+                        .add(i, i, i, it.data.get(i).id.toString() + it.data.get(i).name)
+                }
+                countryBrandsPopUp.setOnMenuItemClickListener(PopupMenu.OnMenuItemClickListener { item ->
+                    binding.edPharmacyName.setText(it.data.get(item.getItemId()).name)
+                    binding.edPharmacyNo.setText(it.data.get(item.getItemId()).id.toString())
+                    pharmacyID = it.data.get(item.getItemId()).id
+//                    binding.btnAddToPharmacy.setVisibility(View.VISIBLE)
+//                    binding.searchBarVideo.setVisibility(View.VISIBLE)
+//                    binding.recyclerDetailsPharmacies.setVisibility(View.VISIBLE)
+//                    countryBrandsPopUp.dismiss()
+                    return@OnMenuItemClickListener false;
+                })
+                countryBrandsPopUp.show()
             }
-            countryBrandsPopUp.setOnMenuItemClickListener(PopupMenu.OnMenuItemClickListener { item ->
-                binding.edPharmacySearch
-                    .setText(it.data.get(item.getItemId()).id.toString() + it.data.get(item.getItemId()).name)
-                binding.edPharmacyName.setText(it.data.get(item.getItemId()).name)
-                binding.edPharmacyNo.setText(it.data.get(item.getItemId()).id.toString())
-                pharmacyID = it.data.get(item.getItemId()).id.toInt()
-                binding.btnAddToPharmacy.setVisibility(View.VISIBLE)
-                binding.searchBarVideo.setVisibility(View.VISIBLE)
-                binding.edPharmacyNo.setHint("...............")
-                binding.edPharmacyName.setHint("...............")
-                binding.tvTotalMoney.setText("0")
-                binding.tvTotalCoinssss.setText("0")
-                viewModel!!.getSearchAllPharmacy("")
-                binding.recyclerDetailsPharmacies.setVisibility(View.VISIBLE)
-                countryBrandsPopUp.dismiss()
-                Log.e("popupCarBrands", "onMenuItemClick: $pharmacyID")
-                return@OnMenuItemClickListener false
-            })
-            countryBrandsPopUp.show()
         })
         viewModel!!.categoryPharmacyResponse.observe(this, Observer {
             if (it!!.data == null) {

@@ -1,6 +1,7 @@
 package com.devartlab.ui.main.ui.eShopping.ticket;
 
 import android.content.Context;
+import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
 public class GetContactsAdapter extends RecyclerView.Adapter<GetContactsAdapter.ViewHolder> {
 
@@ -142,6 +144,18 @@ public class GetContactsAdapter extends RecyclerView.Adapter<GetContactsAdapter.
         }
         String formatted = output.format(d);
         date.setText(formatted);
+
+//        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd' 'HH:mm:ss.SSS'Z'");
+//        sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
+//        try {
+//            long time = sdf.parse(format).getTime();
+//            long now = System.currentTimeMillis();
+//            CharSequence ago =
+//                    DateUtils.getRelativeTimeSpanString(time, now, DateUtils.MINUTE_IN_MILLIS);
+//            date.setText(ago);
+//        } catch (ParseException e) {
+//            e.printStackTrace();
+//        }
     }
 
 }
