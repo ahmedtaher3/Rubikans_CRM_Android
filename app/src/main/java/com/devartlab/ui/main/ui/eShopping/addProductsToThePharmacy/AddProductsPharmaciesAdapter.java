@@ -50,26 +50,26 @@ public class AddProductsPharmaciesAdapter extends RecyclerView.Adapter<AddProduc
         viewHolder.binding.btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (TextUtils.isEmpty(viewHolder.binding.edPharmacySearch.getText().toString())) {
-                    viewHolder.binding.edPharmacySearch.setError("please enter amount");
+                if (TextUtils.isEmpty(viewHolder.binding.pharmacySearch.getText().toString())) {
+                    viewHolder.binding.pharmacySearch.setError("please enter amount");
                 } else {
                     if (!dataItem.getFlag()) {
                         Log.e("ccc", String.valueOf(dataItem.getFlag()));
-                        amount = Float.parseFloat(viewHolder.binding.edPharmacySearch.getText().toString());
+                        amount = Float.parseFloat(viewHolder.binding.pharmacySearch.getText().toString());
                         viewHolder.binding.tvTotal.setText(String.format("%.2f", amount * dataItem.getPrice()));
                         dataItem.setFlag(true);
-                        viewHolder.binding.edPharmacySearch.setEnabled(false);
+                        viewHolder.binding.pharmacySearch.setEnabled(false);
                         viewHolder.binding.btnAdd.setText("remove");
                         viewHolder.binding.btnAdd.setBackgroundResource(R.drawable.bg_red);
-                        onItemClickListener.onItemClick(position,  dataItem.getId(), Integer.parseInt(viewHolder.binding.edPharmacySearch.getText().toString()));
+                        onItemClickListener.onItemClick(position,  dataItem.getId(), Integer.parseInt(viewHolder.binding.pharmacySearch.getText().toString()));
                     } else {
                         Log.e("ccc", String.valueOf(dataItem.getFlag()));
-                        onItemClickListener2.onItemClick2(position, dataItem.getId(), Integer.parseInt(viewHolder.binding.edPharmacySearch.getText().toString()));
+                        onItemClickListener2.onItemClick2(position, dataItem.getId(), Integer.parseInt(viewHolder.binding.pharmacySearch.getText().toString()));
                         dataItem.setFlag(false);
-                        viewHolder.binding.edPharmacySearch.setEnabled(true);
+                        viewHolder.binding.pharmacySearch.setEnabled(true);
                         viewHolder.binding.btnAdd.setText("Add");
                         viewHolder.binding.btnAdd.setBackgroundResource(R.drawable.check_status_trip_green);
-                        viewHolder.binding.edPharmacySearch.setText(null);
+                        viewHolder.binding.pharmacySearch.setText(null);
                         viewHolder.binding.tvTotal.setText("0");
                     }
                 }

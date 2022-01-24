@@ -115,6 +115,7 @@ class DevartLinkActivity : BaseActivity<ActivityDevartLinkBinding>(),
         })
         viewModel.userResponse.observe(this, Observer {
             UserPreferenceHelper.saveUserProfileChat(it!!)
+            binding.recycler.setVisibility(View.VISIBLE)
         })
     }
     //
