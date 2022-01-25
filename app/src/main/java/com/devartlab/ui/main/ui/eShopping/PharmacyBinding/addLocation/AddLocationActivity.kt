@@ -225,6 +225,12 @@ class AddLocationActivity : AppCompatActivity() {
                 binding.edArea.setText(it.area_name)
                 binding.edDistrict.setText(it.district_name)
                 binding.edAddress.setText(it.fulladdress)
+                if (it.lat_lng!=null){
+                    val strs = it.lat_lng.split(",").toTypedArray()
+                    val lat:Double=strs[0].toDouble()
+                    val lng:Double=strs[1].toDouble()
+                    binding.edLanLng.setText(getAddressFromLatLng(this@AddLocationActivity,lat,lng))
+                }
                 countryID = it.country_id
                 cityID = it.city_id
                 areaID = it.area_id

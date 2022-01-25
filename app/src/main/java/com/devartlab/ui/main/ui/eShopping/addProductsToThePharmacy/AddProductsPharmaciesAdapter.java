@@ -1,6 +1,7 @@
 package com.devartlab.ui.main.ui.eShopping.addProductsToThePharmacy;
 
 import android.content.Context;
+import android.graphics.Paint;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -42,10 +43,13 @@ public class AddProductsPharmaciesAdapter extends RecyclerView.Adapter<AddProduc
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, final int position) {
         final Prod dataItem = dataItems.get(position);
-        Double discount = (1 - dataItem.getPrevious_price()) / dataItem.getPrice()*100;
+        Double discount = (1 - dataItem.getPrice()) / dataItem.getPrevious_price()*100;
         viewHolder.binding.tvNamePharmacy.setText(dataItem.getName());
         viewHolder.binding.tvIdPharmacy.setText(dataItem.getSku());
-        viewHolder.binding.tvUpdateDate.setText(dataItem.getPrice()+" EGP");
+        viewHolder.binding.tvUpdateDate.setText(dataItem.getPrevious_price()+" EGP");
+        viewHolder.binding.tvPrice.setText(dataItem.getPrice()+" EGP");
+        viewHolder.binding.tvUpdateDate.setPaintFlags( viewHolder.binding.tvUpdateDate.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+        viewHolder.binding.tvNoPharmacy.setText(String.format("%.2f",discount)+"%");
 
         viewHolder.binding.btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -166,6 +166,7 @@ public class ChatThreadActivity extends AppCompatActivity {
                 if (TextUtils.isEmpty(binding.message.getText().toString())) {
                     binding.message.setError("please enter message");
                 } else {
+                    binding.send.setEnabled(false);
                     submit();
                 }
             }
@@ -191,6 +192,7 @@ public class ChatThreadActivity extends AppCompatActivity {
                 binding.message.setText("");
                 binding.sendIMG.setImageResource(R.drawable.ic_attach_file);
                 volleyFileObjs.clear();
+                binding.send.setEnabled(true);
             }
         });
     }

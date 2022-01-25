@@ -14,5 +14,6 @@ data class GetUserAddressResponse(
     val fulladdress: String?,
     val id: Int,
     val pharmacy_id: Int,
-    val updated_at: String
+    val updated_at: String,
+    val lat_lng: String
 )
