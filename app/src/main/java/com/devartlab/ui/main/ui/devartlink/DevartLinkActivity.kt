@@ -156,7 +156,7 @@ class DevartLinkActivity : BaseActivity<ActivityDevartLinkBinding>(),
 
                 binding.imageView.visibility = View.VISIBLE
                 Glide.with(this).load(model.resourceLink)
-                    .centerCrop().placeholder(R.drawable.dr_hussain).into(binding.imageView)
+                    .centerCrop().into(binding.imageView)
             }
             "GIF" -> {
                 binding.imageView.visibility = View.VISIBLE

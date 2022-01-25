@@ -163,7 +163,7 @@ public class PeopleListAdapter extends RecyclerView.Adapter<PeopleListAdapter.Vi
     public void convertDateTime(String format, TextView date, TextView time) {
         SimpleDateFormat input = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
         SimpleDateFormat output = new SimpleDateFormat("dd/MM/yyyy");
-        SimpleDateFormat outputTime = new SimpleDateFormat("HH:mm:ss");
+        SimpleDateFormat outputTime = new SimpleDateFormat("HH:mm");
 
         Date d = null;
         try {
@@ -173,7 +173,6 @@ public class PeopleListAdapter extends RecyclerView.Adapter<PeopleListAdapter.Vi
         }
         String formatted = output.format(d);
         String formatted1 = outputTime.format(d);
-        Log.i("DATE", "" + formatted + formatted1);
         date.setText(formatted);
         time.setText(formatted1);
     }

@@ -10,7 +10,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#b8c2cc"
+        android:background="@drawable/ic_caht"
         tools:context=".letsTalk.LetsTalkActivity">
 
         <com.google.android.material.appbar.AppBarLayout
@@ -49,6 +49,7 @@
             android:layout_height="50dp"
             android:layout_margin="10dp"
             app:stl_clickable="true"
+            android:visibility="gone"
             app:stl_defaultTabBackground="?attr/selectableItemBackground"
             app:stl_defaultTabTextAllCaps="false"
             app:stl_defaultTabTextColor="@drawable/tab_layout_selector_color"

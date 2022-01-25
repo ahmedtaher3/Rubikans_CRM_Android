@@ -138,7 +138,7 @@ class OrientationVideosActivity : AppCompatActivity() {
                     binding.constrAds.setVisibility(View.VISIBLE)
                     binding.imageView.visibility = View.VISIBLE
                     Glide.with(this).load(model.default_ad_image).centerCrop()
-                        .placeholder(R.drawable.dr_hussain).into(binding.imageView)
+                        .into(binding.imageView)
                 }
                 break
             }

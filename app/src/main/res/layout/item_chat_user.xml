@@ -27,6 +27,7 @@
                 android:drawableStart="@drawable/ic_calendar"
                 android:textColor="@color/black"
                 android:textSize="18sp"
+                android:visibility="gone"
                 app:layout_constraintEnd_toStartOf="@+id/time"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -36,15 +37,13 @@
                 android:id="@+id/time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
-                android:drawableStart="@drawable/ic_time"
-                android:textColor="@color/black"
-                android:textSize="18sp"
+                android:layout_marginEnd="10dp"
+                android:textColor="@color/colorGray3"
+                android:textSize="12sp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/date"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:text="ddMMyyyyhhmmss" />
+                app:layout_constraintTop_toTopOf="@id/name"
+                app:layout_constraintBottom_toBottomOf="@id/name"
+                tools:text="55:44" />
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/profile_image"
@@ -60,25 +59,28 @@
 
             <TextView
                 android:id="@+id/name"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:textColor="@color/black"
                 android:textSize="18sp"
+                app:layout_constraintEnd_toStartOf="@id/time"
+                android:layout_marginEnd="10dp"
                 app:layout_constraintStart_toEndOf="@+id/profile_image"
                 app:layout_constraintTop_toTopOf="@+id/profile_image"
                 tools:text="Android Room" />
 
             <TextView
                 android:id="@+id/details"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
                 app:layout_constraintBottom_toBottomOf="@id/profile_image"
                 app:layout_constraintStart_toStartOf="@id/name"
                 app:layout_constraintTop_toBottomOf="@id/name"
+                app:layout_constraintEnd_toStartOf="@id/time"
+                android:layout_marginEnd="10dp"
                 tools:text="Android Room" />
 
             <TextView
