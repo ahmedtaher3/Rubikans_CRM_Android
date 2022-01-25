@@ -112,6 +112,7 @@ public class LetsTalkActivity extends AppCompatActivity {
                 Intent intent = new Intent(LetsTalkActivity.this, ChatThreadActivity.class);
                 intent.putExtra("peopleItem", userIDResponse.getId());
                 intent.putExtra("people_name", name);
+                binding.tvPeopleSearch.setText(null);
                 startActivity(intent);
             }
         });
@@ -121,8 +122,8 @@ public class LetsTalkActivity extends AppCompatActivity {
         adapter = new FragmentPagerItemAdapter(getSupportFragmentManager(),
                 FragmentPagerItems.with(this)
                         .add(R.string.title_home, HomeChatFragment.class)
-                        .add(R.string.title_groups, GroupsFragment.class)
-                        .add(R.string.title_t_r, TRFragment.class)
+//                        .add(R.string.title_groups, GroupsFragment.class)
+//                        .add(R.string.title_t_r, TRFragment.class)
                         .create());
 
 
