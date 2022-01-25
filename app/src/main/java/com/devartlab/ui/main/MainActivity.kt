@@ -75,6 +75,7 @@ class MainActivity : BaseActivity<ActivityMainBinding?>(), View.OnClickListener,
     lateinit var mediaSource: SimpleMediaSource
     var name: String? = null
     var pass: String? = null
+    var token: String? = null
     lateinit var login4EShoppingRequest: Login4EShoppingRequest//request login 4EShopping
 
     private var toggle: ActionBarDrawerToggle? = null
@@ -178,9 +179,12 @@ class MainActivity : BaseActivity<ActivityMainBinding?>(), View.OnClickListener,
         ads()
 
         //login 4EShopping
+        //change device_type in request
         name = viewModel.dataManager.user.userName
         pass = viewModel.dataManager.user.password
-        login4EShoppingRequest = Login4EShoppingRequest(name!!, pass!!, "mr")
+        token = viewModel.dataManager.token
+        login4EShoppingRequest =
+            Login4EShoppingRequest(name!!, pass!!, "mr", token!!, "device_type")
         viewModel!!.getUserModel(login4EShoppingRequest)
 
         viewModel!!.getAllPending("allPending", "")
@@ -267,7 +271,7 @@ class MainActivity : BaseActivity<ActivityMainBinding?>(), View.OnClickListener,
                 R.drawable.money
             )
         )
-        list.add(CardModel(5, "DevartLink", R.drawable.devartlink))
+//        list.add(CardModel(5, "DevartLink", R.drawable.devartlink))
         list.add(CardModel(6, "4eShopping", R.drawable.e_shopping))
 
         adapter = MenuListAdapter(this, list, this)
