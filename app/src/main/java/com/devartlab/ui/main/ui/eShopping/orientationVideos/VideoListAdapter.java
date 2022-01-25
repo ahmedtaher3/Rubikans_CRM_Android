@@ -43,13 +43,13 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
         viewHolder.binding.nameChannel.setText(dataItem.getSnippet().getChannelTitle());
         int postion=dataItem.getSnippet().getPosition()+1;
         viewHolder.binding.numberVideo.setText(String.valueOf(postion));
-        Picasso.get()
-                .load(dataItem.getSnippet().getThumbnails().getDefault().getUrl())
-                .centerCrop()
-                .resize(320 , 180)
-                .placeholder(R.drawable.ic_baseline_replay_24)
-                .error(android.R.drawable.stat_notify_error)
-                .into(viewHolder.binding.image);
+//        Picasso.get()
+//                .load(dataItem.getSnippet().getThumbnails().getDefault().getUrl())
+//                .centerCrop()
+//                .resize(320 , 180)
+//                .placeholder(R.drawable.ic_baseline_replay_24)
+//                .error(android.R.drawable.stat_notify_error)
+//                .into(viewHolder.binding.image);
         viewHolder.binding.name.setText(dataItem.getSnippet().getTitle());
         if (onItemClickListener != null) {
             viewHolder.itemView.setOnClickListener(new View.OnClickListener() {

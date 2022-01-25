@@ -535,7 +535,7 @@
     <string name="label_rate_rider2">How satisfied are you with our customer support?</string>
     <string name="label_type_your_message_here">Add message</string>
     <string name="label_submit">Rate Us</string>
-    <string name="label_delete_txt">Delete?</string>
+    <string name="label_delete_txt">Are you sure you want to delete?</string>
     <string name="orientation_videos">4eShopping FAQ tutorial</string>
     <string name="id_pharmacy">SKU</string>
     <string name="action_all">all</string>
@@ -554,7 +554,7 @@
     <string name="hint_search_ticket">Ticket search</string>
     <string name="chat">Chat</string>
     <string name="lat_talk">Lat\'s talk</string>
-    <string name="eshopping">4EShopping</string>
+    <string name="eshopping">4eShopping</string>
     <string name="video">Video</string>
     <string name="add_location">Add location</string>
     <string name="upload_pharmacy_files">Upload pharmacy files</string>

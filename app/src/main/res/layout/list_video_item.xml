@@ -17,29 +17,29 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="10dp">
+            android:layout_height="match_parent">
 
             <TextView
                 android:id="@+id/number_video"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="3dp"
+                android:layout_marginStart="10dp"
                 android:text="1"
+                android:layout_marginTop="5dp"
                 android:textColor="@color/black"
                 android:textSize="12sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/image"
-                app:layout_constraintBottom_toBottomOf="@+id/image"/>
+                app:layout_constraintTop_toTopOf="parent" />
 
-            <ImageView
-                android:id="@+id/image"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                app:layout_constraintStart_toEndOf="@+id/number_video"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"/>
+            <!--            <ImageView-->
+            <!--                android:id="@+id/image"-->
+            <!--                android:layout_width="wrap_content"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_marginStart="5dp"-->
+            <!--                android:visibility="gone"-->
+            <!--                app:layout_constraintStart_toEndOf="@+id/number_video"-->
+            <!--                app:layout_constraintTop_toTopOf="parent"-->
+            <!--                app:layout_constraintBottom_toBottomOf="parent"/>-->
 
             <TextView
                 android:id="@+id/name"
@@ -50,31 +50,45 @@
                 android:textColor="@color/black"
                 android:textSize="12sp"
                 android:textStyle="bold"
-                android:gravity="end"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/image"
-                app:layout_constraintTop_toTopOf="@+id/image"/>
+                app:layout_constraintEnd_toEndOf="@id/dec"
+                app:layout_constraintStart_toEndOf="@+id/number_video"
+                app:layout_constraintTop_toTopOf="@+id/number_video" />
 
             <TextView
                 android:id="@+id/name_channel"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="نظام التيكيت"
                 android:textColor="@color/color_142c48"
                 android:textSize="13sp"
+                app:layout_constraintEnd_toEndOf="@id/dec"
                 app:layout_constraintStart_toStartOf="@+id/name"
-                app:layout_constraintTop_toBottomOf="@+id/name"/>
+                app:layout_constraintTop_toBottomOf="@+id/name" />
+
             <TextView
                 android:id="@+id/dec"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:maxLines="1"
                 android:text="نظام التيكيت"
                 android:textColor="@color/blueGray"
                 android:textSize="10sp"
-                android:maxLines="1"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="5dp"
+                app:layout_constraintEnd_toStartOf="@+id/iv_video"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/name"
-                app:layout_constraintTop_toBottomOf="@+id/name_channel"/>
+                app:layout_constraintTop_toBottomOf="@+id/name_channel" />
 
+            <ImageView
+                android:id="@+id/iv_video"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:src="@drawable/ic_video_e_shopping"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.cardview.widget.CardView>

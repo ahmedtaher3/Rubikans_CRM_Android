@@ -129,7 +129,9 @@ class ChatThread4EShoppingActivity : AppCompatActivity() {
             adapter = ChatListAdapter(it!!.data)
             binding.recyclerView.adapter = adapter
             adapter!!.setOnItemClickListener(ChatListAdapter.OnItemLongClickListener { pos, dataItem ->
-                deleteMessagesDialog(dataItem.id.toString())
+                if (status == "1"||status=="2") {
+                    deleteMessagesDialog(dataItem.id.toString())
+                }
             })
             if (it!!.rate != null) {
                 binding.tvRateRating.visibility = View.VISIBLE
