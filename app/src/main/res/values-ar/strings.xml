@@ -531,7 +531,7 @@
     <string name="label_rate_rider2">ما مدى رضاك عن دعم العملاء لدينا؟</string>
     <string name="label_type_your_message_here">أضف رسالة</string>
     <string name="label_submit">قيمنا</string>
-    <string name="label_delete_txt">هل تريد مسح الرسالة؟</string>
+    <string name="label_delete_txt">هل تريد مسح؟</string>
     <string name="details_pharmacy_sales">تفاصيل مبيعات الصيدلية</string>
     <string name="orientation_videos">الفيديوهات الاسترشادية</string>
     <string name="id_pharmacy">كود المنتج</string>
