@@ -120,7 +120,7 @@ class ApprovalWorkFromHomeAdapter(
                         "",
                         "",
                         "",
-                        "PENDING",
+                        "Approved",
                         "",
                         simpleDateFormat?.format(System.currentTimeMillis()),
                         model.code!!

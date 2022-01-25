@@ -88,14 +88,6 @@ class ApprovalPenaltiesAdapter(
 
 
 
-
-
-
-
-
-
-
-
         holder.approveRequest?.setOnClickListener {
 
             onApprovalItemClick.setOnPenaltiesApprovalItemClick("APPROVED", model)
@@ -126,7 +118,7 @@ class ApprovalPenaltiesAdapter(
                         "",
                         "",
                         "",
-                        "PENDING",
+                        "Approved",
                         "",
                         simpleDateFormat?.format(System.currentTimeMillis()),
                         model.code!!
