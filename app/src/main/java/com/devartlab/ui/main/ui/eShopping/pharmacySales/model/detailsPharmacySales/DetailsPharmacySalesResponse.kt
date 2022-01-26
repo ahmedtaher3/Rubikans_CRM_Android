@@ -1,4 +1,4 @@
-package com.devartlab.a4eshopping.pharmacySales.model.detailsPharmacySales
+package com.devartlab.ui.main.ui.eShopping.pharmacySales.model.detailsPharmacySales
 
 data class DetailsPharmacySalesResponse(
     val details: List<Detail>,

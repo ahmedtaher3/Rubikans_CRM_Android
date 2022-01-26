@@ -22,7 +22,6 @@ import com.devartlab.a4eshopping.addProductsToThePharmacy.model.searchAllPharmac
 import com.devartlab.a4eshopping.main.model.login4EShopping.Login4EShoppingRequest
 import com.devartlab.a4eshopping.orientationVideos.model.ResponseVideos
 import com.devartlab.a4eshopping.pharmacySales.model.PharmacySalesResponse
-import com.devartlab.a4eshopping.pharmacySales.model.detailsPharmacySales.DetailsPharmacySalesResponse
 import com.devartlab.a4eshopping.ticket.model.addRate.AddRateRequest
 import com.devartlab.a4eshopping.ticket.model.addRate.AddRateResponse
 import com.devartlab.a4eshopping.ticket.model.addTicket.AddTicketRequest
@@ -46,6 +45,7 @@ import com.devartlab.ui.main.ui.devartlink.letsTalk.model.searchPeople.SearchPea
 import com.devartlab.ui.main.ui.devartlink.letsTalk.model.user.UserResponse
 import com.devartlab.ui.main.ui.devartlink.letsTalk.model.userID.UserIDResponse
 import com.devartlab.ui.main.ui.eShopping.main.model.login4EShopping.Login4EShoppingResponse
+import com.devartlab.ui.main.ui.eShopping.pharmacySales.model.detailsPharmacySales.DetailsPharmacySalesResponse
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import io.reactivex.Observable
@@ -815,7 +815,7 @@ interface ApiServices {
         @Query("q") q: String?
     ): Call<PharmacySalesResponse?>?
 
-    @GET("order-details")
+    @GET("order-detailsv2")
     fun getOrderDetails(
         @Header("Authorization") token: String?,
         @Query("order_number") order_number: String?
@@ -828,9 +828,10 @@ interface ApiServices {
     ): Call<SearchAllPharmacyResponse?>?
 
 
-    @GET("categoryv2/Pharmacy")
+    @GET("categoryType")
     fun getCategoryv2Pharmacy(
-        @Header("Authorization") token: String?
+        @Header("Authorization") token: String?,
+        @Query("type_code") type_code: String?
     ): Call<CategoryPharmacyResponse?>?
 
 
