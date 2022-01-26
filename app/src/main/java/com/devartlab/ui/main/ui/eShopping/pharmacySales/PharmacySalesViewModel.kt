@@ -4,8 +4,8 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import com.devartlab.a4eshopping.pharmacySales.model.PharmacySalesResponse
-import com.devartlab.a4eshopping.pharmacySales.model.detailsPharmacySales.DetailsPharmacySalesResponse
 import com.devartlab.data.retrofit.RetrofitClient
+import com.devartlab.ui.main.ui.eShopping.pharmacySales.model.detailsPharmacySales.DetailsPharmacySalesResponse
 import com.devartlab.ui.main.ui.eShopping.utils.UserPreferenceHelper
 import retrofit2.Call
 import retrofit2.Callback

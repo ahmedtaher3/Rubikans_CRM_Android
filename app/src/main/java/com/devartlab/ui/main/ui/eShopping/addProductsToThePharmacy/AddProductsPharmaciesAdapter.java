@@ -43,11 +43,11 @@ public class AddProductsPharmaciesAdapter extends RecyclerView.Adapter<AddProduc
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, final int position) {
         final Prod dataItem = dataItems.get(position);
-        Double discount = (1 - dataItem.getPrice()) / dataItem.getPrevious_price()*100;
+        Double discount = (1 -(dataItem.getPrice() / dataItem.getPrevious_price()))*100;
         viewHolder.binding.tvNamePharmacy.setText(dataItem.getName());
         viewHolder.binding.tvIdPharmacy.setText(dataItem.getSku());
-        viewHolder.binding.tvUpdateDate.setText(dataItem.getPrevious_price()+" EGP");
-        viewHolder.binding.tvPrice.setText(dataItem.getPrice()+" EGP");
+        viewHolder.binding.tvUpdateDate.setText(String.format("%.2f",dataItem.getPrevious_price())+" EGP");
+        viewHolder.binding.tvPrice.setText(String.format("%.2f",dataItem.getPrice())+" EGP");
         viewHolder.binding.tvUpdateDate.setPaintFlags( viewHolder.binding.tvUpdateDate.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
         viewHolder.binding.tvNoPharmacy.setText(String.format("%.2f",discount)+"%");
 

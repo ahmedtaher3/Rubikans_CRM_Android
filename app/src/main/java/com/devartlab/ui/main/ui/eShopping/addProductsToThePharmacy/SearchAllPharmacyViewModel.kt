@@ -48,9 +48,9 @@ class SearchAllPharmacyViewModel(application: Application) : AndroidViewModel(ap
             })
     }
 
-    fun getCategoryv2Pharmacy() {
+    fun getCategoryv2Pharmacy(type_code: String) {
         RetrofitClient.getApis4EShopping()
-            .getCategoryv2Pharmacy("Bearer " + UserPreferenceHelper.getUser().token)!!
+            .getCategoryv2Pharmacy("Bearer " + UserPreferenceHelper.getUser().token,type_code)!!
             .enqueue(object : Callback<CategoryPharmacyResponse?> {
                 override fun onResponse(
                     call: Call<CategoryPharmacyResponse?>,

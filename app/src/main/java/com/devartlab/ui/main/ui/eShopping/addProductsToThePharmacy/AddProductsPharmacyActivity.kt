@@ -60,7 +60,6 @@ class AddProductsPharmacyActivity : AppCompatActivity() {
     }
 
     private fun onClickListener() {
-        viewModel!!.getCategoryv2Pharmacy()
         viewModel!!.getSearchAllPharmacy("")
         binding.searchBarVideo.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
@@ -92,7 +91,7 @@ class AddProductsPharmacyActivity : AppCompatActivity() {
             binding.tvTotalCoinssss.setText("0")
             binding.edPharmacySearch.setHint(R.string.name_no_pharmacy_search)
             binding.edPharmacySearch.setText(null)
-            viewModel!!.getCategoryv2Pharmacy()
+            //viewModel!!.getCategoryv2Pharmacy()
         }
         binding.btnAddToPharmacy.setOnClickListener {
             if (cart.size == 0) {
@@ -129,6 +128,7 @@ class AddProductsPharmacyActivity : AppCompatActivity() {
                 countryBrandsPopUp.setOnMenuItemClickListener(PopupMenu.OnMenuItemClickListener { item ->
                     binding.edPharmacyName.setText(it.data.get(item.getItemId()).name)
                     binding.edPharmacyNo.setText(it.data.get(item.getItemId()).id.toString())
+                    viewModel!!.getCategoryv2Pharmacy(it.data.get(item.getItemId()).type_code)
                     pharmacyID = it.data.get(item.getItemId()).id
                     return@OnMenuItemClickListener false;
                 })
