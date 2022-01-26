@@ -474,7 +474,7 @@
     <string name="labal_from_library_imgs">From library images</string>
     <string name="labal_cancel">Cancel</string>
     <string name="labal_choose_method_img">Choose the image selection method</string>
-    <string name="no_order">رقم الطلب</string>
+    <string name="no_order">رقم الطلب او رقم التيكت</string>
     <string name="created_at">تاريخ الطلب</string>
     <string name="shipment_address">عنوان الشحن</string>
     <string name="customer_email">البريد الالكتروني</string>

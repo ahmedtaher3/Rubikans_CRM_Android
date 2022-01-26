@@ -164,12 +164,9 @@ class AddProductsPharmacyActivity : AppCompatActivity() {
                                 response: Response<AddToCardResponse?>
                             ) {
                                 if (response.isSuccessful) {
-                                    binding.tvTotalMoney.setText(java.lang.String.format("%.2f",
-                                        response.body()!!.totalPrice.toString()))
-                                    binding.tvTotalCoinssss.setText(
-                                        java.lang.String.format("%.2f", response.body()!!.totalCoins.toString()))
-                                    binding.tvTotalRoi.setText(java.lang.String.format("%.2f",
-                                        response.body()!!.roi.toString()+"%"))
+                                    binding.tvTotalMoney.setText(response.body()!!.totalPrice.toString())
+                                    binding.tvTotalCoinssss.setText(response.body()!!.totalCoins.toString())
+                                    binding.tvTotalRoi.setText(response.body()!!.roi.toString()+"%")
                                     no_product++
                                     binding.tvAddToCard.setText(no_product.toString())
                                     addToCardRequest = AddToCardRequest("mr",no_product,id_pharmacies)
@@ -194,12 +191,9 @@ class AddProductsPharmacyActivity : AppCompatActivity() {
                             response: Response<AddToCardResponse?>
                         ) {
                             if (response.isSuccessful) {
-                                binding.tvTotalMoney.setText(java.lang.String.format("%.2f",
-                                    response.body()!!.totalPrice.toString()))
-                                binding.tvTotalCoinssss.setText(java.lang.String.format("%.2f",
-                                    response.body()!!.totalCoins.toString()))
-                                binding.tvTotalRoi.setText(java.lang.String.format("%.2f",
-                                    response.body()!!.roi.toString()+"%"))
+                                binding.tvTotalMoney.setText(response.body()!!.totalPrice.toString())
+                                binding.tvTotalCoinssss.setText(response.body()!!.totalCoins.toString())
+                                binding.tvTotalRoi.setText(response.body()!!.roi.toString()+"%")
                                 no_product--
                                 binding.tvAddToCard.setText(no_product.toString())
                                 Log.e("no_product--",no_product.toString());

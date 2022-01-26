@@ -22,8 +22,8 @@ class UploadPharmacyViewModel(application: Application) : AndroidViewModel(appli
     var getInfoPharmacyResponse: MutableLiveData<GetInfoPharmacyResponse?>
         protected set
 
-    fun getUpdatePharmacyDetails(file: MultipartBody.Part,file2: MultipartBody.Part
-                                 ,file3: MultipartBody.Part,
+    fun getUpdatePharmacyDetails(file: MultipartBody.Part?,file2: MultipartBody.Part?
+                                 ,file3: MultipartBody.Part?,
                                  send: MutableMap<String, RequestBody>) {
         RetrofitClient.getApis4EShopping().updatePharmacyDetails("Bearer "+ UserPreferenceHelper.getUser().token
             ,file,file2,file3, send)!!

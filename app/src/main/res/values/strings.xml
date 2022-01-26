@@ -480,7 +480,7 @@
     <string name="commercial_register">Font photo</string>
     <string name="commercial_register2">Back photo</string>
     <string name="the_tax_card">Tax Card</string>
-    <string name="no_order">Order no.</string>
+    <string name="no_order">Order no. / Ticket no.</string>
     <string name="created_at">Order Date</string>
     <string name="shipment_address">Shipping address</string>
     <string name="customer_email">Email</string>

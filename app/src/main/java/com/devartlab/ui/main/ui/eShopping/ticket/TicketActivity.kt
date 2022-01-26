@@ -243,6 +243,10 @@ class TicketActivity : AppCompatActivity() {
                     R.id.action_problem_old_ticket -> {
                         EdOther.setVisibility(View.GONE)
                         TvSelectProblem.setText(R.string.action_problem_old_ticket)
+                        EdOther.setVisibility(View.VISIBLE)
+                        if (TextUtils.isEmpty(EdOther.getText().toString())) {
+                            EdOther.setError("please enter order number")
+                        }
                     }
                     R.id.other -> {
                         EdOther.setVisibility(View.VISIBLE)
