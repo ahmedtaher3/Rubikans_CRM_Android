@@ -44,6 +44,7 @@ import com.devartlab.ui.main.ui.devartlink.letsTalk.home.model.peopleList.People
 import com.devartlab.ui.main.ui.devartlink.letsTalk.model.searchPeople.SearchPeapleResponse
 import com.devartlab.ui.main.ui.devartlink.letsTalk.model.user.UserResponse
 import com.devartlab.ui.main.ui.devartlink.letsTalk.model.userID.UserIDResponse
+import com.devartlab.ui.main.ui.eShopping.PharmacyBinding.uploadPharmacyFiles.model.pharmacydata.GetInfoPharmacyResponse
 import com.devartlab.ui.main.ui.eShopping.addProductsToThePharmacy.model.showCart.ShowCartResponse
 import com.devartlab.ui.main.ui.eShopping.main.model.login4EShopping.Login4EShoppingResponse
 import com.devartlab.ui.main.ui.eShopping.pharmacySales.model.detailsPharmacySales.DetailsPharmacySalesResponse
@@ -917,4 +918,11 @@ interface ApiServices {
     fun getVideos(
         @Header("Authorization") token: String?
     ): Call<ResponseVideos?>?
+
+    @GET("get-user-details")
+    fun getInfoPharmacy(
+        @Header("Authorization") token: String?,
+        @Query("id") id: String?
+    ): Call<GetInfoPharmacyResponse?>?
+
 }

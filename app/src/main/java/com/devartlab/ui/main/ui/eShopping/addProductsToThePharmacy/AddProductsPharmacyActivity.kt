@@ -129,8 +129,10 @@ class AddProductsPharmacyActivity : AppCompatActivity() {
                     binding.edPharmacyName.setText(it.data.get(item.getItemId()).name)
                     binding.edPharmacyNo.setText(it.data.get(item.getItemId()).id.toString())
                     viewModel!!.getCategoryv2Pharmacy(it.data.get(item.getItemId()).type_code)
-                    viewModel!!.getShowCard(it.data.get(item.getItemId()).id)
                     id_pharmacies=it.data.get(item.getItemId()).id
+                    binding.tvTotalMoney.setText("0")
+                    binding.tvTotalCoinssss.setText("0")
+                    binding.tvTotalRoi.setText("0%")
                     binding.tvAddToCard.setText("0")
                     no_product=0
                     pharmacyID = it.data.get(item.getItemId()).id
@@ -162,9 +164,12 @@ class AddProductsPharmacyActivity : AppCompatActivity() {
                                 response: Response<AddToCardResponse?>
                             ) {
                                 if (response.isSuccessful) {
-                                    binding.tvTotalMoney.setText(response.body()!!.totalPrice.toString())
-                                    binding.tvTotalCoinssss.setText(response.body()!!.totalCoins.toString())
-                                    binding.tvTotalRoi.setText(response.body()!!.roi.toString()+"%")
+                                    binding.tvTotalMoney.setText(java.lang.String.format("%.2f",
+                                        response.body()!!.totalPrice.toString()))
+                                    binding.tvTotalCoinssss.setText(
+                                        java.lang.String.format("%.2f", response.body()!!.totalCoins.toString()))
+                                    binding.tvTotalRoi.setText(java.lang.String.format("%.2f",
+                                        response.body()!!.roi.toString()+"%"))
                                     no_product++
                                     binding.tvAddToCard.setText(no_product.toString())
                                     addToCardRequest = AddToCardRequest("mr",no_product,id_pharmacies)
@@ -189,9 +194,12 @@ class AddProductsPharmacyActivity : AppCompatActivity() {
                             response: Response<AddToCardResponse?>
                         ) {
                             if (response.isSuccessful) {
-                                binding.tvTotalMoney.setText(response.body()!!.totalPrice.toString())
-                                binding.tvTotalCoinssss.setText(response.body()!!.totalCoins.toString())
-                                binding.tvTotalRoi.setText(response.body()!!.roi.toString()+"%")
+                                binding.tvTotalMoney.setText(java.lang.String.format("%.2f",
+                                    response.body()!!.totalPrice.toString()))
+                                binding.tvTotalCoinssss.setText(java.lang.String.format("%.2f",
+                                    response.body()!!.totalCoins.toString()))
+                                binding.tvTotalRoi.setText(java.lang.String.format("%.2f",
+                                    response.body()!!.roi.toString()+"%"))
                                 no_product--
                                 binding.tvAddToCard.setText(no_product.toString())
                                 Log.e("no_product--",no_product.toString());
@@ -215,20 +223,6 @@ class AddProductsPharmacyActivity : AppCompatActivity() {
             } else {
                 Toast.makeText(this, "error in response data", Toast.LENGTH_SHORT)
                     .show()
-            }
-        })
-
-        viewModel!!.showCartResponse.observe(this, Observer {
-            if (it!=null){
-                if (it.roi!=null){
-                    binding.tvTotalRoi.text=it.roi.toString()+"%"
-                }
-                if (it.totalCoins!=null){
-                    binding.tvTotalCoinssss.text=it.totalCoins.toString()
-                }
-                if (it.totalPrice!=null){
-                    binding.tvTotalMoney.text=it.totalPrice.toString()
-                }
             }
         })
     }

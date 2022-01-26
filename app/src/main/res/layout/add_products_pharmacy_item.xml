@@ -150,7 +150,7 @@
                 android:background="@drawable/bg_search"
                 android:gravity="center"
                 android:hint="@string/quantity"
-                android:inputType="number"
+                android:inputType="numberSigned"
                 android:padding="3dp"
                 android:textColor="@color/color_142c48"
                 android:textSize="14sp"
