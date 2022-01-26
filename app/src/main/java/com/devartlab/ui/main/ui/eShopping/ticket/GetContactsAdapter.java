@@ -44,6 +44,7 @@ public class GetContactsAdapter extends RecyclerView.Adapter<GetContactsAdapter.
         final Data dataItem = dataItems.get(position);
         viewHolder.binding.tvNoTicket.setText(dataItem.getTicket_id());
         viewHolder.binding.tvDecTicket.setText(dataItem.getSubject());
+        viewHolder.binding.tvTypeTicket.setText(dataItem.getTicket_type());
         convertDateTime(dataItem.getCreated_at(), viewHolder.binding.tvStartDate);
         if (dataItem.getStatus() == 0) {
             viewHolder.binding.tvConditionTicket.setText(R.string.action_all);

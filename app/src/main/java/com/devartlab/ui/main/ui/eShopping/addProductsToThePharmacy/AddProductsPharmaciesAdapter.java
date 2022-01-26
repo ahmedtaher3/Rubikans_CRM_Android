@@ -43,29 +43,29 @@ public class AddProductsPharmaciesAdapter extends RecyclerView.Adapter<AddProduc
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, final int position) {
         final Prod dataItem = dataItems.get(position);
-        Double discount = (1 -(dataItem.getPrice() / dataItem.getPrevious_price()))*100;
+        Double discount = (1 - (dataItem.getPrice() / dataItem.getPrevious_price())) * 100;
         viewHolder.binding.tvNamePharmacy.setText(dataItem.getName());
         viewHolder.binding.tvIdPharmacy.setText(dataItem.getSku());
-        viewHolder.binding.tvUpdateDate.setText(String.format("%.2f",dataItem.getPrevious_price())+" EGP");
-        viewHolder.binding.tvPrice.setText(String.format("%.2f",dataItem.getPrice())+" EGP");
-        viewHolder.binding.tvUpdateDate.setPaintFlags( viewHolder.binding.tvUpdateDate.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-        viewHolder.binding.tvNoPharmacy.setText(String.format("%.2f",discount)+"%");
+        viewHolder.binding.tvUpdateDate.setText(String.format("%.2f", dataItem.getPrevious_price()) + " EGP");
+        viewHolder.binding.tvPrice.setText(String.format("%.2f", dataItem.getPrice()) + " EGP");
+        viewHolder.binding.tvUpdateDate.setPaintFlags(viewHolder.binding.tvUpdateDate.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+        viewHolder.binding.tvNoPharmacy.setText(String.format("%.2f", discount) + "%");
 
         viewHolder.binding.btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (TextUtils.isEmpty(viewHolder.binding.pharmacySearch.getText().toString())) {
-                    viewHolder.binding.pharmacySearch.setError("please enter amount");
+                if (TextUtils.isEmpty(viewHolder.binding.pharmacySearch.getText().toString()) || Integer.parseInt(viewHolder.binding.pharmacySearch.getText().toString()) <= 0) {
+                    viewHolder.binding.pharmacySearch.setError("please enter right quantity");
                 } else {
                     if (!dataItem.getFlag()) {
                         Log.e("ccc", String.valueOf(dataItem.getFlag()));
                         amount = Float.parseFloat(viewHolder.binding.pharmacySearch.getText().toString());
-                        viewHolder.binding.tvTotal.setText(String.format("%.2f", amount * dataItem.getPrice())+" EGP");
+                        viewHolder.binding.tvTotal.setText(String.format("%.2f", amount * dataItem.getPrice()) + " EGP");
                         dataItem.setFlag(true);
                         viewHolder.binding.pharmacySearch.setEnabled(false);
                         viewHolder.binding.btnAdd.setText("remove");
                         viewHolder.binding.btnAdd.setBackgroundResource(R.drawable.bg_red);
-                        onItemClickListener.onItemClick(position,  dataItem.getId(), Integer.parseInt(viewHolder.binding.pharmacySearch.getText().toString()));
+                        onItemClickListener.onItemClick(position, dataItem.getId(), Integer.parseInt(viewHolder.binding.pharmacySearch.getText().toString()));
                     } else {
                         Log.e("ccc", String.valueOf(dataItem.getFlag()));
                         onItemClickListener2.onItemClick2(position, dataItem.getId(), Integer.parseInt(viewHolder.binding.pharmacySearch.getText().toString()));
@@ -132,7 +132,8 @@ public class AddProductsPharmaciesAdapter extends RecyclerView.Adapter<AddProduc
     public interface OnItemClickListener2 {
         void onItemClick2(int pos, int id, int amount);
     }
-    public void filterData(ArrayList<Prod> newList ){
+
+    public void filterData(ArrayList<Prod> newList) {
         this.dataItems = newList;
         notifyDataSetChanged(); // refresh
     }

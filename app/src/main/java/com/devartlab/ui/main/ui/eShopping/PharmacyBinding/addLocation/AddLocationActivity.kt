@@ -25,6 +25,7 @@ import com.devartlab.utils.LocationUtils
 import com.devartlab.utils.ProgressLoading
 import kotlinx.android.synthetic.main.plan_item.*
 import android.location.Geocoder
+import com.devartlab.ui.main.ui.eShopping.PharmacyBinding.PharmacyBindingActivity
 import java.lang.Exception
 import java.util.*
 
@@ -211,7 +212,7 @@ class AddLocationActivity : AppCompatActivity() {
             if (it!!.message) {
                 Toast.makeText(this, " تمت اضافة بنجاح", Toast.LENGTH_SHORT)
                     .show()
-                val intent = Intent(this, Home4EShoppingActivity::class.java)
+                val intent = Intent(this, PharmacyBindingActivity::class.java)
                 startActivity(intent)
             } else {
                 Toast.makeText(this, "error in Network", Toast.LENGTH_SHORT).show()

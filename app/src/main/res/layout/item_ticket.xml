@@ -65,10 +65,23 @@
                 android:text="sadfadfadsfasdfasdfsdf"
                 android:textColor="@color/color_142c48"
                 android:textSize="12sp"
+                android:textStyle="bold"
                 android:layout_marginEnd="10dp"
                 android:layout_marginTop="5dp"
                 app:layout_constraintStart_toStartOf="@id/tv_label_no_ticket"
                 app:layout_constraintTop_toBottomOf="@+id/tv_label_no_ticket"/>
+            <TextView
+                android:id="@+id/tv_type_ticket"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:maxLines="1"
+                android:text="sadfadfadsfasdfasdfsdf"
+                android:textColor="@color/color_142c48"
+                android:textSize="12sp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginTop="5dp"
+                app:layout_constraintStart_toStartOf="@id/tv_label_no_ticket"
+                app:layout_constraintTop_toBottomOf="@+id/tv_dec_ticket"/>
 
             <TextView
                 android:id="@+id/tv_start_date"

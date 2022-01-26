@@ -467,8 +467,8 @@
     <string name="h24">24</string>
     <string name="delivery">خدمة التوصيل</string>
     <string name="file">المستندات</string>
-    <string name="commercial_register">السجل التجارى او البطاقه الشخصيه او الترخيص ص1</string>
-    <string name="commercial_register2">السجل التجارى او البطاقه الشخصيه او الترخيص ص2</string>
+    <string name="commercial_register">الصورة الامامية</string>
+    <string name="commercial_register2">الصورة الخلفية</string>
     <string name="the_tax_card">البطاقه الضريبيه</string>
     <string name="labal_from_camera">From camera</string>
     <string name="labal_from_library_imgs">From library images</string>

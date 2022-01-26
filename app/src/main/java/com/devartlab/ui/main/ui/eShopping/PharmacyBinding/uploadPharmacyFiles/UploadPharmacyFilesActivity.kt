@@ -1,9 +1,11 @@
 package com.devartlab.a4eshopping.PharmacyBinding.uploadPharmacyFiles
 
 import android.Manifest
+import android.R.attr
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.database.Cursor
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
@@ -26,12 +28,24 @@ import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
+import com.bumptech.glide.Glide
 import com.devartlab.R
 import com.devartlab.databinding.ActivityUploadPharmacyFilesBinding
 import com.devartlab.ui.main.ui.a4eshopping.main.Home4EShoppingActivity
+import com.devartlab.ui.main.ui.eShopping.PharmacyBinding.PharmacyBindingActivity
 import com.devartlab.ui.main.ui.eShopping.utils.filesUpload.VolleyFileObj
 import okhttp3.MultipartBody
+import android.os.AsyncTask
+import java.io.IOException
+import java.io.InputStream
+import java.lang.Exception
+import java.net.URL
+import android.R.attr.bitmap
+import com.devartlab.ui.main.ui.eShopping.utils.ImageUtils
 
+var volleyFileObjs: List<VolleyFileObj> = ArrayList<VolleyFileObj>()
+var volleyFileObjs2: List<VolleyFileObj> = ArrayList<VolleyFileObj>()
+var volleyFileObjs3: List<VolleyFileObj> = ArrayList<VolleyFileObj>()
 
 class UploadPharmacyFilesActivity : AppCompatActivity() {
     var idPharmacies: String? = null
@@ -40,14 +54,12 @@ class UploadPharmacyFilesActivity : AppCompatActivity() {
     var yesOrNo: String? = null
     var viewModel: UploadPharmacyViewModel? = null
     lateinit var binding: ActivityUploadPharmacyFilesBinding
-    var volleyFileObjs: List<VolleyFileObj> = ArrayList<VolleyFileObj>()
-    var volleyFileObjs2: List<VolleyFileObj> = ArrayList<VolleyFileObj>()
-    var volleyFileObjs3: List<VolleyFileObj> = ArrayList<VolleyFileObj>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(
             this,
-            R.layout.activity_upload_pharmacy_files)
+            R.layout.activity_upload_pharmacy_files
+        )
         setSupportActionBar(binding.toolbar)
         supportActionBar!!.title = getString(R.string.upload_pharmacy_files)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
@@ -60,6 +72,7 @@ class UploadPharmacyFilesActivity : AppCompatActivity() {
     }
 
     private fun onClickListener() {
+        viewModel!!.getInfoPharmacy(idPharmacies!!)
         binding.ivDelCommercialRegister.setOnClickListener {
             (volleyFileObjs as ArrayList<VolleyFileObj>).clear()
             binding.ivCommercialRegister.setImageResource(R.drawable.licence_personal)
@@ -67,33 +80,63 @@ class UploadPharmacyFilesActivity : AppCompatActivity() {
         }
         binding.ivDelCommercialRegisterTwo.setOnClickListener {
             (volleyFileObjs as ArrayList<VolleyFileObj>).clear()
-            binding.ivCommercialRegister.setImageResource(R.drawable.licence_personal)
+            binding.ivCommercialRegisterTwo.setImageResource(R.drawable.licence_personal)
             binding.ivDelCommercialRegisterTwo.setVisibility(View.GONE)
         }
         binding.ivDelTheTaxCard.setOnClickListener {
             (volleyFileObjs as ArrayList<VolleyFileObj>).clear()
-            binding.ivCommercialRegister.setImageResource(R.drawable.licence_personal)
+            binding.ivTheTaxCard.setImageResource(R.drawable.licence_personal)
             binding.ivDelTheTaxCard.setVisibility(View.GONE)
         }
         binding.ivCommercialRegister.setOnClickListener {
-            if (ContextCompat.checkSelfPermission(this@UploadPharmacyFilesActivity, Manifest.permission.CAMERA) ==
-                PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(this@UploadPharmacyFilesActivity, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(this@UploadPharmacyFilesActivity, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+            if (ContextCompat.checkSelfPermission(
+                    this@UploadPharmacyFilesActivity,
+                    Manifest.permission.CAMERA
+                ) ==
+                PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(
+                    this@UploadPharmacyFilesActivity,
+                    Manifest.permission.READ_EXTERNAL_STORAGE
+                ) == PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(
+                    this@UploadPharmacyFilesActivity,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE
+                ) == PackageManager.PERMISSION_GRANTED
+            ) {
                 selectImage()
             } else {
                 requestCameraPermission()
             }
         }
         binding.ivCommercialRegisterTwo.setOnClickListener {
-            if (ContextCompat.checkSelfPermission(this@UploadPharmacyFilesActivity, Manifest.permission.CAMERA) ==
-                PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(this@UploadPharmacyFilesActivity, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(this@UploadPharmacyFilesActivity, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+            if (ContextCompat.checkSelfPermission(
+                    this@UploadPharmacyFilesActivity,
+                    Manifest.permission.CAMERA
+                ) ==
+                PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(
+                    this@UploadPharmacyFilesActivity,
+                    Manifest.permission.READ_EXTERNAL_STORAGE
+                ) == PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(
+                    this@UploadPharmacyFilesActivity,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE
+                ) == PackageManager.PERMISSION_GRANTED
+            ) {
                 selectImageCommercialRegisterTwo()
             } else {
                 requestCameraPermission()
             }
         }
         binding.ivTheTaxCard.setOnClickListener {
-            if (ContextCompat.checkSelfPermission(this@UploadPharmacyFilesActivity, Manifest.permission.CAMERA) ==
-                PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(this@UploadPharmacyFilesActivity, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(this@UploadPharmacyFilesActivity, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+            if (ContextCompat.checkSelfPermission(
+                    this@UploadPharmacyFilesActivity,
+                    Manifest.permission.CAMERA
+                ) ==
+                PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(
+                    this@UploadPharmacyFilesActivity,
+                    Manifest.permission.READ_EXTERNAL_STORAGE
+                ) == PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(
+                    this@UploadPharmacyFilesActivity,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE
+                ) == PackageManager.PERMISSION_GRANTED
+            ) {
                 selectImageTheTaxCard()
             } else {
                 requestCameraPermission()
@@ -108,11 +151,11 @@ class UploadPharmacyFilesActivity : AppCompatActivity() {
                 payGetWay = "Fawry"
                 binding.edOther.setVisibility(View.GONE)
                 binding.edOther.setText("")
-            }else if (binding.Aman.isChecked()) {
+            } else if (binding.Aman.isChecked()) {
                 payGetWay = "Aman"
                 binding.edOther.setVisibility(View.GONE)
                 binding.edOther.setText("")
-            }else if (binding.other.isChecked()) {
+            } else if (binding.other.isChecked()) {
                 payGetWay = "others"
                 if (TextUtils.isEmpty(binding.edOther.getText().toString())) {
                     binding.edOther.setError("enter other payment")
@@ -125,7 +168,7 @@ class UploadPharmacyFilesActivity : AppCompatActivity() {
                 hours = "12"
             } else if (binding.h18.isChecked()) {
                 hours = "18"
-            }else if (binding.h24.isChecked()) {
+            } else if (binding.h24.isChecked()) {
                 hours = "24"
             }
         })
@@ -139,19 +182,19 @@ class UploadPharmacyFilesActivity : AppCompatActivity() {
         binding.btnUpdate.setOnClickListener {
             if (TextUtils.isEmpty(binding.edCommercialRegisterNumber.getText().toString())) {
                 binding.edCommercialRegisterNumber.setError("valid")
-            }else if (TextUtils.isEmpty(binding.edPharmacyLegalName.getText().toString())) {
+            } else if (TextUtils.isEmpty(binding.edPharmacyLegalName.getText().toString())) {
                 binding.edPharmacyLegalName.setError("valid")
-            }else if (TextUtils.isEmpty(binding.edPhone.getText().toString())) {
+            } else if (TextUtils.isEmpty(binding.edPhone.getText().toString())) {
                 binding.edPhone.setError("valid")
-            }else if (TextUtils.isEmpty(binding.edTheTaxCardNumber.getText().toString())) {
+            } else if (TextUtils.isEmpty(binding.edTheTaxCardNumber.getText().toString())) {
                 binding.edTheTaxCardNumber.setError("valid")
-            }else if (volleyFileObjs.size == 0) {
+            } else if (volleyFileObjs.size == 0) {
                 Toast.makeText(this, "please upload image", Toast.LENGTH_SHORT).show()
-            }else if (volleyFileObjs2.size == 0) {
+            } else if (volleyFileObjs2.size == 0) {
                 Toast.makeText(this, "please upload image", Toast.LENGTH_SHORT).show()
-            }else if (volleyFileObjs3.size == 0) {
+            } else if (volleyFileObjs3.size == 0) {
                 Toast.makeText(this, "please upload image", Toast.LENGTH_SHORT).show()
-            }else{
+            } else {
                 submit()
             }
         }
@@ -168,13 +211,95 @@ class UploadPharmacyFilesActivity : AppCompatActivity() {
             }
         })
         viewModel!!.updatePharmacyDetails.observe(this, Observer {
-            if(it!!.message){
+            if (it!!.message) {
                 Toast.makeText(this, " تمت رفع بيانات الصيدلية بنجاح", Toast.LENGTH_SHORT)
                     .show()
-                val intent = Intent(this, Home4EShoppingActivity::class.java)
+                val intent = Intent(this, PharmacyBindingActivity::class.java)
                 startActivity(intent)
-            }else{
+            } else {
                 Toast.makeText(this, "error in Network", Toast.LENGTH_SHORT).show()
+            }
+        })
+
+        viewModel!!.getInfoPharmacyResponse.observe(this, Observer {
+            binding.progressBar.setVisibility(View.GONE)
+            if (it!!.data != null) {
+                if (!it!!.data.id.equals(null)) {
+                    binding.tvNoPharmacy.text = it!!.data.id.toString()
+                }
+                if (it!!.data.name != null) {
+                    binding.tvNamePharmacy.text = it!!.data.name
+                }
+                if (it!!.data.phone != null) {
+                    binding.tvStartDate.text = it!!.data.phone
+                    binding.edPhone.setText(it!!.data.phone)
+                }
+                if (it!!.data.email != null) {
+                    binding.tvUpdateDate.text = it!!.data.email
+                }
+                if (it!!.data.the_tax_card_number != null) {
+                    binding.edTheTaxCardNumber.setText(it!!.data.the_tax_card_number)
+                }
+                if (it!!.data.pharmacy_legal_name != null) {
+                    binding.edPharmacyLegalName.setText(it!!.data.pharmacy_legal_name)
+                }
+                if (it!!.data.the_tax_card != null) {
+                    Glide.with(this)
+                        .load("https://t4e.4eshopping.com/assets/images/pharmacy/" + it!!.data.the_tax_card)
+                        .centerCrop()
+                        .into(binding.ivTheTaxCard)
+                    AsyncTaskLoadImageCartTax().execute("https://t4e.4eshopping.com/assets/images/pharmacy/" + it!!.data.the_tax_card)
+                    binding.ivDelTheTaxCard.setVisibility(View.VISIBLE)
+                }
+                if (it!!.data.commercial_register != null) {
+                    Glide.with(this)
+                        .load("https://t4e.4eshopping.com/assets/images/pharmacy/" + it!!.data.commercial_register)
+                        .centerCrop()
+                        .into(binding.ivCommercialRegister)
+                    binding.ivDelCommercialRegister.setVisibility(View.VISIBLE)
+                }
+                if (it!!.data.commercial_register_two != null) {
+                    Glide.with(this)
+                        .load("https://t4e.4eshopping.com/assets/images/pharmacy/" + it!!.data.commercial_register_two)
+                        .centerCrop()
+                        .into(binding.ivCommercialRegisterTwo)
+                    binding.ivDelCommercialRegisterTwo.setVisibility(View.VISIBLE)
+                }
+                if (!it!!.data.commercial_register_number.equals(null)) {
+                    binding.edCommercialRegisterNumber.setText(it!!.data.commercial_register_number)
+                }
+                if (it!!.data.working_hours != null) {
+                    hours = it!!.data.working_hours
+                    if (it!!.data.working_hours == "12") {
+                        binding.h12.isChecked = true
+                    } else if (it!!.data.working_hours == "18") {
+                        binding.h18.isChecked = true
+                    } else if (it!!.data.working_hours == "24") {
+                        binding.h24.isChecked = true
+                    }
+                }
+                if (it!!.data.payment != null) {
+                    payGetWay = it!!.data.payment
+                    if (it!!.data.payment == "PayMob") {
+                        binding.PayMob.isChecked = true
+                    } else if (it!!.data.payment == "Fawry") {
+                        binding.Fawry.isChecked = true
+                    } else if (it!!.data.payment == "Aman") {
+                        binding.Aman.isChecked = true
+                    } else {
+                        binding.other.isChecked = true
+                        binding.edOther.setVisibility(View.VISIBLE)
+                        binding.edOther.setText(it!!.data.payment)
+                    }
+                    if (it!!.data.delivery != null) {
+                        yesOrNo = it!!.data.delivery
+                        if (it!!.data.delivery == "delivery") {
+                            binding.yes.isChecked = true
+                        } else if (it!!.data.delivery == "not_delivery") {
+                            binding.no.isChecked = true
+                        }
+                    }
+                }
             }
         })
     }
@@ -203,6 +328,7 @@ class UploadPharmacyFilesActivity : AppCompatActivity() {
         }
         builder.show()
     }
+
     fun selectImageCommercialRegisterTwo() {
         val options = arrayOf<CharSequence>(
             getString(R.string.labal_from_camera),
@@ -227,6 +353,7 @@ class UploadPharmacyFilesActivity : AppCompatActivity() {
         }
         builder.show()
     }
+
     fun selectImageTheTaxCard() {
         val options = arrayOf<CharSequence>(
             getString(R.string.labal_from_camera),
@@ -251,6 +378,7 @@ class UploadPharmacyFilesActivity : AppCompatActivity() {
         }
         builder.show()
     }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         //camera
@@ -335,7 +463,7 @@ class UploadPharmacyFilesActivity : AppCompatActivity() {
             binding.ivDelTheTaxCard.setVisibility(View.VISIBLE)
             (volleyFileObjs3 as ArrayList<VolleyFileObj>).add(
                 VolleyFileObj(
-                    "commercial_register_two",
+                    "the_tax_card",
                     getRealPathFromURICamera(tempUri!!),
                     1001
                 )
@@ -358,7 +486,7 @@ class UploadPharmacyFilesActivity : AppCompatActivity() {
             binding.ivDelTheTaxCard.setVisibility(View.VISIBLE)
             (volleyFileObjs3 as ArrayList<VolleyFileObj>).add(
                 VolleyFileObj(
-                    "commercial_register_two",
+                    "the_tax_card",
                     picturePath,
                     1001
                 )
@@ -389,78 +517,93 @@ class UploadPharmacyFilesActivity : AppCompatActivity() {
         }
         return result
     }
+
     private fun submit() {
         val map: MutableMap<String, RequestBody> = HashMap()
         val id: RequestBody =
             RequestBody.create("multipart/form-data".toMediaTypeOrNull(), idPharmacies!!)
         map["id"] = id
-        Log.e("id"," $idPharmacies")
+        Log.e("id", " $idPharmacies")
 
         val phone: RequestBody =
-            RequestBody.create("multipart/form-data".toMediaTypeOrNull(), binding.edPhone.text.toString())
+            RequestBody.create(
+                "multipart/form-data".toMediaTypeOrNull(),
+                binding.edPhone.text.toString()
+            )
         map["phone"] = phone
-        Log.e("phone",binding.edPhone.text.toString())
+        Log.e("phone", binding.edPhone.text.toString())
 
         val commercialregisternumber: RequestBody =
-            RequestBody.create("multipart/form-data".toMediaTypeOrNull()
-                , binding.edCommercialRegisterNumber.text.toString())
+            RequestBody.create(
+                "multipart/form-data".toMediaTypeOrNull(),
+                binding.edCommercialRegisterNumber.text.toString()
+            )
         map["commercial_register_number"] = commercialregisternumber
-        Log.e("registernumber",binding.edCommercialRegisterNumber.text.toString())
+        Log.e("registernumber", binding.edCommercialRegisterNumber.text.toString())
 
         val payment: RequestBody =
             RequestBody.create("multipart/form-data".toMediaTypeOrNull(), payGetWay!!)
         map["payment"] = payment
-        Log.e("payment",payGetWay!!)
+        Log.e("payment", payGetWay!!)
 
         val workingHours: RequestBody =
             RequestBody.create("multipart/form-data".toMediaTypeOrNull(), hours!!)
         map["working_hours"] = workingHours
-        Log.e("workingHours",hours!!)
+        Log.e("workingHours", hours!!)
 
         val delivery: RequestBody =
             RequestBody.create("multipart/form-data".toMediaTypeOrNull(), yesOrNo!!)
         map["delivery"] = delivery
-        Log.e("delivery",yesOrNo!!)
+        Log.e("delivery", yesOrNo!!)
 
         val pharmacyLegalName: RequestBody =
-            RequestBody.create("multipart/form-data".toMediaTypeOrNull(), binding.edPharmacyLegalName.text.toString())
+            RequestBody.create(
+                "multipart/form-data".toMediaTypeOrNull(),
+                binding.edPharmacyLegalName.text.toString()
+            )
         map["pharmacy_legal_name"] = pharmacyLegalName
-        Log.e("pharmacy_legal_name",binding.edPharmacyLegalName.text.toString())
+        Log.e("pharmacy_legal_name", binding.edPharmacyLegalName.text.toString())
 
         val theTaxCardNumber: RequestBody =
-            RequestBody.create("multipart/form-data".toMediaTypeOrNull(), binding.edTheTaxCardNumber.text.toString())
+            RequestBody.create(
+                "multipart/form-data".toMediaTypeOrNull(),
+                binding.edTheTaxCardNumber.text.toString()
+            )
         map["the_tax_card_number"] = theTaxCardNumber
-        Log.e("the_tax_card_number",binding.edTheTaxCardNumber.text.toString())
+        Log.e("the_tax_card_number", binding.edTheTaxCardNumber.text.toString())
 
 
         val paymentName: RequestBody =
-            RequestBody.create("multipart/form-data".toMediaTypeOrNull(), binding.edOther.text.toString())
+            RequestBody.create(
+                "multipart/form-data".toMediaTypeOrNull(),
+                binding.edOther.text.toString()
+            )
         map["payment_name"] = paymentName
-        Log.e("payment_name",binding.edOther.text.toString())
+        Log.e("payment_name", binding.edOther.text.toString())
 
-        val sendMGSReqBody: RequestBody = RequestBody.create("image/*".toMediaTypeOrNull(),
-            volleyFileObjs.get(0).file )
+        val sendMGSReqBody: RequestBody = RequestBody.create(
+            "image/*".toMediaTypeOrNull(),
+            volleyFileObjs.get(0).file)
         val part: MultipartBody.Part = MultipartBody.Part.createFormData(
             volleyFileObjs[0].paramName,
-            volleyFileObjs[0].file.name, sendMGSReqBody
-        )
+            volleyFileObjs[0].file.name, sendMGSReqBody)
 
-        val sendMGSReqBody2: RequestBody = RequestBody.create("image/*".toMediaTypeOrNull(),
-            volleyFileObjs2.get(0).file )
+        val sendMGSReqBody2: RequestBody = RequestBody.create(
+            "image/*".toMediaTypeOrNull(),
+            volleyFileObjs2.get(0).file)
         val part2: MultipartBody.Part = MultipartBody.Part.createFormData(
             volleyFileObjs2[0].paramName,
-            volleyFileObjs2[0].file.name, sendMGSReqBody2
-        )
+            volleyFileObjs2[0].file.name, sendMGSReqBody2)
 
-        val sendMGSReqBody3: RequestBody = RequestBody.create("image/*".toMediaTypeOrNull(),
-            volleyFileObjs3.get(0).file )
+        val sendMGSReqBody3: RequestBody = RequestBody.create(
+            "image/*".toMediaTypeOrNull(),
+            volleyFileObjs3.get(0).file)
         val part3: MultipartBody.Part = MultipartBody.Part.createFormData(
             volleyFileObjs3[0].paramName,
-            volleyFileObjs3[0].file.name, sendMGSReqBody3
-        )
+            volleyFileObjs3[0].file.name, sendMGSReqBody3)
 
 
-        viewModel!!.getUpdatePharmacyDetails(part,part2,part3, map)
+        viewModel!!.getUpdatePharmacyDetails(part, part2, part3, map)
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -469,16 +612,67 @@ class UploadPharmacyFilesActivity : AppCompatActivity() {
     }
 
     fun requestCameraPermission() {
-        if (ActivityCompat.shouldShowRequestPermissionRationale(this@UploadPharmacyFilesActivity, Manifest.permission.CAMERA)) {
+        if (ActivityCompat.shouldShowRequestPermissionRationale(
+                this@UploadPharmacyFilesActivity,
+                Manifest.permission.CAMERA
+            )
+        ) {
             android.app.AlertDialog.Builder(this@UploadPharmacyFilesActivity)
                 .setTitle("permission denied")
                 .setMessage("ask for permission again")
-                .setPositiveButton("ok") { dialog, which -> ActivityCompat.requestPermissions(this@UploadPharmacyFilesActivity, arrayOf(
-                    Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE), 22) }
+                .setPositiveButton("ok") { dialog, which ->
+                    ActivityCompat.requestPermissions(
+                        this@UploadPharmacyFilesActivity, arrayOf(
+                            Manifest.permission.CAMERA,
+                            Manifest.permission.READ_EXTERNAL_STORAGE,
+                            Manifest.permission.WRITE_EXTERNAL_STORAGE
+                        ), 22
+                    )
+                }
                 .setNegativeButton("cancel") { dialog, which -> dialog.dismiss() }
                 .create().show()
         } else {
-            ActivityCompat.requestPermissions(this@UploadPharmacyFilesActivity, arrayOf(Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE), 22)
+            ActivityCompat.requestPermissions(
+                this@UploadPharmacyFilesActivity,
+                arrayOf(
+                    Manifest.permission.CAMERA,
+                    Manifest.permission.READ_EXTERNAL_STORAGE,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE
+                ),
+                22
+            )
+        }
+    }
+
+    class AsyncTaskLoadImageCartTax : AsyncTask<String, String, Bitmap>() {
+        private var mContext: Context? = null
+
+        fun AsyncTaskLoadImageCartTax(context: Context?) {
+            mContext = context
+        }
+        override fun doInBackground(vararg params: String?): Bitmap {
+            var bitmap: Bitmap? = null
+            try {
+                val url = URL(params[0])
+                bitmap = BitmapFactory.decodeStream(url.content as InputStream)
+            } catch (e: IOException) {
+                e.printStackTrace()
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+            return bitmap!!
+        }
+
+        override fun onPostExecute(result: Bitmap?) {
+            try {
+                val imgTaxCart: String = ImageUtils.getRealPathFromURI(ImageUtils.getImageUri(mContext, result),mContext)
+                Log.e("TAG", "onPostExecute: $imgTaxCart")
+                (volleyFileObjs as ArrayList<VolleyFileObj>).add(
+                    VolleyFileObj("the_tax_card", imgTaxCart, 1001))
+
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
         }
     }
 }

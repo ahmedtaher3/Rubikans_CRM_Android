@@ -136,10 +136,12 @@ class ChatThread4EShoppingActivity : AppCompatActivity() {
             if (it!!.rate != null) {
                 binding.tvRateRating.visibility = View.VISIBLE
                 binding.tvRate.visibility = View.VISIBLE
+                binding.msgRate.visibility = View.VISIBLE
                 binding.send.visibility = View.GONE
                 binding.sendIMG.visibility = View.GONE
                 binding.message.visibility = View.GONE
                 binding.tvRateRating.rating = it!!.rate.rate.toFloat()
+                binding.msgRate.text = it!!.rate.message
             } else if (it!!.rate == null) {
                 if (status != "1" && status != "2") {
                     binding.btnRate.visibility = View.VISIBLE
