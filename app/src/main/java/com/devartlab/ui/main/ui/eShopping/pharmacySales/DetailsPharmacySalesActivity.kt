@@ -45,7 +45,6 @@ class DetailsPharmacySalesActivity : AppCompatActivity() {
     fun handleObserver() {
         viewModel!!.errorMessage.observe(this, { integer: Int ->
             if (integer == 1) {
-                Log.e("xxx", "error")
                 Toast.makeText(this, "error in response data", Toast.LENGTH_SHORT)
                     .show()
             } else {
@@ -62,7 +61,7 @@ class DetailsPharmacySalesActivity : AppCompatActivity() {
             binding.edCustomerAddress.setText(it!!.order.customer_address + it!!.order.customer_city)
             binding.edShippingMethod.setText(it!!.order.shipping.name)
             binding.edPaymentStatus.setText(it!!.order.status)
-            binding.edPayAmount.setText(it!!.order.pay_amount.toString() + it!!.order.currency_sign)
+            binding.edPayAmount.setText(it!!.order.pay_amount.toString() +" "+ it!!.order.currency_sign)
             binding.edMethod.setText(it!!.order.method)
             binding.edNoOperation.setText(it!!.order.id.toString())
             if (it!!.details == null) {

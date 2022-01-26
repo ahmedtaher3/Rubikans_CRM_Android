@@ -3,7 +3,6 @@ package com.devartlab.a4eshopping.addProductsToThePharmacy
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Handler
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
@@ -13,7 +12,6 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.devartlab.a4eshopping.PharmacyBinding.addLocation.AddLocationViewModel
 import com.devartlab.a4eshopping.addProductsToThePharmacy.model.addOrderToCart.AddOrderToCartRequest
 import com.devartlab.a4eshopping.addProductsToThePharmacy.model.addOrderToCart.Cart
 import com.devartlab.a4eshopping.addProductsToThePharmacy.model.addProduct.AddToCardRequest
@@ -22,10 +20,8 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.util.ArrayList
-import android.os.Looper
 import com.devartlab.R
 import com.devartlab.a4eshopping.addProductsToThePharmacy.model.Pharmacy.Prod
-import com.devartlab.a4eshopping.orientationVideos.model.Item
 import com.devartlab.data.retrofit.RetrofitClient
 import com.devartlab.databinding.ActivityAddProductsPharmacyBinding
 import com.devartlab.ui.main.ui.a4eshopping.main.Home4EShoppingActivity
@@ -39,6 +35,8 @@ class AddProductsPharmacyActivity : AppCompatActivity() {
     var viewModel: SearchAllPharmacyViewModel? = null
     var cart: List<Cart> = ArrayList<Cart>()
     val list = ArrayList<Prod>()
+    var no_product:Int = 0
+    var id_pharmacies:Int=0
     lateinit var request: AddOrderToCartRequest
     var addToCardRequest: AddToCardRequest? = null
     var pharmacyID: Int = 0
@@ -89,6 +87,8 @@ class AddProductsPharmacyActivity : AppCompatActivity() {
             binding.edPharmacyName.setText(null)
             binding.tvTotalMoney.setText("0")
             binding.tvTotalCoinssss.setText("0")
+            binding.tvTotalRoi.setText("0%")
+            binding.tvAddToCard.setText("0")
             binding.edPharmacySearch.setHint(R.string.name_no_pharmacy_search)
             binding.edPharmacySearch.setText(null)
             //viewModel!!.getCategoryv2Pharmacy()
@@ -129,6 +129,10 @@ class AddProductsPharmacyActivity : AppCompatActivity() {
                     binding.edPharmacyName.setText(it.data.get(item.getItemId()).name)
                     binding.edPharmacyNo.setText(it.data.get(item.getItemId()).id.toString())
                     viewModel!!.getCategoryv2Pharmacy(it.data.get(item.getItemId()).type_code)
+                    viewModel!!.getShowCard(it.data.get(item.getItemId()).id)
+                    id_pharmacies=it.data.get(item.getItemId()).id
+                    binding.tvAddToCard.setText("0")
+                    no_product=0
                     pharmacyID = it.data.get(item.getItemId()).id
                     return@OnMenuItemClickListener false;
                 })
@@ -142,7 +146,7 @@ class AddProductsPharmacyActivity : AppCompatActivity() {
                 binding.progressBar.setVisibility(View.GONE)
             } else {
                 //show data in recyclerView
-                addToCardRequest = AddToCardRequest("mr")
+                addToCardRequest = AddToCardRequest("mr",no_product,id_pharmacies)
                 binding.progressBar.setVisibility(View.GONE)
                 adapter = AddProductsPharmaciesAdapter(it.data.prods)
                 binding.recyclerDetailsPharmacies.setAdapter(adapter)
@@ -151,8 +155,7 @@ class AddProductsPharmacyActivity : AppCompatActivity() {
                     RetrofitClient.getApis4EShopping().getAddToCard(
                         "Bearer " + UserPreferenceHelper.getUser().token,
                         id, amount,
-                        addToCardRequest
-                    )!!
+                        addToCardRequest)!!
                         .enqueue(object : Callback<AddToCardResponse?> {
                             override fun onResponse(
                                 call: Call<AddToCardResponse?>,
@@ -162,6 +165,10 @@ class AddProductsPharmacyActivity : AppCompatActivity() {
                                     binding.tvTotalMoney.setText(response.body()!!.totalPrice.toString())
                                     binding.tvTotalCoinssss.setText(response.body()!!.totalCoins.toString())
                                     binding.tvTotalRoi.setText(response.body()!!.roi.toString()+"%")
+                                    no_product++
+                                    binding.tvAddToCard.setText(no_product.toString())
+                                    addToCardRequest = AddToCardRequest("mr",no_product,id_pharmacies)
+                                    Log.e("no_product++",no_product.toString())
                                     (cart as ArrayList<Cart>).add(Cart(id, amount))
                                 }
                             }
@@ -185,6 +192,9 @@ class AddProductsPharmacyActivity : AppCompatActivity() {
                                 binding.tvTotalMoney.setText(response.body()!!.totalPrice.toString())
                                 binding.tvTotalCoinssss.setText(response.body()!!.totalCoins.toString())
                                 binding.tvTotalRoi.setText(response.body()!!.roi.toString()+"%")
+                                no_product--
+                                binding.tvAddToCard.setText(no_product.toString())
+                                Log.e("no_product--",no_product.toString());
                                 (cart as ArrayList<Cart>).remove(Cart(id, amount))
                             }
                         }
@@ -205,6 +215,20 @@ class AddProductsPharmacyActivity : AppCompatActivity() {
             } else {
                 Toast.makeText(this, "error in response data", Toast.LENGTH_SHORT)
                     .show()
+            }
+        })
+
+        viewModel!!.showCartResponse.observe(this, Observer {
+            if (it!=null){
+                if (it.roi!=null){
+                    binding.tvTotalRoi.text=it.roi.toString()+"%"
+                }
+                if (it.totalCoins!=null){
+                    binding.tvTotalCoinssss.text=it.totalCoins.toString()
+                }
+                if (it.totalPrice!=null){
+                    binding.tvTotalMoney.text=it.totalPrice.toString()
+                }
             }
         })
     }

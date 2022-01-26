@@ -455,7 +455,7 @@
     <string name="the_tax_card_number">رقم البطاقة الضريبية</string>
     <string name="pharmacy_legal_name">الاسم القانوني</string>
     <string name="label_pharmacy_legal_name">(كما هو مسجل بالبطاقة الضريبية)</string>
-    <string name="commercial_register_number">رقم السجل التجارى</string>
+    <string name="commercial_register_number">الرقم</string>
     <string name="phone">رقم التليفون</string>
     <string name="PayMob">باى موب</string>
     <string name="pay_get_way">وسيلة الدفع</string>
@@ -555,4 +555,7 @@
     <string name="action_pending">قيد الانتظار</string>
     <string name="select_ticket">اختار الحاله التيكيت</string>
     <string name="current_location">الموقع الحالي</string>
+    <string name="info_pharmacy">معلومات الصدليه</string>
+    <string name="the_tax_card_img">صورة البطاقة الضربية</string>
+    <string name="the_commercial_register">البطاقة الشخصية \ السجل التجاري \ الرخصة</string>
 </resources>

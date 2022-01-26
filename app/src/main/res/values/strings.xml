@@ -465,7 +465,7 @@
     <string name="the_tax_card_number">The Tax Card Number</string>
     <string name="pharmacy_legal_name">Pharmacy Legal Name</string>
     <string name="label_pharmacy_legal_name">(As recorded in the tax card)</string>
-    <string name="commercial_register_number">Commercial Register Number</string>
+    <string name="commercial_register_number">Number</string>
     <string name="phone">phone number</string>
     <string name="PayMob">PayMob</string>
     <string name="pay_get_way">Payment</string>
@@ -477,9 +477,9 @@
     <string name="h24">24</string>
     <string name="delivery">Delivery service</string>
     <string name="file">file</string>
-    <string name="commercial_register">Commercial Register p1</string>
-    <string name="commercial_register2">Commercial Register p2</string>
-    <string name="the_tax_card">The Tax Card</string>
+    <string name="commercial_register">Font photo</string>
+    <string name="commercial_register2">Back photo</string>
+    <string name="the_tax_card">Tax Card</string>
     <string name="no_order">Order no.</string>
     <string name="created_at">Order Date</string>
     <string name="shipment_address">Shipping address</string>
@@ -563,6 +563,9 @@
     <string name="select_ticket">select ticket status</string>
     <string name="current_location">Current location</string>
     <string name="label_total_roi">ROI</string>
+    <string name="info_pharmacy">Pharmacy info</string>
+    <string name="the_tax_card_img">Tax card photo</string>
+    <string name="the_commercial_register">International ID / Commercial / license</string>
 
 
 </resources>
