@@ -74,7 +74,7 @@ public class AddProductsPharmaciesAdapter extends RecyclerView.Adapter<AddProduc
                         viewHolder.binding.btnAdd.setText("Add");
                         viewHolder.binding.btnAdd.setBackgroundResource(R.drawable.check_status_trip_green);
                         viewHolder.binding.pharmacySearch.setText(null);
-                        viewHolder.binding.tvTotal.setText("0");
+                        viewHolder.binding.tvTotal.setText("0 EGP");
                     }
                 }
             }

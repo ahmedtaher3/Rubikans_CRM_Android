@@ -19,14 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <ImageView
-                android:id="@+id/tv_label_no_pharmacy"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_discount_e_shopping"
-                app:layout_constraintTop_toTopOf="@id/tv_label_id_pharmacy"
-                app:layout_constraintBottom_toBottomOf="@id/tv_label_id_pharmacy"
-                app:layout_constraintStart_toStartOf="@id/pharmacy_search"/>
+
             <TextView
                 android:id="@+id/tv_no_pharmacy"
                 android:layout_width="wrap_content"
@@ -36,9 +29,12 @@
                 android:textSize="16sp"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
-                app:layout_constraintStart_toEndOf="@id/tv_label_no_pharmacy"
-                app:layout_constraintBottom_toBottomOf="@+id/tv_label_no_pharmacy"
-                app:layout_constraintTop_toTopOf="@+id/tv_label_no_pharmacy"/>
+                android:drawablePadding="5dp"
+                android:layout_marginEnd="10dp"
+                android:drawableStart="@drawable/ic_discount_e_shopping"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_label_id_pharmacy"
+                app:layout_constraintTop_toTopOf="@+id/tv_label_id_pharmacy"/>
             <TextView
                 android:id="@+id/tv_label_id_pharmacy"
                 android:layout_width="wrap_content"
@@ -104,7 +100,7 @@
                 android:id="@+id/tv_update_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="100"
+                android:text="100.00 egy"
                 android:textColor="@color/color_142c48"
                 android:textSize="14sp"
                 app:layout_constraintBottom_toBottomOf="@+id/tv_label_update_date"
@@ -114,7 +110,7 @@
                 android:id="@+id/tv_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="100"
+                android:text="100.00 egy"
                 android:textColor="@color/color_142c48"
                 android:textSize="14sp"
                 android:layout_marginStart="10dp"
@@ -141,7 +137,7 @@
                 android:layout_marginStart="20dp"
                 android:text="0 EGP"
                 android:textColor="@color/black"
-                android:textSize="12sp"
+                android:textSize="14sp"
                 app:layout_constraintBottom_toBottomOf="@+id/tv_label_total"
                 app:layout_constraintStart_toEndOf="@+id/tv_label_total"
                 app:layout_constraintTop_toTopOf="@+id/tv_label_total" />
@@ -153,26 +149,28 @@
                 android:layout_marginEnd="10dp"
                 android:background="@drawable/bg_search"
                 android:gravity="center"
-                android:hint="@string/enter_amount"
+                android:hint="@string/quantity"
                 android:inputType="number"
                 android:padding="3dp"
                 android:textColor="@color/color_142c48"
-                android:textSize="12sp"
+                android:textSize="14sp"
                 android:layout_marginBottom="5dp"
-                app:layout_constraintStart_toStartOf="@id/btn_add"
+                app:layout_constraintStart_toStartOf="@id/tv_no_pharmacy"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintBottom_toTopOf="@+id/btn_add" />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btn_add"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="25dp"
                 android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
                 android:background="@drawable/check_status_trip_green"
                 android:text="@string/add"
                 android:textAllCaps="false"
                 android:textColor="@color/white"
                 android:textSize="12sp"
+                app:layout_constraintStart_toStartOf="@id/pharmacy_search"
                 app:layout_constraintBottom_toBottomOf="@id/tv_label_total"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/tv_label_total" />

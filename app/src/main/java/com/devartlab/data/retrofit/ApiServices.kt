@@ -44,6 +44,7 @@ import com.devartlab.ui.main.ui.devartlink.letsTalk.home.model.peopleList.People
 import com.devartlab.ui.main.ui.devartlink.letsTalk.model.searchPeople.SearchPeapleResponse
 import com.devartlab.ui.main.ui.devartlink.letsTalk.model.user.UserResponse
 import com.devartlab.ui.main.ui.devartlink.letsTalk.model.userID.UserIDResponse
+import com.devartlab.ui.main.ui.eShopping.addProductsToThePharmacy.model.showCart.ShowCartResponse
 import com.devartlab.ui.main.ui.eShopping.main.model.login4EShopping.Login4EShoppingResponse
 import com.devartlab.ui.main.ui.eShopping.pharmacySales.model.detailsPharmacySales.DetailsPharmacySalesResponse
 import com.google.gson.JsonArray
@@ -691,7 +692,7 @@ interface ApiServices {
         @Query("IsApproved") isApprove: Boolean,
         @Body array: JsonArray
     ): Call<ResponseModel>
- 
+
 
     @POST("InventoryTransaction/GetAllInvnetoryTrxByOption")
     fun getInventoryInventory(@Body objects: JsonObject): Call<ResponseModel>
@@ -835,18 +836,24 @@ interface ApiServices {
     ): Call<CategoryPharmacyResponse?>?
 
 
-    @POST("addtocart/{id}/{amount}")
+    @POST("add-to-cart-MR/{id}/{amount}")
     fun getAddToCard(
         @Header("Authorization") token: String?, @Path("id") id: Int,
         @Path("amount") amount: Int,
         @Body request: AddToCardRequest?
     ): Call<AddToCardResponse?>?
 
-    @POST("removefromcart/{id}")
+    @POST("removefrom-cart-MR/{id}")
     fun getRemoveToCard(
         @Header("Authorization") token: String?, @Path("id") id: Int,
         @Body request: AddToCardRequest?
     ): Call<AddToCardResponse?>?
+
+
+    @GET("show-cart-MR")
+    fun getShowCard(
+        @Header("Authorization") token: String?, @Query("user_id") user_id: Int?
+    ): Call<ShowCartResponse?>?
 
     @POST("add-order-to-cart")
     fun getAddOrderToCart(

@@ -115,7 +115,7 @@ class UploadPharmacyFilesActivity : AppCompatActivity() {
             }else if (binding.other.isChecked()) {
                 payGetWay = "others"
                 if (TextUtils.isEmpty(binding.edOther.getText().toString())) {
-                    binding.edOther.setError("valid")
+                    binding.edOther.setError("enter other payment")
                 }
                 binding.edOther.setVisibility(View.VISIBLE)
             }

@@ -10,6 +10,7 @@ import com.devartlab.a4eshopping.addProductsToThePharmacy.model.addProduct.AddTo
 import com.devartlab.a4eshopping.addProductsToThePharmacy.model.addProduct.AddToCardResponse
 import com.devartlab.a4eshopping.addProductsToThePharmacy.model.searchAllPharmacy.SearchAllPharmacyResponse
 import com.devartlab.data.retrofit.RetrofitClient
+import com.devartlab.ui.main.ui.eShopping.addProductsToThePharmacy.model.showCart.ShowCartResponse
 import com.devartlab.ui.main.ui.eShopping.utils.UserPreferenceHelper
 import retrofit2.Call
 import retrofit2.Callback
@@ -25,6 +26,8 @@ class SearchAllPharmacyViewModel(application: Application) : AndroidViewModel(ap
     var addToCardResponse: MutableLiveData<AddToCardResponse?>
         protected set
     var addOrderToCartResponse: MutableLiveData<AddOrderToCartResponse?>
+        protected set
+    var showCartResponse: MutableLiveData<ShowCartResponse?>
         protected set
 
     fun getSearchAllPharmacy(q: String) {
@@ -90,11 +93,32 @@ class SearchAllPharmacyViewModel(application: Application) : AndroidViewModel(ap
             })
     }
 
+    fun getShowCard(user_id: Int) {
+        RetrofitClient.getApis4EShopping()
+            .getShowCard("Bearer " + UserPreferenceHelper.getUser().token,user_id)!!
+            .enqueue(object : Callback<ShowCartResponse?> {
+                override fun onResponse(
+                    call: Call<ShowCartResponse?>,
+                    response: Response<ShowCartResponse?>
+                ) {
+                    if (response.isSuccessful) {
+                        showCartResponse.postValue(response.body())
+                    } else {
+                        showCartResponse.postValue(response.body())
+                    }
+                }
+
+                override fun onFailure(call: Call<ShowCartResponse?>, t: Throwable) {
+                    errorMessage.postValue(1)
+                }
+            })
+    }
     init {
         SearchAllPharmacyResponse = MutableLiveData()
         errorMessage = MutableLiveData()
         categoryPharmacyResponse = MutableLiveData()
         addToCardResponse = MutableLiveData()
         addOrderToCartResponse= MutableLiveData()
+        showCartResponse= MutableLiveData()
     }
 }
