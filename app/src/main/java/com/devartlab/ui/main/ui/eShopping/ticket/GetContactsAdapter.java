@@ -46,10 +46,7 @@ public class GetContactsAdapter extends RecyclerView.Adapter<GetContactsAdapter.
         viewHolder.binding.tvDecTicket.setText(dataItem.getSubject());
         viewHolder.binding.tvTypeTicket.setText(dataItem.getTicket_type());
         convertDateTime(dataItem.getCreated_at(), viewHolder.binding.tvStartDate);
-        if (dataItem.getStatus() == 0) {
-            viewHolder.binding.tvConditionTicket.setText(R.string.action_all);
-            viewHolder.binding.tvConditionTicket.setBackgroundResource(R.drawable.check_status_trip_orange);
-        } else if (dataItem.getStatus() == 1) {
+        if (dataItem.getStatus() == 1) {
             viewHolder.binding.tvConditionTicket.setText(R.string.action_open);
             viewHolder.binding.tvConditionTicket.setBackgroundResource(R.drawable.check_status_trip_green);
         } else if (dataItem.getStatus() == 2) {

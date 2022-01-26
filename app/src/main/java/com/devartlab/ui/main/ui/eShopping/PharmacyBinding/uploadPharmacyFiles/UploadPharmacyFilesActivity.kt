@@ -188,12 +188,6 @@ class UploadPharmacyFilesActivity : AppCompatActivity() {
                 binding.edPhone.setError("valid")
             } else if (TextUtils.isEmpty(binding.edTheTaxCardNumber.getText().toString())) {
                 binding.edTheTaxCardNumber.setError("valid")
-            } else if (volleyFileObjs.size == 0) {
-                Toast.makeText(this, "please upload image", Toast.LENGTH_SHORT).show()
-            } else if (volleyFileObjs2.size == 0) {
-                Toast.makeText(this, "please upload image", Toast.LENGTH_SHORT).show()
-            } else if (volleyFileObjs3.size == 0) {
-                Toast.makeText(this, "please upload image", Toast.LENGTH_SHORT).show()
             } else {
                 submit()
             }
@@ -248,7 +242,7 @@ class UploadPharmacyFilesActivity : AppCompatActivity() {
                         .load("https://t4e.4eshopping.com/assets/images/pharmacy/" + it!!.data.the_tax_card)
                         .centerCrop()
                         .into(binding.ivTheTaxCard)
-                    AsyncTaskLoadImageCartTax().execute("https://t4e.4eshopping.com/assets/images/pharmacy/" + it!!.data.the_tax_card)
+//                    AsyncTaskLoadImageCartTax().execute("https://t4e.4eshopping.com/assets/images/pharmacy/" + it!!.data.the_tax_card)
                     binding.ivDelTheTaxCard.setVisibility(View.VISIBLE)
                 }
                 if (it!!.data.commercial_register != null) {
@@ -580,30 +574,84 @@ class UploadPharmacyFilesActivity : AppCompatActivity() {
             )
         map["payment_name"] = paymentName
         Log.e("payment_name", binding.edOther.text.toString())
+        when {
+            volleyFileObjs.size == 0 && volleyFileObjs2.size == 0 && volleyFileObjs3.size == 0 -> {
+                val part: MultipartBody.Part? = null
+                val part2: MultipartBody.Part? = null
+                val part3: MultipartBody.Part? = null
+                viewModel!!.getUpdatePharmacyDetails(part, part2, part3, map)
+            }
+            volleyFileObjs.size == 0 && volleyFileObjs2.size == 0 -> {
+                val part: MultipartBody.Part? = null
+                val part2: MultipartBody.Part? = null
 
-        val sendMGSReqBody: RequestBody = RequestBody.create(
-            "image/*".toMediaTypeOrNull(),
-            volleyFileObjs.get(0).file)
-        val part: MultipartBody.Part = MultipartBody.Part.createFormData(
-            volleyFileObjs[0].paramName,
-            volleyFileObjs[0].file.name, sendMGSReqBody)
+                val sendMGSReqBody3: RequestBody = RequestBody.create(
+                    "image/*".toMediaTypeOrNull(),
+                    volleyFileObjs3.get(0).file
+                )
+                val part3: MultipartBody.Part = MultipartBody.Part.createFormData(
+                    volleyFileObjs3[0].paramName,
+                    volleyFileObjs3[0].file.name, sendMGSReqBody3
+                )
+                viewModel!!.getUpdatePharmacyDetails(part, part2, part3, map)
+            }
+            volleyFileObjs.size == 0 && volleyFileObjs3.size == 0 -> {
+                val part: MultipartBody.Part? = null
+                val part3: MultipartBody.Part? = null
 
-        val sendMGSReqBody2: RequestBody = RequestBody.create(
-            "image/*".toMediaTypeOrNull(),
-            volleyFileObjs2.get(0).file)
-        val part2: MultipartBody.Part = MultipartBody.Part.createFormData(
-            volleyFileObjs2[0].paramName,
-            volleyFileObjs2[0].file.name, sendMGSReqBody2)
+                val sendMGSReqBody2: RequestBody = RequestBody.create(
+                    "image/*".toMediaTypeOrNull(),
+                    volleyFileObjs2.get(0).file
+                )
+                val part2: MultipartBody.Part = MultipartBody.Part.createFormData(
+                    volleyFileObjs2[0].paramName,
+                    volleyFileObjs2[0].file.name, sendMGSReqBody2
+                )
+                viewModel!!.getUpdatePharmacyDetails(part, part2, part3, map)
+            }
+            volleyFileObjs2.size == 0 && volleyFileObjs3.size == 0 -> {
+                val part3: MultipartBody.Part? = null
+                val part2: MultipartBody.Part? = null
+                val sendMGSReqBody: RequestBody = RequestBody.create(
+                    "image/*".toMediaTypeOrNull(),
+                    volleyFileObjs.get(0).file
+                )
+                val part: MultipartBody.Part = MultipartBody.Part.createFormData(
+                    volleyFileObjs[0].paramName,
+                    volleyFileObjs[0].file.name, sendMGSReqBody
+                )
+                viewModel!!.getUpdatePharmacyDetails(part, part2, part3, map)
+            }
+            else -> {
+                val sendMGSReqBody: RequestBody = RequestBody.create(
+                    "image/*".toMediaTypeOrNull(),
+                    volleyFileObjs.get(0).file
+                )
+                val part: MultipartBody.Part = MultipartBody.Part.createFormData(
+                    volleyFileObjs[0].paramName,
+                    volleyFileObjs[0].file.name, sendMGSReqBody
+                )
 
-        val sendMGSReqBody3: RequestBody = RequestBody.create(
-            "image/*".toMediaTypeOrNull(),
-            volleyFileObjs3.get(0).file)
-        val part3: MultipartBody.Part = MultipartBody.Part.createFormData(
-            volleyFileObjs3[0].paramName,
-            volleyFileObjs3[0].file.name, sendMGSReqBody3)
+                val sendMGSReqBody2: RequestBody = RequestBody.create(
+                    "image/*".toMediaTypeOrNull(),
+                    volleyFileObjs2.get(0).file
+                )
+                val part2: MultipartBody.Part = MultipartBody.Part.createFormData(
+                    volleyFileObjs2[0].paramName,
+                    volleyFileObjs2[0].file.name, sendMGSReqBody2
+                )
 
-
-        viewModel!!.getUpdatePharmacyDetails(part, part2, part3, map)
+                val sendMGSReqBody3: RequestBody = RequestBody.create(
+                    "image/*".toMediaTypeOrNull(),
+                    volleyFileObjs3.get(0).file
+                )
+                val part3: MultipartBody.Part = MultipartBody.Part.createFormData(
+                    volleyFileObjs3[0].paramName,
+                    volleyFileObjs3[0].file.name, sendMGSReqBody3
+                )
+                viewModel!!.getUpdatePharmacyDetails(part, part2, part3, map)
+            }
+        }
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -650,6 +698,7 @@ class UploadPharmacyFilesActivity : AppCompatActivity() {
         fun AsyncTaskLoadImageCartTax(context: Context?) {
             mContext = context
         }
+
         override fun doInBackground(vararg params: String?): Bitmap {
             var bitmap: Bitmap? = null
             try {
@@ -665,10 +714,14 @@ class UploadPharmacyFilesActivity : AppCompatActivity() {
 
         override fun onPostExecute(result: Bitmap?) {
             try {
-                val imgTaxCart: String = ImageUtils.getRealPathFromURI(ImageUtils.getImageUri(mContext, result),mContext)
+                val imgTaxCart: String = ImageUtils.getRealPathFromURI(
+                    ImageUtils.getImageUri(mContext, result),
+                    mContext
+                )
                 Log.e("TAG", "onPostExecute: $imgTaxCart")
                 (volleyFileObjs as ArrayList<VolleyFileObj>).add(
-                    VolleyFileObj("the_tax_card", imgTaxCart, 1001))
+                    VolleyFileObj("the_tax_card", imgTaxCart, 1001)
+                )
 
             } catch (e: Exception) {
                 e.printStackTrace()

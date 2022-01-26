@@ -805,9 +805,9 @@ interface ApiServices {
     @POST("updatePharmacyDetails")
     fun updatePharmacyDetails(
         @Header("Authorization") token: String?,
-        @Part file: MultipartBody.Part,
-        @Part file2: MultipartBody.Part,
-        @Part file3: MultipartBody.Part,
+        @Part file: MultipartBody.Part?,
+        @Part file2: MultipartBody.Part?,
+        @Part file3: MultipartBody.Part?,
         @PartMap send: MutableMap<String, RequestBody>
     ): Call<updatePharmacyDetails?>?
 
