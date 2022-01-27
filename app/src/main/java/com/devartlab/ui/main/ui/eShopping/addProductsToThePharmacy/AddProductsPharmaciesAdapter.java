@@ -54,33 +54,39 @@ public class AddProductsPharmaciesAdapter extends RecyclerView.Adapter<AddProduc
         viewHolder.binding.btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (TextUtils.isEmpty(viewHolder.binding.pharmacySearch.getText().toString()) || Integer.parseInt(viewHolder.binding.pharmacySearch.getText().toString()) <= 0||viewHolder.binding.pharmacySearch.getText().toString()=="-") {
-                    viewHolder.binding.pharmacySearch.setError("please enter right quantity");
-                } else {
-                    if (!dataItem.getFlag()) {
-                        Log.e("ccc", String.valueOf(dataItem.getFlag()));
-                        amount = Float.parseFloat(viewHolder.binding.pharmacySearch.getText().toString());
-                        viewHolder.binding.tvTotal.setText(String.format("%.2f", amount * dataItem.getPrice()) + " EGP");
-                        dataItem.setFlag(true);
-                        viewHolder.binding.pharmacySearch.setEnabled(false);
-                        viewHolder.binding.btnAdd.setText("remove");
-                        viewHolder.binding.btnAdd.setBackgroundResource(R.drawable.bg_red);
-                        onItemClickListener.onItemClick(position, dataItem.getId(), Integer.parseInt(viewHolder.binding.pharmacySearch.getText().toString()));
+                String text = viewHolder.binding.pharmacySearch.getText().toString();
+                try {
+                    int num = Integer.parseInt(text);
+                    Log.i("", num + " is a number");
+                    if (TextUtils.isEmpty(viewHolder.binding.pharmacySearch.getText().toString()) || Integer.parseInt(viewHolder.binding.pharmacySearch.getText().toString()) <= 0||viewHolder.binding.pharmacySearch.getText().toString()=="-") {
+                        viewHolder.binding.pharmacySearch.setError("please enter right quantity");
                     } else {
-                        Log.e("ccc", String.valueOf(dataItem.getFlag()));
-                        onItemClickListener2.onItemClick2(position, dataItem.getId(), Integer.parseInt(viewHolder.binding.pharmacySearch.getText().toString()));
-                        dataItem.setFlag(false);
-                        viewHolder.binding.pharmacySearch.setEnabled(true);
-                        viewHolder.binding.btnAdd.setText("Add");
-                        viewHolder.binding.btnAdd.setBackgroundResource(R.drawable.check_status_trip_green);
-                        viewHolder.binding.pharmacySearch.setText(null);
-                        viewHolder.binding.tvTotal.setText("0 EGP");
+                        if (!dataItem.getFlag()) {
+                            Log.e("ccc", String.valueOf(dataItem.getFlag()));
+                            amount = Float.parseFloat(viewHolder.binding.pharmacySearch.getText().toString());
+                            viewHolder.binding.tvTotal.setText(String.format("%.2f", amount * dataItem.getPrice()) + " EGP");
+                            dataItem.setFlag(true);
+                            viewHolder.binding.pharmacySearch.setEnabled(false);
+                            viewHolder.binding.btnAdd.setText("remove");
+                            viewHolder.binding.btnAdd.setBackgroundResource(R.drawable.bg_red);
+                            onItemClickListener.onItemClick(position, dataItem.getId(), Integer.parseInt(viewHolder.binding.pharmacySearch.getText().toString()));
+                        } else {
+                            Log.e("ccc", String.valueOf(dataItem.getFlag()));
+                            onItemClickListener2.onItemClick2(position, dataItem.getId(), Integer.parseInt(viewHolder.binding.pharmacySearch.getText().toString()));
+                            dataItem.setFlag(false);
+                            viewHolder.binding.pharmacySearch.setEnabled(true);
+                            viewHolder.binding.btnAdd.setText("Add");
+                            viewHolder.binding.btnAdd.setBackgroundResource(R.drawable.check_status_trip_green);
+                            viewHolder.binding.pharmacySearch.setText(null);
+                            viewHolder.binding.tvTotal.setText("0 EGP");
+                        }
                     }
+                } catch (NumberFormatException e) {
+                    Log.i("", text + " is not a number");
+                    viewHolder.binding.pharmacySearch.setError("please enter right quantity");
                 }
             }
         });
-
-
     }
 
     @Override
