@@ -254,7 +254,7 @@ class UploadPharmacyFilesActivity : AppCompatActivity() {
                         .into(binding.ivCommercialRegisterTwo)
                     binding.ivDelCommercialRegisterTwo.setVisibility(View.VISIBLE)
                 }
-                if (!it!!.data.commercial_register_number.equals(null)) {
+                if (it!!.data.commercial_register_number !=null) {
                     binding.edCommercialRegisterNumber.setText(it!!.data.commercial_register_number)
                 }
                 if (it!!.data.working_hours != null) {

@@ -129,7 +129,7 @@ class ChatThread4EShoppingActivity : AppCompatActivity() {
             adapter = ChatListAdapter(it!!.data)
             binding.recyclerView.adapter = adapter
             adapter!!.setOnItemClickListener(ChatListAdapter.OnItemLongClickListener { pos, dataItem ->
-                if (status == "1"||status=="2") {
+                if (status == "1"||status=="2"||status=="4") {
                     deleteMessagesDialog(dataItem.id.toString())
                 }
             })
@@ -143,7 +143,7 @@ class ChatThread4EShoppingActivity : AppCompatActivity() {
                 binding.tvRateRating.rating = it!!.rate.rate.toFloat()
                 binding.msgRate.text = it!!.rate.message
             } else if (it!!.rate == null) {
-                if (status != "1" && status != "2") {
+                if (status != "1" && status != "2"&& status != "4") {
                     binding.btnRate.visibility = View.VISIBLE
                     binding.send.visibility = View.GONE
                     binding.sendIMG.visibility = View.GONE

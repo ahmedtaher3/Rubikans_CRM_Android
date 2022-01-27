@@ -127,7 +127,7 @@ class TicketActivity : AppCompatActivity() {
                 })
 
                 adapter!!.setOnItemClickListener2(GetContactsAdapter.OnItemClickListener2 { pos, noOrder, status ->
-                    if (status == "1") {
+                    if (status == "1"||status == "4") {
                         deleteMessagesDialog(noOrder)
                     }
                 })
