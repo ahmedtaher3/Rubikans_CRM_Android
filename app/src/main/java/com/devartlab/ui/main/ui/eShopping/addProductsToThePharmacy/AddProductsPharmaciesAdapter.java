@@ -54,7 +54,7 @@ public class AddProductsPharmaciesAdapter extends RecyclerView.Adapter<AddProduc
         viewHolder.binding.btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (TextUtils.isEmpty(viewHolder.binding.pharmacySearch.getText().toString()) || Integer.parseInt(viewHolder.binding.pharmacySearch.getText().toString()) <= 0) {
+                if (TextUtils.isEmpty(viewHolder.binding.pharmacySearch.getText().toString()) || Integer.parseInt(viewHolder.binding.pharmacySearch.getText().toString()) <= 0||viewHolder.binding.pharmacySearch.getText().toString()=="-") {
                     viewHolder.binding.pharmacySearch.setError("please enter right quantity");
                 } else {
                     if (!dataItem.getFlag()) {
