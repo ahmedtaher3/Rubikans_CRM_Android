@@ -1,4 +1,4 @@
-package com.devartlab.a4eshopping.addProductsToThePharmacy
+package com.devartlab.ui.main.ui.eShopping.addProductsToThePharmacy
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -24,8 +24,8 @@ import com.devartlab.R
 import com.devartlab.a4eshopping.addProductsToThePharmacy.model.Pharmacy.Prod
 import com.devartlab.data.retrofit.RetrofitClient
 import com.devartlab.databinding.ActivityAddProductsPharmacyBinding
-import com.devartlab.ui.main.ui.a4eshopping.main.Home4EShoppingActivity
 import com.devartlab.ui.main.ui.eShopping.addProductsToThePharmacy.AddProductsPharmaciesAdapter
+import com.devartlab.ui.main.ui.eShopping.main.Home4EShoppingActivity
 import com.devartlab.ui.main.ui.eShopping.utils.UserPreferenceHelper
 
 

@@ -1,4 +1,4 @@
-package com.devartlab.ui.main.ui.eshopping.main
+package com.devartlab.ui.main.ui.eShopping.main
 
 import android.content.Context
 import android.view.LayoutInflater

@@ -1,4 +1,4 @@
-package com.devartlab.ui.main.ui.a4eshopping.main
+package com.devartlab.ui.main.ui.eShopping.main
 
 import android.content.Intent
 import android.net.Uri
@@ -11,18 +11,16 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.devartlab.R
-import com.devartlab.a4eshopping.addProductsToThePharmacy.AddProductsPharmacyActivity
 import com.devartlab.a4eshopping.main.model.CardModel
 import com.devartlab.base.BaseApplication
 import com.devartlab.data.shared.DataManager
 import com.devartlab.databinding.Activity4eshoppingBinding
 import com.devartlab.model.AdModel
-import com.devartlab.ui.main.ui.eShopping.PharmacyBinding.PharmacyBindingActivity
-import com.devartlab.ui.main.ui.eShopping.main.Home4EShoppingViewModel
+import com.devartlab.ui.main.ui.eShopping.addProductsToThePharmacy.AddProductsPharmacyActivity
+import com.devartlab.ui.main.ui.eShopping.orientationVideos.OrientationVideosActivity
+import com.devartlab.ui.main.ui.eShopping.pharmacyBinding.PharmacyBindingActivity
 import com.devartlab.ui.main.ui.eShopping.pharmacySales.PharmacySalesActivity
 import com.devartlab.ui.main.ui.eShopping.ticket.TicketActivity
-import com.devartlab.ui.main.ui.eshopping.main.MenuListAdapter
-import com.devartlab.ui.main.ui.eshopping.orientationVideos.OrientationVideosActivity
 import com.devartlab.ui.main.ui.moreDetailsAds.MoreDetailsAdsActivity
 import com.devartlab.utils.Constants
 import com.devartlab.utils.MainSliderAdapter

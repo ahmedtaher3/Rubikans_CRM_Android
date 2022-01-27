@@ -1,4 +1,4 @@
-package com.devartlab.a4eshopping.PharmacyBinding.model.searchForPharmacy
+package com.devartlab.ui.main.ui.eShopping.pharmacyBinding.model.searchForPharmacy
 
 data class SearchForPharmacyResponse(
     val `data`: Data,

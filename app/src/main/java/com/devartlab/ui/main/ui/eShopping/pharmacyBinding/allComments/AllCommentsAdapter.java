@@ -1,4 +1,4 @@
-package com.devartlab.ui.main.ui.eShopping.PharmacyBinding.allComments;
+package com.devartlab.ui.main.ui.eShopping.pharmacyBinding.allComments;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -11,8 +11,8 @@ import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.devartlab.R;
-import com.devartlab.a4eshopping.PharmacyBinding.allComments.model.Data;
 import com.devartlab.databinding.AllCommentsItemBinding;
+import com.devartlab.ui.main.ui.eShopping.pharmacyBinding.allComments.model.Data;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

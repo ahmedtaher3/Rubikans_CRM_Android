@@ -1,12 +1,11 @@
-package com.devartlab.a4eshopping.PharmacyBinding.uploadPharmacyFiles
+package com.devartlab.ui.main.ui.eShopping.pharmacyBinding.uploadPharmacyFiles
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import com.devartlab.a4eshopping.PharmacyBinding.uploadPharmacyFiles.model.updatePharmacyDetails
-import com.devartlab.a4eshopping.orientationVideos.model.ResponseVideos
 import com.devartlab.data.retrofit.RetrofitClient
-import com.devartlab.ui.main.ui.eShopping.PharmacyBinding.uploadPharmacyFiles.model.pharmacydata.GetInfoPharmacyResponse
+import com.devartlab.ui.main.ui.eShopping.pharmacyBinding.uploadPharmacyFiles.model.pharmacydata.GetInfoPharmacyResponse
+import com.devartlab.ui.main.ui.eShopping.pharmacyBinding.uploadPharmacyFiles.model.updatePharmacyDetails
 import com.devartlab.ui.main.ui.eShopping.utils.UserPreferenceHelper
 import okhttp3.MultipartBody
 import okhttp3.RequestBody

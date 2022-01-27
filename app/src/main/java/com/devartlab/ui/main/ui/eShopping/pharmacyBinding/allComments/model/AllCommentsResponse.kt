@@ -1,4 +1,4 @@
-package com.devartlab.a4eshopping.PharmacyBinding.allComments.model
+package com.devartlab.ui.main.ui.eShopping.pharmacyBinding.allComments.model
 
 data class AllCommentsResponse(
     val code: Int,

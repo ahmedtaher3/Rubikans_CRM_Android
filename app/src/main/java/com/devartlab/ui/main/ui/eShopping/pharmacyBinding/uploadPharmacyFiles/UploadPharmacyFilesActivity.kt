@@ -1,11 +1,9 @@
-package com.devartlab.a4eshopping.PharmacyBinding.uploadPharmacyFiles
+package com.devartlab.ui.main.ui.eShopping.pharmacyBinding.uploadPharmacyFiles
 
 import android.Manifest
-import android.R.attr
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.database.Cursor
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
@@ -31,8 +29,7 @@ import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
 import com.devartlab.R
 import com.devartlab.databinding.ActivityUploadPharmacyFilesBinding
-import com.devartlab.ui.main.ui.a4eshopping.main.Home4EShoppingActivity
-import com.devartlab.ui.main.ui.eShopping.PharmacyBinding.PharmacyBindingActivity
+import com.devartlab.ui.main.ui.eShopping.pharmacyBinding.PharmacyBindingActivity
 import com.devartlab.ui.main.ui.eShopping.utils.filesUpload.VolleyFileObj
 import okhttp3.MultipartBody
 import android.os.AsyncTask
@@ -40,12 +37,7 @@ import java.io.IOException
 import java.io.InputStream
 import java.lang.Exception
 import java.net.URL
-import android.R.attr.bitmap
 import com.devartlab.ui.main.ui.eShopping.utils.ImageUtils
-
-var volleyFileObjs: List<VolleyFileObj> = ArrayList<VolleyFileObj>()
-var volleyFileObjs2: List<VolleyFileObj> = ArrayList<VolleyFileObj>()
-var volleyFileObjs3: List<VolleyFileObj> = ArrayList<VolleyFileObj>()
 
 class UploadPharmacyFilesActivity : AppCompatActivity() {
     var idPharmacies: String? = null
@@ -53,6 +45,9 @@ class UploadPharmacyFilesActivity : AppCompatActivity() {
     var hours: String? = null
     var yesOrNo: String? = null
     var viewModel: UploadPharmacyViewModel? = null
+    var volleyFileObjs: List<VolleyFileObj> = ArrayList<VolleyFileObj>()
+    var volleyFileObjs2: List<VolleyFileObj> = ArrayList<VolleyFileObj>()
+    var volleyFileObjs3: List<VolleyFileObj> = ArrayList<VolleyFileObj>()
     lateinit var binding: ActivityUploadPharmacyFilesBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -692,40 +687,34 @@ class UploadPharmacyFilesActivity : AppCompatActivity() {
         }
     }
 
-    class AsyncTaskLoadImageCartTax : AsyncTask<String, String, Bitmap>() {
-        private var mContext: Context? = null
-
-        fun AsyncTaskLoadImageCartTax(context: Context?) {
-            mContext = context
-        }
-
-        override fun doInBackground(vararg params: String?): Bitmap {
-            var bitmap: Bitmap? = null
-            try {
-                val url = URL(params[0])
-                bitmap = BitmapFactory.decodeStream(url.content as InputStream)
-            } catch (e: IOException) {
-                e.printStackTrace()
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
-            return bitmap!!
-        }
-
-        override fun onPostExecute(result: Bitmap?) {
-            try {
-                val imgTaxCart: String = ImageUtils.getRealPathFromURI(
-                    ImageUtils.getImageUri(mContext, result),
-                    mContext
-                )
-                Log.e("TAG", "onPostExecute: $imgTaxCart")
-                (volleyFileObjs as ArrayList<VolleyFileObj>).add(
-                    VolleyFileObj("the_tax_card", imgTaxCart, 1001)
-                )
-
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
-        }
-    }
+//    public class AsyncTaskLoadImageCartTax : AsyncTask<String, String, Bitmap>() {
+//        override fun doInBackground(vararg params: String?): Bitmap {
+//            var bitmap: Bitmap? = null
+//            try {
+//                val url = URL(params[0])
+//                bitmap = BitmapFactory.decodeStream(url.content as InputStream)
+//            } catch (e: IOException) {
+//                e.printStackTrace()
+//            } catch (e: Exception) {
+//                e.printStackTrace()
+//            }
+//            return bitmap!!
+//        }
+//
+//        override fun onPostExecute(result: Bitmap?) {
+//            try {
+//                Log.e("qwe:inImage:", result.toString())
+//                val imgTaxCart: String = ImageUtils.getRealPathFromURI(
+//                    ImageUtils.getImageUri(mContext, result),
+//                    mContext
+//                )
+//                Log.e("TAG", "onPostExecute: $imgTaxCart")
+//                (volleyFileObjs as ArrayList<VolleyFileObj>).add(
+//                    VolleyFileObj("the_tax_card", imgTaxCart, 1001)
+//                )
+//            } catch (e: Exception) {
+//                e.printStackTrace()
+//            }
+//        }
+//    }
 }

@@ -1,4 +1,4 @@
-package com.devartlab.a4eshopping.pharmacySales.model
+package com.devartlab.ui.main.ui.eShopping.pharmacySales.model
 
 data class PharmacySalesResponse(
     val current_page: Int,

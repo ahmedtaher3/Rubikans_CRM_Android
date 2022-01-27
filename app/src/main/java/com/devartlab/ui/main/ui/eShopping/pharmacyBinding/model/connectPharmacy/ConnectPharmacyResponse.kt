@@ -1,4 +1,4 @@
-package com.devartlab.a4eshopping.PharmacyBinding.model.connectPharmacy
+package com.devartlab.ui.main.ui.eShopping.pharmacyBinding.model.connectPharmacy
 
 data class ConnectPharmacyResponse(
     val code: Int,

@@ -28,8 +28,8 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.devartlab.R
-import com.devartlab.a4eshopping.ticket.model.addRate.AddRateRequest
 import com.devartlab.databinding.ActivityChatEShoppingThreadBinding
+import com.devartlab.ui.main.ui.eShopping.ticket.model.addRate.AddRateRequest
 import com.devartlab.ui.main.ui.eShopping.utils.filesUpload.VolleyFileObj
 import com.pusher.client.Pusher
 import com.pusher.client.PusherOptions

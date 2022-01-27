@@ -1,4 +1,4 @@
-package com.devartlab.ui.main.ui.eShopping.PharmacyBinding.allComments
+package com.devartlab.ui.main.ui.eShopping.pharmacyBinding.allComments
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -9,7 +9,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.devartlab.R
-import com.devartlab.a4eshopping.PharmacyBinding.allComments.AllCommentsViewModel
 import com.devartlab.databinding.ActivityAllCommentsBinding
 
 class AllCommentsActivity : AppCompatActivity() {

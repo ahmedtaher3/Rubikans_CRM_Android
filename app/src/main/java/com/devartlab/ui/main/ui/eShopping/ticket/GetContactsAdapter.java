@@ -12,8 +12,8 @@ import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.devartlab.R;
-import com.devartlab.a4eshopping.ticket.model.getContacts.Data;
 import com.devartlab.databinding.ItemTicketBinding;
+import com.devartlab.ui.main.ui.eShopping.ticket.model.getContacts.Data;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

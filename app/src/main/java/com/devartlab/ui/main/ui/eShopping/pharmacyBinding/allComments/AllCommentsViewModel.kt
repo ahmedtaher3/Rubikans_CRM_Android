@@ -1,10 +1,10 @@
-package com.devartlab.a4eshopping.PharmacyBinding.allComments
+package com.devartlab.ui.main.ui.eShopping.pharmacyBinding.allComments
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import com.devartlab.a4eshopping.PharmacyBinding.allComments.model.AllCommentsResponse
 import com.devartlab.data.retrofit.RetrofitClient
+import com.devartlab.ui.main.ui.eShopping.pharmacyBinding.allComments.model.AllCommentsResponse
 import com.devartlab.ui.main.ui.eShopping.utils.UserPreferenceHelper
 import retrofit2.Call
 import retrofit2.Callback

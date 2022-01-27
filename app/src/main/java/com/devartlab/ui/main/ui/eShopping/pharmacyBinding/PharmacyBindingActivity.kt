@@ -1,4 +1,4 @@
-package com.devartlab.ui.main.ui.eShopping.PharmacyBinding
+package com.devartlab.ui.main.ui.eShopping.pharmacyBinding
 
 import android.app.Dialog
 import android.content.Intent
@@ -21,13 +21,13 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.devartlab.R
 import com.devartlab.a4eshopping.PharmacyBinding.PharmacyBindingViewModel
-import com.devartlab.a4eshopping.PharmacyBinding.model.searchForPharmacy.DataX
-import com.devartlab.a4eshopping.PharmacyBinding.model.searchForPharmacy.SearchForPharmacyRequest
-import com.devartlab.a4eshopping.PharmacyBinding.model.searchForPharmacy.SearchForPharmacyResponse
-import com.devartlab.a4eshopping.PharmacyBinding.uploadPharmacyFiles.UploadPharmacyFilesActivity
 import com.devartlab.databinding.ActivityPharmacyBindingBinding
-import com.devartlab.ui.main.ui.eShopping.PharmacyBinding.addLocation.AddLocationActivity
-import com.devartlab.ui.main.ui.eShopping.PharmacyBinding.allComments.AllCommentsActivity
+import com.devartlab.ui.main.ui.eShopping.pharmacyBinding.model.searchForPharmacy.SearchForPharmacyRequest
+import com.devartlab.ui.main.ui.eShopping.pharmacyBinding.addLocation.AddLocationActivity
+import com.devartlab.ui.main.ui.eShopping.pharmacyBinding.allComments.AllCommentsActivity
+import com.devartlab.ui.main.ui.eShopping.pharmacyBinding.model.searchForPharmacy.DataX
+import com.devartlab.ui.main.ui.eShopping.pharmacyBinding.model.searchForPharmacy.SearchForPharmacyResponse
+import com.devartlab.ui.main.ui.eShopping.pharmacyBinding.uploadPharmacyFiles.UploadPharmacyFilesActivity
 
 class PharmacyBindingActivity : AppCompatActivity() {
     lateinit var binding: ActivityPharmacyBindingBinding

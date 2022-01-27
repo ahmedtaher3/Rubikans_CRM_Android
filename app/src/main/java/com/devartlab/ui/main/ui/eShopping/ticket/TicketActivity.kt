@@ -18,8 +18,8 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.devartlab.R
-import com.devartlab.a4eshopping.ticket.model.addTicket.AddTicketRequest
 import com.devartlab.databinding.ActivityTicketBinding
+import com.devartlab.ui.main.ui.eShopping.ticket.model.addTicket.AddTicketRequest
 import com.pusher.client.Pusher
 import com.pusher.client.PusherOptions
 import com.pusher.client.channel.Channel

@@ -1,4 +1,4 @@
-package com.devartlab.a4eshopping.addProductsToThePharmacy
+package com.devartlab.ui.main.ui.eShopping.addProductsToThePharmacy
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel

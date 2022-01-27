@@ -10,7 +10,6 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
-import com.devartlab.a4eshopping.PharmacyBinding.model.searchForPharmacy.ConnetctedPharmaciesResponse
 import com.devartlab.a4eshopping.main.model.login4EShopping.Login4EShoppingRequest
 import com.devartlab.base.BaseApplication
 import com.devartlab.data.retrofit.ApiServices
