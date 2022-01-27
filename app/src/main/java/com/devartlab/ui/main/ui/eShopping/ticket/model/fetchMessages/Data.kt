@@ -1,4 +1,4 @@
-package com.devartlab.a4eshopping.ticket.model.fetchMessages
+package com.devartlab.ui.main.ui.eShopping.ticket.model.fetchMessages
 
 data class Data(
     val admin_id: Any,

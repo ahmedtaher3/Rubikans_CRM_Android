@@ -1,4 +1,4 @@
-package com.devartlab.a4eshopping.ticket.model.getContacts
+package com.devartlab.ui.main.ui.eShopping.ticket.model.getContacts
 
 data class GetContactsResponse(
     val current_page: Int,

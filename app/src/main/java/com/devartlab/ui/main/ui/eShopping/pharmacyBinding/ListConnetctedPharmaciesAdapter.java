@@ -1,4 +1,4 @@
-package com.devartlab.ui.main.ui.eShopping.PharmacyBinding;
+package com.devartlab.ui.main.ui.eShopping.pharmacyBinding;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -11,8 +11,8 @@ import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.devartlab.R;
-import com.devartlab.a4eshopping.PharmacyBinding.model.searchForPharmacy.DataX;
 import com.devartlab.databinding.PharmacyBingingItemBinding;
+import com.devartlab.ui.main.ui.eShopping.pharmacyBinding.model.searchForPharmacy.DataX;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

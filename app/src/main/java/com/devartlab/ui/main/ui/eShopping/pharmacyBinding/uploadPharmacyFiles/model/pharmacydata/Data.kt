@@ -1,4 +1,4 @@
-package com.devartlab.ui.main.ui.eShopping.PharmacyBinding.uploadPharmacyFiles.model.pharmacydata
+package com.devartlab.ui.main.ui.eShopping.pharmacyBinding.uploadPharmacyFiles.model.pharmacydata
 
 data class Data(
     val PharmacyLastPurchase: Any,

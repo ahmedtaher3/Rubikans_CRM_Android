@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.devartlab.R;
-import com.devartlab.a4eshopping.ticket.model.fetchMessages.Data;
+import com.devartlab.ui.main.ui.eShopping.ticket.model.fetchMessages.Data;
 import com.devartlab.ui.main.ui.eShopping.utils.UserPreferenceHelper;
 
 import org.json.JSONException;

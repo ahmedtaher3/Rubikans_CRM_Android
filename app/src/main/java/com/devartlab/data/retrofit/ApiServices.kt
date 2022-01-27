@@ -7,12 +7,6 @@ import com.devartlab.a4eshopping.PharmacyBinding.addLocation.model.districts.Dis
 import com.devartlab.a4eshopping.PharmacyBinding.addLocation.model.getUserAddress.GetUserAddressResponse
 import com.devartlab.a4eshopping.PharmacyBinding.addLocation.model.updateAddress.UpdateAddressRequest
 import com.devartlab.a4eshopping.PharmacyBinding.addLocation.model.updateAddress.UpdateAddressResponse
-import com.devartlab.a4eshopping.PharmacyBinding.allComments.model.AllCommentsResponse
-import com.devartlab.a4eshopping.PharmacyBinding.model.connectPharmacy.ConnectPharmacyResponse
-import com.devartlab.a4eshopping.PharmacyBinding.model.searchForPharmacy.ConnetctedPharmaciesResponse
-import com.devartlab.a4eshopping.PharmacyBinding.model.searchForPharmacy.SearchForPharmacyRequest
-import com.devartlab.a4eshopping.PharmacyBinding.model.searchForPharmacy.SearchForPharmacyResponse
-import com.devartlab.a4eshopping.PharmacyBinding.uploadPharmacyFiles.model.updatePharmacyDetails
 import com.devartlab.a4eshopping.addProductsToThePharmacy.model.Pharmacy.CategoryPharmacyResponse
 import com.devartlab.a4eshopping.addProductsToThePharmacy.model.addOrderToCart.AddOrderToCartRequest
 import com.devartlab.a4eshopping.addProductsToThePharmacy.model.addOrderToCart.AddOrderToCartResponse
@@ -20,23 +14,14 @@ import com.devartlab.a4eshopping.addProductsToThePharmacy.model.addProduct.AddTo
 import com.devartlab.a4eshopping.addProductsToThePharmacy.model.addProduct.AddToCardResponse
 import com.devartlab.a4eshopping.addProductsToThePharmacy.model.searchAllPharmacy.SearchAllPharmacyResponse
 import com.devartlab.a4eshopping.main.model.login4EShopping.Login4EShoppingRequest
+import com.devartlab.ui.main.ui.eShopping.ticket.model.sendMessages.SendMessagesResponse
 import com.devartlab.a4eshopping.orientationVideos.model.ResponseVideos
-import com.devartlab.a4eshopping.pharmacySales.model.PharmacySalesResponse
-import com.devartlab.a4eshopping.ticket.model.addRate.AddRateRequest
-import com.devartlab.a4eshopping.ticket.model.addRate.AddRateResponse
-import com.devartlab.a4eshopping.ticket.model.addTicket.AddTicketRequest
-import com.devartlab.a4eshopping.ticket.model.addTicket.AddTicketRsponse
-import com.devartlab.a4eshopping.ticket.model.deleteMessages.DeleteMessagesResponse
-import com.devartlab.a4eshopping.ticket.model.deleteTickets.DeleteTicketsResponse
-import com.devartlab.a4eshopping.ticket.model.fetchMessages.FetchMessagesResponse
-import com.devartlab.a4eshopping.ticket.model.getContacts.GetContactsResponse
 import com.devartlab.data.room.activity.ActivityEntity
 import com.devartlab.data.room.filterdata.FilterDataEntity
 import com.devartlab.data.room.list.ListEntity
 import com.devartlab.data.room.specialty.SpecialtyParentEntity
 import com.devartlab.model.*
 import com.devartlab.ui.main.ui.devartlink.letsTalk.ChatThread.model.ChatListResponse
-import com.devartlab.ui.main.ui.devartlink.letsTalk.ChatThread.model.sendMessages.SendMessagesResponse
 import com.devartlab.ui.main.ui.devartlink.letsTalk.home.model.ImageModel.ImageProfileResponse
 import com.devartlab.ui.main.ui.devartlink.letsTalk.home.model.mareSeen.MarkSeenRequest
 import com.devartlab.ui.main.ui.devartlink.letsTalk.home.model.mareSeen.MarkSeenResponse
@@ -44,10 +29,25 @@ import com.devartlab.ui.main.ui.devartlink.letsTalk.home.model.peopleList.People
 import com.devartlab.ui.main.ui.devartlink.letsTalk.model.searchPeople.SearchPeapleResponse
 import com.devartlab.ui.main.ui.devartlink.letsTalk.model.user.UserResponse
 import com.devartlab.ui.main.ui.devartlink.letsTalk.model.userID.UserIDResponse
-import com.devartlab.ui.main.ui.eShopping.PharmacyBinding.uploadPharmacyFiles.model.pharmacydata.GetInfoPharmacyResponse
+import com.devartlab.ui.main.ui.eShopping.pharmacyBinding.uploadPharmacyFiles.model.pharmacydata.GetInfoPharmacyResponse
 import com.devartlab.ui.main.ui.eShopping.addProductsToThePharmacy.model.showCart.ShowCartResponse
 import com.devartlab.ui.main.ui.eShopping.main.model.login4EShopping.Login4EShoppingResponse
+import com.devartlab.ui.main.ui.eShopping.pharmacyBinding.allComments.model.AllCommentsResponse
+import com.devartlab.ui.main.ui.eShopping.pharmacyBinding.model.connectPharmacy.ConnectPharmacyResponse
+import com.devartlab.ui.main.ui.eShopping.pharmacyBinding.model.searchForPharmacy.ConnetctedPharmaciesResponse
+import com.devartlab.ui.main.ui.eShopping.pharmacyBinding.model.searchForPharmacy.SearchForPharmacyRequest
+import com.devartlab.ui.main.ui.eShopping.pharmacyBinding.model.searchForPharmacy.SearchForPharmacyResponse
+import com.devartlab.ui.main.ui.eShopping.pharmacyBinding.uploadPharmacyFiles.model.updatePharmacyDetails
+import com.devartlab.ui.main.ui.eShopping.pharmacySales.model.PharmacySalesResponse
 import com.devartlab.ui.main.ui.eShopping.pharmacySales.model.detailsPharmacySales.DetailsPharmacySalesResponse
+import com.devartlab.ui.main.ui.eShopping.ticket.model.addRate.AddRateRequest
+import com.devartlab.ui.main.ui.eShopping.ticket.model.addRate.AddRateResponse
+import com.devartlab.ui.main.ui.eShopping.ticket.model.addTicket.AddTicketRequest
+import com.devartlab.ui.main.ui.eShopping.ticket.model.addTicket.AddTicketRsponse
+import com.devartlab.ui.main.ui.eShopping.ticket.model.deleteMessages.DeleteMessagesResponse
+import com.devartlab.ui.main.ui.eShopping.ticket.model.deleteTickets.DeleteTicketsResponse
+import com.devartlab.ui.main.ui.eShopping.ticket.model.fetchMessages.FetchMessagesResponse
+import com.devartlab.ui.main.ui.eShopping.ticket.model.getContacts.GetContactsResponse
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import io.reactivex.Observable
@@ -744,7 +744,7 @@ interface ApiServices {
     fun SEND_MESSAGES(
         @Part file: MultipartBody.Part,
         @PartMap send: MutableMap<String, RequestBody>
-    ): Call<SendMessagesResponse?>?
+    ): Call<com.devartlab.ui.main.ui.devartlink.letsTalk.ChatThread.model.sendMessages.SendMessagesResponse?>?
 
     @POST("makeSeen")
     fun MARK_SEEN(@Body markSeenRequest: MarkSeenRequest?): Call<MarkSeenResponse?>?
@@ -887,14 +887,14 @@ interface ApiServices {
         @Header("Authorization") token: String?,
         @Part file: MultipartBody.Part,
         @PartMap send: MutableMap<String, RequestBody>
-    ): Call<com.devartlab.a4eshopping.ticket.model.sendMessages.SendMessagesResponse?>?
+    ): Call<SendMessagesResponse?>?
 
     @Multipart
     @POST("sendmesage")
     fun SEND_MESSAGES(
         @Header("Authorization") token: String?,
         @PartMap send: MutableMap<String, RequestBody>
-    ): Call<com.devartlab.a4eshopping.ticket.model.sendMessages.SendMessagesResponse?>?
+    ): Call<SendMessagesResponse?>?
 
     @POST("ratetickets")
     fun addRate(

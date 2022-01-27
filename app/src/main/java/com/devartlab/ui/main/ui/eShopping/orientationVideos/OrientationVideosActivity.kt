@@ -1,4 +1,4 @@
-package com.devartlab.ui.main.ui.eshopping.orientationVideos
+package com.devartlab.ui.main.ui.eShopping.orientationVideos
 
 import android.content.Intent
 import android.net.Uri
@@ -15,14 +15,11 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.devartlab.R
-import com.devartlab.a4eshopping.orientationVideos.VideosViewModel
 import com.devartlab.a4eshopping.orientationVideos.model.Item
-import com.devartlab.a4eshopping.orientationVideos.videoActivity
 import com.devartlab.base.BaseApplication
 import com.devartlab.data.shared.DataManager
 import com.devartlab.databinding.ActivityOrientationVideosBinding
 import com.devartlab.model.AdModel
-import com.devartlab.ui.main.ui.eShopping.orientationVideos.VideoListAdapter
 import com.devartlab.ui.main.ui.moreDetailsAds.MoreDetailsAdsActivity
 import com.devartlab.utils.Constants
 import com.devartlab.utils.MainSliderAdapter

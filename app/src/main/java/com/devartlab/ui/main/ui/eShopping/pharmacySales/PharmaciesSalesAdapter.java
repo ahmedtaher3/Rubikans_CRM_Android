@@ -11,8 +11,8 @@ import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.devartlab.R;
-import com.devartlab.a4eshopping.pharmacySales.model.Data;
 import com.devartlab.databinding.PharmacySalesItemBinding;
+import com.devartlab.ui.main.ui.eShopping.pharmacySales.model.Data;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

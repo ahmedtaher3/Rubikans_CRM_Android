@@ -1,4 +1,4 @@
-package com.devartlab.ui.main.ui.eShopping.PharmacyBinding.addLocation
+package com.devartlab.ui.main.ui.eShopping.pharmacyBinding.addLocation
 
 import android.content.Context
 import android.content.Intent
@@ -19,13 +19,12 @@ import com.devartlab.R
 import com.devartlab.a4eshopping.PharmacyBinding.addLocation.AddLocationViewModel
 import com.devartlab.a4eshopping.PharmacyBinding.addLocation.model.updateAddress.UpdateAddressRequest
 import com.devartlab.databinding.ActivityAddLocationBinding
-import com.devartlab.ui.main.ui.a4eshopping.main.Home4EShoppingActivity
 import com.devartlab.utils.CommonUtilities
 import com.devartlab.utils.LocationUtils
 import com.devartlab.utils.ProgressLoading
 import kotlinx.android.synthetic.main.plan_item.*
 import android.location.Geocoder
-import com.devartlab.ui.main.ui.eShopping.PharmacyBinding.PharmacyBindingActivity
+import com.devartlab.ui.main.ui.eShopping.pharmacyBinding.PharmacyBindingActivity
 import java.lang.Exception
 import java.util.*
 

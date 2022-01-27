@@ -33,12 +33,12 @@ import com.devartlab.databinding.ActivityMainBinding
 import com.devartlab.databinding.NavHeaderMainBinding
 import com.devartlab.model.AdModel
 import com.devartlab.model.CardModel
-import com.devartlab.ui.main.ui.a4eshopping.main.Home4EShoppingActivity
 import com.devartlab.ui.main.ui.callmanagement.CallManagementActivity
 import com.devartlab.ui.main.ui.callmanagement.home.MenuListAdapter
 import com.devartlab.ui.main.ui.callmanagement.syncdata.SyncDataDialog
 import com.devartlab.ui.main.ui.contactlist.ui.main.ContactsActivity
 import com.devartlab.ui.main.ui.devartlink.DevartLinkActivity
+import com.devartlab.ui.main.ui.eShopping.main.Home4EShoppingActivity
 import com.devartlab.ui.main.ui.eShopping.utils.UserPreferenceHelper
 import com.devartlab.ui.main.ui.employeeservices.SelfServiceActivity
 import com.devartlab.ui.main.ui.employeeservices.approval.ApprovalRequestsFragment

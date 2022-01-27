@@ -1,4 +1,4 @@
-package com.devartlab.a4eshopping.orientationVideos
+package com.devartlab.ui.main.ui.eShopping.orientationVideos
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel

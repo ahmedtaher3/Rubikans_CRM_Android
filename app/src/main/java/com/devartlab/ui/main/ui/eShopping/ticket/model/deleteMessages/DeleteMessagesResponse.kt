@@ -1,4 +1,4 @@
-package com.devartlab.a4eshopping.ticket.model.deleteMessages
+package com.devartlab.ui.main.ui.eShopping.ticket.model.deleteMessages
 
 data class DeleteMessagesResponse(
     val success: String

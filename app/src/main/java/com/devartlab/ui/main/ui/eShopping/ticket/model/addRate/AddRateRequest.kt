@@ -1,4 +1,4 @@
-package com.devartlab.a4eshopping.ticket.model.addRate
+package com.devartlab.ui.main.ui.eShopping.ticket.model.addRate
 
 data class AddRateRequest(
     val id: String,
