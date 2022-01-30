@@ -1,15 +1,14 @@
 package com.devartlab.ui.main.ui.eShopping.orientationVideos
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.devartlab.R
 import com.devartlab.databinding.ActivityVideoBinding
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
-import kotlinx.android.synthetic.main.exo_playback_control_view.view.*
 
-class videoActivity : AppCompatActivity() {
+class VideoActivity : AppCompatActivity() {
     lateinit var binding: ActivityVideoBinding
     var _id: String? = null
     var _name: String? = null
