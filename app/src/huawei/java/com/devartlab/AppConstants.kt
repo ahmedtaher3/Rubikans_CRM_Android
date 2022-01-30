@@ -9,5 +9,6 @@ object AppConstants {
     const val ViewsPermissions = true
     const val ReportLimit = true
     const val UpdateUserPlan = true
+    const val DeviceType = "huawei"
 
 }

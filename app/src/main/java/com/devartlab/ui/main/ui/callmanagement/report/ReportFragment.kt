@@ -547,7 +547,7 @@ class ReportFragment : BaseFragment<FragmentReportBinding>(), InvoiceTypsAdapter
                                                                             "1",
                                                                             "1",
                                                                             true,
-                                                                            startTime)
+                                                                            startTime.replace("null",""))
                                             }
                                             else {
                                                 viewModel.confirmStartPoint(CommonUtilities.convertDateToMillis(DATE).toString(),
@@ -558,7 +558,7 @@ class ReportFragment : BaseFragment<FragmentReportBinding>(), InvoiceTypsAdapter
                                                                             location?.latitude.toString(),
                                                                             location?.longitude.toString(),
                                                                             true,
-                                                                            startTime)
+                                                                            startTime.replace("null",""))
                                             }
                                         }
 

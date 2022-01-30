@@ -71,12 +71,12 @@ class SharedPrefsHelper(context: Context) {
 
     //////////////////////////////////////////////////////////////////////////////////
 
-    fun putHuaweiToken(s: String) {
-        mSharedPreferences!!.edit().putString(HuaweiToken, s).apply()
+    fun putDeviceToken(s: String) {
+        mSharedPreferences!!.edit().putString(DeviceToken, s).apply()
     }
 
-    val huaweiToken: String?
-        get() = mSharedPreferences!!.getString(HuaweiToken , "")
+    val deviceToken: String?
+        get() = mSharedPreferences!!.getString(DeviceToken , "")
     //////////////////////////////////////////////////////////////////////////////////
 
     val googleService: Boolean
@@ -256,7 +256,7 @@ class SharedPrefsHelper(context: Context) {
         const val UserPassword = "UserPassword"
         private const val LANG = "LANG"
         private const val Token = "Token"
-        private const val HuaweiToken = "HuaweiToken"
+        private const val DeviceToken = "DeviceToken"
     }
 
     init {

@@ -10,5 +10,6 @@ object AppConstants {
     const val ViewsPermissions = false
     const val ReportLimit = false
     const val UpdateUserPlan = false
+    const val DeviceType = "google"
 
 }

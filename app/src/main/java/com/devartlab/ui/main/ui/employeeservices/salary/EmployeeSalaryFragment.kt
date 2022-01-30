@@ -6,12 +6,8 @@ import android.content.Intent
 import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import android.os.Build
 import android.os.Bundle
-import android.text.Html
-import android.text.TextUtils
 import android.util.Base64
-import android.util.Log
 import android.util.TypedValue
 import android.view.Menu
 import android.view.MenuInflater
@@ -22,12 +18,12 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.devartlab.R
 import com.devartlab.base.BaseFragment
-import com.devartlab.data.retrofit.ApiServices
-import com.devartlab.databinding.FragmentEmployeeSalaryBinding
 import com.devartlab.data.room.filterdata.FilterDataEntity
+import com.devartlab.databinding.FragmentEmployeeSalaryBinding
 import com.devartlab.model.AdModel
 import com.devartlab.model.SalaryItemDetails
 import com.devartlab.ui.dialogs.chooseemployee.ChooseEmployee
@@ -115,8 +111,14 @@ class EmployeeSalaryFragment : BaseFragment<FragmentEmployeeSalaryBinding>(),
         val dateFormatYear: DateFormat = SimpleDateFormat("yyyy", Locale.US)
         val dateFormatMonth: DateFormat = SimpleDateFormat("MM", Locale.US)
         val date = Date()
-        currentMonth = (dateFormatMonth.format(date).toInt() - 1).toString()
-        currentyear = dateFormatYear.format(date).toString()
+        if (dateFormatMonth.format(date).toInt() == 1) {
+            currentMonth = "12"
+            currentyear = (dateFormatYear.format(date).toInt() - 1).toString()
+        } else {
+            currentMonth = (dateFormatMonth.format(date).toInt() - 1).toString()
+            currentyear = dateFormatYear.format(date).toString()
+        }
+
 
 
         salaryDetailsAdapter = SalaryDetailsAdapter(baseActivity, viewModel.dataManager, this)
@@ -221,8 +223,16 @@ class EmployeeSalaryFragment : BaseFragment<FragmentEmployeeSalaryBinding>(),
         val dateFormatYear: DateFormat = SimpleDateFormat("yyyy", Locale.US)
         val dateFormatMonth: DateFormat = SimpleDateFormat("MM", Locale.US)
         val date = Date()
-        textView.text = (dateFormatMonth.format(date).toString()
-            .toInt() - 1).toString() + " - " + dateFormatYear.format(date).toString()
+        if (dateFormatMonth.format(date).toInt() == 1) {
+            currentMonth = "12"
+            currentyear = (dateFormatYear.format(date).toInt() - 1).toString()
+        } else {
+            currentMonth = (dateFormatMonth.format(date).toInt() - 1).toString()
+            currentyear = dateFormatYear.format(date).toString()
+        }
+
+
+        textView.text = "$currentMonth - $currentyear"
 
 
         textView.setOnClickListener(View.OnClickListener {
@@ -289,39 +299,33 @@ class EmployeeSalaryFragment : BaseFragment<FragmentEmployeeSalaryBinding>(),
 
     override fun showDetails(id: Int, value: String) {
 
-        var model = SalaryItemDetails()
+        val mData = ArrayList<SalaryItemDetails>()
+
         for (it in list) {
             if (id == it.duesDeductionId) {
-                model = it
-                break
+                mData.add(it)
             }
         }
 
-        if (model.description != null) {
+        if (!mData.isNullOrEmpty()) {
 
-            if (!TextUtils.isEmpty(model.description)) {
-                val dialogBuilder = AlertDialog.Builder(baseActivity)
-                // ...Irrelevant code for customizing the buttons and title
-                val inflater = this.layoutInflater
-                val dialogView = inflater.inflate(R.layout.salary_details, null)
-                dialogBuilder.setView(dialogView)
-                val dismiss = dialogView.findViewById<View>(R.id.dismiss) as TextView
-                val desc = dialogView.findViewById<View>(R.id.desc) as TextView
-                val descValue = dialogView.findViewById<View>(R.id.descValue) as TextView
-                val notes = dialogView.findViewById<View>(R.id.notes) as TextView
-                val totalValue = dialogView.findViewById<View>(R.id.totalValue) as TextView
+            val dialogBuilder = AlertDialog.Builder(baseActivity)
+            // ...Irrelevant code for customizing the buttons and title
+            val inflater = this.layoutInflater
+            val dialogView = inflater.inflate(R.layout.salary_details, null)
+            dialogBuilder.setView(dialogView)
+            val dismiss = dialogView.findViewById<View>(R.id.dismiss) as TextView
+            val recycler = dialogView.findViewById<View>(R.id.recycler) as RecyclerView
+
+            val alertDialog = dialogBuilder.create()
+            dismiss.setOnClickListener(View.OnClickListener { alertDialog.dismiss() })
+            val adapter = SalaryRowDetailsAdapter(baseActivity)
+            recycler.adapter = adapter
+            adapter.setMyData(mData)
+            alertDialog.show()
+            alertDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
 
-                val alertDialog = dialogBuilder.create()
-                dismiss.setOnClickListener(View.OnClickListener { alertDialog.dismiss() })
-                desc.setText(model.description)
-                descValue.setText(model.valueDescription)
-                notes.setText(model.notes)
-                totalValue.setText(value)
-
-                alertDialog.show()
-
-            }
         }
     }
 

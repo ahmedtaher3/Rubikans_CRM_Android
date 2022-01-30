@@ -30,12 +30,12 @@ class DataManager(var mSharedPrefsHelper: SharedPrefsHelper) {
     ////////////////////////////////////////////////////////////////////////////////
 
 
-    fun saveHuaweiToken(b: String) {
-        mSharedPrefsHelper.putHuaweiToken(b)
+    fun saveDeviceToken(b: String) {
+        mSharedPrefsHelper.putDeviceToken(b)
     }
 
-    val huaweiToken: String?
-        get() = mSharedPrefsHelper.huaweiToken
+    val deviceToken: String?
+        get() = mSharedPrefsHelper.deviceToken
 
     ////////////////////////////////////////////////////////////////////////////////
 

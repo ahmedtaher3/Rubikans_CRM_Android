@@ -150,6 +150,15 @@
             <intent-filter>
                 <action android:name="com.mazenrashed.universalbluethootprinter.ui.ScanningActivity.LAUNCH"/>
             </intent-filter>
-        </activity></application>
+        </activity>
+        <activity android:name=".ui.main.ui.eShopping.main.Home4EShoppingActivity" />
+        <activity android:name=".ui.main.ui.eShopping.orientationVideos.OrientationVideosActivity" />
+        <activity android:name=".ui.main.ui.eShopping.pharmacyBinding.PharmacyBindingActivity" />
+        <activity android:name=".ui.main.ui.eShopping.addProductsToThePharmacy.AddProductsPharmacyActivity" />
+        <activity android:name=".ui.main.ui.eShopping.orientationVideos.VideoActivity" />
+        <activity android:name=".ui.main.ui.eShopping.pharmacyBinding.addLocation.AddLocationActivity" />
+        <activity android:name=".ui.main.ui.eShopping.pharmacyBinding.uploadPharmacyFiles.UploadPharmacyFilesActivity" />
+        <activity android:name=".ui.main.ui.eShopping.pharmacyBinding.allComments.AllCommentsActivity" />
+    </application>
 
 </manifest>

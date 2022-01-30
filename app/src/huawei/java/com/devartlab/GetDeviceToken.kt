@@ -24,10 +24,10 @@ class GetDeviceToken(private val activity: AppCompatActivity) {
                     val token = HmsInstanceId.getInstance(activity).getToken(appId, "HCM")
                     Log.i(TAG, "get token:$token")
                     if (token.isNullOrBlank()) {
-                        if (dataManager.huaweiToken.isNullOrBlank()) {
+                        if (dataManager.deviceToken.isNullOrBlank()) {
                             result?.success("")
                         } else {
-                            result?.success(dataManager.huaweiToken)
+                            result?.success(dataManager.deviceToken)
                         }
                     } else {
                         result?.success(token)

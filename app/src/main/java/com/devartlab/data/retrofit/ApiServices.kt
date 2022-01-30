@@ -13,7 +13,7 @@ import com.devartlab.a4eshopping.addProductsToThePharmacy.model.addOrderToCart.A
 import com.devartlab.a4eshopping.addProductsToThePharmacy.model.addProduct.AddToCardRequest
 import com.devartlab.a4eshopping.addProductsToThePharmacy.model.addProduct.AddToCardResponse
 import com.devartlab.a4eshopping.addProductsToThePharmacy.model.searchAllPharmacy.SearchAllPharmacyResponse
-import com.devartlab.a4eshopping.main.model.login4EShopping.Login4EShoppingRequest
+import com.devartlab.ui.main.ui.eShopping.main.model.login4EShopping.Login4EShoppingRequest
 import com.devartlab.ui.main.ui.eShopping.ticket.model.sendMessages.SendMessagesResponse
 import com.devartlab.a4eshopping.orientationVideos.model.ResponseVideos
 import com.devartlab.data.room.activity.ActivityEntity

@@ -52,7 +52,7 @@ class HuaweiPushNotificationService : HmsMessageService() {
     private fun refreshedTokenToServer(token: String) {
 
         try {
-            dataManager.saveHuaweiToken(token)
+            dataManager.saveDeviceToken(token)
         } catch (e: java.lang.Exception) {
             e.printStackTrace()
         }

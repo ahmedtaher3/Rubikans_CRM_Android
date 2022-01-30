@@ -1,6 +1,5 @@
 package com.devartlab.ui.main
 
-import com.devartlab.GetDeviceToken
 import android.app.job.JobScheduler
 import android.content.ActivityNotFoundException
 import android.content.Context
@@ -26,9 +25,10 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
+import com.devartlab.AppConstants
+import com.devartlab.GetDeviceToken
 import com.devartlab.R
 import com.devartlab.UpdatePlan
-import com.devartlab.a4eshopping.main.model.login4EShopping.Login4EShoppingRequest
 import com.devartlab.base.BaseActivity
 import com.devartlab.databinding.ActivityMainBinding
 import com.devartlab.databinding.NavHeaderMainBinding
@@ -40,6 +40,7 @@ import com.devartlab.ui.main.ui.callmanagement.syncdata.SyncDataDialog
 import com.devartlab.ui.main.ui.contactlist.ui.main.ContactsActivity
 import com.devartlab.ui.main.ui.devartlink.DevartLinkActivity
 import com.devartlab.ui.main.ui.eShopping.main.Home4EShoppingActivity
+import com.devartlab.ui.main.ui.eShopping.main.model.login4EShopping.Login4EShoppingRequest
 import com.devartlab.ui.main.ui.eShopping.utils.UserPreferenceHelper
 import com.devartlab.ui.main.ui.employeeservices.SelfServiceActivity
 import com.devartlab.ui.main.ui.employeeservices.approval.ApprovalRequestsFragment
@@ -185,13 +186,13 @@ class MainActivity : BaseActivity<ActivityMainBinding?>(), View.OnClickListener,
         pass = viewModel.dataManager.user.password
         token = viewModel.dataManager.token
         login4EShoppingRequest =
-            Login4EShoppingRequest(name!!, pass!!, "mr", token!!, "device_type")
-        viewModel!!.getUserModel(login4EShoppingRequest)
+            Login4EShoppingRequest(name!!, pass!!, "mr", token!!, AppConstants.DeviceType)
+        viewModel!!.getUserModel(this,login4EShoppingRequest)
 
         val getToken = GetDeviceToken(this)
         getToken.getToken(object : GetDeviceToken.TokenResult() {
             override fun success(token: String?) {
-                viewModel.dataManager.saveHuaweiToken(token!!)
+                viewModel.dataManager.saveDeviceToken(token!!)
             }
 
             override fun failure(msg: String?) {
