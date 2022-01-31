@@ -160,7 +160,7 @@ public class RetrofitClient extends Application {
             retrofit1 = new Retrofit.Builder()
                     .addConverterFactory(GsonConverterFactory.create())
                     .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                    .baseUrl("https://t4e.4eshopping.com/api/")
+                    .baseUrl(AppConstants.forEShoppingURL)
                     .client(client)
                     .build();
         }

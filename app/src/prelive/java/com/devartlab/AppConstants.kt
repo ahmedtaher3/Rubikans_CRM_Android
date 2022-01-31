@@ -11,5 +11,6 @@ object AppConstants {
     const val ReportLimit = false
     const val UpdateUserPlan = false
     const val DeviceType = "google"
+    const val forEShoppingURL = "https://t4e.4eshopping.com/api/"
 
 }
