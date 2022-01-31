@@ -75,8 +75,12 @@ class TicketActivity : AppCompatActivity() {
                         viewModel!!.getGetContacts("2", "")
                     }
                     R.id.action_close -> {
-                        binding.edFilter.setText(R.string.action_inreview)
+                        binding.edFilter.setText(R.string.action_close)
                         viewModel!!.getGetContacts("3", "")
+                    }
+                    R.id.action_pending -> {
+                        binding.edFilter.setText(R.string.action_pending)
+                        viewModel!!.getGetContacts("4", "")
                     }
                 }
                 true

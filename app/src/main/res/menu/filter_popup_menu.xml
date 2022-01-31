@@ -17,4 +17,8 @@
         android:id="@+id/action_close"
         android:title="@string/action_close"
         app:showAsAction="never"/>
+    <item
+        android:id="@+id/action_pending"
+        android:title="@string/action_pending"
+        app:showAsAction="never"/>
 </menu>
