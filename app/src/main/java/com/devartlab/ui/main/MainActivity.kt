@@ -187,7 +187,7 @@ class MainActivity : BaseActivity<ActivityMainBinding?>(), View.OnClickListener,
         token = viewModel.dataManager.token
         login4EShoppingRequest =
             Login4EShoppingRequest(name!!, pass!!, "mr", token!!, AppConstants.DeviceType)
-        viewModel!!.getUserModel(this,login4EShoppingRequest)
+        viewModel!!.getUserModel(this, login4EShoppingRequest)
 
         val getToken = GetDeviceToken(this)
         getToken.getToken(object : GetDeviceToken.TokenResult() {
@@ -637,12 +637,21 @@ class MainActivity : BaseActivity<ActivityMainBinding?>(), View.OnClickListener,
 
             }
             6 -> {
-                if (UserPreferenceHelper.getUser().type_code == "pv#s7#w?x") {
+                if (AppConstants.ShoppingPermission) {
+                    if (UserPreferenceHelper.getUser().type_code == "pv#s7#w?x") {
+                        val intent = Intent(this@MainActivity, Home4EShoppingActivity::class.java)
+                        startActivity(intent)
+                    } else {
+                        Toast.makeText(
+                            this@MainActivity,
+                            "You haven't permission",
+                            Toast.LENGTH_SHORT
+                        )
+                            .show()
+                    }
+                } else {
                     val intent = Intent(this@MainActivity, Home4EShoppingActivity::class.java)
                     startActivity(intent)
-                } else {
-                    Toast.makeText(this@MainActivity, "You haven't permission", Toast.LENGTH_SHORT)
-                        .show()
                 }
             }
         }

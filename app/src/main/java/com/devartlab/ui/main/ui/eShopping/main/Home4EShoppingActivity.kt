@@ -2,9 +2,10 @@ package com.devartlab.ui.main.ui.eShopping.main
 
 import android.content.Intent
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
@@ -28,8 +29,10 @@ import com.devartlab.utils.PicassoImageLoadingService
 import com.jarvanmo.exoplayerview.media.SimpleMediaSource
 import ss.com.bannerslider.Slider
 
-class Home4EShoppingActivity : AppCompatActivity() ,
-    MenuListAdapter.OnHomeItemClick{
+private const val TAG = "Home4EShoppingActivity"
+
+class Home4EShoppingActivity : AppCompatActivity(),
+    MenuListAdapter.OnHomeItemClick {
 
     lateinit var binding: Activity4eshoppingBinding
     lateinit var adapter: MenuListAdapter
@@ -38,8 +41,10 @@ class Home4EShoppingActivity : AppCompatActivity() ,
     lateinit var viewModel: Home4EShoppingViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this,
-            R.layout.activity_4eshopping)
+        binding = DataBindingUtil.setContentView(
+            this,
+            R.layout.activity_4eshopping
+        )
         setSupportActionBar(binding.toolbar)
         supportActionBar!!.title = getString(R.string.eshopping)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
@@ -51,10 +56,38 @@ class Home4EShoppingActivity : AppCompatActivity() ,
 
     private fun setUpRecycler() {
         val list = ArrayList<CardModel>()
-        list.add(CardModel(1, resources.getString(R.string.orientation_videos), "",R.drawable.ic_video))
-        list.add(CardModel(2, resources.getString(R.string.Pharmacy_binding), "", R.drawable.ic_pharmacy_binding))
-        list.add(CardModel(3, resources.getString(R.string.Pharmacy_sales), "", R.drawable.pharmacy_sales))
-        list.add(CardModel(4, resources.getString(R.string.Add_products_to_Pharmacy), "", R.drawable.ic_add_pharmacy))
+        list.add(
+            CardModel(
+                1,
+                resources.getString(R.string.orientation_videos),
+                "",
+                R.drawable.ic_video
+            )
+        )
+        list.add(
+            CardModel(
+                2,
+                resources.getString(R.string.Pharmacy_binding),
+                "",
+                R.drawable.ic_pharmacy_binding
+            )
+        )
+        list.add(
+            CardModel(
+                3,
+                resources.getString(R.string.Pharmacy_sales),
+                "",
+                R.drawable.pharmacy_sales
+            )
+        )
+        list.add(
+            CardModel(
+                4,
+                resources.getString(R.string.Add_products_to_Pharmacy),
+                "",
+                R.drawable.ic_add_pharmacy
+            )
+        )
         list.add(CardModel(5, resources.getString(R.string.Add_ticket), "", R.drawable.ic_chat))
 
         adapter = MenuListAdapter(this, list, this)
@@ -76,8 +109,8 @@ class Home4EShoppingActivity : AppCompatActivity() ,
                 startActivity(intent)
             }
             3 -> {
-                    val intent = Intent(this, PharmacySalesActivity::class.java)
-                    startActivity(intent)
+                val intent = Intent(this, PharmacySalesActivity::class.java)
+                startActivity(intent)
             }
             4 -> {
                 val intent = Intent(this, AddProductsPharmacyActivity::class.java)
@@ -98,6 +131,7 @@ class Home4EShoppingActivity : AppCompatActivity() ,
     fun ads() {
         var model: AdModel? = null
         for (m in viewModel.dataManager.ads.ads!!) {
+            Log.d(TAG, "ads: ${m.pageCode}")
             if (m.pageCode?.toInt() == Constants.HOME_4ESHOPPING) {
                 model = m
                 binding.constrAds.setVisibility(View.VISIBLE)
@@ -179,11 +213,13 @@ class Home4EShoppingActivity : AppCompatActivity() ,
             }
         }
     }
+
     fun openWebPage(url: String?) {
         val uri = Uri.parse(url)
         val intent = Intent(Intent.ACTION_VIEW, uri)
         startActivity(intent)
     }
+
     override fun onStop() {
         super.onStop()
         binding.videoView.stop()

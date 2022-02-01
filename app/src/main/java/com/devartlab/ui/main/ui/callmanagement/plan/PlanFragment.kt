@@ -34,7 +34,6 @@ import com.devartlab.ui.main.ui.callmanagement.plan.choosestartpoint.ChooseStart
 import com.devartlab.ui.main.ui.callmanagement.plan.choosestartpoint.ChooseStartPointInterFace
 import com.devartlab.ui.main.ui.callmanagement.plan.cycles.CyclesDialog
 import com.devartlab.utils.*
-import com.google.gson.Gson
 import devs.mulham.horizontalcalendar.HorizontalCalendar
 import devs.mulham.horizontalcalendar.utils.HorizontalCalendarListener
 import io.reactivex.Single
@@ -567,26 +566,7 @@ class PlanFragment : BaseFragment<FragmentPlanBinding?>(), ActivitiesAdapter.Cho
 
             fullList = it as ArrayList
 
-            for (m in adList!!) {
 
-                val model = PlanEntity()
-                model.isAd = true
-                model.adModel = Gson().toJson(m as Any?)
-                if (m.recyclerPosition?.toInt()!! > 0) {
-                    if (fullList?.size!! > m.recyclerPosition?.toInt()!!) {
-                        fullList?.add(m.recyclerPosition?.toInt()!!, model)
-                    }
-                    else
-                    {
-                        fullList?.add(fullList?.size!!, model)
-                    }
-                }
-                else {
-                    fullList?.add(m.recyclerPosition?.toInt()!!, model)
-                }
-
-
-            }
 
             adapter!!.setMyData(fullList!!)
 
