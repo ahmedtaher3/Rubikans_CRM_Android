@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -105,36 +106,6 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ViewHo
         final DataItem dataItem = messages.get(position);
         viewHolder.content.setText(dataItem.getMessage());
         viewHolder.time.setText(covertTimeToText(dataItem.getUpdatedAt()));
-        viewHolder.textViewOptions.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //creating a popup menu
-                PopupMenu popup = new PopupMenu(context, viewHolder.textViewOptions);
-                //inflating menu from xml resource
-                popup.inflate(R.menu.lats_talk_menu);
-                //adding click listener
-                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                    @Override
-                    public boolean onMenuItemClick(MenuItem item) {
-                        switch (item.getItemId()) {
-                            case R.id.action_delete:
-                                //handle menu1 click
-                                onItemClickListener.onItemLongClick(position, dataItem);
-                                return true;
-                            case R.id.action_reply:
-                                //handle menu2 click
-                                onItemClickListener2.onItemLongClick2(position, dataItem.getMessage());
-                                return true;
-                            default:
-                                return false;
-                        }
-                    }
-                });
-                //displaying the popup
-                popup.show();
-
-            }
-        });
         if (dataItem.getAttachment() != null) {
             String result = dataItem.getAttachment();
             JSONObject jObject = null;
@@ -150,6 +121,37 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ViewHo
             }
         }
         if (!dataItem.getUserId().equals(UserPreferenceHelper.getUserChat().getId())) {
+            viewHolder.textViewOptions.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    //creating a popup menu
+                    PopupMenu popup = new PopupMenu(context, viewHolder.textViewOptions);
+                    //inflating menu from xml resource
+                    popup.inflate(R.menu.lats_talk_menu);
+                    //adding click listener
+                    popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                        @Override
+                        public boolean onMenuItemClick(MenuItem item) {
+                            switch (item.getItemId()) {
+                                case R.id.action_delete:
+                                    Toast.makeText(context,"you can't delete message",Toast.LENGTH_SHORT).show();
+                                    return true;
+                                case R.id.action_reply:
+                                    onItemClickListener2.onItemLongClick2(position, dataItem.getMessage());
+                                    return true;
+                                case R.id.action_forward:
+                                    onItemClickListener3.onItemLongClick3(position, dataItem.getMessage());
+                                    return true;
+                                default:
+                                    return false;
+                            }
+                        }
+                    });
+                    //displaying the popup
+                    popup.show();
+
+                }
+            });
             viewHolder.sender_name.setText(dataItem.getUserapi().getName());
 
             RetrofitClient.getApis().getImageProfile(dataItem.getUserapi().getId())
@@ -173,6 +175,37 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ViewHo
                     });
         }
         if (dataItem.getUserId().equals(UserPreferenceHelper.getUserChat().getId())) {
+            viewHolder.textViewOptions.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    //creating a popup menu
+                    PopupMenu popup = new PopupMenu(context, viewHolder.textViewOptions);
+                    //inflating menu from xml resource
+                    popup.inflate(R.menu.lats_talk_menu);
+                    //adding click listener
+                    popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                        @Override
+                        public boolean onMenuItemClick(MenuItem item) {
+                            switch (item.getItemId()) {
+                                case R.id.action_delete:
+                                    onItemClickListener.onItemLongClick(position, dataItem);
+                                    return true;
+                                case R.id.action_reply:
+                                    onItemClickListener2.onItemLongClick2(position, dataItem.getMessage());
+                                    return true;
+                                case R.id.action_forward:
+                                    onItemClickListener3.onItemLongClick3(position, dataItem.getMessage());
+                                    return true;
+                                default:
+                                    return false;
+                            }
+                        }
+                    });
+                    //displaying the popup
+                    popup.show();
+
+                }
+            });
             if (dataItem.getSeen().equals("0")) {
                 viewHolder.seen.setImageResource(R.drawable.unseen);
             } else {
@@ -289,6 +322,7 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ViewHo
     }
    OnItemLongClickListener onItemClickListener;
     OnItemLongClickListener2 onItemClickListener2;
+    OnItemLongClickListener3 onItemClickListener3;
     public void setOnItemClickListener(OnItemLongClickListener onItemClickListener) {
         this.onItemClickListener = onItemClickListener;
     }
@@ -300,5 +334,11 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ViewHo
     }
     public interface OnItemLongClickListener2 {
         void onItemLongClick2(int pos, String dataItem);
+    }
+    public void setOnItemClickListener3(OnItemLongClickListener3 onItemClickListener3) {
+        this.onItemClickListener3 = onItemClickListener3;
+    }
+    public interface OnItemLongClickListener3 {
+        void onItemLongClick3(int pos, String dataItem);
     }
 }

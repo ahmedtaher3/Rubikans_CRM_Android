@@ -9,4 +9,8 @@
         android:id="@+id/action_reply"
         android:title="@string/reply"
         app:showAsAction="never"/>
+    <item
+        android:id="@+id/action_forward"
+        android:title="@string/forward"
+        app:showAsAction="never"/>
 </menu>

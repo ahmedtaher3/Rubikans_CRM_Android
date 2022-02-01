@@ -24,6 +24,7 @@ import com.devartlab.ui.main.ui.devartlink.letsTalk.groups.GroupsFragment;
 import com.devartlab.ui.main.ui.devartlink.letsTalk.model.searchPeople.SearchPeapleResponse;
 import com.devartlab.ui.main.ui.devartlink.letsTalk.model.user.UserResponse;
 import com.devartlab.ui.main.ui.devartlink.letsTalk.model.userID.UserIDResponse;
+import com.ogaclejapan.smarttablayout.utils.v4.Bundler;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItemAdapter;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItems;
 
@@ -37,6 +38,7 @@ public class LetsTalkActivity extends AppCompatActivity {
     FragmentPagerItemAdapter adapter;
     DataManager dataManager;
     String name;
+    String forward;
 
     private List<String> people = new ArrayList<>();
     private ArrayAdapter<String> adapterPeople;
@@ -48,7 +50,9 @@ public class LetsTalkActivity extends AppCompatActivity {
         setSupportActionBar(binding.toolbar);
         getSupportActionBar().setTitle(R.string.lat_talk);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
+        if (getIntent().hasExtra("forward")) {
+            forward = getIntent().getStringExtra("forward");
+        }
         viewModel = new ViewModelProvider(this).get(LetsTalkViewModel.class);
 
         dataManager = ((BaseApplication) getApplication()).getDataManager();
@@ -121,7 +125,7 @@ public class LetsTalkActivity extends AppCompatActivity {
     public void prepareTabsLayout() {
         adapter = new FragmentPagerItemAdapter(getSupportFragmentManager(),
                 FragmentPagerItems.with(this)
-                        .add(R.string.title_home, HomeChatFragment.class)
+                        .add(R.string.title_home, HomeChatFragment.class,new Bundler().putString("forward", forward).get())
 //                        .add(R.string.title_groups, GroupsFragment.class)
 //                        .add(R.string.title_t_r, TRFragment.class)
                         .create());

@@ -560,4 +560,5 @@
     <string name="the_commercial_register">البطاقة الشخصية \ السجل التجاري \ الرخصة</string>
     <string name="reply">رد</string>
     <string name="delete">مسح</string>
+    <string name="forward">إعادة التوجيه</string>
 </resources>

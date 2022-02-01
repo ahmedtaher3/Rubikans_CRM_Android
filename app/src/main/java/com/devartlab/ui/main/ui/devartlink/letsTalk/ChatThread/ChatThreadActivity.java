@@ -32,11 +32,13 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.chat.home.HomeChatFragment;
 import com.devartlab.R;
 import com.devartlab.databinding.ActivityChatThreadBinding;
 import com.devartlab.ui.main.ui.devartlink.letsTalk.ChatThread.model.ChatListResponse;
 import com.devartlab.ui.main.ui.devartlink.letsTalk.ChatThread.model.DataItem;
 import com.devartlab.ui.main.ui.devartlink.letsTalk.ChatThread.model.sendMessages.SendMessagesResponse;
+import com.devartlab.ui.main.ui.devartlink.letsTalk.LetsTalkActivity;
 import com.devartlab.ui.main.ui.eShopping.utils.filesUpload.VolleyFileObj;
 import com.devartlab.ui.main.ui.eShopping.utils.UserPreferenceHelper;
 import com.karumi.dexter.Dexter;
@@ -67,6 +69,7 @@ public class ChatThreadActivity extends AppCompatActivity {
     String peopleItem;
     String idUser;
     String people_name;
+    String forward;
     ActivityChatThreadBinding binding;
     private ChatListViewModel viewModel;
     ChatListAdapter adapter;
@@ -95,6 +98,10 @@ public class ChatThreadActivity extends AppCompatActivity {
         if (getIntent().hasExtra("people_name")) {
             people_name = getIntent().getStringExtra("people_name");
             getSupportActionBar().setTitle(people_name);
+        }
+        if (getIntent().hasExtra("forward")) {
+            forward = getIntent().getStringExtra("forward");
+            submit();
         }
         pusher();
         onClickListener();
@@ -203,6 +210,18 @@ public class ChatThreadActivity extends AppCompatActivity {
                         binding.message.setText(getString(R.string.reply)+" :"+dataItem+"\n");
                     }
                 });
+                adapter.setOnItemClickListener3(new ChatListAdapter.OnItemLongClickListener3() {
+                    @Override
+                    public void onItemLongClick3(int pos, String dataItem) {
+//                        Bundle newBundle = new Bundle();
+//                        newBundle.putString("forward", dataItem);
+//                        HomeChatFragment objects = new HomeChatFragment();
+//                        objects.setArguments(newBundle);
+                        Intent intent = new Intent(ChatThreadActivity.this, LetsTalkActivity.class);
+                        intent.putExtra("forward", dataItem);
+                        startActivity(intent);
+                    }
+                });
             }
         });
         viewModel.getSendMessagesResponseMutableLiveData().observe(this, new Observer<SendMessagesResponse>() {
@@ -295,9 +314,17 @@ public class ChatThreadActivity extends AppCompatActivity {
 
     private void submit() {
         Map<String, RequestBody> map = new HashMap<>();
-        RequestBody message = RequestBody.create(MediaType.parse("multipart/form-data"), binding.message.getText().toString());
-        map.put("message", message);
-        Log.e("message", binding.message.getText().toString());
+        if (forward!=null){
+            RequestBody message = RequestBody
+                    .create(MediaType.parse("multipart/form-data"), "forward:\n"+forward);
+            map.put("message", message);
+            Log.e("message", forward);
+        }else {
+            RequestBody message = RequestBody
+                    .create(MediaType.parse("multipart/form-data"), binding.message.getText().toString());
+            map.put("message", message);
+            Log.e("message", binding.message.getText().toString());
+        }
 
         RequestBody id = RequestBody.create(MediaType.parse("multipart/form-data"), UserPreferenceHelper.getUserChat().getId());
         map.put("user_id", id);

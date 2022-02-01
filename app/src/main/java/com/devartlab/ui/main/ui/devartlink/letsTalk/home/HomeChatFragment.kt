@@ -1,6 +1,7 @@
 package com.chat.home
 
 import android.content.Intent
+import android.content.Intent.getIntent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -31,6 +32,7 @@ class HomeChatFragment : Fragment() {
     lateinit var binding: FragmentHomeChatBinding
     var viewModel: HomeViewModel? = null
     private var adapter: PeopleListAdapter? = null
+    var forward: String? = null
     lateinit var markSeenRequest: MarkSeenRequest
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,6 +41,9 @@ class HomeChatFragment : Fragment() {
         // Inflate the layout for this fragment
         binding = DataBindingUtil
             .inflate(inflater!!, R.layout.fragment_home_chat, container, false)
+        if (arguments != null) {
+            forward = requireArguments().getString("forward")
+        }
         binding.lifecycleOwner = this
         return binding.root
     }
@@ -116,6 +121,9 @@ class HomeChatFragment : Fragment() {
                     val intent = Intent(requireContext(), ChatThreadActivity::class.java)
                     intent.putExtra("people_id", dataItem.id)
                     intent.putExtra("people_name", dataItem.userapi.name)
+                    if (forward!=null){
+                        intent.putExtra("forward", forward)
+                    }
                     startActivity(intent)
                 })
             }
