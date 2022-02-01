@@ -558,4 +558,6 @@
     <string name="info_pharmacy">معلومات الصدليه</string>
     <string name="the_tax_card_img">صورة البطاقة الضربية</string>
     <string name="the_commercial_register">البطاقة الشخصية \ السجل التجاري \ الرخصة</string>
+    <string name="reply">رد</string>
+    <string name="delete">مسح</string>
 </resources>

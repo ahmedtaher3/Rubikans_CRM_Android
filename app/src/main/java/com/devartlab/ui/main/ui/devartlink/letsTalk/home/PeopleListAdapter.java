@@ -81,9 +81,13 @@ public class PeopleListAdapter extends RecyclerView.Adapter<PeopleListAdapter.Vi
                     public void onResponse(Call<ImageProfileResponse> call, Response<ImageProfileResponse> response) {
                         if (response.isSuccessful()) {
                             String base64String = response.body().getImg();
-                            String base64Image = base64String.split(",")[1];
-                            byte[] imageAsBytes = Base64.decode(base64Image.getBytes(), Base64.DEFAULT);
-                            viewHolder.binding.profileImage.setImageBitmap(BitmapFactory.decodeByteArray(imageAsBytes, 0, imageAsBytes.length));
+//                            String base64Image = base64String.split(",")[1];
+//                            byte[] imageAsBytes = Base64.decode(base64Image.getBytes(), Base64.DEFAULT);
+//                            viewHolder.binding.profileImage.setImageBitmap(BitmapFactory.decodeByteArray(imageAsBytes, 0, imageAsBytes.length));
+                            final String pureBase64Encoded = base64String.substring(base64String.indexOf(",")  + 1);
+                            final byte[] decodedBytes = Base64.decode(pureBase64Encoded, Base64.DEFAULT);
+                            viewHolder.binding.profileImage.setImageBitmap(BitmapFactory
+                                    .decodeByteArray(decodedBytes, 0, decodedBytes.length));
                         }
                     }
 

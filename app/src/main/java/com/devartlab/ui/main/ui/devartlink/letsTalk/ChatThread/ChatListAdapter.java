@@ -6,10 +6,12 @@ import android.graphics.BitmapFactory;
 import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -23,6 +25,7 @@ import com.devartlab.data.retrofit.RetrofitClient;
 import com.devartlab.data.shared.DataManager;
 import com.devartlab.ui.main.ui.devartlink.letsTalk.ChatThread.model.DataItem;
 import com.devartlab.ui.main.ui.devartlink.letsTalk.home.model.ImageModel.ImageProfileResponse;
+import com.devartlab.ui.main.ui.eShopping.ticket.model.fetchMessages.Data;
 import com.devartlab.ui.main.ui.eShopping.utils.UserPreferenceHelper;
 import com.pusher.client.Pusher;
 import com.pusher.client.channel.Channel;
@@ -102,6 +105,36 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ViewHo
         final DataItem dataItem = messages.get(position);
         viewHolder.content.setText(dataItem.getMessage());
         viewHolder.time.setText(covertTimeToText(dataItem.getUpdatedAt()));
+        viewHolder.textViewOptions.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //creating a popup menu
+                PopupMenu popup = new PopupMenu(context, viewHolder.textViewOptions);
+                //inflating menu from xml resource
+                popup.inflate(R.menu.lats_talk_menu);
+                //adding click listener
+                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        switch (item.getItemId()) {
+                            case R.id.action_delete:
+                                //handle menu1 click
+                                onItemClickListener.onItemLongClick(position, dataItem);
+                                return true;
+                            case R.id.action_reply:
+                                //handle menu2 click
+                                onItemClickListener2.onItemLongClick2(position, dataItem.getMessage());
+                                return true;
+                            default:
+                                return false;
+                        }
+                    }
+                });
+                //displaying the popup
+                popup.show();
+
+            }
+        });
         if (dataItem.getAttachment() != null) {
             String result = dataItem.getAttachment();
             JSONObject jObject = null;
@@ -191,6 +224,7 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ViewHo
         public ImageView attachment;
         public LinearLayout linear_deleted;
         public ConstraintLayout conlay_message;
+        public TextView textViewOptions;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -203,6 +237,7 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ViewHo
             attachment = itemView.findViewById(R.id.imgMsg);
             linear_deleted=itemView.findViewById(R.id.linear_deleted);
             conlay_message=itemView.findViewById(R.id.conlay_message);
+            textViewOptions=itemView.findViewById(R.id.textViewOptions);
         }
     }
 
@@ -252,5 +287,18 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ViewHo
 
         return convTime;
     }
-
+   OnItemLongClickListener onItemClickListener;
+    OnItemLongClickListener2 onItemClickListener2;
+    public void setOnItemClickListener(OnItemLongClickListener onItemClickListener) {
+        this.onItemClickListener = onItemClickListener;
+    }
+    public interface OnItemLongClickListener {
+        void onItemLongClick(int pos, DataItem dataItem);
+    }
+    public void setOnItemClickListener2(OnItemLongClickListener2 onItemClickListener2) {
+        this.onItemClickListener2 = onItemClickListener2;
+    }
+    public interface OnItemLongClickListener2 {
+        void onItemLongClick2(int pos, String dataItem);
+    }
 }

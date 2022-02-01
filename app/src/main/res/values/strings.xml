@@ -566,6 +566,8 @@
     <string name="info_pharmacy">Pharmacy info</string>
     <string name="the_tax_card_img">Tax card photo</string>
     <string name="the_commercial_register">International ID / Commercial / license</string>
+    <string name="reply">Reply</string>
+    <string name="delete">Delete</string>
 
 
 </resources>

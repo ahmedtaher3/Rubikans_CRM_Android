@@ -271,7 +271,7 @@ class MainActivity : BaseActivity<ActivityMainBinding?>(), View.OnClickListener,
                 R.drawable.money
             )
         )
-//        list.add(CardModel(5, "DevartLink", R.drawable.devartlink))
+        list.add(CardModel(5, "DevartLink", R.drawable.devartlink))
         list.add(CardModel(6, "4eShopping", R.drawable.e_shopping))
 
         adapter = MenuListAdapter(this, list, this)

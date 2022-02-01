@@ -1,12 +1,15 @@
 package com.devartlab.ui.main.ui.devartlink.letsTalk.ChatThread;
 
 import android.Manifest;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -14,8 +17,11 @@ import android.provider.Settings;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
+import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -29,6 +35,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.devartlab.R;
 import com.devartlab.databinding.ActivityChatThreadBinding;
 import com.devartlab.ui.main.ui.devartlink.letsTalk.ChatThread.model.ChatListResponse;
+import com.devartlab.ui.main.ui.devartlink.letsTalk.ChatThread.model.DataItem;
 import com.devartlab.ui.main.ui.devartlink.letsTalk.ChatThread.model.sendMessages.SendMessagesResponse;
 import com.devartlab.ui.main.ui.eShopping.utils.filesUpload.VolleyFileObj;
 import com.devartlab.ui.main.ui.eShopping.utils.UserPreferenceHelper;
@@ -184,6 +191,18 @@ public class ChatThreadActivity extends AppCompatActivity {
                 binding.progressBar.setVisibility(View.GONE);
                 adapter = new ChatListAdapter(chatListResponse.getData());
                 binding.recyclerView.setAdapter(adapter);
+                adapter.setOnItemClickListener(new ChatListAdapter.OnItemLongClickListener() {
+                    @Override
+                    public void onItemLongClick(int pos, DataItem dataItem) {
+                        deleteMessagesDialog(dataItem.getId());
+                    }
+                });
+                adapter.setOnItemClickListener2(new ChatListAdapter.OnItemLongClickListener2() {
+                    @Override
+                    public void onItemLongClick2(int pos, String dataItem) {
+                        binding.message.setText(getString(R.string.reply)+" :"+dataItem+"\n");
+                    }
+                });
             }
         });
         viewModel.getSendMessagesResponseMutableLiveData().observe(this, new Observer<SendMessagesResponse>() {
@@ -338,6 +357,31 @@ public class ChatThreadActivity extends AppCompatActivity {
                 token.continuePermissionRequest();
             }
         }).onSameThread().check();
+    }
+    public void deleteMessagesDialog(String id_messages) {
+        Dialog dialog = new Dialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setCancelable(false);
+        dialog.setContentView(R.layout.dialog_delete_message);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        final Window window = dialog.getWindow();
+        window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+        Button BtnCancel = dialog.findViewById(R.id.btn_cancel);
+        Button BtnSubmit = dialog.findViewById(R.id.btn_delete);
+        BtnCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        BtnSubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+  //              viewModel.deleteMessages(id_messages);
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
     }
 
 }

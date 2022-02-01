@@ -46,6 +46,17 @@
                 android:text="@string/deleted" />
 
         </LinearLayout>
+
+        <TextView
+            android:id="@+id/textViewOptions"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:paddingStart="@dimen/activity_horizontal_margin"
+            android:text="&#8942;"
+            android:textAppearance="?android:textAppearanceLarge"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/conlay_message"
             android:layout_width="0dp"
@@ -54,11 +65,9 @@
             android:background="@drawable/message_incoming_bg"
             android:padding="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/textViewOptions"
             app:layout_constraintStart_toEndOf="@+id/img_sender"
             app:layout_constraintTop_toTopOf="parent">
-
-
 
             <TextView
                 android:id="@+id/sender_name"
