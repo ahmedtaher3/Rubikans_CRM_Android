@@ -5,12 +5,13 @@ import android.content.Intent
 import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.ObservableField
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
-import com.devartlab.a4eshopping.main.model.login4EShopping.Login4EShoppingRequest
+import com.devartlab.GetDeviceToken
 import com.devartlab.base.BaseApplication
 import com.devartlab.data.retrofit.ApiServices
 import com.devartlab.data.retrofit.ApiServicesGoogle
@@ -45,7 +46,7 @@ import com.devartlab.data.source.values.ValuesRepository
 import com.devartlab.model.GoogleRequestResponse
 import com.devartlab.model.ProductTable
 import com.devartlab.ui.auth.login.LoginActivity
-import com.devartlab.ui.main.ui.devartlink.letsTalk.model.user.UserResponse
+import com.devartlab.ui.main.ui.eShopping.main.model.login4EShopping.Login4EShoppingRequest
 import com.devartlab.ui.main.ui.eShopping.main.model.login4EShopping.Login4EShoppingResponse
 import com.devartlab.utils.CommonUtilities
 import com.google.gson.Gson
@@ -124,7 +125,6 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         login4EShoppingResponse = MutableLiveData()//login 4eshopping
 
 
-
         progress = MutableLiveData()
         progressGoogle = MutableLiveData()
         responseLiveRequests = MutableLiveData()
@@ -151,7 +151,8 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         listTypeDao = DatabaseClient.getInstance(application)?.appDatabase?.listTypesDao()!!
         contractDao = DatabaseClient.getInstance(application)?.appDatabase?.contractDao()!!
         myBallanceDao = DatabaseClient.getInstance(application)?.appDatabase?.myBallanceDao()!!
-        customerInvoiceDao = DatabaseClient.getInstance(application)?.appDatabase?.customerInvoiceDao()!!
+        customerInvoiceDao =
+            DatabaseClient.getInstance(application)?.appDatabase?.customerInvoiceDao()!!
         filterDataDao = DatabaseClient.getInstance(application)?.appDatabase?.filterDataDao()!!
 
 
@@ -162,8 +163,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         if (dataManager.offlineMood) {
             onlineText.set("Offline")
             onlineBoolean.set(false)
-        }
-        else {
+        } else {
             onlineText.set("Online")
             onlineBoolean.set(true)
         }
@@ -376,9 +376,9 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
                         }.subscribeOn(Schedulers.io()).subscribe()
 
-                               } else {
-                                   Toast.makeText(getApplication(), body.rerurnMessage, Toast.LENGTH_SHORT)
-                                       .show()
+                    } else {
+                        Toast.makeText(getApplication(), body.rerurnMessage, Toast.LENGTH_SHORT)
+                            .show()
                     }
 
 
@@ -460,23 +460,44 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
 
     //function login 4EShopping
-    fun getUserModel(login4EShoppingRequest: Login4EShoppingRequest) {
-        RetrofitClient.getApis4EShopping().LOGIN4ESHOPPING(login4EShoppingRequest)!!
-            .enqueue(object : Callback<Login4EShoppingResponse?> {
-                override fun onResponse(
-                    call: Call<Login4EShoppingResponse?>,
-                    response: Response<Login4EShoppingResponse?>
-                ) {
-                    if (response.isSuccessful) {
-                        login4EShoppingResponse.postValue(response.body())
-                    } else {
-                        login4EShoppingResponse.postValue(response.body())
-                    }
+    fun getUserModel(activity: AppCompatActivity, login4EShoppingRequest: Login4EShoppingRequest) {
+
+        val getToken = GetDeviceToken(activity)
+        getToken.getToken(object : GetDeviceToken.TokenResult() {
+            override fun success(token: String?) {
+                var myToken = ""
+                myToken = if (token.isNullOrBlank()) {
+                    dataManager.deviceToken!!
+                } else {
+                    token
                 }
 
-                override fun onFailure(call: Call<Login4EShoppingResponse?>, t: Throwable) {
-                    errorMessage.postValue(1)
-                }
-            })
+                login4EShoppingRequest.fcm = myToken
+                RetrofitClient.getApis4EShopping().LOGIN4ESHOPPING(login4EShoppingRequest)!!
+                    .enqueue(object : Callback<Login4EShoppingResponse?> {
+                        override fun onResponse(
+                            call: Call<Login4EShoppingResponse?>,
+                            response: Response<Login4EShoppingResponse?>
+                        ) {
+                            if (response.isSuccessful) {
+                                login4EShoppingResponse.postValue(response.body())
+                            } else {
+                                login4EShoppingResponse.postValue(response.body())
+                            }
+                        }
+
+                        override fun onFailure(call: Call<Login4EShoppingResponse?>, t: Throwable) {
+                            errorMessage.postValue(1)
+                        }
+                    })
+            }
+
+            override fun failure(msg: String?) {
+
+
+            }
+
+        })
+
     }
 }

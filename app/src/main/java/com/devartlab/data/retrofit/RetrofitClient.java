@@ -69,10 +69,10 @@ public class RetrofitClient extends Application {
         }
 
         final OkHttpClient okHttpClient = new OkHttpClient.Builder()
-                .connectTimeout(20, TimeUnit.SECONDS)
+                .connectTimeout(5, TimeUnit.MINUTES)
                 .retryOnConnectionFailure(true)
                 .writeTimeout(5, TimeUnit.MINUTES)
-                .readTimeout(60, TimeUnit.SECONDS)
+                .readTimeout(5, TimeUnit.MINUTES)
                 .addInterceptor(loggingInterceptor).build();
 
 
@@ -160,7 +160,7 @@ public class RetrofitClient extends Application {
             retrofit1 = new Retrofit.Builder()
                     .addConverterFactory(GsonConverterFactory.create())
                     .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                    .baseUrl("https://t4e.4eshopping.com/api/")
+                    .baseUrl(AppConstants.forEShoppingURL)
                     .client(client)
                     .build();
         }

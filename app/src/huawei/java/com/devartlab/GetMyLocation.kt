@@ -78,19 +78,20 @@ class GetMyLocation(private val activity: AppCompatActivity) {
     private fun checkLocation(location: Location?): Boolean {
 
 
-        return if (location != null) {
-            val differenceMillis = System.currentTimeMillis() - location.time
-            val minutes = (differenceMillis / 1000) / 60
-            if (minutes > 3) {
-                false
-            }
-            else if (location.latitude < 2 || location.longitude < 2) {
-                false
-            }
-            else location.latitude != location.longitude
+        return if (BuildConfig.DEBUG) {
+            true
+        } else {
+            if (location != null) {
+                val differenceMillis = System.currentTimeMillis() - location.time
+                val minutes = (differenceMillis / 1000) / 60
+                if (minutes > 3) {
+                    false
+                } else if (location.latitude < 2 || location.longitude < 2) {
+                    false
+                } else location.latitude != location.longitude
 
+            } else false
         }
-        else false
 
     }
 

@@ -91,8 +91,8 @@
         <activity android:exported="true" android:name=".ui.trade.InventoryTransferDetailsActivity"/>
         <activity android:exported="true" android:name=".ui.main.ui.devartlink.DevartLinkWebView"/>
         <activity
-            android:name=".ui.main.ui.eShopping.orientationVideos.videoActivity"
-            android:configChanges="orientation|screenSize" />
+            android:name=".a4eshopping.orientationVideos.videoActivity"
+            android:exported="false" />
         <activity
             android:name=".ui.main.ui.eShopping.ticket.ChatThread4EShoppingActivity"
             android:exported="false" />
@@ -101,7 +101,7 @@
             android:exported="true"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name=".ui.main.ui.eShopping.addProductsToThePharmacy.AddProductsPharmacyActivity"
+            android:name=".a4eshopping.addProductsToThePharmacy.AddProductsPharmacyActivity"
             android:exported="false" />
         <activity
             android:name=".ui.main.ui.eShopping.pharmacySales.DetailsPharmacySalesActivity"
@@ -110,22 +110,22 @@
             android:name=".ui.main.ui.eShopping.pharmacySales.PharmacySalesActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.main.ui.eShopping.pharmacyBinding.uploadPharmacyFiles.UploadPharmacyFilesActivity"
+            android:name=".a4eshopping.PharmacyBinding.uploadPharmacyFiles.UploadPharmacyFilesActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.main.ui.eShopping.main.Home4EShoppingActivity"
+            android:name=".ui.main.ui.a4eshopping.main.Home4EShoppingActivity"
             android:exported="true"/>
         <activity
-            android:name=".ui.main.ui.eShopping.pharmacyBinding.addLocation.AddLocationActivity"
+            android:name=".ui.main.ui.eShopping.PharmacyBinding.addLocation.AddLocationActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.main.ui.eShopping.pharmacyBinding.allComments.AllCommentsActivity"
+            android:name=".ui.main.ui.eShopping.PharmacyBinding.allComments.AllCommentsActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.main.ui.eShopping.pharmacyBinding.PharmacyBindingActivity"
+            android:name=".ui.main.ui.eShopping.PharmacyBinding.PharmacyBindingActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.main.ui.eShopping.orientationVideos.OrientationVideosActivity"
+            android:name=".ui.main.ui.eshopping.orientationVideos.OrientationVideosActivity"
             android:windowSoftInputMode="stateHidden" />
         <activity android:name=".ui.main.ui.devartlink.letsTalk.ChatThread.ChatThreadActivity" android:exported="false" />
         <activity
@@ -150,6 +150,15 @@
             <intent-filter>
                 <action android:name="com.mazenrashed.universalbluethootprinter.ui.ScanningActivity.LAUNCH"/>
             </intent-filter>
-        </activity></application>
+        </activity>
+        <activity android:name=".ui.main.ui.eShopping.main.Home4EShoppingActivity" />
+        <activity android:name=".ui.main.ui.eShopping.orientationVideos.OrientationVideosActivity" />
+        <activity android:name=".ui.main.ui.eShopping.pharmacyBinding.PharmacyBindingActivity" />
+        <activity android:name=".ui.main.ui.eShopping.addProductsToThePharmacy.AddProductsPharmacyActivity" />
+        <activity android:name=".ui.main.ui.eShopping.orientationVideos.VideoActivity" />
+        <activity android:name=".ui.main.ui.eShopping.pharmacyBinding.addLocation.AddLocationActivity" />
+        <activity android:name=".ui.main.ui.eShopping.pharmacyBinding.uploadPharmacyFiles.UploadPharmacyFilesActivity" />
+        <activity android:name=".ui.main.ui.eShopping.pharmacyBinding.allComments.AllCommentsActivity" />
+    </application>
 
 </manifest>

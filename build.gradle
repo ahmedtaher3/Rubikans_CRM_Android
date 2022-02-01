@@ -15,6 +15,7 @@ buildscript {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath 'com.google.firebase:firebase-crashlytics-gradle:2.8.1'
         classpath "com.huawei.agconnect:agcp:1.6.0.300"
+        classpath "com.google.dagger:hilt-android-gradle-plugin:2.35.1"
 
 
         // NOTE: Do not place your application dependencies here; they belong
@@ -51,7 +52,3 @@ allprojects {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
-
-
-
-

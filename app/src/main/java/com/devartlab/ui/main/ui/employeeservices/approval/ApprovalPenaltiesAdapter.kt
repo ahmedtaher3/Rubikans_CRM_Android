@@ -88,14 +88,6 @@ class ApprovalPenaltiesAdapter(
 
 
 
-
-
-
-
-
-
-
-
         holder.approveRequest?.setOnClickListener {
 
             onApprovalItemClick.setOnPenaltiesApprovalItemClick("APPROVED", model)

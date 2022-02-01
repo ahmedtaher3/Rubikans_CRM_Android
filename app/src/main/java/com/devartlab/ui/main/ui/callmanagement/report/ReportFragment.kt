@@ -117,7 +117,7 @@ class ReportFragment : BaseFragment<FragmentReportBinding>(), InvoiceTypsAdapter
         binding = viewDataBinding
 
         for (m in viewModel.dataManager.ads.ads!!) {
-            if (m.pageCode?.toInt() == Constants.PLAN_RECYCLER) {
+            if (m.pageCode?.toInt() == Constants.REPORT_RECYCLER) {
                 adList?.add(m)
             }
         }
@@ -164,16 +164,24 @@ class ReportFragment : BaseFragment<FragmentReportBinding>(), InvoiceTypsAdapter
 
 
                 for (model in it) {
-                    if (!model?.isAd!!) {
-                        this.model = model
 
-                        if (!model?.startPoint.isNullOrEmpty() && model?.startPointId != 0) {
+                    try {
+                        if (!model?.isAd!!) {
+                            this.model = model
 
-                            this.modelWithStartPoint = model
-                            break
+                            if (!model?.startPoint.isNullOrEmpty() && model?.startPointId != 0) {
 
+                                this.modelWithStartPoint = model
+                                break
+
+                            }
                         }
                     }
+                    catch (e:Exception)
+                    {
+
+                    }
+
                 }
 
                 if (modelWithStartPoint != null) {
@@ -539,7 +547,7 @@ class ReportFragment : BaseFragment<FragmentReportBinding>(), InvoiceTypsAdapter
                                                                             "1",
                                                                             "1",
                                                                             true,
-                                                                            startTime)
+                                                                            startTime.replace("null",""))
                                             }
                                             else {
                                                 viewModel.confirmStartPoint(CommonUtilities.convertDateToMillis(DATE).toString(),
@@ -550,7 +558,7 @@ class ReportFragment : BaseFragment<FragmentReportBinding>(), InvoiceTypsAdapter
                                                                             location?.latitude.toString(),
                                                                             location?.longitude.toString(),
                                                                             true,
-                                                                            startTime)
+                                                                            startTime.replace("null",""))
                                             }
                                         }
 

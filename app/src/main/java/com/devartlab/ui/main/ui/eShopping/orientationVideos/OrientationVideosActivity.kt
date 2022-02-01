@@ -87,7 +87,7 @@ class OrientationVideosActivity : AppCompatActivity() {
                 binding.recyclerListVideos.setAdapter(adapter)
                 adapter!!.setOnItemClickListener(VideoListAdapter.OnItemClickListener { pos, dataItem ->
 
-                    val intent = Intent(this, videoActivity::class.java)
+                    val intent = Intent(this, VideoActivity::class.java)
                     intent.putExtra("_id", dataItem.snippet.resourceId.videoId)
                     intent.putExtra("_name", dataItem.snippet.title)
                     intent.putExtra("_dec", dataItem.snippet.description)

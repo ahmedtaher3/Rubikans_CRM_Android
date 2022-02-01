@@ -49,7 +49,7 @@ class EmployeeRequestsAdapter(private val context: Context, private var myData: 
         holder.requestStartIn?.text = model.requestStartIn
         holder.requestEndIn?.text = model.requestEndIn
 
-        when (model.status) {
+        when (model.status?.uppercase()) {
             "PENDING" -> holder.itemStatus?.setBackgroundColor(ContextCompat.getColor(context, R.color.yellow))
 
             "APPROVED" -> holder.itemStatus?.setBackgroundColor(ContextCompat.getColor(context, R.color.green))

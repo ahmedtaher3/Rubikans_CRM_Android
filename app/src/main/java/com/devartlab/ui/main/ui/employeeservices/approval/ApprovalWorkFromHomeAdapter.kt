@@ -100,6 +100,9 @@ class ApprovalWorkFromHomeAdapter(
             onApprovalItemClick.setWorkFromHomeApprovalItemClick("REFUSED", model)
         }
 
+
+
+
         holder.approveCheckbox?.setOnClickListener {
 
             myData[position].checked = holder.approveCheckbox!!.isChecked
