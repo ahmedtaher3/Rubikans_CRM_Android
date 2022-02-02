@@ -60,7 +60,7 @@ class GooglePushNotificationService : FirebaseMessagingService() {
 
 
         try {
-            dataManager.saveHuaweiToken(token)
+            dataManager.saveDeviceToken(token)
         } catch (e: java.lang.Exception) {
             e.printStackTrace()
         }

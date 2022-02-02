@@ -31,8 +31,8 @@ android {
         applicationId "com.devartlab"
         minSdkVersion 21
         targetSdkVersion 32
-        versionCode 53
-        versionName "1.1.23"
+        versionCode 54
+        versionName "1.1.24"
         resConfigs "en"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
