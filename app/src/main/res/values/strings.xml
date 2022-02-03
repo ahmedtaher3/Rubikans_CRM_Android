@@ -569,6 +569,14 @@
     <string name="reply">Reply</string>
     <string name="delete">Delete</string>
     <string name="forward">forward</string>
+    <string name="from_to_date">from date / to date</string>
+    <string name="label_order_status"><![CDATA[Order Status & Values]]></string>
+    <string name="processing">Processing</string>
+    <string name="on_delivery">On Delivery</string>
+    <string name="returned">Returned</string>
+    <string name="declined">Declined</string>
+    <string name="completed">Completed</string>
+    <string name="total_order">Total Orders</string>
 
 
 </resources>

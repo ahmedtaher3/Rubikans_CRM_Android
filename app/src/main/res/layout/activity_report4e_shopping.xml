@@ -1,0 +1,399 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:context=".ui.main.ui.eShopping.report.Report4eShoppingActivity">
+
+            <com.google.android.material.appbar.AppBarLayout
+                android:id="@+id/back"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:theme="@style/AppTheme.AppBarOverlay"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <androidx.appcompat.widget.Toolbar
+                    android:id="@+id/toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize" />
+
+            </com.google.android.material.appbar.AppBarLayout>
+
+            <ImageView
+                android:id="@+id/iv_tree"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/bg_blue"
+                android:padding="5dp"
+                android:src="@drawable/ic_tree"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/back" />
+
+            <TextView
+                android:id="@+id/tv_from_to_date"
+                android:layout_width="0dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:background="@drawable/bg_search"
+                android:gravity="center"
+                android:hint="@string/from_to_date"
+                android:padding="5dp"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="@id/iv_tree"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/iv_tree"
+                app:layout_constraintTop_toTopOf="@id/iv_tree" />
+            <ImageView
+                android:id="@+id/iv_remove_search"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="5dp"
+                android:src="@drawable/ic_pre_declined"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="@id/tv_from_to_date"
+                app:layout_constraintEnd_toEndOf="@id/tv_from_to_date"
+                app:layout_constraintTop_toTopOf="@id/tv_from_to_date" />
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card_parent"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                app:cardBackgroundColor="@android:color/white"
+                app:cardCornerRadius="5dp"
+                app:cardElevation="2dp"
+                app:cardUseCompatPadding="true"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="@id/tv_from_to_date"
+                app:layout_constraintStart_toStartOf="@id/iv_tree"
+                app:layout_constraintTop_toBottomOf="@id/iv_tree">
+
+                <LinearLayout
+                    android:id="@+id/ll_parent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:orientation="vertical">
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/order_status"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                app:cardBackgroundColor="@android:color/white"
+                app:cardCornerRadius="5dp"
+                app:cardElevation="2dp"
+                app:cardUseCompatPadding="true"
+                app:layout_constraintEnd_toEndOf="@id/tv_from_to_date"
+                app:layout_constraintStart_toStartOf="@id/iv_tree"
+                app:layout_constraintTop_toBottomOf="@id/card_parent">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/tv_label_order_status"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:text="@string/label_order_status"
+                        android:textColor="@color/color_142c48"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/tv_label_status"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:text="@string/status"
+                        android:textColor="@color/color_142c48"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_label_order_status" />
+
+                    <TextView
+                        android:id="@+id/tv_label_order"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:text="@string/order"
+                        android:textColor="@color/color_142c48"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_label_order_status" />
+
+                    <TextView
+                        android:id="@+id/tv_label_Value"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="10dp"
+                        android:text="@string/value"
+                        android:textColor="@color/color_142c48"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_label_order_status" />
+
+                    <TextView
+                        android:id="@+id/tv_label_pending"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/pending"
+                        android:textColor="@color/color_142c48"
+                        android:textSize="14sp"
+                        app:layout_constraintStart_toStartOf="@id/tv_label_status"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_label_status" />
+
+                    <TextView
+                        android:id="@+id/tv_label_processing"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/processing"
+                        android:textColor="@color/color_142c48"
+                        android:textSize="14sp"
+                        app:layout_constraintStart_toStartOf="@id/tv_label_status"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_label_pending" />
+
+                    <TextView
+                        android:id="@+id/tv_label_on_delivery"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/on_delivery"
+                        android:textColor="@color/color_142c48"
+                        android:textSize="14sp"
+                        app:layout_constraintStart_toStartOf="@id/tv_label_status"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_label_processing" />
+
+                    <TextView
+                        android:id="@+id/tv_label_returned"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/returned"
+                        android:textColor="@color/color_142c48"
+                        android:textSize="14sp"
+                        app:layout_constraintStart_toStartOf="@id/tv_label_status"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_label_on_delivery" />
+
+                    <TextView
+                        android:id="@+id/tv_label_declined"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/declined"
+                        android:textColor="@color/color_142c48"
+                        android:textSize="14sp"
+                        app:layout_constraintStart_toStartOf="@id/tv_label_status"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_label_returned" />
+
+                    <TextView
+                        android:id="@+id/tv_label_completed"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/completed"
+                        android:textColor="@color/color_142c48"
+                        android:textSize="14sp"
+                        app:layout_constraintStart_toStartOf="@id/tv_label_status"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_label_declined" />
+
+                    <TextView
+                        android:id="@+id/tv_label_pending_no"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:textColor="@color/color_142c48"
+                        android:textSize="14sp"
+                        app:layout_constraintEnd_toEndOf="@id/tv_label_order"
+                        app:layout_constraintStart_toStartOf="@id/tv_label_order"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_label_status" />
+
+                    <TextView
+                        android:id="@+id/tv_label_processing_no"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:textColor="@color/color_142c48"
+                        android:textSize="14sp"
+                        app:layout_constraintEnd_toEndOf="@id/tv_label_order"
+                        app:layout_constraintStart_toStartOf="@id/tv_label_order"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_label_pending" />
+
+                    <TextView
+                        android:id="@+id/tv_label_on_delivery_no"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:textColor="@color/color_142c48"
+                        android:textSize="14sp"
+                        app:layout_constraintEnd_toEndOf="@id/tv_label_order"
+                        app:layout_constraintStart_toStartOf="@id/tv_label_order"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_label_processing" />
+
+                    <TextView
+                        android:id="@+id/tv_label_returned_no"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:textColor="@color/color_142c48"
+                        android:textSize="14sp"
+                        app:layout_constraintEnd_toEndOf="@id/tv_label_order"
+                        app:layout_constraintStart_toStartOf="@id/tv_label_order"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_label_on_delivery" />
+
+                    <TextView
+                        android:id="@+id/tv_label_declined_no"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:textColor="@color/color_142c48"
+                        android:textSize="14sp"
+                        app:layout_constraintEnd_toEndOf="@id/tv_label_order"
+                        app:layout_constraintStart_toStartOf="@id/tv_label_order"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_label_returned" />
+
+                    <TextView
+                        android:id="@+id/tv_label_completed_no"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:textColor="@color/color_142c48"
+                        android:textSize="14sp"
+                        app:layout_constraintEnd_toEndOf="@id/tv_label_order"
+                        app:layout_constraintStart_toStartOf="@id/tv_label_order"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_label_declined" />
+
+                    <TextView
+                        android:id="@+id/tv_label_pending_cost"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="2002 EGP"
+                        android:textColor="@color/color_142c48"
+                        android:textSize="14sp"
+                        app:layout_constraintEnd_toEndOf="@id/tv_label_Value"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_label_status" />
+
+                    <TextView
+                        android:id="@+id/tv_label_processing_cost"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0 EGP"
+                        android:textColor="@color/color_142c48"
+                        android:textSize="14sp"
+                        app:layout_constraintEnd_toEndOf="@id/tv_label_Value"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_label_pending" />
+
+                    <TextView
+                        android:id="@+id/tv_label_on_delivery_cost"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="230 EGP"
+                        android:textColor="@color/color_142c48"
+                        android:textSize="14sp"
+                        app:layout_constraintEnd_toEndOf="@id/tv_label_Value"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_label_processing" />
+
+                    <TextView
+                        android:id="@+id/tv_label_returned_cost"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0 EGP"
+                        android:textColor="@color/color_142c48"
+                        android:textSize="14sp"
+                        app:layout_constraintEnd_toEndOf="@id/tv_label_Value"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_label_on_delivery" />
+
+                    <TextView
+                        android:id="@+id/tv_label_declined_cost"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0 EGP"
+                        android:textColor="@color/color_142c48"
+                        android:textSize="14sp"
+                        app:layout_constraintEnd_toEndOf="@id/tv_label_Value"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_label_returned" />
+
+                    <TextView
+                        android:id="@+id/tv_label_completed_cost"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0 EGP"
+                        android:textColor="@color/color_142c48"
+                        android:textSize="14sp"
+                        app:layout_constraintEnd_toEndOf="@id/tv_label_Value"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_label_declined" />
+
+                    <TextView
+                        android:id="@+id/tv_label_total"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/total_order"
+                        android:textColor="@color/color_142c48"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="@id/tv_label_status"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_label_completed" />
+
+                    <TextView
+                        android:id="@+id/tv_label_order_no"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:text="0"
+                        android:textColor="@color/color_142c48"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_label_completed" />
+
+                    <TextView
+                        android:id="@+id/tv_label_Value_cost"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="10dp"
+                        android:text="3000 EGP"
+                        android:textColor="@color/color_142c48"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_label_completed" />
+
+                    <com.github.mikephil.charting.charts.PieChart
+                        android:id="@+id/activity_main_piechart"
+                        android:layout_width="0dp"
+                        android:layout_height="300dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="10dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="@id/tv_label_Value_cost"
+                        app:layout_constraintStart_toStartOf="@id/tv_label_total"
+                        app:layout_constraintTop_toBottomOf="@id/tv_label_total" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+</layout>

@@ -261,4 +261,9 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.4.0"
     // Activity KTX for viewModels()
     implementation "androidx.activity:activity-ktx:1.4.0"
+    //CalendarDateRangePicker
+    implementation 'com.archit.calendar:awesome-calendar:2.0.0'
+    //AnyChart for Android
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
+
 }

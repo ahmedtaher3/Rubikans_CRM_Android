@@ -12,6 +12,6 @@ object AppConstants {
     const val UpdateUserPlan = true
     const val DeviceType = "google"
     const val ShoppingPermission = true
-    const val forEShoppingURL = "https://4eshopping.com/api/"
+    const val forEShoppingURL = "https://t4e.4eshopping.com/api/"
 
 }

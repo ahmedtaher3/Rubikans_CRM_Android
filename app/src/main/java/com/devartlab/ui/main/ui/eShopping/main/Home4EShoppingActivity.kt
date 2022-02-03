@@ -21,6 +21,7 @@ import com.devartlab.ui.main.ui.eShopping.addProductsToThePharmacy.AddProductsPh
 import com.devartlab.ui.main.ui.eShopping.orientationVideos.OrientationVideosActivity
 import com.devartlab.ui.main.ui.eShopping.pharmacyBinding.PharmacyBindingActivity
 import com.devartlab.ui.main.ui.eShopping.pharmacySales.PharmacySalesActivity
+import com.devartlab.ui.main.ui.eShopping.report.Report4eShoppingActivity
 import com.devartlab.ui.main.ui.eShopping.ticket.TicketActivity
 import com.devartlab.ui.main.ui.moreDetailsAds.MoreDetailsAdsActivity
 import com.devartlab.utils.Constants
@@ -56,39 +57,12 @@ class Home4EShoppingActivity : AppCompatActivity(),
 
     private fun setUpRecycler() {
         val list = ArrayList<CardModel>()
-        list.add(
-            CardModel(
-                1,
-                resources.getString(R.string.orientation_videos),
-                "",
-                R.drawable.ic_video
-            )
-        )
-        list.add(
-            CardModel(
-                2,
-                resources.getString(R.string.Pharmacy_binding),
-                "",
-                R.drawable.ic_pharmacy_binding
-            )
-        )
-        list.add(
-            CardModel(
-                3,
-                resources.getString(R.string.Pharmacy_sales),
-                "",
-                R.drawable.pharmacy_sales
-            )
-        )
-        list.add(
-            CardModel(
-                4,
-                resources.getString(R.string.Add_products_to_Pharmacy),
-                "",
-                R.drawable.ic_add_pharmacy
-            )
-        )
+        list.add(CardModel(1, resources.getString(R.string.orientation_videos), "", R.drawable.ic_video))
+        list.add(CardModel(2, resources.getString(R.string.Pharmacy_binding), "", R.drawable.ic_pharmacy_binding))
+        list.add(CardModel(3, resources.getString(R.string.Pharmacy_sales), "", R.drawable.pharmacy_sales))
+        list.add(CardModel(4, resources.getString(R.string.Add_products_to_Pharmacy), "", R.drawable.ic_add_pharmacy))
         list.add(CardModel(5, resources.getString(R.string.Add_ticket), "", R.drawable.ic_chat))
+        list.add(CardModel(6, resources.getString(R.string.report), "", R.drawable.report))
 
         adapter = MenuListAdapter(this, list, this)
         val layoutManager = GridLayoutManager(this, 2)
@@ -118,6 +92,10 @@ class Home4EShoppingActivity : AppCompatActivity(),
             }
             5 -> {
                 val intent = Intent(this, TicketActivity::class.java)
+                startActivity(intent)
+            }
+            6 -> {
+                val intent = Intent(this, Report4eShoppingActivity::class.java)
                 startActivity(intent)
             }
         }
