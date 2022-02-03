@@ -40,6 +40,7 @@ import com.devartlab.ui.main.ui.eShopping.pharmacyBinding.model.searchForPharmac
 import com.devartlab.ui.main.ui.eShopping.pharmacyBinding.uploadPharmacyFiles.model.updatePharmacyDetails
 import com.devartlab.ui.main.ui.eShopping.pharmacySales.model.PharmacySalesResponse
 import com.devartlab.ui.main.ui.eShopping.pharmacySales.model.detailsPharmacySales.DetailsPharmacySalesResponse
+import com.devartlab.ui.main.ui.eShopping.requestVoucher.model.compaignVouchers.CompaignVouchersResponse
 import com.devartlab.ui.main.ui.eShopping.ticket.model.addRate.AddRateRequest
 import com.devartlab.ui.main.ui.eShopping.ticket.model.addRate.AddRateResponse
 import com.devartlab.ui.main.ui.eShopping.ticket.model.addTicket.AddTicketRequest
@@ -924,5 +925,11 @@ interface ApiServices {
         @Header("Authorization") token: String?,
         @Query("id") id: String?
     ): Call<GetInfoPharmacyResponse?>?
+
+    @GET("compaign_vouchers")
+    fun getCompaignVouchers(
+        @Header("Authorization") token: String?,
+        @Header("lang_code") lang_code: String?
+    ): Call<CompaignVouchersResponse?>?
 
 }

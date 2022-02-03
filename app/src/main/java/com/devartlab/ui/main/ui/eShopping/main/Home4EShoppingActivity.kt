@@ -22,6 +22,7 @@ import com.devartlab.ui.main.ui.eShopping.orientationVideos.OrientationVideosAct
 import com.devartlab.ui.main.ui.eShopping.pharmacyBinding.PharmacyBindingActivity
 import com.devartlab.ui.main.ui.eShopping.pharmacySales.PharmacySalesActivity
 import com.devartlab.ui.main.ui.eShopping.report.Report4eShoppingActivity
+import com.devartlab.ui.main.ui.eShopping.requestVoucher.RequestVoucherActivity
 import com.devartlab.ui.main.ui.eShopping.ticket.TicketActivity
 import com.devartlab.ui.main.ui.moreDetailsAds.MoreDetailsAdsActivity
 import com.devartlab.utils.Constants
@@ -63,6 +64,7 @@ class Home4EShoppingActivity : AppCompatActivity(),
         list.add(CardModel(4, resources.getString(R.string.Add_products_to_Pharmacy), "", R.drawable.ic_add_pharmacy))
         list.add(CardModel(5, resources.getString(R.string.Add_ticket), "", R.drawable.ic_chat))
         list.add(CardModel(6, resources.getString(R.string.report), "", R.drawable.report))
+        list.add(CardModel(7, resources.getString(R.string.request_voucher), "", R.drawable.ic_coupon))
 
         adapter = MenuListAdapter(this, list, this)
         val layoutManager = GridLayoutManager(this, 2)
@@ -96,6 +98,10 @@ class Home4EShoppingActivity : AppCompatActivity(),
             }
             6 -> {
                 val intent = Intent(this, Report4eShoppingActivity::class.java)
+                startActivity(intent)
+            }
+            7 -> {
+                val intent = Intent(this, RequestVoucherActivity::class.java)
                 startActivity(intent)
             }
         }

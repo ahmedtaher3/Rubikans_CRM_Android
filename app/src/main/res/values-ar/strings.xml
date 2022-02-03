@@ -561,4 +561,14 @@
     <string name="reply">رد</string>
     <string name="delete">مسح</string>
     <string name="forward">إعادة التوجيه</string>
+    <string name="request_voucher">دفتر فواتير</string>
+    <string name="order_request_voucher">طلب دفتر فواتير</string>
+    <string name="count">عدد الدفاتر</string>
+    <string name="label_vouchers_count">عدد الكوبونات</string>
+    <string name="used">المستخدم</string>
+    <string name="label_not_used">المتبقى</string>
+    <string name="id">الترتيب</string>
+    <string name="show_vouchers">اظهار الكوبونات</string>
+    <string name="doctors">دكاتره</string>
+    <string name="voucher">كوبون خصم</string>
 </resources>

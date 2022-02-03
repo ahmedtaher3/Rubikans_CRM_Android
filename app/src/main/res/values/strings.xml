@@ -577,6 +577,16 @@
     <string name="declined">Declined</string>
     <string name="completed">Completed</string>
     <string name="total_order">Total Orders</string>
+    <string name="request_voucher">Request voucher</string>
+    <string name="order_request_voucher">ORDER REQUEST VOUCHER</string>
+    <string name="count">Count</string>
+    <string name="label_vouchers_count">Vouchers Count</string>
+    <string name="used">Used</string>
+    <string name="label_not_used">Not used</string>
+    <string name="id">ID</string>
+    <string name="show_vouchers">Show vouchers</string>
+    <string name="doctors">doctors</string>
+    <string name="voucher">voucher</string>
 
 
 </resources>

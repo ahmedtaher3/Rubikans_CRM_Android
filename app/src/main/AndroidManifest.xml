@@ -34,6 +34,9 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".ui.main.ui.eShopping.requestVoucher.RequestVoucherActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.main.ui.eShopping.report.Report4eShoppingActivity"
             android:exported="false" />
         <activity
