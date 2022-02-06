@@ -111,7 +111,8 @@
         <entry key="..\:/work/DevartLab/DevartLabCRMproject/app/src/main/res/layout/activity_pharmacy_sales.xml" value="0.1921875" />
         <entry key="..\:/work/DevartLab/DevartLabCRMproject/app/src/main/res/layout/activity_report4e_shopping.xml" value="0.25" />
         <entry key="..\:/work/DevartLab/DevartLabCRMproject/app/src/main/res/layout/activity_reprot4e_shopping.xml" value="0.1921875" />
-        <entry key="..\:/work/DevartLab/DevartLabCRMproject/app/src/main/res/layout/activity_request_voucher.xml" value="0.2" />
+        <entry key="..\:/work/DevartLab/DevartLabCRMproject/app/src/main/res/layout/activity_request_voucher.xml" value="0.67" />
+        <entry key="..\:/work/DevartLab/DevartLabCRMproject/app/src/main/res/layout/activity_show_vouchers.xml" value="0.25" />
         <entry key="..\:/work/DevartLab/DevartLabCRMproject/app/src/main/res/layout/activity_ticket.xml" value="0.22" />
         <entry key="..\:/work/DevartLab/DevartLabCRMproject/app/src/main/res/layout/activity_upload_pharmacy_files.xml" value="0.33" />
         <entry key="..\:/work/DevartLab/DevartLabCRMproject/app/src/main/res/layout/activity_video.xml" value="0.1921875" />
@@ -155,6 +156,7 @@
         <entry key="..\:/work/DevartLab/DevartLabCRMproject/app/src/main/res/layout/parent.xml" value="0.1921875" />
         <entry key="..\:/work/DevartLab/DevartLabCRMproject/app/src/main/res/layout/pharmacy_binging_item.xml" value="0.25" />
         <entry key="..\:/work/DevartLab/DevartLabCRMproject/app/src/main/res/layout/pharmacy_sales_item.xml" value="0.25" />
+        <entry key="..\:/work/DevartLab/DevartLabCRMproject/app/src/main/res/layout/show_vouchers_item.xml" value="0.25" />
         <entry key="..\:/work/DevartLab/DevartLabCRMproject/app/src/main/res/layout/sync_fragment.xml" value="0.1921875" />
         <entry key="..\:/work/DevartLab/DevartLabCRMproject/app/src/main/res/layout/types_fragment.xml" value="0.1921875" />
         <entry key="..\:/work/DevartLab/DevartLabCRMproject/app/src/main/res/menu/filter_popup_menu.xml" value="0.1921875" />

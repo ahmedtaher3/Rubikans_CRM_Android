@@ -5,7 +5,9 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Editable
 import android.text.TextUtils
+import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import android.view.Window
@@ -18,6 +20,7 @@ import com.devartlab.R
 import com.devartlab.a4eshopping.PharmacyBinding.addLocation.AddLocationViewModel
 import com.devartlab.databinding.ActivityRequestVoucherBinding
 import com.devartlab.ui.main.ui.eShopping.ticket.model.addTicket.AddTicketRequest
+import java.lang.NumberFormatException
 
 class RequestVoucherActivity : AppCompatActivity() {
     lateinit var binding: ActivityRequestVoucherBinding
@@ -75,6 +78,30 @@ class RequestVoucherActivity : AppCompatActivity() {
         edVoucher.setOnClickListener {
             viewModel!!.getCompaignVouchers()
         }
+        edCount.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {}
+            override fun onTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {
+                val text: String = edCount.getText().toString()
+                try {
+                    val num = text.toInt()
+                    Log.i("", "$num is a number")
+                    if (TextUtils.isEmpty(
+                            edCount.getText().toString()) || edCount.getText().toString()
+                            .toInt() <= 0 || edCount.getText()
+                            .toString() === "-") {
+                        edCount.setError("please enter right number")
+                    } else {
+                        tvNoVouchers.setVisibility(View.VISIBLE)
+                        tvNoVouchers.setText(" عدد"+num*50+"الكوبونات كوبون ")
+                    }
+                } catch (e: NumberFormatException) {
+                    Log.i("", "$text is not a number")
+                    edCount.setError("please enter right number")
+                }
+            }
+
+            override fun afterTextChanged(editable: Editable) {}
+        })
         viewModel!!.compaignVouchersResponse.observe(this, Observer {
 
             val countryBrandsPopUp = PopupMenu(this, edVoucher)
@@ -83,29 +110,29 @@ class RequestVoucherActivity : AppCompatActivity() {
             }
             countryBrandsPopUp.setOnMenuItemClickListener(PopupMenu.OnMenuItemClickListener { item ->
                 edVoucher.setText(it.get(item.getItemId()).voucher_translates_title.get(0).title)
-                compaignVouchersID = it.get(item.getItemId()).id.toInt()
+                compaignVouchersID = it.get(item.getItemId()).id
                 Log.e("popupCarBrands", "onMenuItemClick: $compaignVouchersID")
                 return@OnMenuItemClickListener false
             })
             countryBrandsPopUp.show()
         })
         BtnAddTicket.setOnClickListener {
-//            if (TextUtils.isEmpty(TvSelectProblem.getText().toString())) {
-//                TvSelectProblem.setError("please select problem")
-//            } else if (TextUtils.isEmpty(EdTitleProblem.getText().toString())) {
-//                EdTitleProblem.setError("please enter title")
-//            } else if (TextUtils.isEmpty(EdMessageProblem.getText().toString())) {
-//                EdMessageProblem.setError("please enter message")
-//            } else {
+            if (compaignVouchersID==0) {
+                edVoucher.setError("please select voucher")
+            } else if (TextUtils.isEmpty(edCount.getText().toString())) {
+                edCount.setError("please enter count")
+            } else if (TextUtils.isEmpty(edSelectDoctors.getText().toString())) {
+                edSelectDoctors.setError("please enter doctors")
+            } else {
 //                request = AddTicketRequest(
 //                    EdMessageProblem.text.toString(),
 //                    EdOther.text.toString(),
 //                    EdTitleProblem.text.toString(),
 //                    TvSelectProblem.text.toString()
 //                )
-//                viewModel!!.addTicket(request)
-//                dialog.dismiss()
-//            }
+ //               viewModel!!.addTicket(request)
+                dialog.dismiss()
+            }
         }
         BtnCancel.setOnClickListener {
             dialog.dismiss()

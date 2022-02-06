@@ -571,4 +571,6 @@
     <string name="show_vouchers">اظهار الكوبونات</string>
     <string name="doctors">دكاتره</string>
     <string name="voucher">كوبون خصم</string>
+    <string name="label_from">من</string>
+    <string name="label_to">الى</string>
 </resources>

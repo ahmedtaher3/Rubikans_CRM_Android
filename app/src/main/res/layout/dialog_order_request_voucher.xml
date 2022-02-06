@@ -88,6 +88,8 @@
             android:layout_margin="10dp"
             android:background="@drawable/bg_search"
             android:hint="@string/count"
+            android:inputType="numberSigned"
+            android:digits="1234567890"
             android:textColor="@color/color_142c48"
             android:keyboardNavigationCluster="false"
             android:padding="10dp"

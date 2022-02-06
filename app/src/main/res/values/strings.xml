@@ -587,6 +587,8 @@
     <string name="show_vouchers">Show vouchers</string>
     <string name="doctors">doctors</string>
     <string name="voucher">voucher</string>
+    <string name="label_from">From</string>
+    <string name="label_to">To</string>
 
 
 </resources>
