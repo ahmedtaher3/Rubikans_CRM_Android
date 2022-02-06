@@ -41,6 +41,13 @@ import com.devartlab.ui.main.ui.eShopping.pharmacyBinding.uploadPharmacyFiles.mo
 import com.devartlab.ui.main.ui.eShopping.pharmacySales.model.PharmacySalesResponse
 import com.devartlab.ui.main.ui.eShopping.pharmacySales.model.detailsPharmacySales.DetailsPharmacySalesResponse
 import com.devartlab.ui.main.ui.eShopping.requestVoucher.model.compaignVouchers.CompaignVouchersResponse
+import com.devartlab.ui.main.ui.eShopping.requestVoucher.model.deliverVoucher.DeliverVoucherRequest
+import com.devartlab.ui.main.ui.eShopping.requestVoucher.model.deliverVoucher.DeliverVoucherResponse
+import com.devartlab.ui.main.ui.eShopping.requestVoucher.model.doctors.GetDoctorsResponse
+import com.devartlab.ui.main.ui.eShopping.requestVoucher.model.getVoucher.GetVoucherResponse
+import com.devartlab.ui.main.ui.eShopping.requestVoucher.model.myVoucherRequest.MyVoucherRequestResponse
+import com.devartlab.ui.main.ui.eShopping.requestVoucher.model.voucherRequest.VoucherRequestRequest
+import com.devartlab.ui.main.ui.eShopping.requestVoucher.model.voucherRequest.VoucherRequestResponse
 import com.devartlab.ui.main.ui.eShopping.ticket.model.addRate.AddRateRequest
 import com.devartlab.ui.main.ui.eShopping.ticket.model.addRate.AddRateResponse
 import com.devartlab.ui.main.ui.eShopping.ticket.model.addTicket.AddTicketRequest
@@ -931,5 +938,34 @@ interface ApiServices {
         @Header("Authorization") token: String?,
         @Header("lang_code") lang_code: String?
     ): Call<CompaignVouchersResponse?>?
+
+    @GET("get_doctors")
+    fun getDoctors(
+        @Header("Authorization") token: String?,
+        @Query("q") q: String?
+    ): Call<GetDoctorsResponse?>?
+
+    @POST("voucher/request")
+    fun getVoucherRequest(
+        @Header("Authorization") token: String?,
+        @Body request: VoucherRequestRequest?
+    ): Call<VoucherRequestResponse?>?
+
+    @GET("my_voucher_request")
+    fun getMyVoucherRequest(
+        @Header("Authorization") token: String?
+    ): Call<MyVoucherRequestResponse?>?
+
+    @GET("get_vouchers_by_voucher_request_id")
+    fun getVouchers(
+        @Header("Authorization") token: String?,
+        @Query("id") id: String?
+    ): Call<GetVoucherResponse?>?
+
+    @POST("deliver_voucher")
+    fun getDeliverVoucher(
+        @Header("Authorization") token: String?,
+        @Body request: DeliverVoucherRequest?
+    ): Call<DeliverVoucherResponse?>?
 
 }

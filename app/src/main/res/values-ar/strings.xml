@@ -573,4 +573,6 @@
     <string name="voucher">كوبون خصم</string>
     <string name="label_from">من</string>
     <string name="label_to">الى</string>
+    <string name="show_voucher">اظهار الكوبونات</string>
+    <string name="delivered">تسليم</string>
 </resources>
