@@ -44,10 +44,13 @@ public class ShowVouchersAdapter extends RecyclerView.Adapter<ShowVouchersAdapte
         final Data dataItem = dataItems.get(position);
 
         if (!dataItem.getDelivered_time().equals(null)) {
+            viewHolder.binding.tvNamePharmacy.setVisibility(View.VISIBLE);
+            viewHolder.binding.tvLabelDeliveredToDr.setVisibility(View.VISIBLE);
             convertDateTime(dataItem.getDelivered_time(),viewHolder.binding.tvNamePharmacy);
             viewHolder.binding.btnAdd.setVisibility(View.GONE);
         } else if (dataItem.getDelivered_time().equals(null)) {
             viewHolder.binding.tvNamePharmacy.setVisibility(View.GONE);
+            viewHolder.binding.tvLabelDeliveredToDr.setVisibility(View.GONE);
         }
         viewHolder.binding.btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override

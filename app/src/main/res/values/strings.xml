@@ -591,6 +591,7 @@
     <string name="label_to">To</string>
     <string name="show_voucher">Show vouchers</string>
     <string name="delivered">Delivered</string>
+    <string name="label_delivered_to_dr">"Delivered to Dr"</string>
 
 
 </resources>

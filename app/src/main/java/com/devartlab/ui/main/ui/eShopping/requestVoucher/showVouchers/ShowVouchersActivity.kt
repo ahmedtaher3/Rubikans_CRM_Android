@@ -30,8 +30,7 @@ class ShowVouchersActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(
-            this, R.layout.activity_show_vouchers
-        )
+            this, R.layout.activity_show_vouchers)
         setSupportActionBar(binding.toolbar)
         supportActionBar!!.title = getString(R.string.show_voucher)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)

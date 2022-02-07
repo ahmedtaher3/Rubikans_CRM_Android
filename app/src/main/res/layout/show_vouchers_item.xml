@@ -23,63 +23,79 @@
                 android:id="@+id/tv_label_no_pharmacy"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_margin="10dp"
                 android:text="@string/id"
                 android:textColor="@color/blue"
                 android:textSize="14sp"
                 android:textStyle="bold"
-                android:layout_margin="10dp"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/tv_no_pharmacy"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="25dp"
                 android:text="22220"
                 android:textColor="@color/black"
                 android:textSize="12sp"
-                android:layout_marginStart="25dp"
                 app:layout_constraintBottom_toBottomOf="@+id/tv_label_no_pharmacy"
-                app:layout_constraintTop_toTopOf="@+id/tv_label_no_pharmacy"
-                app:layout_constraintStart_toEndOf="@id/tv_label_no_pharmacy" />
+                app:layout_constraintStart_toEndOf="@id/tv_label_no_pharmacy"
+                app:layout_constraintTop_toTopOf="@+id/tv_label_no_pharmacy" />
+
+            <TextView
+                android:id="@+id/tv_label_delivered_to_dr"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:text="@string/label_delivered_to_dr"
+                android:textColor="@color/blue"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:visibility="gone"
+                android:layout_marginEnd="10dp"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_label_no_pharmacy"
+                app:layout_constraintEnd_toStartOf="@id/tv_name_pharmacy"
+                app:layout_constraintTop_toTopOf="@+id/tv_label_no_pharmacy" />
 
             <TextView
                 android:id="@+id/tv_name_pharmacy"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
                 android:text="50/50/5050"
                 android:textColor="@color/black"
                 android:textSize="12sp"
-                android:layout_marginEnd="10dp"
+                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="@+id/tv_label_no_pharmacy"
-                app:layout_constraintTop_toTopOf="@+id/tv_label_no_pharmacy"
-                app:layout_constraintEnd_toEndOf="parent" />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/tv_label_no_pharmacy" />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btn_add"
                 android:layout_width="wrap_content"
                 android:layout_height="25dp"
-                android:paddingStart="5dp"
-                android:paddingEnd="5dp"
                 android:layout_marginEnd="10dp"
                 android:background="@drawable/bg_blue"
+                android:paddingStart="5dp"
+                android:paddingEnd="5dp"
                 android:text="@string/delivered"
                 android:textAllCaps="false"
                 android:textColor="@color/white"
                 android:textSize="12sp"
-                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintBottom_toBottomOf="@id/tv_label_no_pharmacy"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@id/tv_label_no_pharmacy" />
 
             <TextView
                 android:id="@+id/tv_label_from"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
                 android:text="@string/label_from"
                 android:textColor="@color/blue"
                 android:textSize="14sp"
                 android:textStyle="bold"
-                android:layout_marginBottom="10dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/tv_label_no_pharmacy"
                 app:layout_constraintTop_toBottomOf="@+id/tv_label_no_pharmacy" />
@@ -99,25 +115,26 @@
                 android:id="@+id/tv_label_to"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
                 android:text="@string/label_to"
                 android:textColor="@color/blue"
-                android:layout_marginStart="10dp"
                 android:textSize="14sp"
                 android:textStyle="bold"
-                app:layout_constraintTop_toTopOf="@+id/tv_label_from"
                 app:layout_constraintBottom_toBottomOf="@+id/tv_label_from"
-                app:layout_constraintStart_toEndOf="@id/tv_from"/>
+                app:layout_constraintStart_toEndOf="@id/tv_from"
+                app:layout_constraintTop_toTopOf="@+id/tv_label_from" />
+
             <TextView
                 android:id="@+id/tv_vouchers_count"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
                 android:text="5050"
                 android:textColor="@color/black"
                 android:textSize="12sp"
-                android:layout_marginStart="10dp"
                 app:layout_constraintBottom_toBottomOf="@+id/tv_label_to"
-                app:layout_constraintTop_toTopOf="@+id/tv_label_to"
-                app:layout_constraintStart_toEndOf="@+id/tv_label_to"/>
+                app:layout_constraintStart_toEndOf="@+id/tv_label_to"
+                app:layout_constraintTop_toTopOf="@+id/tv_label_to" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 </layout>
