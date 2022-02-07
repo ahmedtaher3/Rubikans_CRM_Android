@@ -578,7 +578,7 @@
     <string name="completed">Completed</string>
     <string name="total_order">Total Orders</string>
     <string name="request_voucher">Request voucher</string>
-    <string name="order_request_voucher">ORDER REQUEST VOUCHER</string>
+    <string name="order_request_voucher">REQUEST VOUCHERS</string>
     <string name="count">Count</string>
     <string name="label_vouchers_count">Vouchers Count</string>
     <string name="used">Used</string>

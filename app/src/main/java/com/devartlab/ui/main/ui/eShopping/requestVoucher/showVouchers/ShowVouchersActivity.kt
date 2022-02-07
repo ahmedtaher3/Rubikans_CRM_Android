@@ -17,7 +17,6 @@ import com.devartlab.ui.main.ui.eShopping.requestVoucher.RequestVoucherViewModel
 import com.devartlab.ui.main.ui.eShopping.requestVoucher.ShowVouchersAdapter
 import com.devartlab.ui.main.ui.eShopping.requestVoucher.model.deliverVoucher.DeliverVoucherRequest
 import com.devartlab.ui.main.ui.eShopping.requestVoucher.model.getVoucher.Data
-import com.devartlab.ui.main.ui.eShopping.requestVoucher.model.voucherRequest.VoucherRequestRequest
 
 class ShowVouchersActivity : AppCompatActivity() {
     lateinit var binding: ActivityShowVouchersBinding
@@ -64,8 +63,7 @@ class ShowVouchersActivity : AppCompatActivity() {
         viewModel!!.errorMessage.observe(this, { integer: Int ->
             if (integer == 1) {
                 Log.e("xxx", "error")
-                Toast.makeText(this, "error in response data", Toast.LENGTH_SHORT)
-                    .show()
+                Toast.makeText(this, "error in response data", Toast.LENGTH_SHORT).show()
             } else {
                 Toast.makeText(this, "error in Network", Toast.LENGTH_SHORT).show()
             }
@@ -73,6 +71,7 @@ class ShowVouchersActivity : AppCompatActivity() {
 
         viewModel!!.deliverVoucherResponse.observe(this, Observer {
             viewModel!!.getVouchers(_id!!)
+            Toast.makeText(this, "done!", Toast.LENGTH_SHORT).show()
         })
 
         viewModel!!.getVoucherResponse.observe(this, Observer {
