@@ -194,7 +194,7 @@ class RequestVoucherActivity : AppCompatActivity() {
                         edCount.setError("please enter right number")
                     } else {
                         tvNoVouchers.setVisibility(View.VISIBLE)
-                        tvNoVouchers.setText(" عدد" + num * 50 + "الكوبونات كوبون ")
+                        tvNoVouchers.setText(" عدد الكوبونات " + num * 50 + " كوبون ")
                     }
                 } catch (e: NumberFormatException) {
                     Log.i("", "$text is not a number")
@@ -256,7 +256,6 @@ class RequestVoucherActivity : AppCompatActivity() {
         for (item in list) {
             if (item.doctor_name.toLowerCase().contains(text.toLowerCase())) {
                 filteredList.add(item)
-                Log.e("xxx",item.toString())
             }
         }
         adapter!!.filterData(filteredList)

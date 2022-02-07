@@ -63,7 +63,7 @@ class Home4EShoppingActivity : AppCompatActivity(),
         list.add(CardModel(3, resources.getString(R.string.Pharmacy_sales), "", R.drawable.pharmacy_sales))
         list.add(CardModel(4, resources.getString(R.string.Add_products_to_Pharmacy), "", R.drawable.ic_add_pharmacy))
         list.add(CardModel(5, resources.getString(R.string.Add_ticket), "", R.drawable.ic_chat))
-        list.add(CardModel(6, resources.getString(R.string.report), "", R.drawable.report))
+     //   list.add(CardModel(6, resources.getString(R.string.report), "", R.drawable.report))
         list.add(CardModel(7, resources.getString(R.string.request_voucher), "", R.drawable.ic_coupon))
 
         adapter = MenuListAdapter(this, list, this)
