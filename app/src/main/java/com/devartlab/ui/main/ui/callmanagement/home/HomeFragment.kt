@@ -2,10 +2,7 @@ package com.devartlab.ui.main.ui.callmanagement.home
 
 import android.content.Context
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
-import android.text.Html
-import android.util.Log
 import android.view.View
 import android.view.WindowManager
 import android.widget.Button
@@ -27,7 +24,7 @@ import com.devartlab.model.CardModel
 import com.devartlab.ui.dialogs.chooseemployee.ChooseEmployee
 import com.devartlab.ui.dialogs.chooseemployee.ChooseEmployeeInterFace
 import com.devartlab.ui.main.CallsActivity
-import com.devartlab.ui.main.ui.callmanagement.IncentiveRole.IncentiveRoleFragment
+import com.devartlab.ui.main.ui.callmanagement.IncentiveRule.IncentiveRuleFragment
 import com.devartlab.ui.main.ui.callmanagement.employee.EmployeeReportActivity
 import com.devartlab.ui.main.ui.callmanagement.inventory.InventoryFragment
 import com.devartlab.ui.main.ui.callmanagement.list.TypesFragment
@@ -49,7 +46,6 @@ import com.devartlab.utils.CommonUtilities
 import com.devartlab.utils.Constants
 import com.devartlab.utils.MainSliderAdapter
 import com.devartlab.utils.PicassoImageLoadingService
-import com.google.gson.Gson
 import com.jarvanmo.exoplayerview.media.SimpleMediaSource
 import io.reactivex.Completable
 import io.reactivex.schedulers.Schedulers
@@ -369,7 +365,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ChooseEmployeeInterFac
                 replace_fragment(InventoryFragment(), "InventoryFragment")
             }
             16 -> {// add fragment incentive role
-                replace_fragment(IncentiveRoleFragment(), "IncentiveRoleFragment")
+                replace_fragment(IncentiveRuleFragment(), "IncentiveRuleFragment")
             }
 
         }

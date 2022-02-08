@@ -1,18 +1,16 @@
-package com.devartlab.ui.main.ui.callmanagement.IncentiveRole
+package com.devartlab.ui.main.ui.callmanagement.IncentiveRule
 
 import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import com.devartlab.R
 import com.devartlab.base.BaseFragment
 import com.devartlab.databinding.FragmentIncentiveRoleBinding
 import com.devartlab.utils.CommonUtilities
 
-class IncentiveRoleFragment : BaseFragment<FragmentIncentiveRoleBinding>() {
+class IncentiveRuleFragment : BaseFragment<FragmentIncentiveRoleBinding>() {
     lateinit var binding: FragmentIncentiveRoleBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
