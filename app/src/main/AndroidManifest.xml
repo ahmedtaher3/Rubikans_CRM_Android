@@ -34,6 +34,15 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".ui.main.ui.devartlink.devartCommunity.DevartCommunityActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.main.ui.devartlink.faq.FAQActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.main.ui.devartLabTeam.DevartLabTeamActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.main.ui.eShopping.requestVoucher.showVouchers.ShowVouchersActivity"
             android:exported="false" />
         <activity

@@ -96,7 +96,8 @@ class ShowVouchersActivity : AppCompatActivity() {
         val filteredList: ArrayList<Data> = ArrayList()
 
         for (item in list) {
-            if (item.id.toLowerCase().contains(text.toLowerCase())) {
+            val filter:String= (item.from+item.to).toString()
+            if (filter.toLowerCase().contains(text.toLowerCase())) {
                 filteredList.add(item)
                 Log.e("xxx", item.toString())
             }

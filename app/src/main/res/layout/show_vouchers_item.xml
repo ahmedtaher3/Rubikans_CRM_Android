@@ -24,13 +24,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/id"
+                android:visibility="gone"
                 android:textColor="@color/blue"
                 android:textSize="14sp"
-                android:layout_marginBottom="10dp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/tv_label_from"
-                app:layout_constraintTop_toBottomOf="@+id/tv_label_from"/>
+                android:textStyle="bold"/>
 
             <TextView
                 android:id="@+id/tv_no_pharmacy"
@@ -38,11 +35,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="25dp"
                 android:text="22220"
+                android:visibility="gone"
                 android:textColor="@color/black"
-                android:textSize="12sp"
-                app:layout_constraintBottom_toBottomOf="@+id/tv_label_no_pharmacy"
-                app:layout_constraintStart_toEndOf="@id/tv_label_no_pharmacy"
-                app:layout_constraintTop_toTopOf="@+id/tv_label_no_pharmacy" />
+                android:textSize="12sp" />
 
             <TextView
                 android:id="@+id/tv_label_delivered_to_dr"
@@ -55,9 +50,10 @@
                 android:textStyle="bold"
                 android:visibility="invisible"
                 android:layout_marginEnd="10dp"
-                app:layout_constraintBottom_toBottomOf="@+id/tv_label_no_pharmacy"
-                app:layout_constraintEnd_toStartOf="@id/tv_name_pharmacy"
-                app:layout_constraintTop_toTopOf="@+id/tv_label_no_pharmacy" />
+                app:layout_constraintBottom_toBottomOf="@+id/tv_label_from"
+                app:layout_constraintStart_toEndOf="@id/tv_from"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/tv_label_from" />
 
             <TextView
                 android:id="@+id/tv_name_pharmacy"
@@ -68,9 +64,10 @@
                 android:textColor="@color/black"
                 android:textSize="12sp"
                 android:visibility="invisible"
-                app:layout_constraintBottom_toBottomOf="@+id/tv_label_no_pharmacy"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/tv_label_no_pharmacy" />
+                app:layout_constraintBottom_toBottomOf="@+id/tv_label_to"
+                app:layout_constraintEnd_toEndOf="@id/tv_label_delivered_to_dr"
+                app:layout_constraintStart_toStartOf="@id/tv_label_delivered_to_dr"
+                app:layout_constraintTop_toTopOf="@+id/tv_label_to" />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btn_add"
@@ -85,9 +82,10 @@
                 android:textColor="@color/white"
                 android:visibility="visible"
                 android:textSize="12sp"
-                app:layout_constraintBottom_toBottomOf="@id/tv_label_no_pharmacy"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_label_from"
+                app:layout_constraintStart_toEndOf="@id/tv_from"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@id/tv_label_no_pharmacy" />
+                app:layout_constraintTop_toTopOf="@+id/tv_label_from"  />
 
             <TextView
                 android:id="@+id/tv_label_from"
@@ -108,8 +106,9 @@
                 android:text="222220"
                 android:textColor="@color/black"
                 android:textSize="12sp"
+                android:layout_marginStart="5dp"
                 app:layout_constraintBottom_toBottomOf="@+id/tv_label_from"
-                app:layout_constraintStart_toStartOf="@id/tv_no_pharmacy"
+                app:layout_constraintStart_toEndOf="@+id/tv_label_from"
                 app:layout_constraintTop_toTopOf="@+id/tv_label_from" />
 
             <TextView
@@ -120,9 +119,10 @@
                 android:textColor="@color/blue"
                 android:textSize="14sp"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="@+id/tv_label_from"
-                app:layout_constraintStart_toStartOf="@id/tv_label_delivered_to_dr"
-                app:layout_constraintTop_toTopOf="@+id/tv_label_from" />
+                android:layout_marginBottom="10dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/tv_label_from"
+                app:layout_constraintTop_toBottomOf="@+id/tv_label_from" />
 
             <TextView
                 android:id="@+id/tv_vouchers_count"
@@ -132,7 +132,7 @@
                 android:textColor="@color/black"
                 android:textSize="12sp"
                 app:layout_constraintBottom_toBottomOf="@+id/tv_label_to"
-                app:layout_constraintStart_toStartOf="@id/tv_name_pharmacy"
+                app:layout_constraintStart_toStartOf="@id/tv_from"
                 app:layout_constraintTop_toTopOf="@+id/tv_label_to" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>

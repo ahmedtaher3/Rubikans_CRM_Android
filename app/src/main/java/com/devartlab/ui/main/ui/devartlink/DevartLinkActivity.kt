@@ -21,6 +21,8 @@ import com.devartlab.databinding.ActivityDevartLinkBinding
 import com.devartlab.model.AdModel
 import com.devartlab.model.CardModel
 import com.devartlab.ui.main.ui.callmanagement.home.MenuListAdapter
+import com.devartlab.ui.main.ui.devartlink.devartCommunity.DevartCommunityActivity
+import com.devartlab.ui.main.ui.devartlink.faq.FAQActivity
 import com.devartlab.ui.main.ui.devartlink.letsTalk.LetsTalkActivity
 import com.devartlab.ui.main.ui.devartlink.letsTalk.model.user.UserResponse
 import com.devartlab.ui.main.ui.eShopping.utils.UserPreferenceHelper
@@ -65,7 +67,8 @@ class DevartLinkActivity : BaseActivity<ActivityDevartLinkBinding>(),
         val list = ArrayList<CardModel>()
 
         list.add(CardModel(1, resources.getString(R.string.lets_talk), R.drawable.ic_talk_icon_02))
-
+        list.add(CardModel(2, resources.getString(R.string.faq), R.drawable.ic_faq))
+        list.add(CardModel(3, resources.getString(R.string.community), R.drawable.ic_community))
 
         adapter = MenuListAdapter(this, list, this)
         val layoutManager = GridLayoutManager(this, 2)
@@ -85,6 +88,12 @@ class DevartLinkActivity : BaseActivity<ActivityDevartLinkBinding>(),
         when (model.id) {
             1 -> {
                 startActivity(Intent(this, LetsTalkActivity::class.java))
+            }
+            2 -> {
+                startActivity(Intent(this, FAQActivity::class.java))
+            }
+            3 -> {
+                startActivity(Intent(this, DevartCommunityActivity::class.java))
             }
         }
     }
@@ -116,6 +125,7 @@ class DevartLinkActivity : BaseActivity<ActivityDevartLinkBinding>(),
         viewModel.userResponse.observe(this, Observer {
             UserPreferenceHelper.saveUserProfileChat(it!!)
             binding.recycler.setVisibility(View.VISIBLE)
+            binding.ProgressBar.setVisibility(View.GONE)
         })
     }
     //

@@ -38,6 +38,7 @@ import com.devartlab.ui.main.ui.callmanagement.CallManagementActivity
 import com.devartlab.ui.main.ui.callmanagement.home.MenuListAdapter
 import com.devartlab.ui.main.ui.callmanagement.syncdata.SyncDataDialog
 import com.devartlab.ui.main.ui.contactlist.ui.main.ContactsActivity
+import com.devartlab.ui.main.ui.devartLabTeam.DevartLabTeamActivity
 import com.devartlab.ui.main.ui.devartlink.DevartLinkActivity
 import com.devartlab.ui.main.ui.eShopping.main.Home4EShoppingActivity
 import com.devartlab.ui.main.ui.eShopping.main.model.login4EShopping.Login4EShoppingRequest
@@ -269,24 +270,13 @@ class MainActivity : BaseActivity<ActivityMainBinding?>(), View.OnClickListener,
 
     private fun setUpRecycler() {
         val list = ArrayList<CardModel>()
-        list.add(
-            CardModel(
-                1,
-                resources.getString(R.string.call_management),
-                R.drawable.call_managment_icon
-            )
-        )
+        list.add(CardModel(1, resources.getString(R.string.call_management), R.drawable.call_managment_icon))
         list.add(CardModel(2, resources.getString(R.string.self_service), R.drawable.self_service))
         list.add(CardModel(3, resources.getString(R.string.my_profile), R.drawable.employee))
-        list.add(
-            CardModel(
-                4,
-                resources.getString(R.string.market_request),
-                R.drawable.money
-            )
-        )
-    //    list.add(CardModel(5, "DevartLink", R.drawable.devartlink))
+        list.add(CardModel(4, resources.getString(R.string.market_request), R.drawable.money))
+        list.add(CardModel(5, "DevartLink", R.drawable.devartlink))
         list.add(CardModel(6, "4eShopping", R.drawable.e_shopping))
+        list.add(CardModel(7, "DevartLab Team", R.drawable.ic_team))
 
         adapter = MenuListAdapter(this, list, this)
         val layoutManager = GridLayoutManager(this, 2)
@@ -642,17 +632,16 @@ class MainActivity : BaseActivity<ActivityMainBinding?>(), View.OnClickListener,
                         val intent = Intent(this@MainActivity, Home4EShoppingActivity::class.java)
                         startActivity(intent)
                     } else {
-                        Toast.makeText(
-                            this@MainActivity,
-                            "You haven't permission",
-                            Toast.LENGTH_SHORT
-                        )
-                            .show()
+                        Toast.makeText(this@MainActivity, "You haven't permission", Toast.LENGTH_SHORT).show()
                     }
                 } else {
                     val intent = Intent(this@MainActivity, Home4EShoppingActivity::class.java)
                     startActivity(intent)
                 }
+            }
+            7 -> {
+                val intent = Intent(this@MainActivity, DevartLabTeamActivity::class.java)
+                startActivity(intent)
             }
         }
     }

@@ -592,6 +592,9 @@
     <string name="show_voucher">Show vouchers</string>
     <string name="delivered">Delivered</string>
     <string name="label_delivered_to_dr">Delivered to Dr</string>
+    <string name="faq">FAQ</string>
+    <string name="community">Devart Community</string>
+    <string name="incentive_role">Incentive Role</string>
 
 
 </resources>
