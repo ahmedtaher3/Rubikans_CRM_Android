@@ -23,6 +23,7 @@ import com.devartlab.data.room.specialty.SpecialtyParentEntity
 import com.devartlab.model.*
 import com.devartlab.ui.main.ui.devartLabTeam.model.DevartLabTeamResponse
 import com.devartlab.ui.main.ui.devartlink.devartCommunity.model.DevartCommunityResponse
+import com.devartlab.ui.main.ui.devartlink.faq.model.FAQResponse
 import com.devartlab.ui.main.ui.devartlink.letsTalk.ChatThread.model.ChatListResponse
 import com.devartlab.ui.main.ui.devartlink.letsTalk.home.model.ImageModel.ImageProfileResponse
 import com.devartlab.ui.main.ui.devartlink.letsTalk.home.model.mareSeen.MarkSeenRequest
@@ -764,6 +765,9 @@ interface ApiServices {
 
     @GET("youtube")
     fun getDevartCommunity(): Call<DevartCommunityResponse?>?
+
+    @GET("faq")
+    fun getFAQ(): Call<FAQResponse?>?
 
     ///////////////////4eshopping//////////////
     @POST("login")

@@ -19,7 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <TextView
+            <WebView
                 android:id="@+id/tv_question"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -42,12 +42,11 @@
                 app:layout_constraintTop_toTopOf="@id/tv_question"
                 app:layout_constraintBottom_toBottomOf="@id/tv_question" />
 
-            <TextView
+            <WebView
                 android:id="@+id/tv_answer"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="Based on our research, the number of connections to kick-start the value of LinkedIn's network is 30. Once you hit this many connections, you should start to see a more relevant news feed and engagement on your posts and new opportunities start to open up"
-                android:layout_marginTop="5dp"
                 android:textColor="@color/black"
                 android:textSize="14sp"
                 android:visibility="gone"
