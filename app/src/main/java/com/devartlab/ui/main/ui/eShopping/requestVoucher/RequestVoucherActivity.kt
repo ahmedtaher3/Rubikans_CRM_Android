@@ -4,7 +4,6 @@ import android.app.Dialog
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextUtils
@@ -14,6 +13,7 @@ import android.view.View
 import android.view.Window
 import android.view.WindowManager
 import android.widget.*
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -22,7 +22,6 @@ import com.devartlab.databinding.ActivityRequestVoucherBinding
 import com.devartlab.ui.main.ui.eShopping.requestVoucher.model.myVoucherRequest.Data
 import com.devartlab.ui.main.ui.eShopping.requestVoucher.model.voucherRequest.VoucherRequestRequest
 import com.devartlab.ui.main.ui.eShopping.requestVoucher.showVouchers.ShowVouchersActivity
-import java.lang.NumberFormatException
 
 class RequestVoucherActivity : AppCompatActivity() {
     lateinit var binding: ActivityRequestVoucherBinding
@@ -30,6 +29,8 @@ class RequestVoucherActivity : AppCompatActivity() {
     var compaignVouchersID: Int = 0
     var doctorsID: Int = 0
     val list = ArrayList<Data>()
+    private val doctors: List<String> = java.util.ArrayList()
+    private var adapterDoctors: ArrayAdapter<String>? = null
     private var adapter: MyVoucherRequestAdapter? = null
     lateinit var request: VoucherRequestRequest
     var doctorsName: String? = null
@@ -117,70 +118,53 @@ class RequestVoucherActivity : AppCompatActivity() {
         )
         val BtnAddTicket = dialog.findViewById<Button>(R.id.btn_add_problem)
         val BtnCancel = dialog.findViewById<ImageView>(R.id.iv_cancel_dialog)
-        val edSelectDoctors = dialog.findViewById<EditText>(R.id.ed_select_doctors)
+        val edSelectDoctors = dialog.findViewById<AutoCompleteTextView>(R.id.ed_select_doctors)
         val edVoucher = dialog.findViewById<TextView>(R.id.ed_voucher)
         val edCount = dialog.findViewById<EditText>(R.id.ed_count)
         val tvNoVouchers = dialog.findViewById<TextView>(R.id.tv_no_vouchers)
+        viewModel!!.getDoctors("")
         edVoucher.setOnClickListener {
             viewModel!!.getCompaignVouchers()
         }
-
-        edSelectDoctors.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(
-                charSequence: CharSequence,
-                i: Int,
-                i1: Int,
-                i2: Int
-            ) {
-            }
-
-            override fun onTextChanged(
-                charSequence: CharSequence,
-                i: Int,
-                i1: Int,
-                i2: Int
-            ) {
-            }
-
-            override fun afterTextChanged(editable: Editable) {
-                viewModel!!.getDoctors(edSelectDoctors.text.toString())
-            }
-        })
-
 
         viewModel!!.getDoctorsResponse.observe(this, Observer {
             if (it!!.data == null) {
                 Toast.makeText(this, "not Authorized", Toast.LENGTH_SHORT).show()
             } else {
-                val countryBrandsPopUp = PopupMenu(this, edSelectDoctors)
-                for (i in 0 until it!!.data.size) {
-                    countryBrandsPopUp.getMenu()
-                        .add(i, i, i, it.data.get(i).id.toString() + it.data.get(i).text)
+                adapterDoctors =
+                    ArrayAdapter<String>(baseContext, android.R.layout.simple_list_item_1, doctors)
+                edSelectDoctors.setAdapter(adapterDoctors)
+                try {
+                    for (i in it.data.indices) {
+                        val name: String = it.data.get(i).text
+                        (doctors as java.util.ArrayList<String>).add(name)
+                    }
+                    adapterDoctors!!.notifyDataSetChanged()
+                } catch (e: Exception) {
+                    e.printStackTrace()
                 }
-                countryBrandsPopUp.setOnMenuItemClickListener(PopupMenu.OnMenuItemClickListener { item ->
-                    edSelectDoctors.setText(it.data.get(item.getItemId()).text)
-                    doctorsID = it.data.get(item.getItemId()).id
-                    doctorsName = it.data.get(item.getItemId()).text
-                    return@OnMenuItemClickListener false;
+                edSelectDoctors.addTextChangedListener(object : TextWatcher {
+                    override fun beforeTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {}
+
+                    override fun onTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {
+                        viewModel!!.getDoctors(edSelectDoctors.text.toString())
+                        if (doctors.contains(charSequence.toString())) {
+                            val index: Int = doctors.indexOf(charSequence.toString())
+                            doctorsName = it.data.get(index).text
+                            doctorsID = it.data.get(index).id
+                        } else {
+                            Toast.makeText(this@RequestVoucherActivity, "please choose right name", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                    override fun afterTextChanged(editable: Editable) {}
                 })
-                countryBrandsPopUp.show()
             }
         })
         edCount.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(
-                charSequence: CharSequence,
-                i: Int,
-                i1: Int,
-                i2: Int
-            ) {
-            }
+            override fun beforeTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {}
 
             override fun onTextChanged(
-                charSequence: CharSequence,
-                i: Int,
-                i1: Int,
-                i2: Int
-            ) {
+                charSequence: CharSequence, i: Int, i1: Int, i2: Int) {
                 val text: String = edCount.getText().toString()
                 try {
                     val num = text.toInt()
@@ -201,7 +185,6 @@ class RequestVoucherActivity : AppCompatActivity() {
                     edCount.setError("please enter right number")
                 }
             }
-
             override fun afterTextChanged(editable: Editable) {}
         })
         viewModel!!.compaignVouchersResponse.observe(this, Observer {
