@@ -21,6 +21,8 @@ import com.devartlab.data.room.filterdata.FilterDataEntity
 import com.devartlab.data.room.list.ListEntity
 import com.devartlab.data.room.specialty.SpecialtyParentEntity
 import com.devartlab.model.*
+import com.devartlab.ui.main.ui.devartLabTeam.model.DevartLabTeamResponse
+import com.devartlab.ui.main.ui.devartlink.devartCommunity.model.DevartCommunityResponse
 import com.devartlab.ui.main.ui.devartlink.letsTalk.ChatThread.model.ChatListResponse
 import com.devartlab.ui.main.ui.devartlink.letsTalk.home.model.ImageModel.ImageProfileResponse
 import com.devartlab.ui.main.ui.devartlink.letsTalk.home.model.mareSeen.MarkSeenRequest
@@ -756,6 +758,12 @@ interface ApiServices {
 
     @POST("makeSeen")
     fun MARK_SEEN(@Body markSeenRequest: MarkSeenRequest?): Call<MarkSeenResponse?>?
+
+    @GET("devart-teams")
+    fun getDevartLabTeam(@Query("_id") _id: String?): Call<DevartLabTeamResponse?>?
+
+    @GET("youtube")
+    fun getDevartCommunity(): Call<DevartCommunityResponse?>?
 
     ///////////////////4eshopping//////////////
     @POST("login")

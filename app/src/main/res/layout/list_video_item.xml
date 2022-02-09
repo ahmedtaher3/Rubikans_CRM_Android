@@ -74,6 +74,7 @@
                 android:textColor="@color/blueGray"
                 android:textSize="10sp"
                 android:layout_marginEnd="10dp"
+                android:visibility="gone"
                 android:layout_marginBottom="5dp"
                 app:layout_constraintEnd_toStartOf="@+id/iv_video"
                 app:layout_constraintBottom_toBottomOf="parent"

@@ -50,8 +50,7 @@
                     <ImageView
                         android:id="@+id/imageView"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:src="@drawable/dr_hussain" />
+                        android:layout_height="match_parent" />
                 </RelativeLayout>
             </androidx.cardview.widget.CardView>
 
@@ -78,15 +77,13 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
-        <TextView
+        <WebView
             android:id="@+id/dec_team"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:textColor="@color/black"
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
-            android:layout_marginTop="10dp"
-            android:text="mdafmopdsamfpodsamfposdamfpoadsmfpomsdafposdafmsadpofmsdamfposdamfpoasdmpfmsdapfdspaofdsafdsafdsafdsfasdfdsafsdafsdafdsafdsafsdafsdadsaffdsafasdfdsafdgfdgsfdgfdsgfdgsfdsafdsa"
+            android:layout_marginTop="5dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/constr_more_than_ads"/>
@@ -103,5 +100,25 @@
             app:layout_constraintEnd_toEndOf="@+id/dec_team"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/dec_team"/>
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminateTint="@color/blue"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:id="@+id/tv_empty_list"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Empty list"
+            android:visibility="invisible"
+            android:textColor="@color/blue"
+            app:layout_constraintTop_toBottomOf="@+id/dec_team"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

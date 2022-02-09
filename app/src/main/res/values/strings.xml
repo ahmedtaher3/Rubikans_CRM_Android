@@ -595,6 +595,7 @@
     <string name="faq">FAQ</string>
     <string name="community">Devart Community</string>
     <string name="incentive_role">Incentive Rule</string>
+    <string name="label_description">Description:</string>
 
 
 </resources>

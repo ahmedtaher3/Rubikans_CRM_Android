@@ -34,6 +34,9 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".ui.main.ui.devartlink.devartCommunity.DevartCommunityVideoActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.main.ui.devartlink.devartCommunity.DevartCommunityActivity"
             android:exported="false" />
         <activity

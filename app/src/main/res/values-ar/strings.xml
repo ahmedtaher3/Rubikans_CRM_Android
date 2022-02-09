@@ -579,4 +579,5 @@
     <string name="faq">التعليمات</string>
     <string name="incentive_role">قاعدة الحوافز</string>
     <string name="community">مجتمع ديفارت</string>
+    <string name="label_description">التفاصيل:</string>
 </resources>
