@@ -117,7 +117,7 @@ class FAQActivity : AppCompatActivity() {
     fun ads() {
         var model: AdModel? = null
         for (m in viewModel!!.dataManager.ads.ads!!) {
-            if (m.pageCode?.toInt() == Constants.FAQ_TUTORIAL) {
+            if (m.pageCode?.toInt() == Constants.FAQ_DEVART_LINK) {
                 model = m
                 binding.constrAds.setVisibility(View.VISIBLE)
                 if (model.resourceLink.equals(null) && model.paragraph.equals(null) && model.slideImages == null) {
@@ -146,8 +146,7 @@ class FAQActivity : AppCompatActivity() {
                 "Image" -> {
 
                     binding.imageView.visibility = View.VISIBLE
-                    Glide.with(this).load(model.resourceLink).centerCrop()
-                        .placeholder(R.drawable.dr_hussain).into(binding.imageView)
+                    Glide.with(this).load(model.resourceLink).centerCrop().into(binding.imageView)
                 }
                 "GIF" -> {
                     binding.imageView.visibility = View.VISIBLE

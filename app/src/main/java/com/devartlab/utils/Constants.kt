@@ -32,4 +32,6 @@ object Constants {
     const val ADD_LOCATION_4ESHOPPING = 28
     const val ALL_COMMENTS_4ESHOPPING = 29
     const val UPLOAD_PHARMACY_4ESHOPPING = 30
+    const val FAQ_DEVART_LINK = 31
+    const val DEVART_COMMUNITY = 32
 }

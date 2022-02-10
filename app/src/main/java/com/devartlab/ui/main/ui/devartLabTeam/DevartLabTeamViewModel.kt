@@ -38,6 +38,26 @@ class DevartLabTeamViewModel(application: Application) : AndroidViewModel(applic
             })
     }
 
+    fun getIncentive(_id: String) {
+        RetrofitClient.getApis().getIncentive(_id)!!
+            .enqueue(object : Callback<DevartLabTeamResponse?> {
+                override fun onResponse(
+                    call: Call<DevartLabTeamResponse?>,
+                    response: Response<DevartLabTeamResponse?>
+                ) {
+                    if (response.isSuccessful) {
+                        devartLabTeamResponse.postValue(response.body())
+                    } else {
+                        devartLabTeamResponse.postValue(response.body())
+                    }
+                }
+
+                override fun onFailure(call: Call<DevartLabTeamResponse?>, t: Throwable) {
+                    errorMessage.postValue(1)
+                }
+            })
+    }
+
     init {
         devartLabTeamResponse = MutableLiveData()
         errorMessage = MutableLiveData()
