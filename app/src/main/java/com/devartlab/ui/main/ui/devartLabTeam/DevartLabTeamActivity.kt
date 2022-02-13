@@ -69,7 +69,7 @@ class DevartLabTeamActivity : AppCompatActivity() {
 
                 Glide.with(this)
                     .load("https://devartlink.devartlab.com/assets/images/" + it!!.image)
-                    .centerCrop().into(binding.imageView)
+                    .fitCenter().into(binding.imageView)
                 supportActionBar!!.title = it.name
                 binding.decTeam.loadDataWithBaseURL(
                     null, it.description, "text/html", "utf-8", null)

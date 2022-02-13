@@ -38,9 +38,6 @@ import com.devartlab.ui.main.ui.eShopping.report.atv.model.TreeNode
 
 import com.devartlab.ui.main.ui.eShopping.report.atv.view.AndroidTreeView
 
-
-
-
 class Report4eShoppingActivity : AppCompatActivity() {
     lateinit var binding: ActivityReport4eShoppingBinding
     override fun onCreate(savedInstanceState: Bundle?) {
