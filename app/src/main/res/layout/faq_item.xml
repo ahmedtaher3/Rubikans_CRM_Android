@@ -6,32 +6,35 @@
     <data>
 
     </data>
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/videos_list"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:cardBackgroundColor="@color/blue"
-        app:cardCornerRadius="10dp"
-        app:cardElevation="2dp"
-        app:cardUseCompatPadding="true">
-
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:layout_margin="2dp">
 
-            <TextView
-                android:id="@+id/tv_question"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                tools:text="What should you not do on LinkedIn?"
-                android:layout_marginTop="5dp"
-                android:textColor="@color/white"
-                android:textSize="14sp"
-                android:textStyle="bold"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="5dp"
+                android:background="@drawable/custom_bg_blue_add"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintBottom_toBottomOf="@+id/iv_down"
+                app:layout_constraintTop_toTopOf="@id/iv_down"
+                app:layout_constraintEnd_toStartOf="@id/iv_down">
+
+                <TextView
+                    android:id="@+id/tv_question"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:textColor="@color/white"
+                    android:textSize="12sp"
+                    android:gravity="center"
+                    android:padding="5dp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="What should you not do on LinkedIn?" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/iv_down"
@@ -39,27 +42,11 @@
                 android:layout_height="60dp"
                 android:layout_marginEnd="10dp"
                 android:src="@drawable/ic_down"
+                app:civ_border_color="@color/blue"
                 app:civ_border_width="1dp"
-                app:civ_border_color="@color/white"
-                tools:src="@drawable/ic_team"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@id/tv_question"
-                app:layout_constraintBottom_toBottomOf="@id/tv_question" />
-
-            <WebView
-                android:id="@+id/tv_answer"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="Based on our research, the number of connections to kick-start the value of LinkedIn's network is 30. Once you hit this many connections, you should start to see a more relevant news feed and engagement on your posts and new opportunities start to open up"
-                android:textColor="@color/black"
-                android:textSize="14sp"
-                android:visibility="gone"
-                android:layout_marginBottom="10dp"
-                app:layout_constraintEnd_toEndOf="@id/iv_down"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="@id/tv_question"
-                app:layout_constraintTop_toBottomOf="@id/tv_question" />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:src="@drawable/ic_team" />
         </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </androidx.cardview.widget.CardView>
 </layout>

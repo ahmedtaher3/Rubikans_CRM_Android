@@ -17,8 +17,8 @@ class FAQViewModel(application: Application) : AndroidViewModel(application) {
     var faqResponse: MutableLiveData<FAQResponse?>
         protected set
     var dataManager: DataManager
-    fun getFAQ() {
-        RetrofitClient.getApis().getFAQ()!!
+    fun getFAQ(id:String) {
+        RetrofitClient.getApis().getFAQ(id)!!
             .enqueue(object : Callback<FAQResponse?> {
                 override fun onResponse(
                     call: Call<FAQResponse?>,

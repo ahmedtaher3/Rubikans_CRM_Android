@@ -18,9 +18,7 @@ import com.devartlab.base.BaseApplication
 import com.devartlab.data.shared.DataManager
 import com.devartlab.databinding.ActivityFaqBinding
 import com.devartlab.model.AdModel
-import com.devartlab.ui.main.ui.devartlink.devartCommunity.DevartCommunityAdapter
-import com.devartlab.ui.main.ui.devartlink.devartCommunity.DevartCommunityVideoActivity
-import com.devartlab.ui.main.ui.devartlink.faq.model.Data
+import com.devartlab.ui.main.ui.devartlink.faq.model.FAQResponseItem
 import com.devartlab.ui.main.ui.moreDetailsAds.MoreDetailsAdsActivity
 import com.devartlab.utils.Constants
 import com.devartlab.utils.MainSliderAdapter
@@ -34,7 +32,7 @@ class FAQActivity : AppCompatActivity() {
     lateinit var mediaSource: SimpleMediaSource
     var viewModel: FAQViewModel? = null
     private var adapter: FAQAdapter? = null
-    val list =ArrayList<Data>()
+    val list =ArrayList<FAQResponseItem>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(
@@ -59,14 +57,14 @@ class FAQActivity : AppCompatActivity() {
                 filter(s.toString())
             }
         })
-        viewModel!!.getFAQ()
+        viewModel!!.getFAQ("0")
         binding.swipeRefreshLayout.setOnRefreshListener {
             refresh()
         }
     }
 
     private fun handleObserver() {
-        viewModel!!.errorMessage.observe(this, { integer: Int ->
+        viewModel!!.errorMessage.observe(this,Observer { integer: Int ->
             if (integer == 1) {
                 Log.e("xxx", "error")
                 Toast.makeText(this, "error in response data", Toast.LENGTH_SHORT)
@@ -77,24 +75,24 @@ class FAQActivity : AppCompatActivity() {
         })
 
         viewModel!!.faqResponse.observe(this, Observer {
-            if (it!!.data == null) {
+            if (it == null) {
                 //errorMessage if data coming is null;
                 binding.tvEmptyList.setVisibility(View.VISIBLE)
             } else {
                 //show data in recyclerView
                 binding.progressBar.setVisibility(View.GONE)
-                adapter = FAQAdapter(it.data)
-                list.addAll(it.data)
+                adapter = FAQAdapter(it)
+                list.addAll(it)
                 binding.recyclerListVideos.setAdapter(adapter)
             }
         })
     }
 
     private fun filter(text: String) {
-        val filteredList: ArrayList<Data> = ArrayList()
+        val filteredList: ArrayList<FAQResponseItem> = ArrayList()
 
         for (item in list) {
-            if (item.q.toLowerCase().contains(text.toLowerCase())) {
+            if (item.title.toLowerCase().contains(text.toLowerCase())) {
                 filteredList.add(item)
             }
         }
@@ -103,7 +101,7 @@ class FAQActivity : AppCompatActivity() {
 
     private fun refresh() {
         synchronized(this) {
-            viewModel!!.getFAQ()
+            viewModel!!.getFAQ("0")
             binding.swipeRefreshLayout.isRefreshing = false
             binding.progressBar.setVisibility(View.VISIBLE)
         }

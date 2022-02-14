@@ -772,7 +772,7 @@ interface ApiServices {
     fun getDevartCommunity(@Query("_id") _id: String?): Call<DevartCommunityResponse?>?
 
     @GET("faq")
-    fun getFAQ(): Call<FAQResponse?>?
+    fun getFAQ(@Query("id") id: String?): Call<FAQResponse?>?
 
     ///////////////////4eshopping//////////////
     @POST("login")

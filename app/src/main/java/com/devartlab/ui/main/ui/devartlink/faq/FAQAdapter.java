@@ -9,20 +9,20 @@ import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.devartlab.R;
 import com.devartlab.databinding.FaqItemBinding;
-import com.devartlab.databinding.ListVideoItemBinding;
-import com.devartlab.ui.main.ui.devartlink.faq.model.Data;
+import com.devartlab.ui.main.ui.devartlink.faq.model.FAQResponseItem;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class FAQAdapter extends RecyclerView.Adapter<FAQAdapter.ViewHolder> {
 
-    List<Data> dataItems;
+    List<FAQResponseItem> dataItems;
     private Context context;
 
-    public FAQAdapter(List<Data> dataItems) {
+    public FAQAdapter(List<FAQResponseItem> dataItems) {
         this.dataItems = dataItems;
     }
 
@@ -37,23 +37,19 @@ public class FAQAdapter extends RecyclerView.Adapter<FAQAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, final int position) {
-        final Data dataItem = dataItems.get(position);
-        viewHolder.binding.tvAnswer.loadDataWithBaseURL(
-                null,dataItem.getA(), "text/html", "utf-8", null);
-//        viewHolder.binding.tvQuestion.loadDataWithBaseURL(
-//                null,dataItem.getQ(), "text/html", "utf-8", null);
-        viewHolder.binding.ivDown.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (viewHolder.binding.tvAnswer.getVisibility() == View.VISIBLE) {
-                    viewHolder.binding.tvAnswer.setVisibility(View.GONE);
-                    viewHolder.binding.ivDown.setImageResource(R.drawable.ic_down);
-                } else {
-                    viewHolder.binding.tvAnswer.setVisibility(View.VISIBLE);
-                    viewHolder.binding.ivDown.setImageResource(R.drawable.ic_up);
+        final FAQResponseItem dataItem = dataItems.get(position);
+        viewHolder.binding.tvQuestion.setText(dataItem.getTitle());
+        Glide.with(context)
+                .load("https://devartlink.devartlab.com/assets/images/" + dataItem.getImage())
+                    .centerCrop().into(viewHolder.binding.ivDown);
+        if (onItemClickListener != null) {
+            viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onItemClickListener.onItemClick(position, dataItem);
                 }
-            }
-        });
+            });
+        }
     }
 
     @Override
@@ -94,9 +90,9 @@ public class FAQAdapter extends RecyclerView.Adapter<FAQAdapter.ViewHolder> {
     }
 
     public interface OnItemClickListener {
-        void onItemClick(int pos, Data dataItem);
+        void onItemClick(int pos, FAQResponseItem dataItem);
     }
-    public void filterData(ArrayList<Data> newList ){
+    public void filterData(ArrayList<FAQResponseItem> newList ){
         this.dataItems = newList;
         notifyDataSetChanged(); // refresh
     }

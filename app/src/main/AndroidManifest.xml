@@ -34,9 +34,6 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".ui.main.ui.devartlink.devartCommunity.CatDevartCommunityActivity"
-            android:exported="false" />
-        <activity
             android:name=".ui.main.ui.callmanagement.incentiveRule.IncentiveRuleActivity"
             android:exported="false" />
         <activity
@@ -259,7 +256,7 @@
             android:name=".ui.main.ui.devartlink.DevartLinkWebView"
             android:exported="true" />
         <activity
-            android:name=".a4eshopping.orientationVideos.videoActivity"
+            android:name=".ui.main.ui.eShopping.orientationVideos.VideoActivity"
             android:exported="false" />
         <activity
             android:name=".ui.main.ui.eShopping.ticket.ChatThread4EShoppingActivity"
@@ -269,7 +266,7 @@
             android:exported="true"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name=".a4eshopping.addProductsToThePharmacy.AddProductsPharmacyActivity"
+            android:name=".ui.main.ui.eShopping.addProductsToThePharmacy.AddProductsPharmacyActivity"
             android:exported="false" />
         <activity
             android:name=".ui.main.ui.eShopping.pharmacySales.DetailsPharmacySalesActivity"
@@ -278,22 +275,22 @@
             android:name=".ui.main.ui.eShopping.pharmacySales.PharmacySalesActivity"
             android:exported="false" />
         <activity
-            android:name=".a4eshopping.PharmacyBinding.uploadPharmacyFiles.UploadPharmacyFilesActivity"
+            android:name=".ui.main.ui.eShopping.pharmacyBinding.uploadPharmacyFiles.UploadPharmacyFilesActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.main.ui.a4eshopping.main.Home4EShoppingActivity"
+            android:name=".ui.main.ui.eShopping.main.Home4EShoppingActivity"
             android:exported="true" />
         <activity
-            android:name=".ui.main.ui.eShopping.PharmacyBinding.addLocation.AddLocationActivity"
+            android:name=".ui.main.ui.eShopping.pharmacyBinding.addLocation.AddLocationActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.main.ui.eShopping.PharmacyBinding.allComments.AllCommentsActivity"
+            android:name=".ui.main.ui.eShopping.pharmacyBinding.allComments.AllCommentsActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.main.ui.eShopping.PharmacyBinding.PharmacyBindingActivity"
+            android:name=".ui.main.ui.eShopping.pharmacyBinding.PharmacyBindingActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.main.ui.eshopping.orientationVideos.OrientationVideosActivity"
+            android:name=".ui.main.ui.eShopping.orientationVideos.OrientationVideosActivity"
             android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".ui.main.ui.devartlink.letsTalk.ChatThread.ChatThreadActivity"
@@ -336,14 +333,6 @@
                 <action android:name="com.mazenrashed.universalbluethootprinter.ui.ScanningActivity.LAUNCH" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.main.ui.eShopping.main.Home4EShoppingActivity" />
-        <activity android:name=".ui.main.ui.eShopping.orientationVideos.OrientationVideosActivity" />
-        <activity android:name=".ui.main.ui.eShopping.pharmacyBinding.PharmacyBindingActivity" />
-        <activity android:name=".ui.main.ui.eShopping.addProductsToThePharmacy.AddProductsPharmacyActivity" />
-        <activity android:name=".ui.main.ui.eShopping.orientationVideos.VideoActivity" />
-        <activity android:name=".ui.main.ui.eShopping.pharmacyBinding.addLocation.AddLocationActivity" />
-        <activity android:name=".ui.main.ui.eShopping.pharmacyBinding.uploadPharmacyFiles.UploadPharmacyFilesActivity" />
-        <activity android:name=".ui.main.ui.eShopping.pharmacyBinding.allComments.AllCommentsActivity" />
     </application>
 
 </manifest>
