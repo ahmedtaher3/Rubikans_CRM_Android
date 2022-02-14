@@ -34,6 +34,9 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".ui.main.ui.devartlink.devartCommunity.CatDevartCommunityActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.main.ui.callmanagement.IncentiveRule.IncentiveRuleActivity"
             android:exported="false" />
         <activity

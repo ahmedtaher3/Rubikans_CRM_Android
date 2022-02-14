@@ -46,8 +46,11 @@ import com.devartlab.data.source.values.ValuesRepository
 import com.devartlab.model.GoogleRequestResponse
 import com.devartlab.model.ProductTable
 import com.devartlab.ui.auth.login.LoginActivity
+import com.devartlab.ui.main.ui.devartlink.model.WelcomePostResponse
 import com.devartlab.ui.main.ui.eShopping.main.model.login4EShopping.Login4EShoppingRequest
 import com.devartlab.ui.main.ui.eShopping.main.model.login4EShopping.Login4EShoppingResponse
+import com.devartlab.ui.main.ui.eShopping.pharmacyBinding.uploadPharmacyFiles.model.pharmacydata.GetInfoPharmacyResponse
+import com.devartlab.ui.main.ui.eShopping.utils.UserPreferenceHelper
 import com.devartlab.utils.CommonUtilities
 import com.google.gson.Gson
 import io.reactivex.Completable
@@ -76,6 +79,8 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     var errorMessage: MutableLiveData<Int>
         protected set
     var login4EShoppingResponse: MutableLiveData<Login4EShoppingResponse?>
+        protected set
+    var welcomePostResponse: MutableLiveData<WelcomePostResponse?>
         protected set
 
     var myAPI: ApiServices? = null
@@ -123,7 +128,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         myAPI2 = retrofit2!!.create(ApiServicesGoogle::class.java)
         errorMessage = MutableLiveData()//error message
         login4EShoppingResponse = MutableLiveData()//login 4eshopping
-
+        welcomePostResponse= MutableLiveData()//welcome post
 
         progress = MutableLiveData()
         progressGoogle = MutableLiveData()
@@ -499,5 +504,25 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
         })
 
+    }
+    //function welcome post
+    fun getWelcomePost() {
+        RetrofitClient.getApis4EShopping().getWelcomePost()!!
+            .enqueue(object : Callback<WelcomePostResponse?> {
+                override fun onResponse(
+                    call: Call<WelcomePostResponse?>,
+                    response: Response<WelcomePostResponse?>
+                ) {
+                    if (response.isSuccessful) {
+                        welcomePostResponse.postValue(response.body())
+                    } else {
+                        welcomePostResponse.postValue(response.body())
+                    }
+                }
+
+                override fun onFailure(call: Call<WelcomePostResponse?>, t: Throwable) {
+                    errorMessage.postValue(1)
+                }
+            })
     }
 }

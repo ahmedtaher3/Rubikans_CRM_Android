@@ -181,6 +181,8 @@ class MainActivity : BaseActivity<ActivityMainBinding?>(), View.OnClickListener,
         setUpRecycler()
         ads()
 
+        //welcome post dialog
+        viewModel.getWelcomePost()
         //login 4EShopping
         //change device_type in request
         name = viewModel.dataManager.user.userName
@@ -188,8 +190,7 @@ class MainActivity : BaseActivity<ActivityMainBinding?>(), View.OnClickListener,
         token = viewModel.dataManager.token
         login4EShoppingRequest =
             Login4EShoppingRequest(name!!, pass!!, "mr", token!!, AppConstants.DeviceType)
-        viewModel!!.getUserModel(this, login4EShoppingRequest)
-
+        viewModel.getUserModel(this, login4EShoppingRequest)
         val getToken = GetDeviceToken(this)
         getToken.getToken(object : GetDeviceToken.TokenResult() {
             override fun success(token: String?) {
@@ -206,6 +207,10 @@ class MainActivity : BaseActivity<ActivityMainBinding?>(), View.OnClickListener,
     }
 
     private fun setObservers() {
+        //welcome post dialog
+        viewModel.welcomePostResponse.observe(this, Observer {
+            showWelcomePostDialog(it!!.ad_image)
+        })
         viewModel.progress.observe(this, Observer { integer ->
             when (integer) {
                 0 -> {
@@ -254,7 +259,7 @@ class MainActivity : BaseActivity<ActivityMainBinding?>(), View.OnClickListener,
         })
 
         //login 4EShopping
-        viewModel!!.errorMessage.observe(this, { integer: Int ->
+        viewModel.errorMessage.observe(this, { integer: Int ->
             if (integer == 1) {
                 Log.e("xxx", "error")
                 Toast.makeText(this, "error in response data", Toast.LENGTH_SHORT)
@@ -263,7 +268,7 @@ class MainActivity : BaseActivity<ActivityMainBinding?>(), View.OnClickListener,
                 Toast.makeText(this, "error in Network", Toast.LENGTH_SHORT).show()
             }
         })
-        viewModel!!.login4EShoppingResponse.observe(this, Observer {
+        viewModel.login4EShoppingResponse.observe(this, Observer {
             UserPreferenceHelper.saveUserProfile(it)
         })
     }
@@ -684,7 +689,7 @@ class MainActivity : BaseActivity<ActivityMainBinding?>(), View.OnClickListener,
                 "GIF" -> {
                     binding.imageView.visibility = View.VISIBLE
                     Glide.with(this).asGif().load(model.resourceLink).centerCrop()
-                        .placeholder(R.drawable.dr_hussain).into(binding.imageView);
+                        .placeholder(R.drawable.dr_hussain).into(binding.imageView)
                 }
                 "Paragraph" -> {
                     binding.textView.visibility = View.VISIBLE

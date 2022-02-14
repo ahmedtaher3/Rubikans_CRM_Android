@@ -32,6 +32,7 @@ import com.devartlab.ui.main.ui.devartlink.letsTalk.home.model.peopleList.People
 import com.devartlab.ui.main.ui.devartlink.letsTalk.model.searchPeople.SearchPeapleResponse
 import com.devartlab.ui.main.ui.devartlink.letsTalk.model.user.UserResponse
 import com.devartlab.ui.main.ui.devartlink.letsTalk.model.userID.UserIDResponse
+import com.devartlab.ui.main.ui.devartlink.model.WelcomePostResponse
 import com.devartlab.ui.main.ui.eShopping.pharmacyBinding.uploadPharmacyFiles.model.pharmacydata.GetInfoPharmacyResponse
 import com.devartlab.ui.main.ui.eShopping.addProductsToThePharmacy.model.showCart.ShowCartResponse
 import com.devartlab.ui.main.ui.eShopping.main.model.login4EShopping.Login4EShoppingResponse
@@ -983,4 +984,6 @@ interface ApiServices {
         @Body request: DeliverVoucherRequest?
     ): Call<DeliverVoucherResponse?>?
 
+    @GET("v")
+    fun getWelcomePost(): Call<WelcomePostResponse?>?
 }

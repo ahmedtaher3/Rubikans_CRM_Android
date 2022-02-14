@@ -1,13 +1,18 @@
 package com.devartlab.base;
 
 import android.annotation.TargetApi;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 
 import androidx.annotation.LayoutRes;
@@ -16,9 +21,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ViewDataBinding;
 
+import com.bumptech.glide.Glide;
+import com.devartlab.R;
 import com.devartlab.data.shared.DataManager;
+import com.devartlab.databinding.DialogWelcomePostBinding;
 import com.devartlab.utils.InternetConnectionDetector;
 import com.devartlab.utils.LocaleUtils;
+import com.squareup.picasso.Picasso;
 
 import java.util.Locale;
 
@@ -128,5 +137,27 @@ public abstract class BaseActivity <T extends ViewDataBinding> extends AppCompat
         startActivity(intent);
     }
 
-
+    public void showWelcomePostDialog(String image) {
+        Dialog dialog = new Dialog(this);
+        DialogWelcomePostBinding binding = DataBindingUtil.inflate(dialog.getLayoutInflater(), R.layout.dialog_welcome_post, null, false);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setCancelable(false);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+        dialog.setContentView(binding.getRoot());
+//        Glide.with(this).asGif().load("https://t4e.4eshopping.com"+image).fitCenter().into(binding.ivPost);
+        Picasso.get()
+                .load("https://t4e.4eshopping.com"+image)
+                .centerCrop()
+                .resize(1024, 1024)
+                .error(android.R.drawable.stat_notify_error)
+                .into(binding.ivPost);
+        binding.ivCancelDialog.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
+    }
 }
