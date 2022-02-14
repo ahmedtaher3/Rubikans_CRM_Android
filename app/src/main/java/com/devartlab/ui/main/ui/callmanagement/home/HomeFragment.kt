@@ -24,7 +24,7 @@ import com.devartlab.model.CardModel
 import com.devartlab.ui.dialogs.chooseemployee.ChooseEmployee
 import com.devartlab.ui.dialogs.chooseemployee.ChooseEmployeeInterFace
 import com.devartlab.ui.main.CallsActivity
-import com.devartlab.ui.main.ui.callmanagement.IncentiveRule.IncentiveRuleActivity
+import com.devartlab.ui.main.ui.callmanagement.incentiveRule.IncentiveRuleActivity
 import com.devartlab.ui.main.ui.callmanagement.employee.EmployeeReportActivity
 import com.devartlab.ui.main.ui.callmanagement.inventory.InventoryFragment
 import com.devartlab.ui.main.ui.callmanagement.list.TypesFragment

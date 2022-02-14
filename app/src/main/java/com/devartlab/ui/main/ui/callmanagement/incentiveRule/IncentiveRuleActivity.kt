@@ -1,4 +1,4 @@
-package com.devartlab.ui.main.ui.callmanagement.IncentiveRule
+package com.devartlab.ui.main.ui.callmanagement.incentiveRule
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -13,15 +13,12 @@ import com.bumptech.glide.Glide
 import com.devartlab.R
 import com.devartlab.a4eshopping.pharmacySales.DevartLabTeamViewModel
 import com.devartlab.databinding.ActivityIncentiveRuleBinding
-import com.devartlab.ui.main.ui.devartLabTeam.DevartLabSubAdapter
-import com.devartlab.ui.main.ui.devartLabTeam.DevartLabTeamActivity
-import com.devartlab.ui.main.ui.devartLabTeam.DevartLabTeamAdapter
 
 class IncentiveRuleActivity : AppCompatActivity() {
     lateinit var binding:ActivityIncentiveRuleBinding
     var viewModel: DevartLabTeamViewModel? = null
-    private var adapter: DevartLabSubAdapter? = null
-    private var adapter2: DevartLabTeamAdapter? = null
+    private var adapter: DevartLabIncentiveSubAdapter? = null
+    private var adapter2: DevartLabIncentiveAdapter? = null
     var _id: String? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,8 +27,8 @@ class IncentiveRuleActivity : AppCompatActivity() {
         )
         setSupportActionBar(binding.toolbar)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-        adapter = DevartLabSubAdapter(null)
-        adapter2 = DevartLabTeamAdapter(null)
+        adapter = DevartLabIncentiveSubAdapter(null)
+        adapter2 = DevartLabIncentiveAdapter(null)
         viewModel = ViewModelProvider(this).get(DevartLabTeamViewModel::class.java)
         if (intent.hasExtra("_id")) {
             _id = intent.getStringExtra("_id")
@@ -66,12 +63,12 @@ class IncentiveRuleActivity : AppCompatActivity() {
             }
         })
 
-        viewModel!!.devartLabTeamResponse.observe(this, Observer {
+        viewModel!!.devartLabIncentiveResponse.observe(this, Observer {
             binding.progressBar.setVisibility(View.GONE)
 
             Glide.with(this)
                 .load("https://devartlink.devartlab.com/assets/images/" + it!!.image)
-                .centerCrop().into(binding.imageView)
+                .fitCenter().into(binding.imageView)
             supportActionBar!!.title = it.name
             binding.decTeam.loadDataWithBaseURL(
                 null, it.description, "text/html", "utf-8", null)
@@ -79,20 +76,20 @@ class IncentiveRuleActivity : AppCompatActivity() {
                 it.sub.isNotEmpty() -> {
                     //show data in recyclerView
                     binding.progressBar.setVisibility(View.GONE)
-                    adapter = DevartLabSubAdapter(it.sub)
+                    adapter = DevartLabIncentiveSubAdapter(it.sub)
                     binding.recyclerListTeams.setAdapter(adapter)
-                    adapter!!.setOnItemClickListener(DevartLabSubAdapter.OnItemClickListener { pos, dataItem ->
+                    adapter!!.setOnItemClickListener(DevartLabIncentiveSubAdapter.OnItemClickListener { pos, dataItem ->
                         val intent = Intent(this, IncentiveRuleActivity::class.java)
                         intent.putExtra("_id", dataItem._id)
                         startActivity(intent)
                     })
                 }
-                it.team.isNotEmpty() -> {
+                it.incentive.isNotEmpty() -> {
                     //show data in recyclerView
                     binding.progressBar.setVisibility(View.GONE)
-                    adapter2 = DevartLabTeamAdapter(it.team)
+                    adapter2 = DevartLabIncentiveAdapter(it.incentive)
                     binding.recyclerListTeams.setAdapter(adapter2)
-                        adapter2!!.setOnItemClickListener(DevartLabTeamAdapter.OnItemClickListener { pos, dataItem ->
+                        adapter2!!.setOnItemClickListener(DevartLabIncentiveAdapter.OnItemClickListener { pos, dataItem ->
                             val intent = Intent(this, IncentiveRuleActivity::class.java)
                             intent.putExtra("_id", dataItem._id)
                             startActivity(intent)

@@ -37,7 +37,7 @@
             android:name=".ui.main.ui.devartlink.devartCommunity.CatDevartCommunityActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.main.ui.callmanagement.IncentiveRule.IncentiveRuleActivity"
+            android:name=".ui.main.ui.callmanagement.incentiveRule.IncentiveRuleActivity"
             android:exported="false" />
         <activity
             android:name=".ui.main.ui.devartlink.devartCommunity.DevartCommunityVideoActivity"

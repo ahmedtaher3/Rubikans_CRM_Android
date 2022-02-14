@@ -21,6 +21,7 @@ import com.devartlab.data.room.filterdata.FilterDataEntity
 import com.devartlab.data.room.list.ListEntity
 import com.devartlab.data.room.specialty.SpecialtyParentEntity
 import com.devartlab.model.*
+import com.devartlab.ui.main.ui.callmanagement.incentiveRule.model.DevartLabIncentiveResponse
 import com.devartlab.ui.main.ui.devartLabTeam.model.DevartLabTeamResponse
 import com.devartlab.ui.main.ui.devartlink.devartCommunity.model.DevartCommunityResponse
 import com.devartlab.ui.main.ui.devartlink.faq.model.FAQResponse
@@ -765,7 +766,7 @@ interface ApiServices {
     fun getDevartLabTeam(@Query("_id") _id: String?): Call<DevartLabTeamResponse?>?
 
     @GET("incentive")
-    fun getIncentive(@Query("_id") _id: String?): Call<DevartLabTeamResponse?>?
+    fun getIncentive(@Query("_id") _id: String?): Call<DevartLabIncentiveResponse?>?
 
     @GET("youtube")
     fun getDevartCommunity(@Query("_id") _id: String?): Call<DevartCommunityResponse?>?

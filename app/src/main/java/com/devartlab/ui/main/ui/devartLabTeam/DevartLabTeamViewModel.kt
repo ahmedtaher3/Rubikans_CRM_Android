@@ -4,10 +4,8 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import com.devartlab.data.retrofit.RetrofitClient
+import com.devartlab.ui.main.ui.callmanagement.incentiveRule.model.DevartLabIncentiveResponse
 import com.devartlab.ui.main.ui.devartLabTeam.model.DevartLabTeamResponse
-import com.devartlab.ui.main.ui.eShopping.pharmacySales.model.PharmacySalesResponse
-import com.devartlab.ui.main.ui.eShopping.pharmacySales.model.detailsPharmacySales.DetailsPharmacySalesResponse
-import com.devartlab.ui.main.ui.eShopping.utils.UserPreferenceHelper
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -16,6 +14,8 @@ class DevartLabTeamViewModel(application: Application) : AndroidViewModel(applic
     var errorMessage: MutableLiveData<Int>
         protected set
     var devartLabTeamResponse: MutableLiveData<DevartLabTeamResponse?>
+        protected set
+    var devartLabIncentiveResponse: MutableLiveData<DevartLabIncentiveResponse?>
         protected set
 
     fun getDevartLabTeam(_id: String) {
@@ -40,19 +40,19 @@ class DevartLabTeamViewModel(application: Application) : AndroidViewModel(applic
 
     fun getIncentive(_id: String) {
         RetrofitClient.getApis().getIncentive(_id)!!
-            .enqueue(object : Callback<DevartLabTeamResponse?> {
+            .enqueue(object : Callback<DevartLabIncentiveResponse?> {
                 override fun onResponse(
-                    call: Call<DevartLabTeamResponse?>,
-                    response: Response<DevartLabTeamResponse?>
+                    call: Call<DevartLabIncentiveResponse?>,
+                    response: Response<DevartLabIncentiveResponse?>
                 ) {
                     if (response.isSuccessful) {
-                        devartLabTeamResponse.postValue(response.body())
+                        devartLabIncentiveResponse.postValue(response.body())
                     } else {
-                        devartLabTeamResponse.postValue(response.body())
+                        devartLabIncentiveResponse.postValue(response.body())
                     }
                 }
 
-                override fun onFailure(call: Call<DevartLabTeamResponse?>, t: Throwable) {
+                override fun onFailure(call: Call<DevartLabIncentiveResponse?>, t: Throwable) {
                     errorMessage.postValue(1)
                 }
             })
@@ -61,5 +61,6 @@ class DevartLabTeamViewModel(application: Application) : AndroidViewModel(applic
     init {
         devartLabTeamResponse = MutableLiveData()
         errorMessage = MutableLiveData()
+        devartLabIncentiveResponse=MutableLiveData()
     }
 }
