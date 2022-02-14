@@ -40,8 +40,8 @@ public class FAQAdapter extends RecyclerView.Adapter<FAQAdapter.ViewHolder> {
         final Data dataItem = dataItems.get(position);
         viewHolder.binding.tvAnswer.loadDataWithBaseURL(
                 null,dataItem.getA(), "text/html", "utf-8", null);
-        viewHolder.binding.tvQuestion.loadDataWithBaseURL(
-                null,dataItem.getQ(), "text/html", "utf-8", null);
+//        viewHolder.binding.tvQuestion.loadDataWithBaseURL(
+//                null,dataItem.getQ(), "text/html", "utf-8", null);
         viewHolder.binding.ivDown.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

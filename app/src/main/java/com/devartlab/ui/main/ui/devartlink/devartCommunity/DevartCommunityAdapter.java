@@ -10,19 +10,18 @@ import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.devartlab.R;
-import com.devartlab.a4eshopping.orientationVideos.model.Item;
 import com.devartlab.databinding.ListVideoItemBinding;
-import com.devartlab.ui.main.ui.devartlink.devartCommunity.model.Data;
+import com.devartlab.ui.main.ui.devartlink.devartCommunity.model.Youtube;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class DevartCommunityAdapter extends RecyclerView.Adapter<DevartCommunityAdapter.ViewHolder> {
 
-    List<Data> dataItems;
+    List<Youtube> dataItems;
     private Context context;
 
-    public DevartCommunityAdapter(List<Data> dataItems) {
+    public DevartCommunityAdapter(List<Youtube> dataItems) {
         this.dataItems = dataItems;
     }
 
@@ -37,7 +36,7 @@ public class DevartCommunityAdapter extends RecyclerView.Adapter<DevartCommunity
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, final int position) {
-        final Data dataItem = dataItems.get(position);
+        final Youtube dataItem = dataItems.get(position);
         viewHolder.binding.nameChannel.setText(dataItem.getSub_title());
         viewHolder.binding.numberVideo.setText(String.valueOf(position+1));
         viewHolder.binding.name.setText(dataItem.getTitle());
@@ -89,9 +88,9 @@ public class DevartCommunityAdapter extends RecyclerView.Adapter<DevartCommunity
     }
 
     public interface OnItemClickListener {
-        void onItemClick(int pos, Data dataItem);
+        void onItemClick(int pos, Youtube dataItem);
     }
-    public void filterData(ArrayList<Data> newList ){
+    public void filterData(ArrayList<Youtube> newList ){
         this.dataItems = newList;
         notifyDataSetChanged(); // refresh
     }

@@ -1,10 +1,9 @@
-package com.devartlab.ui.main.ui.devartLabTeam;
+package com.devartlab.ui.main.ui.devartlink.devartCommunity;
 
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
@@ -13,21 +12,16 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.devartlab.R;
 import com.devartlab.databinding.ListTeamsItemBinding;
-import com.devartlab.databinding.PharmacySalesItemBinding;
-import com.devartlab.ui.main.ui.devartLabTeam.model.Team;
-import com.devartlab.ui.main.ui.eShopping.pharmacySales.model.Data;
+import com.devartlab.ui.main.ui.devartlink.devartCommunity.model.Sub;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
-public class DevartLabTeamAdapter extends RecyclerView.Adapter<DevartLabTeamAdapter.ViewHolder> {
+public class DevartCommunitySubAdapter extends RecyclerView.Adapter<DevartCommunitySubAdapter.ViewHolder> {
 
-    List<Team> dataItems;
+    List<Sub> dataItems;
     private Context context;
 
-    public DevartLabTeamAdapter(List<Team> dataItems) {
+    public DevartCommunitySubAdapter(List<Sub> dataItems) {
         this.dataItems = dataItems;
     }
 
@@ -42,7 +36,7 @@ public class DevartLabTeamAdapter extends RecyclerView.Adapter<DevartLabTeamAdap
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, final int position) {
-        final Team dataItem = dataItems.get(position);
+        final Sub dataItem = dataItems.get(position);
 
         viewHolder.binding.name.setText(dataItem.getName());
         Glide.with(context).load("https://devartlink.devartlab.com/assets/images/"+dataItem.getImage()).centerCrop().into(viewHolder.binding.image);
@@ -96,6 +90,6 @@ public class DevartLabTeamAdapter extends RecyclerView.Adapter<DevartLabTeamAdap
     }
 
     public interface OnItemClickListener {
-        void onItemClick(int pos, Team dataItem);
+        void onItemClick(int pos, Sub dataItem);
     }
 }

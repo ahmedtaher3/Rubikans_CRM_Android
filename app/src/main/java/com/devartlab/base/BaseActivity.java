@@ -145,7 +145,6 @@ public abstract class BaseActivity <T extends ViewDataBinding> extends AppCompat
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
         dialog.setContentView(binding.getRoot());
-//        Glide.with(this).asGif().load("https://t4e.4eshopping.com"+image).fitCenter().into(binding.ivPost);
         Picasso.get()
                 .load("https://t4e.4eshopping.com"+image)
                 .centerCrop()

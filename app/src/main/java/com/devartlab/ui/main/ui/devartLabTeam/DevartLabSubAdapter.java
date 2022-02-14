@@ -41,7 +41,8 @@ public class DevartLabSubAdapter extends RecyclerView.Adapter<DevartLabSubAdapte
 
         viewHolder.binding.name.setText(dataItem.getName());
         Glide.with(context).load("https://devartlink.devartlab.com/assets/images/"+dataItem.getImage()).centerCrop().into(viewHolder.binding.image);
-
+        viewHolder.binding.tvDecTeam.loadDataWithBaseURL(
+                null, dataItem.getSubtitle(), "text/html", "utf-8", null);
         if (onItemClickListener != null) {
             viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

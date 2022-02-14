@@ -74,7 +74,7 @@ class DevartLabTeamActivity : AppCompatActivity() {
                 binding.decTeam.loadDataWithBaseURL(
                     null, it.description, "text/html", "utf-8", null)
                 when {
-                    it.sub.size != 0 -> {
+                    it.sub.isNotEmpty() -> {
                         //show data in recyclerView
                         binding.progressBar.setVisibility(View.GONE)
                         adapter = DevartLabSubAdapter(it.sub)
@@ -85,7 +85,7 @@ class DevartLabTeamActivity : AppCompatActivity() {
                             startActivity(intent)
                         })
                     }
-                    it.team.size != 0 -> {
+                    it.team.isNotEmpty() -> {
                         //show data in recyclerView
                         binding.progressBar.setVisibility(View.GONE)
                         adapter2 = DevartLabTeamAdapter(it.team)

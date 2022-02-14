@@ -3,12 +3,10 @@ package com.devartlab.ui.main.ui.devartlink.devartCommunity
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import com.devartlab.a4eshopping.orientationVideos.model.ResponseVideos
 import com.devartlab.base.BaseApplication
 import com.devartlab.data.retrofit.RetrofitClient
 import com.devartlab.data.shared.DataManager
 import com.devartlab.ui.main.ui.devartlink.devartCommunity.model.DevartCommunityResponse
-import com.devartlab.ui.main.ui.eShopping.utils.UserPreferenceHelper
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -19,8 +17,8 @@ class DevartCommunityViewModel(application: Application) : AndroidViewModel(appl
     var devartCommunityResponse: MutableLiveData<DevartCommunityResponse?>
         protected set
     var dataManager: DataManager
-    fun getDevartCommunity() {
-        RetrofitClient.getApis().getDevartCommunity()!!
+    fun getDevartCommunity(_id: String) {
+        RetrofitClient.getApis().getDevartCommunity(_id)!!
             .enqueue(object : Callback<DevartCommunityResponse?> {
                 override fun onResponse(
                     call: Call<DevartCommunityResponse?>,

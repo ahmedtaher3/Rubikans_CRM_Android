@@ -768,7 +768,7 @@ interface ApiServices {
     fun getIncentive(@Query("_id") _id: String?): Call<DevartLabTeamResponse?>?
 
     @GET("youtube")
-    fun getDevartCommunity(): Call<DevartCommunityResponse?>?
+    fun getDevartCommunity(@Query("_id") _id: String?): Call<DevartCommunityResponse?>?
 
     @GET("faq")
     fun getFAQ(): Call<FAQResponse?>?
