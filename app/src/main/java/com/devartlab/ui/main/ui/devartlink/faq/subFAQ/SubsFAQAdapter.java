@@ -1,4 +1,4 @@
-package com.devartlab.ui.main.ui.devartlink.faq;
+package com.devartlab.ui.main.ui.devartlink.faq.subFAQ;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -12,17 +12,17 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.devartlab.R;
 import com.devartlab.databinding.FaqItemBinding;
-import com.devartlab.ui.main.ui.devartlink.faq.model.faq.FAQResponseItem;
+import com.devartlab.ui.main.ui.devartlink.faq.model.sub.Sub;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class FAQAdapter extends RecyclerView.Adapter<FAQAdapter.ViewHolder> {
+public class SubsFAQAdapter extends RecyclerView.Adapter<SubsFAQAdapter.ViewHolder> {
 
-    List<FAQResponseItem> dataItems;
+    List<Sub> dataItems;
     private Context context;
 
-    public FAQAdapter(List<FAQResponseItem> dataItems) {
+    public SubsFAQAdapter(List<Sub> dataItems) {
         this.dataItems = dataItems;
     }
 
@@ -37,7 +37,7 @@ public class FAQAdapter extends RecyclerView.Adapter<FAQAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, final int position) {
-        final FAQResponseItem dataItem = dataItems.get(position);
+        final Sub dataItem = dataItems.get(position);
         viewHolder.binding.tvQuestion.setText(dataItem.getTitle());
         Glide.with(context)
                 .load("https://devartlink.devartlab.com/assets/images/" + dataItem.getImage())
@@ -90,9 +90,9 @@ public class FAQAdapter extends RecyclerView.Adapter<FAQAdapter.ViewHolder> {
     }
 
     public interface OnItemClickListener {
-        void onItemClick(int pos, FAQResponseItem dataItem);
+        void onItemClick(int pos, Sub dataItem);
     }
-    public void filterData(ArrayList<FAQResponseItem> newList ){
+    public void filterData(ArrayList<Sub> newList ){
         this.dataItems = newList;
         notifyDataSetChanged(); // refresh
     }

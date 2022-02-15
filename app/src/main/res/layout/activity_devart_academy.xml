@@ -14,8 +14,7 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            tools:context=".ui.main.ui.devartlink.faq.FAQActivity">
+            android:layout_height="match_parent">
 
             <com.google.android.material.appbar.AppBarLayout
                 android:id="@+id/back"
@@ -30,6 +29,7 @@
                     android:layout_height="?attr/actionBarSize" />
 
             </com.google.android.material.appbar.AppBarLayout>
+
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/constr_ads"
@@ -126,6 +126,31 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>
+            <WebView
+                android:id="@+id/dec_team"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginTop="5dp"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/constr_more_than_ads"/>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_list_teams"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                app:spanCount="2"
+                tools:listitem="@layout/list_teams_item"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:visibility="gone"
+                app:layout_constraintStart_toStartOf="@+id/dec_team"
+                app:layout_constraintEnd_toEndOf="@+id/dec_team"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/dec_team"/>
 
             <EditText
                 android:id="@+id/search_bar_video"
@@ -144,6 +169,7 @@
                 android:textColor="@color/color_142c48"
                 android:textSize="14sp"
                 android:textStyle="bold"
+                android:visibility="gone"
                 app:drawableEndCompat="@drawable/ic_search"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -183,15 +209,11 @@
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recycler_list_videos"
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_margin="10dp"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/constr_more_than_ads"
-                    tools:listitem="@layout/faq_item" />
+                    tools:listitem="@layout/list_video_item"
+                    android:visibility="gone"/>
             </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>

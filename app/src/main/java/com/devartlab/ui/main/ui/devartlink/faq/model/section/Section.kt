@@ -1,12 +1,12 @@
-package com.devartlab.ui.main.ui.devartlink.faq.model
+package com.devartlab.ui.main.ui.devartlink.faq.model.section
 
-data class SubsItem(
+data class Section(
     val _id: String,
     val arrange: String,
     val created_at: String,
+    val description: String,
+    val faq_id: String,
     val image: String,
-    val parent_id: String,
-    val sections: List<Section>,
     val title: String,
     val updated_at: String
 )

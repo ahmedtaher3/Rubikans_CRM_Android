@@ -1,13 +1,12 @@
-package com.devartlab.ui.main.ui.devartlink.faq.model
+package com.devartlab.ui.main.ui.devartlink.faq.model.sub
 
-data class FAQResponseItem(
+data class SubsResponse(
     val _id: String,
     val arrange: String,
     val created_at: String,
     val image: String,
     val parent_id: String,
-    val sections: List<Section>,
-    val subs: List<SubsItem>,
+    val subs: List<Sub>,
     val title: String,
     val updated_at: String
 )

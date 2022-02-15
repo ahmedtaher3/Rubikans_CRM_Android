@@ -24,7 +24,9 @@ import com.devartlab.model.*
 import com.devartlab.ui.main.ui.callmanagement.incentiveRule.model.DevartLabIncentiveResponse
 import com.devartlab.ui.main.ui.devartLabTeam.model.DevartLabTeamResponse
 import com.devartlab.ui.main.ui.devartlink.devartCommunity.model.DevartCommunityResponse
-import com.devartlab.ui.main.ui.devartlink.faq.model.FAQResponse
+import com.devartlab.ui.main.ui.devartlink.faq.model.faq.FAQResponse
+import com.devartlab.ui.main.ui.devartlink.faq.model.section.SectionsResponse
+import com.devartlab.ui.main.ui.devartlink.faq.model.sub.SubsResponse
 import com.devartlab.ui.main.ui.devartlink.letsTalk.ChatThread.model.ChatListResponse
 import com.devartlab.ui.main.ui.devartlink.letsTalk.home.model.ImageModel.ImageProfileResponse
 import com.devartlab.ui.main.ui.devartlink.letsTalk.home.model.mareSeen.MarkSeenRequest
@@ -771,8 +773,14 @@ interface ApiServices {
     @GET("youtube")
     fun getDevartCommunity(@Query("_id") _id: String?): Call<DevartCommunityResponse?>?
 
-    @GET("faq")
-    fun getFAQ(@Query("id") id: String?): Call<FAQResponse?>?
+    @GET("subjects")
+    fun getFAQ(): Call<FAQResponse?>?
+
+    @GET("subjects/{id}")
+    fun getSubsFAQ(@Path("id") id: String): Call<SubsResponse?>?
+
+    @GET("subjects/{id}/sections")
+    fun getSectionsFAQ(@Path("id") id: String): Call<SectionsResponse?>?
 
     ///////////////////4eshopping//////////////
     @POST("login")

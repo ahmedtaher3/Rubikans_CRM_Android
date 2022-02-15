@@ -1,4 +1,4 @@
-package com.devartlab.ui.main.ui.devartlink.faq;
+package com.devartlab.ui.main.ui.devartlink.faq.sectionFAQ;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -11,18 +11,18 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.devartlab.R;
-import com.devartlab.databinding.FaqItemBinding;
-import com.devartlab.ui.main.ui.devartlink.faq.model.faq.FAQResponseItem;
+import com.devartlab.databinding.SectionFaqItemBinding;
+import com.devartlab.ui.main.ui.devartlink.faq.model.section.Section;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class FAQAdapter extends RecyclerView.Adapter<FAQAdapter.ViewHolder> {
+public class SectionsFAQAdapter extends RecyclerView.Adapter<SectionsFAQAdapter.ViewHolder> {
 
-    List<FAQResponseItem> dataItems;
+    List<Section> dataItems;
     private Context context;
 
-    public FAQAdapter(List<FAQResponseItem> dataItems) {
+    public SectionsFAQAdapter(List<Section> dataItems) {
         this.dataItems = dataItems;
     }
 
@@ -30,26 +30,20 @@ public class FAQAdapter extends RecyclerView.Adapter<FAQAdapter.ViewHolder> {
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.faq_item, parent, false);
+                .inflate(R.layout.section_faq_item, parent, false);
         context = parent.getContext();
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, final int position) {
-        final FAQResponseItem dataItem = dataItems.get(position);
-        viewHolder.binding.tvQuestion.setText(dataItem.getTitle());
+        final Section dataItem = dataItems.get(position);
+        viewHolder.binding.tvTitleSection.setText(dataItem.getTitle());
         Glide.with(context)
                 .load("https://devartlink.devartlab.com/assets/images/" + dataItem.getImage())
-                    .centerCrop().into(viewHolder.binding.ivDown);
-        if (onItemClickListener != null) {
-            viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    onItemClickListener.onItemClick(position, dataItem);
-                }
-            });
-        }
+                    .fitCenter().into(viewHolder.binding.ivSection);
+        viewHolder.binding.tvDec.loadDataWithBaseURL(
+                null, dataItem.getDescription(), "text/html", "utf-8", null);
     }
 
     @Override
@@ -61,7 +55,7 @@ public class FAQAdapter extends RecyclerView.Adapter<FAQAdapter.ViewHolder> {
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
-        FaqItemBinding binding;
+        SectionFaqItemBinding binding;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -83,16 +77,7 @@ public class FAQAdapter extends RecyclerView.Adapter<FAQAdapter.ViewHolder> {
 
     }
 
-    OnItemClickListener onItemClickListener;
-
-    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
-        this.onItemClickListener = onItemClickListener;
-    }
-
-    public interface OnItemClickListener {
-        void onItemClick(int pos, FAQResponseItem dataItem);
-    }
-    public void filterData(ArrayList<FAQResponseItem> newList ){
+    public void filterData(ArrayList<Section> newList ){
         this.dataItems = newList;
         notifyDataSetChanged(); // refresh
     }

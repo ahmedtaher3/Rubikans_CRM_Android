@@ -21,6 +21,7 @@ import com.devartlab.databinding.ActivityDevartLinkBinding
 import com.devartlab.model.AdModel
 import com.devartlab.model.CardModel
 import com.devartlab.ui.main.ui.callmanagement.home.MenuListAdapter
+import com.devartlab.ui.main.ui.devartlink.devartAcademy.DevartAcademyActivity
 import com.devartlab.ui.main.ui.devartlink.devartCommunity.DevartCommunityActivity
 import com.devartlab.ui.main.ui.devartlink.faq.FAQActivity
 import com.devartlab.ui.main.ui.devartlink.letsTalk.LetsTalkActivity
@@ -69,6 +70,7 @@ class DevartLinkActivity : BaseActivity<ActivityDevartLinkBinding>(),
       //  list.add(CardModel(1, resources.getString(R.string.lets_talk), R.drawable.ic_talk_icon_02))
         list.add(CardModel(2, resources.getString(R.string.faq), R.drawable.ic_faq))
         list.add(CardModel(3, resources.getString(R.string.community), R.drawable.ic_community))
+        list.add(CardModel(4, resources.getString(R.string.academy), R.drawable.ic_academy))
 
         adapter = MenuListAdapter(this, list, this)
         val layoutManager = GridLayoutManager(this, 2)
@@ -95,6 +97,9 @@ class DevartLinkActivity : BaseActivity<ActivityDevartLinkBinding>(),
             3 -> {
                 startActivity(Intent(this, DevartCommunityActivity::class.java))
             }
+            4 -> {
+                startActivity(Intent(this, DevartAcademyActivity::class.java))
+            }
         }
     }
 
@@ -113,7 +118,7 @@ class DevartLinkActivity : BaseActivity<ActivityDevartLinkBinding>(),
         binding.videoView.stop()
     }
     fun handleObserver() {
-        viewModel!!.errorMessage.observe(this, { integer: Int ->
+        viewModel!!.errorMessage.observe(this,Observer { integer: Int ->
             if (integer == 1) {
                 Log.e("xxx", "error")
                 Toast.makeText(this, "error in response data", Toast.LENGTH_SHORT)

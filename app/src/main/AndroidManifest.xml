@@ -34,6 +34,16 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".ui.main.ui.devartlink.faq.subFAQ.SubFAQActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.main.ui.devartlink.faq.sectionFAQ.SectionsFAQActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.main.ui.devartlink.devartAcademy.DevartAcademyActivity"
+            android:exported="false" />
+
+        <activity
             android:name=".ui.main.ui.callmanagement.incentiveRule.IncentiveRuleActivity"
             android:exported="false" />
         <activity
