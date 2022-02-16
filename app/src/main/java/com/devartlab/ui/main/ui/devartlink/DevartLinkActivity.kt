@@ -24,6 +24,7 @@ import com.devartlab.ui.main.ui.callmanagement.home.MenuListAdapter
 import com.devartlab.ui.main.ui.devartlink.devartAcademy.DevartAcademyActivity
 import com.devartlab.ui.main.ui.devartlink.devartCommunity.DevartCommunityActivity
 import com.devartlab.ui.main.ui.devartlink.faq.FAQActivity
+import com.devartlab.ui.main.ui.devartlink.handBook.HandBookActivity
 import com.devartlab.ui.main.ui.devartlink.letsTalk.LetsTalkActivity
 import com.devartlab.ui.main.ui.devartlink.letsTalk.model.user.UserResponse
 import com.devartlab.ui.main.ui.eShopping.utils.UserPreferenceHelper
@@ -92,7 +93,7 @@ class DevartLinkActivity : BaseActivity<ActivityDevartLinkBinding>(),
                 startActivity(Intent(this, LetsTalkActivity::class.java))
             }
             2 -> {
-                startActivity(Intent(this, FAQActivity::class.java))
+                startActivity(Intent(this, HandBookActivity::class.java))
             }
             3 -> {
                 startActivity(Intent(this, DevartCommunityActivity::class.java))

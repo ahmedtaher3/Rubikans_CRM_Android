@@ -34,6 +34,9 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".ui.main.ui.devartlink.handBook.HandBookActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.main.ui.devartlink.faq.subFAQ.SubFAQActivity"
             android:exported="false" />
         <activity
@@ -42,7 +45,6 @@
         <activity
             android:name=".ui.main.ui.devartlink.devartAcademy.DevartAcademyActivity"
             android:exported="false" />
-
         <activity
             android:name=".ui.main.ui.callmanagement.incentiveRule.IncentiveRuleActivity"
             android:exported="false" />

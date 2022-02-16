@@ -27,6 +27,7 @@ import com.devartlab.ui.main.ui.devartlink.devartCommunity.model.DevartCommunity
 import com.devartlab.ui.main.ui.devartlink.faq.model.faq.FAQResponse
 import com.devartlab.ui.main.ui.devartlink.faq.model.section.SectionsResponse
 import com.devartlab.ui.main.ui.devartlink.faq.model.sub.SubsResponse
+import com.devartlab.ui.main.ui.devartlink.handBook.model.HandBookResponse
 import com.devartlab.ui.main.ui.devartlink.letsTalk.ChatThread.model.ChatListResponse
 import com.devartlab.ui.main.ui.devartlink.letsTalk.home.model.ImageModel.ImageProfileResponse
 import com.devartlab.ui.main.ui.devartlink.letsTalk.home.model.mareSeen.MarkSeenRequest
@@ -781,6 +782,9 @@ interface ApiServices {
 
     @GET("subjects/{id}/sections")
     fun getSectionsFAQ(@Path("id") id: String): Call<SectionsResponse?>?
+
+    @GET("handbook")
+    fun getHandBook(): Call<HandBookResponse?>?
 
     ///////////////////4eshopping//////////////
     @POST("login")
