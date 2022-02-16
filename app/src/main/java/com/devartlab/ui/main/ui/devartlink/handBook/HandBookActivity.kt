@@ -31,6 +31,9 @@ class HandBookActivity : AppCompatActivity() {
 
     private fun onClickListener() {
         viewModel!!.getHandBook()
+        binding.swipeRefreshLayout.setOnRefreshListener {
+            refresh()
+        }
     }
 
     private fun handleObserver() {
@@ -57,5 +60,18 @@ class HandBookActivity : AppCompatActivity() {
                 }
             }
         })
+    }
+
+    private fun refresh() {
+        synchronized(this) {
+            viewModel!!.getHandBook()
+            binding.swipeRefreshLayout.isRefreshing = false
+            binding.progressBar.setVisibility(View.VISIBLE)
+        }
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        finish()
+        return true
     }
 }

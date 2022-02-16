@@ -10,18 +10,20 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="12dp"
         app:cardBackgroundColor="@color/white"
-        app:cardElevation="8dp">
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        app:cardElevation="4dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="12dp">
+            android:layout_height="wrap_content">
             <ImageView
                 android:id="@+id/img_subject"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
+                android:layout_margin="10dp"
                 tools:src="@drawable/ic_launcher_foreground"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -35,6 +37,7 @@
                 android:textColor="@color/blue"
                 tools:text="الاسليب موجب و سالب"
                 android:layout_marginEnd="10dp"
+                android:layout_marginStart="10dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@id/img_subject"
                 app:layout_constraintBottom_toBottomOf="@id/img_subject"
@@ -44,10 +47,8 @@
                 android:id="@+id/recycler_subs"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="20dp"
                 tools:listitem="@layout/subs_item"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@id/img_subject"
                 app:layout_constraintStart_toStartOf="@id/tv_subject_title"
                 app:layout_constraintTop_toBottomOf="@id/img_subject" />

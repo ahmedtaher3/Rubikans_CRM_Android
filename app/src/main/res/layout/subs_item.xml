@@ -7,48 +7,47 @@
 
     </data>
 
-    <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:cardBackgroundColor="@drawable/bg_search"
-        app:cardElevation="8dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp">
+
             <ImageView
                 android:id="@+id/img_subject"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                tools:src="@drawable/ic_launcher_foreground"
+                android:layout_margin="10dp"
+                android:contentDescription="@string/img"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                android:contentDescription="@string/img" />
+                tools:src="@drawable/ic_launcher_foreground" />
+
             <TextView
                 android:id="@+id/tv_subject_title"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:textStyle="bold"
-                android:textSize="14sp"
-                android:textColor="@color/blue"
-                tools:text="الاسليب موجب و سالب"
+                android:layout_marginStart="10dp"
                 android:layout_marginEnd="10dp"
+                android:textColor="@color/blue"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@id/img_subject"
+                app:layout_constraintEnd_toStartOf="@id/img_subject"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@id/img_subject"
-                app:layout_constraintBottom_toBottomOf="@id/img_subject"
-                app:layout_constraintEnd_toStartOf="@id/img_subject"/>
+                tools:text="الاسليب موجب و سالب" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler_subs"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="20dp"
-                tools:listitem="@layout/sections_item"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@id/img_subject"
                 app:layout_constraintStart_toStartOf="@id/tv_subject_title"
-                app:layout_constraintTop_toBottomOf="@id/img_subject" />
+                app:layout_constraintTop_toBottomOf="@id/img_subject"
+                tools:listitem="@layout/sections_item" />
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.cardview.widget.CardView>
 </layout>

@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.core.text.HtmlCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -42,9 +43,7 @@ public class SectionsAdapter extends RecyclerView.Adapter<SectionsAdapter.ViewHo
         Glide.with(context)
                 .load("https://devartlink.devartlab.com/assets/images/" + dataItem.getImage())
                     .fitCenter().into(viewHolder.binding.imgSubject);
-        viewHolder.binding.wbSections.loadDataWithBaseURL(
-                null, dataItem.getDescription(), "text/html", "utf-8", null);
-
+        viewHolder.binding.wbSections.setText(HtmlCompat.fromHtml(dataItem.getDescription(), 0));
     }
 
     @Override
