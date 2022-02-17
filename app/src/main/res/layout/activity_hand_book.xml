@@ -48,8 +48,22 @@
                 android:textStyle="bold"
                 app:drawableEndCompat="@drawable/ic_search"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toEndOf="@id/tv_index_hand_book"
                 app:layout_constraintTop_toBottomOf="@+id/back" />
+
+            <TextView
+                android:id="@+id/tv_index_hand_book"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableTop="@drawable/ic_index_hand_book"
+                android:textSize="14sp"
+                android:text="@string/index"
+                android:textColor="@color/blue"
+                android:layout_marginStart="10dp"
+                android:textStyle="bold"
+                app:layout_constraintTop_toTopOf="@id/search_bar_video"
+                app:layout_constraintBottom_toBottomOf="@id/search_bar_video"
+                app:layout_constraintStart_toStartOf="parent"/>
 
             <TextView
                 android:id="@+id/tv_empty_list"
@@ -80,7 +94,7 @@
                 android:layout_marginBottom="20dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@+id/search_bar_video"
-                app:layout_constraintStart_toStartOf="@+id/search_bar_video"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/search_bar_video">
 
                 <androidx.recyclerview.widget.RecyclerView

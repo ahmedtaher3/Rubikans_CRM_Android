@@ -581,4 +581,6 @@
     <string name="community">مجتمع ديفارت</string>
     <string name="label_description">التفاصيل:</string>
     <string name="academy">أكاديمية ديفارت</string>
+    <string name="index">فهرس</string>
+    <string name="title_index">فهرس دليل الموظف</string>
 </resources>

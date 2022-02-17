@@ -598,6 +598,8 @@
     <string name="label_description">Description:</string>
     <string name="img">img</string>
     <string name="academy">Devart Academy</string>
+    <string name="index">index</string>
+    <string name="title_index">Index HandBook</string>
 
 
 </resources>
