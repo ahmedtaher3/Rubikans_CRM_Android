@@ -52,8 +52,7 @@ class HomeChatFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         init()
         viewModel!!.getListPeaple(UserPreferenceHelper.getUserChat().id)
-        handleObserver()
-
+            handleObserver()
     }
 
     fun init() {
@@ -62,6 +61,7 @@ class HomeChatFragment : Fragment() {
     }
 
     fun handleObserver() {
+        getActivity()?.runOnUiThread(java.lang.Runnable {
         val options = PusherOptions()
         options.setCluster("ap4")
 
@@ -127,6 +127,7 @@ class HomeChatFragment : Fragment() {
                     startActivity(intent)
                 })
             }
+        })
         })
         binding.swipeRefreshLayout.setOnRefreshListener {
             refresh()

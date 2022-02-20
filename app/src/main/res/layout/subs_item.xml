@@ -21,6 +21,7 @@
                 android:layout_height="50dp"
                 android:layout_margin="10dp"
                 android:contentDescription="@string/img"
+                android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:src="@drawable/ic_launcher_foreground" />
@@ -34,10 +35,9 @@
                 android:textColor="@color/blue"
                 android:textSize="14sp"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="@id/img_subject"
-                app:layout_constraintEnd_toStartOf="@id/img_subject"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@id/img_subject"
                 tools:text="الاسليب موجب و سالب" />
 
             <androidx.recyclerview.widget.RecyclerView
@@ -45,9 +45,9 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                app:layout_constraintEnd_toEndOf="@id/img_subject"
+                app:layout_constraintEnd_toEndOf="@id/tv_subject_title"
                 app:layout_constraintStart_toStartOf="@id/tv_subject_title"
-                app:layout_constraintTop_toBottomOf="@id/img_subject"
+                app:layout_constraintTop_toBottomOf="@id/tv_subject_title"
                 tools:listitem="@layout/sections_item" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
