@@ -141,12 +141,12 @@ public abstract class BaseActivity <T extends ViewDataBinding> extends AppCompat
         Dialog dialog = new Dialog(this);
         DialogWelcomePostBinding binding = DataBindingUtil.inflate(dialog.getLayoutInflater(), R.layout.dialog_welcome_post, null, false);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setCancelable(false);
+        dialog.setCancelable(true);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
         dialog.setContentView(binding.getRoot());
         Picasso.get()
-                .load("https://t4e.4eshopping.com"+image)
+                .load("https://4eshopping.com"+image)
                 .centerCrop()
                 .resize(1024, 1024)
                 .error(android.R.drawable.stat_notify_error)

@@ -234,22 +234,22 @@ class UploadPharmacyFilesActivity : AppCompatActivity() {
                 }
                 if (it!!.data.the_tax_card != null) {
                     Glide.with(this)
-                        .load("https://t4e.4eshopping.com/assets/images/pharmacy/" + it!!.data.the_tax_card)
+                        .load("https://4eshopping.com/assets/images/pharmacy/" + it!!.data.the_tax_card)
                         .centerCrop()
                         .into(binding.ivTheTaxCard)
-//                    AsyncTaskLoadImageCartTax().execute("https://t4e.4eshopping.com/assets/images/pharmacy/" + it!!.data.the_tax_card)
+//                    AsyncTaskLoadImageCartTax().execute("https://4eshopping.com/assets/images/pharmacy/" + it!!.data.the_tax_card)
                     binding.ivDelTheTaxCard.setVisibility(View.VISIBLE)
                 }
                 if (it!!.data.commercial_register != null) {
                     Glide.with(this)
-                        .load("https://t4e.4eshopping.com/assets/images/pharmacy/" + it!!.data.commercial_register)
+                        .load("https://4eshopping.com/assets/images/pharmacy/" + it!!.data.commercial_register)
                         .centerCrop()
                         .into(binding.ivCommercialRegister)
                     binding.ivDelCommercialRegister.setVisibility(View.VISIBLE)
                 }
                 if (it!!.data.commercial_register_two != null) {
                     Glide.with(this)
-                        .load("https://t4e.4eshopping.com/assets/images/pharmacy/" + it!!.data.commercial_register_two)
+                        .load("https://4eshopping.com/assets/images/pharmacy/" + it!!.data.commercial_register_two)
                         .centerCrop()
                         .into(binding.ivCommercialRegisterTwo)
                     binding.ivDelCommercialRegisterTwo.setVisibility(View.VISIBLE)

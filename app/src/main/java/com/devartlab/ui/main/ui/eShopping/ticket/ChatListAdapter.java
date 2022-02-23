@@ -95,7 +95,7 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ViewHo
                 jObject = new JSONObject(result);
                 String aJsonString = jObject.getString("new_name");
                 Glide.with(context)
-                        .load("https://t4e.4eshopping.com/storage/attachments/" +
+                        .load("https://4eshopping.com/storage/attachments/" +
                                 aJsonString)
                         .into(viewHolder.attachment);
             } catch (JSONException e) {

@@ -108,62 +108,7 @@
 
 
         </LinearLayout>
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/constr_ads"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/cardview_ads"
-                android:layout_width="match_parent"
-                android:layout_height="250dp"
-                app:cardBackgroundColor="@android:color/white"
-                app:cardCornerRadius="5dp"
-                app:cardElevation="1dp"
-                android:visibility="gone"
-                app:cardUseCompatPadding="true"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <WebView
-                        android:id="@+id/textView"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:visibility="gone" />
-
-                    <com.jarvanmo.exoplayerview.ui.ExoVideoView
-                        android:id="@+id/videoView"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:visibility="gone" />
-
-                    <ImageView
-                        android:id="@+id/imageView"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:visibility="gone" />
-
-
-                    <ss.com.bannerslider.Slider
-                        android:id="@+id/bannerSlider"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:visibility="gone"
-                        app:slider_loopSlides="true" />
-
-
-                </RelativeLayout>
-
-
-            </androidx.cardview.widget.CardView>
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
