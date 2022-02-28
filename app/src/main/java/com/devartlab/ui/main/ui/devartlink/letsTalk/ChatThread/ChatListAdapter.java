@@ -3,6 +3,8 @@ package com.devartlab.ui.main.ui.devartlink.letsTalk.ChatThread;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -121,6 +123,7 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ViewHo
             }
         }
         if (!dataItem.getUserId().equals(UserPreferenceHelper.getUserChat().getId())) {
+            viewHolder.sender_name.setText(dataItem.getUserapi().getName());
             viewHolder.textViewOptions.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -152,7 +155,6 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ViewHo
 
                 }
             });
-            viewHolder.sender_name.setText(dataItem.getUserapi().getName());
 
             RetrofitClient.getApis().getImageProfile(dataItem.getUserapi().getId())
                     .enqueue(new Callback<ImageProfileResponse>() {
@@ -208,29 +210,33 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ViewHo
             });
             if (dataItem.getSeen().equals("0")) {
                 viewHolder.seen.setImageResource(R.drawable.unseen);
-            } else {
+            } else if (dataItem.getSeen().equals("1"))  {
                 viewHolder.seen.setImageResource(R.drawable.seen);
+            }else {
+                viewHolder.seen.setImageResource(R.drawable.ic_clock);
             }
 
-            RetrofitClient.getApis().getImageProfile(dataItem.getUserapi().getId())
-                    .enqueue(new Callback<ImageProfileResponse>() {
-                        @Override
-                        public void onResponse(Call<ImageProfileResponse> call, Response<ImageProfileResponse> response) {
-                            if (response.isSuccessful()) {
-                                String base64String = response.body().getImg();
-                                String base64Image = base64String.split(",")[1];
-                                byte[] decodedString = Base64.decode(base64Image, Base64.DEFAULT);
-                                Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString
-                                        , 0, decodedString.length);
-                                viewHolder.img_user.setImageBitmap(decodedByte);
+            if (isConnected()) {
+                RetrofitClient.getApis().getImageProfile(dataItem.getUserapi().getId())
+                        .enqueue(new Callback<ImageProfileResponse>() {
+                            @Override
+                            public void onResponse(Call<ImageProfileResponse> call, Response<ImageProfileResponse> response) {
+                                if (response.isSuccessful()) {
+                                    String base64String = response.body().getImg();
+                                    String base64Image = base64String.split(",")[1];
+                                    byte[] decodedString = Base64.decode(base64Image, Base64.DEFAULT);
+                                    Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString
+                                            , 0, decodedString.length);
+                                    viewHolder.img_user.setImageBitmap(decodedByte);
+                                }
                             }
-                        }
 
-                        @Override
-                        public void onFailure(Call<ImageProfileResponse> call, Throwable t) {
-                            //   errorMessage.postValue(1);
-                        }
-                    });
+                            @Override
+                            public void onFailure(Call<ImageProfileResponse> call, Throwable t) {
+                                //   errorMessage.postValue(1);
+                            }
+                        });
+            }
 
         }
         if (dataItem.isIs_deleted()){
@@ -340,5 +346,27 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ViewHo
     }
     public interface OnItemLongClickListener3 {
         void onItemLongClick3(int pos, String dataItem);
+    }
+
+    public void refreshMessages(DataItem message) {
+        this.messages.add(0,message);
+        Log.e("saassa", String.valueOf(message));
+        notifyItemInserted(messages.size() - 1);
+        notifyDataSetChanged();
+    }
+
+    boolean isConnected() {
+
+        ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+
+        if (networkInfo != null) {
+            if (networkInfo.isConnected())
+                return true;
+            else
+                return false;
+        } else
+            return false;
+
     }
 }

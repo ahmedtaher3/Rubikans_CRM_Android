@@ -3,6 +3,13 @@ package com.devartlab.ui.main.ui.devartlink.letsTalk.ChatThread.model;
 import com.google.gson.annotations.SerializedName;
 
 public class DataItem {
+    public DataItem(String userId, String updatedAt, String id, String message, String seen) {
+        this.userId = userId;
+        this.updatedAt = updatedAt;
+        this.id = id;
+        this.message = message;
+        this.seen = seen;
+    }
 
     @SerializedName("attachment")
     private String attachment;

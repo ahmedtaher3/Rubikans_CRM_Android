@@ -52,7 +52,9 @@ class HomeChatFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         init()
         viewModel!!.getListPeaple(UserPreferenceHelper.getUserChat().id)
-            handleObserver()
+        onClickListener()
+        handleObserver()
+//        pusher()
     }
 
     fun init() {
@@ -60,8 +62,13 @@ class HomeChatFragment : Fragment() {
         viewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
     }
 
-    fun handleObserver() {
-        getActivity()?.runOnUiThread(java.lang.Runnable {
+    fun onClickListener() {
+        binding.swipeRefreshLayout.setOnRefreshListener {
+            refresh()
+        }
+    }
+
+    fun pusher() {
         val options = PusherOptions()
         options.setCluster("ap4")
 
@@ -70,7 +77,8 @@ class HomeChatFragment : Fragment() {
         pusher.connect(object : ConnectionEventListener {
             override fun onConnectionStateChange(change: ConnectionStateChange) {
                 Log.i(
-                    "Pusher", "State changed from ${change.previousState} to ${change.currentState}"
+                    "Pusher",
+                    "State changed from ${change.previousState} to ${change.currentState}"
                 )
             }
 
@@ -88,9 +96,16 @@ class HomeChatFragment : Fragment() {
 
         val channel = pusher.subscribe("chatify")
         channel.bind("messaging") { event ->
-                Log.i("Pusher", "Received event with data: $event")
+            Log.i("Pusher", "Received event with data: $event")
             viewModel!!.getListPeaple(UserPreferenceHelper.getUserChat().id)
         }
+        channel.bind("client-seen") { event ->
+            Log.i("Pusher", "Received event with data: $event")
+        }
+    }
+
+    fun handleObserver() {
+
         viewModel!!.getErrorMessage().observe(getViewLifecycleOwner(), Observer {
             if (it == 1) {
                 Toast.makeText(context, "error in response data", Toast.LENGTH_SHORT)
@@ -100,49 +115,43 @@ class HomeChatFragment : Fragment() {
             }
         })
 
-        viewModel!!.getPeapleResponseMutableLiveData().observe(getViewLifecycleOwner(), Observer {
-            if (it.data == null) {
-                //errorMessage if data coming is null;
-                binding.tvEmptyList.setVisibility(View.VISIBLE);
-            } else {
-                //show data in recyclerView
-                binding.progressBar.setVisibility(View.GONE)
-                adapter = PeopleListAdapter(it.data)
-                binding.recHomePeople.setAdapter(adapter)
-                adapter!!.setOnItemClickListener(PeopleListAdapter.OnItemClickListener { pos, dataItem ->
-                    channel.bind("client-seen") { event ->
-                        Log.i("Pusher", "Received event with data: $event")
-                    }
-                    markSeenRequest= MarkSeenRequest()
-                    markSeenRequest.id=dataItem.id
-                    markSeenRequest.toId=dataItem.id
-                    markSeenRequest.userId= UserPreferenceHelper.getUserChat().id
-                    viewModel!!.markSeen(markSeenRequest)
-                    val intent = Intent(requireContext(), ChatThreadActivity::class.java)
-                    intent.putExtra("people_id", dataItem.id)
-                    intent.putExtra("people_name", dataItem.userapi.name)
-                    if (forward!=null){
-                        intent.putExtra("forward", forward)
-                    }
-                    startActivity(intent)
-                })
-            }
-        })
-        })
-        binding.swipeRefreshLayout.setOnRefreshListener {
-            refresh()
-        }
+        viewModel!!.getPeapleResponseMutableLiveData()
+            .observe(getViewLifecycleOwner(), Observer {
+                if (it.data == null) {
+                    //errorMessage if data coming is null;
+                    binding.tvEmptyList.setVisibility(View.VISIBLE);
+                } else {
+                    //show data in recyclerView
+                    binding.progressBar.setVisibility(View.GONE)
+                    adapter = PeopleListAdapter(it.data)
+                    binding.recHomePeople.setAdapter(adapter)
+                    adapter!!.setOnItemClickListener(PeopleListAdapter.OnItemClickListener { pos, dataItem ->
+                        markSeenRequest = MarkSeenRequest()
+                        markSeenRequest.id = dataItem.id
+                        markSeenRequest.toId = dataItem.id
+                        markSeenRequest.userId = UserPreferenceHelper.getUserChat().id
+                        viewModel!!.markSeen(markSeenRequest)
+                        val intent = Intent(requireContext(), ChatThreadActivity::class.java)
+                        intent.putExtra("people_id", dataItem.id)
+                        intent.putExtra("people_name", dataItem.userapi.name)
+                        if (forward != null) {
+                            intent.putExtra("forward", forward)
+                        }
+                        startActivity(intent)
+                    })
+                }
+            })
     }
 
     private fun refresh() {
         synchronized(this) {
             viewModel!!.getListPeaple(
-                UserPreferenceHelper.getUserChat().id)
+                UserPreferenceHelper.getUserChat().id
+            )
             binding.swipeRefreshLayout.isRefreshing = false
             binding.progressBar.setVisibility(View.VISIBLE)
         }
     }
-
 
 
 }

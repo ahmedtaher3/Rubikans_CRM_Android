@@ -10,6 +10,8 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -39,6 +41,8 @@ import com.devartlab.ui.main.ui.devartlink.letsTalk.ChatThread.model.ChatListRes
 import com.devartlab.ui.main.ui.devartlink.letsTalk.ChatThread.model.DataItem;
 import com.devartlab.ui.main.ui.devartlink.letsTalk.ChatThread.model.sendMessages.SendMessagesResponse;
 import com.devartlab.ui.main.ui.devartlink.letsTalk.LetsTalkActivity;
+import com.devartlab.ui.main.ui.devartlink.letsTalk.db.AppDataBase;
+import com.devartlab.ui.main.ui.devartlink.letsTalk.db.ChatItemModel;
 import com.devartlab.ui.main.ui.eShopping.utils.filesUpload.VolleyFileObj;
 import com.devartlab.ui.main.ui.eShopping.utils.UserPreferenceHelper;
 import com.karumi.dexter.Dexter;
@@ -56,7 +60,9 @@ import com.pusher.client.connection.ConnectionState;
 import com.pusher.client.connection.ConnectionStateChange;
 
 import java.io.ByteArrayOutputStream;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -76,7 +82,11 @@ public class ChatThreadActivity extends AppCompatActivity {
     Pusher pusher;
     Channel channel;
     public static final int CAMERA_REQUEST = 2011;
-    List<VolleyFileObj> volleyFileObjs = new ArrayList<>();
+    VolleyFileObj volleyFileObjs;
+    ChatItemModel chatItemModel;
+    DataItem messages;
+    SimpleDateFormat sdf ;
+    String currentDateandTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -118,6 +128,9 @@ public class ChatThreadActivity extends AppCompatActivity {
         binding.recyclerView.setLayoutAnimation(animation);
         adapter = new ChatListAdapter(null);
         binding.recyclerView.setAdapter(adapter);
+        chatItemModel= new ChatItemModel();
+        sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+        currentDateandTime = sdf.format(new Date());
     }
 
     private void pusher() {
@@ -229,7 +242,7 @@ public class ChatThreadActivity extends AppCompatActivity {
             public void onChanged(SendMessagesResponse sendMessagesResponse) {
                 binding.message.setText("");
                 binding.sendIMG.setImageResource(R.drawable.ic_attach_file);
-                volleyFileObjs.clear();
+                volleyFileObjs=null;
                 binding.send.setEnabled(true);
             }
         });
@@ -267,9 +280,9 @@ public class ChatThreadActivity extends AppCompatActivity {
             // CALL THIS METHOD TO GET THE URI FROM THE BITMAP
             Uri tempUri = getImageUri(this, photo);
             binding.sendIMG.setImageBitmap(photo);
-            volleyFileObjs.add(new VolleyFileObj("file",
+            volleyFileObjs=new VolleyFileObj("file",
                     getRealPathFromURICamera(tempUri),
-                    1001));
+                    1001);
             //gallery
         } else if (requestCode == 2) {
             //The array list has the image paths of the selected images
@@ -284,9 +297,9 @@ public class ChatThreadActivity extends AppCompatActivity {
             Bitmap bitmap = BitmapFactory.decodeFile(picturePath);
             binding.sendIMG.setImageBitmap(bitmap);
 
-            volleyFileObjs.add(new VolleyFileObj("file",
+            volleyFileObjs=new VolleyFileObj("file",
                     picturePath,
-                    1001));
+                    1001);
         }
     }
 
@@ -319,36 +332,66 @@ public class ChatThreadActivity extends AppCompatActivity {
                     .create(MediaType.parse("multipart/form-data"), "forward:\n"+forward);
             map.put("message", message);
             Log.e("message", forward);
+            chatItemModel.setMessage("forward:\n"+forward);
         }else {
             RequestBody message = RequestBody
                     .create(MediaType.parse("multipart/form-data"), binding.message.getText().toString());
             map.put("message", message);
+            chatItemModel.setMessage(binding.message.getText().toString());
             Log.e("message", binding.message.getText().toString());
         }
 
         RequestBody id = RequestBody.create(MediaType.parse("multipart/form-data"), UserPreferenceHelper.getUserChat().getId());
         map.put("user_id", id);
+        chatItemModel.setId(UserPreferenceHelper.getUserChat().getId());
 
         if (idUser != null) {
             RequestBody userId = RequestBody.create(MediaType.parse("multipart/form-data"), idUser);
             map.put("id", userId);
             Log.e("user_idxxxx", idUser);
+            chatItemModel.setUserId(idUser);
         } else if (peopleItem != null) {
             RequestBody userId = RequestBody.create(MediaType.parse("multipart/form-data"), peopleItem);
             map.put("id", userId);
             Log.e("user_id", peopleItem);
+            chatItemModel.setUserId(peopleItem);
         }
-        if (volleyFileObjs.size() == 0) {
+        if (volleyFileObjs == null) {
             MultipartBody.Part part = null;
-            viewModel.sendMessages(part, map);
+            if (isConnected()) {
+                viewModel.sendMessages(part, map);
+                AppDataBase.getInstance().classDAO().deleteAllRecords();
+            } else{
+                InsertFormToDataBase insertFormToDataBase = new InsertFormToDataBase(chatItemModel);
+                insertFormToDataBase.start();
+                messages = new DataItem(UserPreferenceHelper.getUserChat().getId()
+                        ,currentDateandTime,UserPreferenceHelper.getUserChat().getId()
+                        ,binding.message.getText().toString(),"2");
+                binding.message.setText("");
+                binding.sendIMG.setImageResource(R.drawable.ic_attach_file);
+                adapter.refreshMessages(messages);
+            }
         } else {
-            RequestBody sendMGSReqBody = RequestBody.create(volleyFileObjs.get(0).getFile()
+            RequestBody sendMGSReqBody = RequestBody.create(volleyFileObjs.getFile()
                     , MediaType.parse("image/*"));
             MultipartBody.Part part = MultipartBody.Part
-                    .createFormData(volleyFileObjs.get(0).getParamName(),
-                            volleyFileObjs.get(0).getFile().getName()
+                    .createFormData(volleyFileObjs.getParamName(),
+                            volleyFileObjs.getFile().getName()
                             , sendMGSReqBody);
-            viewModel.sendMessages(part, map);
+//            chatItemModel.setVolleyFileObjs(volleyFileObjs);
+            if (isConnected()) {
+                viewModel.sendMessages(part, map);
+                AppDataBase.getInstance().classDAO().deleteAllRecords();
+            } else{
+                InsertFormToDataBase insertFormToDataBase = new InsertFormToDataBase(chatItemModel);
+                insertFormToDataBase.start();
+                messages = new DataItem(UserPreferenceHelper.getUserChat().getId()
+                        ,currentDateandTime,UserPreferenceHelper.getUserChat().getId()
+                        ,binding.message.getText().toString(),"2");
+                binding.message.setText("");
+                binding.sendIMG.setImageResource(R.drawable.ic_attach_file);
+                adapter.refreshMessages(messages);
+            }
         }
     }
     @Override
@@ -411,4 +454,33 @@ public class ChatThreadActivity extends AppCompatActivity {
         dialog.show();
     }
 
+
+    boolean isConnected() {
+
+        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+
+        if (networkInfo != null) {
+            if (networkInfo.isConnected())
+                return true;
+            else
+                return false;
+        } else
+            return false;
+
+    }
+    class InsertFormToDataBase extends Thread {
+        ChatItemModel chatItemModel;
+
+        public InsertFormToDataBase(ChatItemModel items) {
+            chatItemModel = items;
+        }
+
+        public void run() {
+            AppDataBase.
+                    getInstance()
+                    .classDAO().
+                    insertForm(chatItemModel);
+        }
+    }
 }

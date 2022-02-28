@@ -9,6 +9,7 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -25,7 +26,10 @@ import com.devartlab.ui.main.ui.devartlink.devartAcademy.DevartAcademyActivity
 import com.devartlab.ui.main.ui.devartlink.devartCommunity.DevartCommunityActivity
 import com.devartlab.ui.main.ui.devartlink.faq.FAQActivity
 import com.devartlab.ui.main.ui.devartlink.handBook.HandBookActivity
+import com.devartlab.ui.main.ui.devartlink.letsTalk.ChatThread.ChatListViewModel
 import com.devartlab.ui.main.ui.devartlink.letsTalk.LetsTalkActivity
+import com.devartlab.ui.main.ui.devartlink.letsTalk.db.AppDataBase
+import com.devartlab.ui.main.ui.devartlink.letsTalk.db.ChatItemModel
 import com.devartlab.ui.main.ui.devartlink.letsTalk.model.user.UserResponse
 import com.devartlab.ui.main.ui.eShopping.utils.UserPreferenceHelper
 import com.devartlab.ui.main.ui.moreDetailsAds.MoreDetailsAdsActivity
@@ -36,7 +40,11 @@ import com.devartlab.utils.PicassoImageLoadingService
 import com.google.android.exoplayer2.source.MediaSource
 import com.google.gson.Gson
 import com.jarvanmo.exoplayerview.media.SimpleMediaSource
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import ss.com.bannerslider.Slider
+import java.util.HashMap
 
 private const val TAG = "DevartLinkActivity"
 
@@ -45,11 +53,13 @@ class DevartLinkActivity : BaseActivity<ActivityDevartLinkBinding>(),
     lateinit var binding: ActivityDevartLinkBinding
     lateinit var adapter: MenuListAdapter
     lateinit var viewModel: DevartLinkViewModel
+    lateinit var viewModel2: ChatListViewModel
     lateinit var mediaSource: SimpleMediaSource
     var dataManager: DataManager? = null
     var name: String? = null
     var pass: String? = null
     var token: String? = null
+    var chatItemModel: ChatItemModel? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,7 +67,8 @@ class DevartLinkActivity : BaseActivity<ActivityDevartLinkBinding>(),
         setSupportActionBar(binding.toolbar)
         supportActionBar!!.title = "Devart Link"
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-        viewModel = ViewModelProviders.of(this).get(DevartLinkViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(DevartLinkViewModel::class.java)
+        viewModel2 = ViewModelProvider(this).get(ChatListViewModel::class.java)
 
         dataManager = (application as BaseApplication).dataManager
         name = dataManager!!.user.userName
@@ -78,8 +89,9 @@ class DevartLinkActivity : BaseActivity<ActivityDevartLinkBinding>(),
         layoutManager.orientation = LinearLayoutManager.VERTICAL
         binding?.recycler?.layoutManager = layoutManager
         binding.recycler.adapter = adapter
-        ads()//fun to show ads
+        chatItemModel = AppDataBase.getInstance().classDAO().allANewForms
         handleObserver()//observer
+        ads()//fun to show ads
     }
 
     override fun getLayoutId(): Int {
@@ -118,8 +130,9 @@ class DevartLinkActivity : BaseActivity<ActivityDevartLinkBinding>(),
         super.onStop()
         binding.videoView.stop()
     }
+
     fun handleObserver() {
-        viewModel!!.errorMessage.observe(this,Observer { integer: Int ->
+        viewModel!!.errorMessage.observe(this, Observer { integer: Int ->
             if (integer == 1) {
                 Log.e("xxx", "error")
                 Toast.makeText(this, "error in response data", Toast.LENGTH_SHORT)
@@ -133,7 +146,45 @@ class DevartLinkActivity : BaseActivity<ActivityDevartLinkBinding>(),
             binding.recycler.setVisibility(View.VISIBLE)
             binding.ProgressBar.setVisibility(View.GONE)
         })
+        if (AppDataBase.getInstance().classDAO().getAllANewForms() != null) {
+            val map: MutableMap<String, RequestBody> = HashMap()
+            val message: RequestBody =
+                RequestBody.create(
+                    "multipart/form-data".toMediaTypeOrNull(),
+                    chatItemModel!!.getMessage()
+                )
+            map["message"] = message
+            val id: RequestBody = RequestBody.create(
+                "multipart/form-data".toMediaTypeOrNull(),
+                chatItemModel!!.getId()
+            )
+            map["user_id"] = id
+            val userId: RequestBody =
+                RequestBody.create(
+                    "multipart/form-data".toMediaTypeOrNull(),
+                    chatItemModel!!.getUserId()
+                )
+            map["id"] = userId
+
+            if (chatItemModel?.getVolleyFileObjs() == null) {
+                val part: MultipartBody.Part? = null
+                viewModel2.sendMessages(part, map)
+                AppDataBase.getInstance().classDAO().deleteAllRecords()
+            }
+//            else {
+//                RequestBody sendMGSReqBody = RequestBody.create(chatItemModel.getVolleyFileObjs().getFile()
+//                        , MediaType.parse("image/*"));
+//                MultipartBody.Part part = MultipartBody.Part
+//                        .createFormData(chatItemModel.getVolleyFileObjs().getParamName(),
+//                                chatItemModel.getVolleyFileObjs().getFile().getName()
+//                                , sendMGSReqBody);
+//                chatItemModel.setVolleyFileObjs(chatItemModel.getVolleyFileObjs());
+//                    viewModel2.sendMessages(part, map);
+//                AppDataBase.getInstance().classDAO().deleteAllRecords();
+//            }
+        }
     }
+
     //
 //    override fun onResume() {
 //        super.onResume()
@@ -147,7 +198,8 @@ class DevartLinkActivity : BaseActivity<ActivityDevartLinkBinding>(),
                 binding.constrAds.setVisibility(View.VISIBLE)
                 if (model.resourceLink.equals(null)
                     && model.paragraph.equals(null)
-                    && model.slideImages == null) {
+                    && model.slideImages == null
+                ) {
                     binding.constrAds.setVisibility(View.VISIBLE)
                     binding.imageView.visibility = View.VISIBLE
                     Glide.with(this).load(model.default_ad_image)
