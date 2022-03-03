@@ -600,6 +600,25 @@
     <string name="academy">Devart Academy</string>
     <string name="index">index</string>
     <string name="title_index">Index HandBook</string>
+    <string name="add_event">Add Event</string>
+    <string name="label">Label</string>
+    <string name="view_all">View All</string>
+    <string name="request">Request</string>
+    <string name="event">Event</string>
+    <string name="holiday">Holiday</string>
+    <string name="meeting_room">Meeting room</string>
+    <string name="calender">Calender</string>
+    <string name="label_title">Title</string>
+    <string name="event_title">Event title</string>
+    <string name="event_uRL">Event URL</string>
+    <string name="department">Departement</string>
+    <string name="add_users">Add users</string>
+    <string name="Add_event">Add Event</string>
+    <string name="action_task">Task</string>
+    <string name="action_request">Request</string>
+    <string name="action_event">Event</string>
+    <string name="action_holiday">Holiday</string>
+    <string name="action_meeting_room">Meeting Room</string>
 
 
 </resources>

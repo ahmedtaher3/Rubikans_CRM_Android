@@ -9,9 +9,9 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constr_approval_is_pending"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_margin="20dp"
-        android:background="@drawable/custom_bg_curve_left_right_color_white"
-        android:layout_height="wrap_content">
+        android:background="@drawable/custom_bg_curve_left_right_color_white">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/linlay_add_message"
@@ -44,20 +44,46 @@
                 android:textColor="@color/white"
                 android:textSize="18sp"
                 android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/iv_cancel_dialog"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/iv_cancel_dialog"
-                app:layout_constraintBottom_toBottomOf="@+id/iv_cancel_dialog" />
+                app:layout_constraintTop_toTopOf="@+id/iv_cancel_dialog" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <EditText
+            android:id="@+id/search_bar_video"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="10dp"
+            android:background="@drawable/bg_search"
+            android:drawablePadding="5dp"
+            android:gravity="center"
+            android:hint="@string/hint_bar_video"
+            android:inputType="text"
+            android:padding="5dp"
+            android:textColor="@color/color_142c48"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:drawableEndCompat="@drawable/ic_search"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linlay_add_message" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_list_subjects"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            tools:listitem="@layout/index_hand_book_item"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            app:layout_constraintEnd_toEndOf="@id/search_bar_video"
+            app:layout_constraintStart_toStartOf="@id/search_bar_video"
+            app:layout_constraintTop_toBottomOf="@id/search_bar_video"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/linlay_add_message" />
+            tools:listitem="@layout/index_hand_book_item" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

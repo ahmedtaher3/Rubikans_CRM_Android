@@ -583,4 +583,25 @@
     <string name="academy">أكاديمية ديفارت</string>
     <string name="index">فهرس</string>
     <string name="title_index">فهرس دليل الموظف</string>
+    <string name="add_event">إضافة حدث</string>
+    <string name="label">التسمية</string>
+    <string name="view_all">عرض الكل</string>
+    <string name="request">الطلب</string>
+    <string name="event">الحدث</string>
+    <string name="holiday">العطلة</string>
+    <string name="meeting_room">قاعة الاجتماعات</string>
+    <string name="calender">التقويم</string>
+    <string name="label_title">عنوان</string>
+    <string name="event_title">عنوان الحدث</string>
+    <string name="event_uRL">لينك الحدث</string>
+    <string name="department">القسم</string>
+    <string name="add_users">إضافة مستخدمين</string>
+    <string name="Add_event">أضف حدث</string>
+    <string name="action_task">مهمة</string>
+    <string name="action_request">طلب</string>
+    <string name="action_event">حدث</string>
+    <string name="action_holiday">إجازة</string>
+    <string name="action_meeting_room">قاعة الاجتماعات</string>
+
+
 </resources>

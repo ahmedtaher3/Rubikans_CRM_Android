@@ -7,12 +7,10 @@
 
     </data>
 
-
-
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#f3f3f3"
+            android:background="@color/color_f3f3f3"
             tools:context=".ui.main.ui.devartlink.handBook.HandBookActivity">
 
             <com.google.android.material.appbar.AppBarLayout
@@ -94,7 +92,7 @@
                 android:layout_marginBottom="20dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@+id/search_bar_video"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toStartOf="@id/tv_index_hand_book"
                 app:layout_constraintTop_toBottomOf="@+id/search_bar_video">
 
                 <androidx.recyclerview.widget.RecyclerView
@@ -104,8 +102,8 @@
                     tools:listitem="@layout/hand_book_item"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="@id/search_bar_video"
+                    app:layout_constraintStart_toStartOf="@id/tv_index_hand_book"
                     app:layout_constraintTop_toBottomOf="@id/constr_more_than_ads" />
             </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>

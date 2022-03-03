@@ -41,10 +41,8 @@ public class SubsAdapter extends RecyclerView.Adapter<SubsAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, final int position) {
         final Sub dataItem = dataItems.get(position);
-        viewHolder.binding.tvSubjectTitle.setText(dataItem.getTitle());
-        Glide.with(context)
-                .load("https://devartlink.devartlab.com/assets/images/" + dataItem.getImage())
-                    .fitCenter().into(viewHolder.binding.imgSubject);
+        viewHolder.binding.tvSubjectTitle.loadDataWithBaseURL(
+                null, dataItem.getTitle(), "text/html", "utf-8", null);
         if (!dataItem.getSections().isEmpty()){
             LinearLayoutManager layoutManager = new LinearLayoutManager(
                     viewHolder.binding.recyclerSubs.getContext(),

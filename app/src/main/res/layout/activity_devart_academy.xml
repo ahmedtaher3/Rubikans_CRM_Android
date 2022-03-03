@@ -35,7 +35,6 @@
                 android:id="@+id/constr_ads"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="gone"
                 app:layout_constraintTop_toBottomOf="@+id/back">
 
                 <androidx.cardview.widget.CardView
@@ -55,33 +54,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent">
 
-                        <WebView
-                            android:id="@+id/textView"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:visibility="gone" />
-
-                        <com.jarvanmo.exoplayerview.ui.ExoVideoView
-                            android:id="@+id/videoView"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:visibility="gone" />
-
                         <ImageView
                             android:id="@+id/imageView"
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:visibility="gone" />
-
-
-                        <ss.com.bannerslider.Slider
-                            android:id="@+id/bannerSlider"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:visibility="gone"
-                            app:slider_loopSlides="true" />
-
-
+                            android:layout_height="match_parent"/>
                     </RelativeLayout>
 
 
@@ -100,20 +76,6 @@
                 android:orientation="horizontal"
                 app:layout_constraintTop_toBottomOf="@+id/constr_ads">
 
-                <TextView
-                    android:id="@+id/tv_more_than_ads"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:padding="5dp"
-                    android:text="@string/more_than"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="15sp"
-                    android:textStyle="bold"
-                    android:visibility="gone"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-
                 <ImageView
                     android:id="@+id/btn_hide_show_ads"
                     android:layout_width="wrap_content"
@@ -122,7 +84,6 @@
                     android:background="@drawable/custom_bg_btn_blue"
                     android:gravity="center"
                     android:src="@drawable/ic_hide_show_ads"
-                    android:visibility="gone"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>

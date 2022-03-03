@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/action_task"
+        android:title="@string/action_task"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/action_request"
+        android:title="@string/action_request"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/action_event"
+        android:title="@string/action_event"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/action_holiday"
+        android:title="@string/action_holiday"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/action_meeting_room"
+        android:title="@string/action_meeting_room"
+        app:showAsAction="never"/>
+</menu>

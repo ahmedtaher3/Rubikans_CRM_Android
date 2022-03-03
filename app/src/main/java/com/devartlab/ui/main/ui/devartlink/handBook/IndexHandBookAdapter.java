@@ -14,6 +14,7 @@ import com.devartlab.R;
 import com.devartlab.databinding.IndexHandBookItemBinding;
 import com.devartlab.ui.main.ui.devartlink.handBook.model.Data;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class IndexHandBookAdapter extends RecyclerView.Adapter<IndexHandBookAdapter.ViewHolder> {
@@ -38,17 +39,28 @@ public class IndexHandBookAdapter extends RecyclerView.Adapter<IndexHandBookAdap
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, final int position) {
         final Data dataItem = dataItems.get(position);
         viewHolder.binding.tvSubjectTitle.setText(dataItem.getTitle());
-        Glide.with(context)
-                .load("https://devartlink.devartlab.com/assets/images/" + dataItem.getImage())
-                .fitCenter().into(viewHolder.binding.imgSubject);
-        if (onItemClickListener != null) {
-            viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    onItemClickListener.onItemClick(position);
+        viewHolder.binding.tvSubjectTitle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onItemClickListener.onItemClick(position);
+            }
+        });
+
+        viewHolder.binding.ivHideShowTitle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (viewHolder.binding.recyclerSubs.getVisibility() == View.VISIBLE) {
+                    viewHolder.binding.recyclerSubs.setVisibility(View.GONE);
+                    viewHolder.binding.ivHideShowTitle.setImageResource(R.drawable.ic_arrow_drop_down);
+                } else {
+                    viewHolder.binding.recyclerSubs.setVisibility(View.VISIBLE);
+                    viewHolder.binding.ivHideShowTitle.setImageResource(R.drawable.ic_arrow_drop_up);
                 }
-            });
-        }
+
+            }
+        });
+
+
     }
 
     @Override
@@ -92,4 +104,8 @@ public class IndexHandBookAdapter extends RecyclerView.Adapter<IndexHandBookAdap
         void onItemClick(int pos);
     }
 
+    public void filterData(ArrayList<Data> newList ){
+        this.dataItems = newList;
+        notifyDataSetChanged(); // refresh
+    }
 }

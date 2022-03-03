@@ -15,8 +15,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="10dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginBottom="5dp">
+            android:layout_marginEnd="10dp">
 
             <ImageView
                 android:id="@+id/img_subject"
@@ -29,7 +28,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 tools:src="@drawable/ic_launcher_foreground" />
 
-            <TextView
+            <WebView
                 android:id="@+id/tv_subject_title"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -57,15 +56,5 @@
                 tools:text="الاسليب موجب و سالب" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/colorGray2"
-            android:layout_gravity="bottom"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@id/img_subject"
-            app:layout_constraintStart_toStartOf="@id/tv_subject_title"
-            app:layout_constraintTop_toBottomOf="@id/wb_sections" />
     </androidx.cardview.widget.CardView>
 </layout>

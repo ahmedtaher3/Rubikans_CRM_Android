@@ -1,0 +1,367 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            tools:context=".PharmacyBinding.addLocation.AddLocationActivity">
+
+            <com.google.android.material.appbar.AppBarLayout
+                android:id="@+id/back"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:theme="@style/AppTheme.AppBarOverlay"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <androidx.appcompat.widget.Toolbar
+                    android:id="@+id/toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize" />
+
+            </com.google.android.material.appbar.AppBarLayout>
+
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="10dp"
+                android:text="@string/label_title"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/ed_country"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/ed_country" />
+
+            <EditText
+                android:id="@+id/ed_country"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="10dp"
+                android:background="@drawable/bg_search"
+                android:hint="@string/event_title"
+                android:keyboardNavigationCluster="false"
+                android:padding="5dp"
+                android:textColor="@color/color_142c48"
+                android:textSize="12sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@id/ed_add_user"
+                app:layout_constraintTop_toBottomOf="@+id/back" />
+
+            <TextView
+                android:id="@+id/tv_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="10dp"
+                android:text="@string/label"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/ed_city"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/ed_city" />
+
+            <TextView
+                android:id="@+id/ed_city"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/bg_search"
+                android:hint="@string/select"
+                android:keyboardNavigationCluster="false"
+                android:padding="5dp"
+                android:textColor="@color/color_142c48"
+                android:textSize="12sp"
+                app:layout_constraintEnd_toEndOf="@id/ed_country"
+                app:layout_constraintStart_toStartOf="@id/ed_add_user"
+                app:layout_constraintTop_toBottomOf="@+id/ed_country" />
+
+            <TextView
+                android:id="@+id/tv_start_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="10dp"
+                android:text="@string/label_start_date"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/ed_area"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/ed_area" />
+
+            <TextView
+                android:id="@+id/ed_area"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="10dp"
+                android:background="@drawable/bg_search"
+                android:hint="@string/date"
+                android:keyboardNavigationCluster="false"
+                android:padding="5dp"
+                android:textColor="@color/color_142c48"
+                android:textSize="12sp"
+                app:layout_constraintStart_toStartOf="@id/ed_add_user"
+                app:layout_constraintTop_toBottomOf="@+id/ed_city" />
+
+            <TextView
+                android:id="@+id/ed_time_create"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="10dp"
+                android:background="@drawable/bg_search"
+                android:hint="@string/select_time"
+                android:keyboardNavigationCluster="false"
+                android:padding="5dp"
+                android:textColor="@color/color_142c48"
+                android:textSize="12sp"
+                app:layout_constraintEnd_toEndOf="@id/ed_address"
+                app:layout_constraintStart_toEndOf="@+id/ed_area"
+                app:layout_constraintTop_toTopOf="@id/ed_area"
+                app:layout_constraintBottom_toBottomOf="@id/ed_area"/>
+
+            <TextView
+                android:id="@+id/tv_end_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="10dp"
+                android:text="@string/end_at"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/ed_district"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/ed_district" />
+
+            <TextView
+                android:id="@+id/ed_district"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/bg_search"
+                android:hint="@string/date"
+                android:keyboardNavigationCluster="false"
+                android:padding="5dp"
+                android:textColor="@color/color_142c48"
+                app:layout_constraintEnd_toEndOf="@id/ed_area"
+                app:layout_constraintStart_toStartOf="@id/ed_add_user"
+                app:layout_constraintTop_toBottomOf="@+id/ed_area" />
+
+            <TextView
+                android:id="@+id/ed_time_end"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="10dp"
+                android:background="@drawable/bg_search"
+                android:hint="@string/select_time"
+                android:keyboardNavigationCluster="false"
+                android:padding="5dp"
+                android:textColor="@color/color_142c48"
+                android:textSize="12sp"
+                app:layout_constraintEnd_toEndOf="@id/ed_address"
+                app:layout_constraintStart_toEndOf="@+id/ed_district"
+                app:layout_constraintTop_toTopOf="@id/ed_district"
+                app:layout_constraintBottom_toBottomOf="@id/ed_district"/>
+
+            <TextView
+                android:id="@+id/tv_event_uRL"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="10dp"
+                android:text="@string/event_uRL"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/ed_address"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/ed_address" />
+
+            <EditText
+                android:id="@+id/ed_address"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/bg_search"
+                android:hint="https//www.google.com"
+                android:keyboardNavigationCluster="false"
+                android:padding="5dp"
+                android:textColor="@color/color_142c48"
+                android:textSize="12sp"
+                app:layout_constraintEnd_toEndOf="@id/ed_country"
+                app:layout_constraintStart_toStartOf="@id/ed_add_user"
+                app:layout_constraintTop_toBottomOf="@+id/ed_district" />
+
+            <TextView
+                android:id="@+id/tv_departement"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="10dp"
+                android:text="@string/department"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/ed_department"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/ed_department" />
+
+            <TextView
+                android:id="@+id/ed_department"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/bg_search"
+                android:hint="@string/select"
+                android:keyboardNavigationCluster="false"
+                android:padding="5dp"
+                android:textColor="@color/color_142c48"
+                android:textSize="12sp"
+                app:layout_constraintEnd_toEndOf="@id/ed_country"
+                app:layout_constraintStart_toStartOf="@id/ed_add_user"
+                app:layout_constraintTop_toBottomOf="@+id/tv_event_uRL" />
+
+            <TextView
+                android:id="@+id/tv_add_user"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="10dp"
+                android:text="@string/add_users"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/ed_add_user"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/ed_add_user" />
+
+            <AutoCompleteTextView
+                android:id="@+id/ed_add_user"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="35dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/bg_search"
+                android:hint="@string/select"
+                android:keyboardNavigationCluster="false"
+                android:padding="5dp"
+                android:textColor="@color/color_142c48"
+                android:textSize="12sp"
+                app:layout_constraintEnd_toEndOf="@id/ed_country"
+                app:layout_constraintStart_toEndOf="@id/tv_add_user"
+                app:layout_constraintTop_toBottomOf="@+id/tv_departement" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recy_users"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/bg_search"
+                app:layout_constraintEnd_toEndOf="@id/ed_add_user"
+                app:layout_constraintStart_toStartOf="@id/tv_add_user"
+                app:layout_constraintTop_toBottomOf="@id/tv_add_user" />
+
+            <TextView
+                android:id="@+id/tv_lan_lng"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="10dp"
+                android:drawableEnd="@drawable/ic_gps"
+                android:drawablePadding="10dp"
+                android:gravity="center"
+                android:text="@string/location"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/ed_lan_lng"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/ed_lan_lng" />
+
+            <EditText
+                android:id="@+id/ed_lan_lng"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/bg_search"
+                android:hint="@string/add_location"
+                android:keyboardNavigationCluster="false"
+                android:padding="5dp"
+                android:textColor="@color/color_142c48"
+                android:textSize="12sp"
+                app:layout_constraintEnd_toEndOf="@id/ed_country"
+                app:layout_constraintStart_toStartOf="@id/ed_add_user"
+                app:layout_constraintTop_toBottomOf="@+id/recy_users" />
+
+            <TextView
+                android:id="@+id/tv_dec"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:drawablePadding="10dp"
+                android:gravity="start"
+                android:text="@string/description"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/ed_dec" />
+
+            <EditText
+                android:id="@+id/ed_dec"
+                android:layout_width="0dp"
+                android:layout_height="100dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/bg_search"
+                android:gravity="start"
+                android:hint="@string/description"
+                android:keyboardNavigationCluster="false"
+                android:padding="5dp"
+                android:textColor="@color/color_142c48"
+                android:textSize="12sp"
+                app:layout_constraintEnd_toEndOf="@id/ed_country"
+                app:layout_constraintStart_toStartOf="@id/ed_add_user"
+                app:layout_constraintTop_toBottomOf="@+id/tv_lan_lng" />
+
+
+            <Button
+                android:id="@+id/btn_add"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:background="@drawable/blue_background"
+                android:text="@string/add"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ed_dec" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+</layout>

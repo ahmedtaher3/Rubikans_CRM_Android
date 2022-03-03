@@ -20,6 +20,7 @@ import android.graphics.drawable.ColorDrawable
 import android.util.Log
 import android.view.Window
 import android.widget.Button
+import android.widget.EditText
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 
@@ -29,6 +30,7 @@ class HandBookActivity : AppCompatActivity() {
     private var adapter: SubjectsAdapter? = null
     private var adapter2: IndexHandBookAdapter? = null
     val list = ArrayList<Data>()
+    val list2 = ArrayList<Data>()
     var recViewIndex: RecyclerView? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -108,6 +110,17 @@ class HandBookActivity : AppCompatActivity() {
         adapter!!.filterData(filteredList)
     }
 
+    private fun filter2(text: String) {
+        val filteredList: ArrayList<Data> = ArrayList()
+
+        for (item in list2) {
+            if (item.title.toLowerCase().contains(text.toLowerCase())) {
+                filteredList.add(item)
+            }
+        }
+        adapter2!!.filterData(filteredList)
+    }
+
     override fun onSupportNavigateUp(): Boolean {
         finish()
         return true
@@ -127,6 +140,14 @@ class HandBookActivity : AppCompatActivity() {
         viewModel!!.getHandBook()
         val BtnCancel = dialog.findViewById<ImageView>(R.id.iv_cancel_dialog)
         recViewIndex = dialog.findViewById<RecyclerView>(R.id.recycler_list_subjects)
+        val searchBarVideo = dialog.findViewById<EditText>(R.id.search_bar_video)
+        searchBarVideo.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
+            override fun afterTextChanged(s: Editable) {
+                filter2(s.toString())
+            }
+        })
         viewModel!!.handBookResponse.observe(this, Observer {
             when {
                 it!!.data.isEmpty() -> {
@@ -137,6 +158,7 @@ class HandBookActivity : AppCompatActivity() {
                     //show data in recyclerView
                     adapter2 = IndexHandBookAdapter(it.data)
                     recViewIndex!!.setAdapter(adapter2)
+                    list2.addAll(it.data)
                     adapter2!!.setOnItemClickListener(IndexHandBookAdapter.OnItemClickListener {
                         binding.recyclerListSubjects.post {
                             binding.recyclerListSubjects.layoutManager?.scrollToPosition(it)

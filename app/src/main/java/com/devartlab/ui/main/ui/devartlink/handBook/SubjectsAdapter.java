@@ -39,7 +39,8 @@ public class SubjectsAdapter extends RecyclerView.Adapter<SubjectsAdapter.ViewHo
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, final int position) {
         final Data dataItem = dataItems.get(position);
-        viewHolder.binding.tvSubjectTitle.setText(dataItem.getTitle());
+        viewHolder.binding.tvSubjectTitle.loadDataWithBaseURL(
+                null, dataItem.getTitle(), "text/html", "utf-8", null);
         Glide.with(context)
                 .load("https://devartlink.devartlab.com/assets/images/" + dataItem.getImage())
                     .fitCenter().into(viewHolder.binding.imgSubject);

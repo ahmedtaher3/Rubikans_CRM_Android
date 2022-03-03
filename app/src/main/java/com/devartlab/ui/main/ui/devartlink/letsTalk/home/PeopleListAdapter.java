@@ -21,6 +21,7 @@ import com.devartlab.databinding.ItemChatUserBinding;
 import com.devartlab.ui.main.ui.devartlink.letsTalk.home.model.ImageModel.ImageProfileResponse;
 import com.devartlab.ui.main.ui.devartlink.letsTalk.home.model.peopleList.DataItem;
 import com.devartlab.ui.main.ui.eShopping.utils.UserPreferenceHelper;
+import com.squareup.picasso.Picasso;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -75,47 +76,14 @@ public class PeopleListAdapter extends RecyclerView.Adapter<PeopleListAdapter.Vi
                 }
             });
         }
-        RetrofitClient.getApis().getImageProfile(dataItem.getUserapi().getId())
-                .enqueue(new Callback<ImageProfileResponse>() {
-                    @Override
-                    public void onResponse(Call<ImageProfileResponse> call, Response<ImageProfileResponse> response) {
-                        if (response.isSuccessful()) {
-                            String base64String = response.body().getImg();
-//                            String base64Image = base64String.split(",")[1];
-//                            byte[] imageAsBytes = Base64.decode(base64Image.getBytes(), Base64.DEFAULT);
-//                            viewHolder.binding.profileImage.setImageBitmap(BitmapFactory.decodeByteArray(imageAsBytes, 0, imageAsBytes.length));
-                            final String pureBase64Encoded = base64String.substring(base64String.indexOf(",")  + 1);
-                            final byte[] decodedBytes = Base64.decode(pureBase64Encoded, Base64.DEFAULT);
-                            viewHolder.binding.profileImage.setImageBitmap(BitmapFactory
-                                    .decodeByteArray(decodedBytes, 0, decodedBytes.length));
-                        }
-                    }
 
-                    @Override
-                    public void onFailure(Call<ImageProfileResponse> call, Throwable t) {
-                        //   errorMessage.postValue(1);
-                    }
-                });
-        RetrofitClient.getApis().getImageProfile(dataItem.getUserapi().getId())
-                .enqueue(new Callback<ImageProfileResponse>() {
-                    @Override
-                    public void onResponse(Call<ImageProfileResponse> call, Response<ImageProfileResponse> response) {
-                        if (response.isSuccessful()) {
-                            byte[] decodedString = Base64.decode(response.body()
-                                    .getImg(), Base64.DEFAULT);
-                            Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0
-                                    , decodedString.length);
-                            viewHolder.binding.profileImage.setImageBitmap(decodedByte);
-                        } else {
-//                        imageProfileResponseMutableLiveData.postValue(response.body());
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<ImageProfileResponse> call, Throwable t) {
-                        //   errorMessage.postValue(1);
-                    }
-                });
+        Picasso.get()
+                .load("https://devartlink.devartlab.com/api/imagev3?id="+dataItem.getUserapi().getId()+".png")
+                .centerCrop()
+                .resize(66, 66)
+                .placeholder(R.drawable.user_defult)
+                .error(android.R.drawable.stat_notify_error)
+                .into(viewHolder.binding.profileImage);
         if (dataItem.getUnseenapi().size()!=0){
             viewHolder.binding.tvCountUnseed.setVisibility(View.VISIBLE);
             viewHolder.binding.tvCountUnseed.setText(String.valueOf(dataItem.getUnseenapi().size()));

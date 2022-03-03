@@ -32,6 +32,7 @@ import com.devartlab.ui.main.ui.eShopping.ticket.model.fetchMessages.Data;
 import com.devartlab.ui.main.ui.eShopping.utils.UserPreferenceHelper;
 import com.pusher.client.Pusher;
 import com.pusher.client.channel.Channel;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -155,26 +156,13 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ViewHo
 
                 }
             });
-
-            RetrofitClient.getApis().getImageProfile(dataItem.getUserapi().getId())
-                    .enqueue(new Callback<ImageProfileResponse>() {
-                        @Override
-                        public void onResponse(Call<ImageProfileResponse> call, Response<ImageProfileResponse> response) {
-                            if (response.isSuccessful()) {
-                                String base64String = response.body().getImg();
-                                String base64Image = base64String.split(",")[1];
-                                byte[] decodedString = Base64.decode(base64Image, Base64.DEFAULT);
-                                Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString
-                                        , 0, decodedString.length);
-                                viewHolder.img_sender.setImageBitmap(decodedByte);
-                            }
-                        }
-
-                        @Override
-                        public void onFailure(Call<ImageProfileResponse> call, Throwable t) {
-                            //   errorMessage.postValue(1);
-                        }
-                    });
+            Picasso.get()
+                    .load("https://devartlink.devartlab.com/api/imagev3?id="+dataItem.getUserapi().getId()+".png")
+                    .centerCrop()
+                    .resize(50, 50)
+                    .placeholder(R.drawable.user_defult)
+                    .error(android.R.drawable.stat_notify_error)
+                    .into(viewHolder.img_sender);
         }
         if (dataItem.getUserId().equals(UserPreferenceHelper.getUserChat().getId())) {
             viewHolder.textViewOptions.setOnClickListener(new View.OnClickListener() {
@@ -217,25 +205,13 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ViewHo
             }
 
             if (isConnected()) {
-                RetrofitClient.getApis().getImageProfile(dataItem.getUserapi().getId())
-                        .enqueue(new Callback<ImageProfileResponse>() {
-                            @Override
-                            public void onResponse(Call<ImageProfileResponse> call, Response<ImageProfileResponse> response) {
-                                if (response.isSuccessful()) {
-                                    String base64String = response.body().getImg();
-                                    String base64Image = base64String.split(",")[1];
-                                    byte[] decodedString = Base64.decode(base64Image, Base64.DEFAULT);
-                                    Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString
-                                            , 0, decodedString.length);
-                                    viewHolder.img_user.setImageBitmap(decodedByte);
-                                }
-                            }
-
-                            @Override
-                            public void onFailure(Call<ImageProfileResponse> call, Throwable t) {
-                                //   errorMessage.postValue(1);
-                            }
-                        });
+                Picasso.get()
+                        .load("https://devartlink.devartlab.com/api/imagev3?id="+dataItem.getUserapi().getId()+".png")
+                        .centerCrop()
+                        .resize(50, 50)
+                        .placeholder(R.drawable.user_defult)
+                        .error(android.R.drawable.stat_notify_error)
+                        .into(viewHolder.img_user);
             }
 
         }

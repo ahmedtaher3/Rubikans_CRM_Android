@@ -22,6 +22,7 @@ import com.devartlab.databinding.ActivityDevartLinkBinding
 import com.devartlab.model.AdModel
 import com.devartlab.model.CardModel
 import com.devartlab.ui.main.ui.callmanagement.home.MenuListAdapter
+import com.devartlab.ui.main.ui.devartlink.calender.CalenderActivity
 import com.devartlab.ui.main.ui.devartlink.devartAcademy.DevartAcademyActivity
 import com.devartlab.ui.main.ui.devartlink.devartCommunity.DevartCommunityActivity
 import com.devartlab.ui.main.ui.devartlink.faq.FAQActivity
@@ -83,6 +84,7 @@ class DevartLinkActivity : BaseActivity<ActivityDevartLinkBinding>(),
         list.add(CardModel(2, resources.getString(R.string.faq), R.drawable.ic_faq))
         list.add(CardModel(3, resources.getString(R.string.community), R.drawable.ic_community))
         list.add(CardModel(4, resources.getString(R.string.academy), R.drawable.ic_academy))
+//        list.add(CardModel(5, resources.getString(R.string.calender), R.drawable.ic_calendar_month))
 
         adapter = MenuListAdapter(this, list, this)
         val layoutManager = GridLayoutManager(this, 2)
@@ -112,6 +114,9 @@ class DevartLinkActivity : BaseActivity<ActivityDevartLinkBinding>(),
             }
             4 -> {
                 startActivity(Intent(this, DevartAcademyActivity::class.java))
+            }
+            5 -> {
+                startActivity(Intent(this, CalenderActivity::class.java))
             }
         }
     }

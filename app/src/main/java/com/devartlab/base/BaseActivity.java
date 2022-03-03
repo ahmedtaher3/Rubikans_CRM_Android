@@ -148,7 +148,7 @@ public abstract class BaseActivity <T extends ViewDataBinding> extends AppCompat
         Picasso.get()
                 .load("https://4eshopping.com"+image)
                 .centerCrop()
-                .resize(1024, 1024)
+                .resize(800, 800)
                 .error(android.R.drawable.stat_notify_error)
                 .into(binding.ivPost);
         binding.ivCancelDialog.setOnClickListener(new View.OnClickListener() {

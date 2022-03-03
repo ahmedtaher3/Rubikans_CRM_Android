@@ -34,6 +34,12 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".ui.main.ui.devartlink.calender.AddEventActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.main.ui.devartlink.calender.CalenderActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.main.ui.devartlink.handBook.HandBookActivity"
             android:exported="false" />
         <activity
