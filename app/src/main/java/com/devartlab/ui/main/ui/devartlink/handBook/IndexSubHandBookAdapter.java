@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.devartlab.R;
@@ -40,12 +41,6 @@ public class IndexSubHandBookAdapter extends RecyclerView.Adapter<IndexSubHandBo
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, final int position) {
         final Sub dataItem = dataItems.get(position);
         viewHolder.binding.tvSubjectTitle.setText(dataItem.getTitle());
-        viewHolder.binding.tvSubjectTitle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onItemClickListener.onItemClick(position);
-            }
-        });
 
         viewHolder.binding.ivHideShowTitle.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,6 +56,21 @@ public class IndexSubHandBookAdapter extends RecyclerView.Adapter<IndexSubHandBo
             }
         });
 
+
+        if (!dataItem.getSections().isEmpty()){
+            LinearLayoutManager layoutManager = new LinearLayoutManager(
+                    viewHolder.binding.recyclerSubs.getContext(),
+                    LinearLayoutManager.VERTICAL,
+                    false
+            );
+            layoutManager.setInitialPrefetchItemCount(dataItem.getSections().size());
+
+            // Create sub item view adapter
+            IndexSectionHandBookAdapter subItemAdapter = new IndexSectionHandBookAdapter(dataItem.getSections());
+            viewHolder.binding.recyclerSubs.setLayoutManager(layoutManager);
+            viewHolder.binding.recyclerSubs.setAdapter(subItemAdapter);
+            viewHolder.binding.recyclerSubs.setRecycledViewPool(viewPool);
+        }
 
     }
 

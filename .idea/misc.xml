@@ -87,6 +87,7 @@
         <entry key="..\:/work/DevartLab/DevartLabCRMproject/app/src/main/res/drawable/rounded_white.xml" value="0.1" />
         <entry key="..\:/work/DevartLab/DevartLabCRMproject/app/src/main/res/drawable/seen.xml" value="0.20833333333333334" />
         <entry key="..\:/work/DevartLab/DevartLabCRMproject/app/src/main/res/drawable/view_all_selector.xml" value="0.20833333333333334" />
+        <entry key="..\:/work/DevartLab/DevartLabCRMproject/app/src/main/res/layout-sw600dp/index_sec_hand_book_item.xml" value="0.144140625" />
         <entry key="..\:/work/DevartLab/DevartLabCRMproject/app/src/main/res/layout/activity_add_event.xml" value="0.25" />
         <entry key="..\:/work/DevartLab/DevartLabCRMproject/app/src/main/res/layout/activity_add_location.xml" value="0.1921875" />
         <entry key="..\:/work/DevartLab/DevartLabCRMproject/app/src/main/res/layout/activity_calender.xml" value="0.22" />
@@ -126,8 +127,9 @@
         <entry key="..\:/work/DevartLab/DevartLabCRMproject/app/src/main/res/layout/fragment_super_report.xml" value="0.1921875" />
         <entry key="..\:/work/DevartLab/DevartLabCRMproject/app/src/main/res/layout/fragment_work_from_home.xml" value="0.1921875" />
         <entry key="..\:/work/DevartLab/DevartLabCRMproject/app/src/main/res/layout/hand_book_item.xml" value="0.22" />
-        <entry key="..\:/work/DevartLab/DevartLabCRMproject/app/src/main/res/layout/index_hand_book_item.xml" value="0.25" />
-        <entry key="..\:/work/DevartLab/DevartLabCRMproject/app/src/main/res/layout/index_sub_hand_book_item.xml" value="0.1921875" />
+        <entry key="..\:/work/DevartLab/DevartLabCRMproject/app/src/main/res/layout/index_hand_book_item.xml" value="0.15242494226327943" />
+        <entry key="..\:/work/DevartLab/DevartLabCRMproject/app/src/main/res/layout/index_sec_hand_book_item.xml" value="0.1921875" />
+        <entry key="..\:/work/DevartLab/DevartLabCRMproject/app/src/main/res/layout/index_sub_hand_book_item.xml" value="0.17232375979112272" />
         <entry key="..\:/work/DevartLab/DevartLabCRMproject/app/src/main/res/layout/item_chat_user.xml" value="0.12222222222222222" />
         <entry key="..\:/work/DevartLab/DevartLabCRMproject/app/src/main/res/layout/list_teams_item.xml" value="0.33" />
         <entry key="..\:/work/DevartLab/DevartLabCRMproject/app/src/main/res/layout/list_video_item.xml" value="0.1" />

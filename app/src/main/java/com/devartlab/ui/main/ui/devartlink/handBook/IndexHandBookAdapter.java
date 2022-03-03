@@ -39,6 +39,12 @@ public class IndexHandBookAdapter extends RecyclerView.Adapter<IndexHandBookAdap
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, final int position) {
         final Data dataItem = dataItems.get(position);
         viewHolder.binding.tvSubjectTitle.setText(dataItem.getTitle());
+        viewHolder.binding.tvSubjectTitle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onItemClickListener.onItemClick(position);
+            }
+        });
 
         viewHolder.binding.ivHideShowTitle.setOnClickListener(new View.OnClickListener() {
             @Override
