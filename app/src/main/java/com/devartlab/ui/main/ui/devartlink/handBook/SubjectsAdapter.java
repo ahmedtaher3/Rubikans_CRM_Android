@@ -41,9 +41,7 @@ public class SubjectsAdapter extends RecyclerView.Adapter<SubjectsAdapter.ViewHo
         final Data dataItem = dataItems.get(position);
         viewHolder.binding.tvSubjectTitle.loadDataWithBaseURL(
                 null, dataItem.getTitle(), "text/html", "utf-8", null);
-        Glide.with(context)
-                .load("https://devartlink.devartlab.com/assets/images/" + dataItem.getImage())
-                    .fitCenter().into(viewHolder.binding.imgSubject);
+
         if (!dataItem.getSubs().isEmpty()){
             LinearLayoutManager layoutManager = new LinearLayoutManager(
                     viewHolder.binding.recyclerSubs.getContext(),

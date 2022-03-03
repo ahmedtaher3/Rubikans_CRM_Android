@@ -7,22 +7,23 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.devartlab.R;
 import com.devartlab.databinding.IndexHandBookItemBinding;
+import com.devartlab.databinding.IndexSubHandBookItemBinding;
 import com.devartlab.ui.main.ui.devartlink.handBook.model.Data;
+import com.devartlab.ui.main.ui.devartlink.handBook.model.Sub;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class IndexHandBookAdapter extends RecyclerView.Adapter<IndexHandBookAdapter.ViewHolder> {
+public class IndexSubHandBookAdapter extends RecyclerView.Adapter<IndexSubHandBookAdapter.ViewHolder> {
     private RecyclerView.RecycledViewPool viewPool = new RecyclerView.RecycledViewPool();
-    List<Data> dataItems;
+    List<Sub> dataItems;
     private Context context;
 
-    public IndexHandBookAdapter(List<Data> dataItems) {
+    public IndexSubHandBookAdapter(List<Sub> dataItems) {
         this.dataItems = dataItems;
     }
 
@@ -30,15 +31,21 @@ public class IndexHandBookAdapter extends RecyclerView.Adapter<IndexHandBookAdap
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.index_hand_book_item, parent, false);
+                .inflate(R.layout.index_sub_hand_book_item, parent, false);
         context = parent.getContext();
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, final int position) {
-        final Data dataItem = dataItems.get(position);
+        final Sub dataItem = dataItems.get(position);
         viewHolder.binding.tvSubjectTitle.setText(dataItem.getTitle());
+        viewHolder.binding.tvSubjectTitle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onItemClickListener.onItemClick(position);
+            }
+        });
 
         viewHolder.binding.ivHideShowTitle.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,21 +61,7 @@ public class IndexHandBookAdapter extends RecyclerView.Adapter<IndexHandBookAdap
             }
         });
 
-        if (!dataItem.getSubs().isEmpty()){
-            LinearLayoutManager layoutManager = new LinearLayoutManager(
-                    viewHolder.binding.recyclerSubs.getContext(),
-                    LinearLayoutManager.VERTICAL,
-                    false
-            );
-            layoutManager.setInitialPrefetchItemCount(dataItem.getSubs().size());
 
-            // Create sub item view adapter
-            IndexSubHandBookAdapter subItemAdapter = new IndexSubHandBookAdapter(dataItem.getSubs());
-
-            viewHolder.binding.recyclerSubs.setLayoutManager(layoutManager);
-            viewHolder.binding.recyclerSubs.setAdapter(subItemAdapter);
-            viewHolder.binding.recyclerSubs.setRecycledViewPool(viewPool);
-        }
     }
 
     @Override
@@ -80,7 +73,7 @@ public class IndexHandBookAdapter extends RecyclerView.Adapter<IndexHandBookAdap
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
-        IndexHandBookItemBinding binding;
+        IndexSubHandBookItemBinding binding;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -102,9 +95,9 @@ public class IndexHandBookAdapter extends RecyclerView.Adapter<IndexHandBookAdap
 
     }
 
-    IndexHandBookAdapter.OnItemClickListener onItemClickListener;
+    IndexSubHandBookAdapter.OnItemClickListener onItemClickListener;
 
-    public void setOnItemClickListener(IndexHandBookAdapter.OnItemClickListener onItemClickListener) {
+    public void setOnItemClickListener(IndexSubHandBookAdapter.OnItemClickListener onItemClickListener) {
         this.onItemClickListener = onItemClickListener;
     }
 
@@ -112,7 +105,7 @@ public class IndexHandBookAdapter extends RecyclerView.Adapter<IndexHandBookAdap
         void onItemClick(int pos);
     }
 
-    public void filterData(ArrayList<Data> newList ){
+    public void filterData(ArrayList<Sub> newList ){
         this.dataItems = newList;
         notifyDataSetChanged(); // refresh
     }

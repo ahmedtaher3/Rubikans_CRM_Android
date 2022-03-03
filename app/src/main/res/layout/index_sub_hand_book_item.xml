@@ -36,7 +36,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_arrow_drop_down"
-                android:layout_marginStart="10dp"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 android:contentDescription="@string/img" />
@@ -49,7 +48,7 @@
                 android:layout_marginTop="5dp"
                 android:layout_marginEnd="10dp"
                 android:visibility="gone"
-                tools:listitem="@layout/index_sub_hand_book_item"
+                tools:listitem="@layout/index_hand_book_item"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintStart_toStartOf="@+id/iv_hide_show_title"
                 app:layout_constraintEnd_toEndOf="@+id/tv_subject_title"
