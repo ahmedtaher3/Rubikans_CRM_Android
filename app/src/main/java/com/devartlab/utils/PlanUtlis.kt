@@ -2,7 +2,6 @@ package com.devartlab.utils
 
 import android.app.Application
 import android.util.Log
-import android.widget.Toast
 import com.devartlab.base.BaseApplication
 import com.devartlab.data.retrofit.ApiServices
 import com.devartlab.data.retrofit.ResponseModel
@@ -15,11 +14,8 @@ import com.devartlab.model.PlanJson
 import com.devartlab.model.Shift
 import com.devartlab.model.SyncPlanResponse
 import com.google.gson.Gson
-import com.google.gson.GsonBuilder
-import com.google.gson.reflect.TypeToken
 import io.reactivex.Completable
 import io.reactivex.Observer
-import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 
@@ -118,7 +114,7 @@ object PlanUtlis {
                     }
                     planDao?.insertAllEntities(list)
 
-                    val text = CommonUtilities.getText()
+            /*        val text = CommonUtilities.getText()
                     if (!text.isNullOrEmpty()) {
                         val gson = GsonBuilder().create()
 
@@ -224,7 +220,7 @@ object PlanUtlis {
                         }
 
 
-                    }
+                    }*/
 
                     if (!data.data.startPointData.isNullOrEmpty()) {
 
