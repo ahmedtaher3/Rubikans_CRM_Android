@@ -146,15 +146,15 @@ public class RetrofitClient extends Application {
 
     public static Retrofit getClient4EShopping() {
         if (retrofit1==null){
-            HttpLoggingInterceptor logging =
-                    new HttpLoggingInterceptor(new HttpLoggingInterceptor.Logger() {
-                        @Override public void log(@NotNull String message) {
-                            Log.e("retrofit",message);
-                        }
-                    });
-            logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+
+            if (BuildConfig.DEBUG) {
+                loggingInterceptor.level(HttpLoggingInterceptor.Level.BODY);
+            } else {
+                loggingInterceptor.level(HttpLoggingInterceptor.Level.NONE);
+            }
+
             OkHttpClient client = new OkHttpClient.Builder()
-                    .addInterceptor(logging)
+                    .addInterceptor(loggingInterceptor)
                     .build();
 
             retrofit1 = new Retrofit.Builder()
