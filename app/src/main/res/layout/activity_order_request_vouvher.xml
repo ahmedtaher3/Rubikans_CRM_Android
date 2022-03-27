@@ -1,0 +1,104 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constr_approval_is_pending"
+        android:layout_width="match_parent"
+        android:background="@drawable/custom_bg_curve_left_right_color_white"
+        android:layout_height="match_parent">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/back"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/AppTheme.AppBarOverlay"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize" />
+
+        </com.google.android.material.appbar.AppBarLayout>
+        <TextView
+            android:id="@+id/ed_select_doctors"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:textColor="@color/color_142c48"
+            android:background="@drawable/bg_search"
+            android:hint="@string/doctors"
+            android:padding="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/back"
+            app:drawableStartCompat="@drawable/ic_drop_down" />
+
+        <TextView
+            android:id="@+id/ed_voucher"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:background="@drawable/bg_search"
+            android:hint="@string/voucher"
+            android:padding="10dp"
+            android:textColor="@color/color_142c48"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ed_select_doctors"
+            app:drawableStartCompat="@drawable/ic_drop_down" />
+
+        <EditText
+            android:id="@+id/ed_count"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:background="@drawable/bg_search"
+            android:hint="@string/count"
+            android:inputType="numberSigned"
+            android:digits="1234567890"
+            android:textColor="@color/color_142c48"
+            android:keyboardNavigationCluster="false"
+            android:padding="10dp"
+            android:gravity="start"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ed_voucher" />
+        <TextView
+            android:id="@+id/tv_no_vouchers"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:text="عدد الكوبونات 250 كوبون"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            android:visibility="gone"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ed_count" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_add_problem"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:background="@drawable/bg_blue"
+            android:text="@string/submit"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_no_vouchers" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

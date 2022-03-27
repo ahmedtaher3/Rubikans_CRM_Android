@@ -259,7 +259,7 @@ class MainActivity : BaseActivity<ActivityMainBinding?>(), View.OnClickListener,
         })
 
         //login 4EShopping
-        viewModel.errorMessage.observe(this, { integer: Int ->
+        viewModel.errorMessage.observe(this) { integer: Int ->
             if (integer == 1) {
                 Log.e("xxx", "error")
                 Toast.makeText(this, "error in response data", Toast.LENGTH_SHORT)
@@ -267,7 +267,7 @@ class MainActivity : BaseActivity<ActivityMainBinding?>(), View.OnClickListener,
             } else {
                 Toast.makeText(this, "error in Network", Toast.LENGTH_SHORT).show()
             }
-        })
+        }
         viewModel.login4EShoppingResponse.observe(this, Observer {
             UserPreferenceHelper.saveUserProfile(it)
         })

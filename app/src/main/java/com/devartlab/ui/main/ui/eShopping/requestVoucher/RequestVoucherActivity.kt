@@ -28,12 +28,12 @@ class RequestVoucherActivity : AppCompatActivity() {
     var viewModel: RequestVoucherViewModel? = null
     var compaignVouchersID: Int = 0
     var doctorsID: Int = 0
+    var doctorsName: String? = null
     val list = ArrayList<Data>()
     private val doctors: List<String> = java.util.ArrayList()
     private var adapterDoctors: ArrayAdapter<String>? = null
     private var adapter: MyVoucherRequestAdapter? = null
     lateinit var request: VoucherRequestRequest
-    var doctorsName: String? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(
@@ -51,7 +51,8 @@ class RequestVoucherActivity : AppCompatActivity() {
     private fun onClickListener() {
         viewModel!!.getMyVoucherRequest()
         binding.btnOrderRequestVoucher.setOnClickListener {
-            orderRequestVouvherDialog()
+            val intent = Intent(this, OrderRequestVouvherActivity::class.java)
+            startActivity(intent)
         }
         binding.tvPeopleSearch.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
@@ -66,7 +67,7 @@ class RequestVoucherActivity : AppCompatActivity() {
     }
 
     private fun handleObserver() {
-        viewModel!!.errorMessage.observe(this, { integer: Int ->
+        viewModel!!.errorMessage.observe(this) { integer: Int ->
             if (integer == 1) {
                 Log.e("xxx", "error")
                 Toast.makeText(this, "error in response data", Toast.LENGTH_SHORT)
@@ -74,17 +75,18 @@ class RequestVoucherActivity : AppCompatActivity() {
             } else {
                 Toast.makeText(this, "error in Network", Toast.LENGTH_SHORT).show()
             }
-        })
+        }
 
         viewModel!!.myVoucherRequestResponse.observe(this, Observer {
-            if (it!!.data == null) {
+            if (it!!.data.isNullOrEmpty()) {
                 //errorMessage if data coming is null;
                 binding.tvEmptyList.setVisibility(View.VISIBLE)
+                binding.progressBar.setVisibility(View.GONE)
             } else {
                 //show data in recyclerView
                 binding.progressBar.setVisibility(View.GONE)
                 adapter = MyVoucherRequestAdapter(it.data)
-                list.addAll(it.data)
+                list.addAll(it.data!!)
                 binding.recOrderRequestVoucher.setAdapter(adapter)
                 adapter!!.setOnItemClickListener(MyVoucherRequestAdapter.OnItemClickListener { pos, dataItem ->
                     val intent = Intent(this, ShowVouchersActivity::class.java)
