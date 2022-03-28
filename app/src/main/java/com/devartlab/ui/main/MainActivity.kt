@@ -211,7 +211,7 @@ class MainActivity : BaseActivity<ActivityMainBinding?>(), View.OnClickListener,
         viewModel.welcomePostResponse.observe(this, Observer {
             if (UserPreferenceHelper.getWelcomeDialog()!=null){
                 if (UserPreferenceHelper.getWelcomeDialog().image!=it!!.data.image
-                    &&UserPreferenceHelper.getWelcomeDialog().link!=it!!.data.link){
+                    ||UserPreferenceHelper.getWelcomeDialog().link!=it!!.data.link){
                     showWelcomePostDialog(it!!.data.image,it.data.link)
                     UserPreferenceHelper.saveWelcomeDialog(it.data)
                 }
