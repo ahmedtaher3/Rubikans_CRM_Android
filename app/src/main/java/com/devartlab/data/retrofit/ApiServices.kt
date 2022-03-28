@@ -973,7 +973,7 @@ interface ApiServices {
     @GET("get_doctors")
     fun getDoctors(
         @Header("Authorization") token: String?,
-        @Query("q") q: String?
+        @Query("query") q: String?
     ): Call<GetDoctorsResponse?>?
 
     @POST("voucher/request")
