@@ -619,6 +619,7 @@
     <string name="action_event">Event</string>
     <string name="action_holiday">Holiday</string>
     <string name="action_meeting_room">Meeting Room</string>
+    <string name="empty_list">Empty list</string>
 
 
 </resources>

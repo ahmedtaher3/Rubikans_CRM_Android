@@ -1,17 +1,16 @@
 package com.devartlab.ui.main.ui.moreDetailsAds
 
-import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.text.Html
 import android.util.Log
 import android.view.View
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.devartlab.R
 import com.devartlab.databinding.ActivityMoreDetailsAdsBinding
 import com.devartlab.model.AdModel
+import com.devartlab.ui.main.ui.moreDetailsAds.model.SeeMoreRequest
 import com.devartlab.utils.MainSliderAdapter
 import com.devartlab.utils.PicassoImageLoadingService
 import com.google.gson.Gson
@@ -23,6 +22,8 @@ class MoreDetailsAdsActivity : AppCompatActivity() {
     lateinit var binding: ActivityMoreDetailsAdsBinding
     lateinit var viewModel: MoreDetailsAdsViewModel
     lateinit var mediaSource: SimpleMediaSource
+    lateinit var request: SeeMoreRequest
+    var model = AdModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,19 +31,17 @@ class MoreDetailsAdsActivity : AppCompatActivity() {
         setSupportActionBar(binding.toolbar)
         supportActionBar!!.title = "Read more"
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-        viewModel = ViewModelProviders.of(this).get(MoreDetailsAdsViewModel::class.java)
+        viewModel = ViewModelProvider(this)[MoreDetailsAdsViewModel::class.java]
         val bundle: Bundle? = intent.extras
         val page_code = bundle?.get("pageCode")
         Log.e("page_code", page_code.toString())
         Log.d(TAG, "onCreate: " + Gson().toJson(viewModel.dataManager.ads.ads!! as Any?))
-        var model = AdModel()
         for (m in viewModel.dataManager.ads.ads!!) {
             if (m.pageCode == page_code) {
                 model = m
                 break
             }
         }
-
         when (model.view_more_type) {
             "Video" -> {
                 binding.videoView.visibility = View.VISIBLE
@@ -101,6 +100,12 @@ class MoreDetailsAdsActivity : AppCompatActivity() {
         binding.tvDec.loadDataWithBaseURL(null, model.view_more_text!!
             ,  "text/html", "utf-8", null)
 
+        handleObserver()
+    }
+
+    private fun handleObserver() {
+        request = SeeMoreRequest(model.id!!)
+        viewModel.getSeeMore(request)
     }
 
     override fun onSupportNavigateUp(): Boolean {

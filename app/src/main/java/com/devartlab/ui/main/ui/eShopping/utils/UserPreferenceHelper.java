@@ -4,8 +4,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.devartlab.base.BaseApplication;
-import com.devartlab.data.retrofit.RetrofitClient;
 import com.devartlab.ui.main.ui.devartlink.letsTalk.model.user.UserResponse;
+import com.devartlab.ui.main.ui.devartlink.model.WelcomePostData;
 import com.devartlab.ui.main.ui.eShopping.main.model.login4EShopping.Login4EShoppingResponse;
 import com.google.gson.Gson;
 
@@ -56,5 +56,22 @@ public class UserPreferenceHelper {
                 .getString("userDetails", "");
         if (json.equals("")) return new UserResponse();
         return gson.fromJson(json, UserResponse.class);
+    }
+
+    public static void saveWelcomeDialog(WelcomePostData welcomePostResponse){
+
+        SharedPreferences.Editor prefsEditor = getSharedPreferenceInstance(BaseApplication
+                .Companion.getInstance().getApplicationContext()).edit();
+        Gson gson = new Gson();
+        String json = gson.toJson(welcomePostResponse);
+        prefsEditor.putString("welcomeDialog", json);
+        prefsEditor.apply();
+    }
+    public static WelcomePostData getWelcomeDialog() {
+        Gson gson = new Gson();
+        String json = getSharedPreferenceInstance(BaseApplication.Companion.getInstance().getApplicationContext())
+                .getString("welcomeDialog", "");
+        if (json.equals("")) return new WelcomePostData();
+        return gson.fromJson(json, WelcomePostData.class);
     }
 }

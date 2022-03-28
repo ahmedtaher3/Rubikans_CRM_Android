@@ -12,22 +12,21 @@ import android.util.Log
 import android.view.View
 import android.view.Window
 import android.view.WindowManager
-import android.widget.PopupMenu
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.RecyclerView
 import com.devartlab.R
 import com.devartlab.databinding.ActivityOrderRequestVouvherBinding
-import com.devartlab.databinding.DialogGetDoctorsBinding
 import com.devartlab.ui.main.ui.eShopping.requestVoucher.model.voucherRequest.VoucherRequestRequest
 
 class OrderRequestVouvherActivity : AppCompatActivity() {
     lateinit var binding: ActivityOrderRequestVouvherBinding
     var viewModel: RequestVoucherViewModel? = null
     var compaignVouchersID: Int = 0
-    var doctorsID: Int = 0
+    var doctorsID: String ?= null
     var doctorsName: String? = null
     lateinit var request: VoucherRequestRequest
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,10 +34,17 @@ class OrderRequestVouvherActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(
             this, R.layout.activity_order_request_vouvher
         )
+        if (intent.hasExtra("_id")) {
+            doctorsID = intent.getStringExtra("_id")
+        }
+        if (intent.hasExtra("_name")) {
+            doctorsName = intent.getStringExtra("_name")
+            binding.edSelectDoctors.setText(doctorsName)
+        }
         setSupportActionBar(binding.toolbar)
         supportActionBar!!.title = getString(R.string.order_request_voucher)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-        viewModel = ViewModelProvider(this).get(RequestVoucherViewModel::class.java)
+        viewModel = ViewModelProvider(this)[RequestVoucherViewModel::class.java]
         onClickListener()
         handleObserver()
     }
@@ -49,8 +55,10 @@ class OrderRequestVouvherActivity : AppCompatActivity() {
         }
 
         binding.edSelectDoctors.setOnClickListener {
-            getDoctorsDialog()
+            val intent = Intent(this, GetDoctorsActivity::class.java)
+            startActivity(intent)
         }
+
         binding.edCount.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {}
 
@@ -84,7 +92,7 @@ class OrderRequestVouvherActivity : AppCompatActivity() {
         binding.btnAddProblem.setOnClickListener {
             if (compaignVouchersID == 0) {
                 binding.edVoucher.setError("please select voucher")
-            } else if (doctorsID == 0) {
+            } else if (doctorsID.equals(null)) {
                 binding.edSelectDoctors.setError("please select doctor")
             } else if (TextUtils.isEmpty(binding.edCount.getText().toString())) {
                 binding.edCount.setError("please enter count")
@@ -94,7 +102,7 @@ class OrderRequestVouvherActivity : AppCompatActivity() {
                 request = VoucherRequestRequest(
                     compaignVouchersID,
                     binding.edCount.text.toString(),
-                    doctorsID,
+                    doctorsID!!.toInt(),
                     doctorsName!!
                 )
                 viewModel!!.getVoucherRequest(request)
@@ -135,52 +143,6 @@ class OrderRequestVouvherActivity : AppCompatActivity() {
             })
             countryBrandsPopUp.show()
         })
-    }
-
-    fun getDoctorsDialog() {
-        val dialog = Dialog(this)
-        val bindingDialog: DialogGetDoctorsBinding =
-            DataBindingUtil.inflate(dialog.layoutInflater, R.layout.dialog_get_doctors, null, false)
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        dialog.setCancelable(false)
-        dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        val window = dialog.window
-        window!!.setLayout(
-            WindowManager.LayoutParams.MATCH_PARENT,
-            WindowManager.LayoutParams.WRAP_CONTENT)
-        dialog.setContentView(bindingDialog.getRoot())
-        var adapter:GetDoctorsAdapter?
-        adapter=GetDoctorsAdapter(null)
-        viewModel!!.getDoctors("")
-                bindingDialog.searchDoctors.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {}
-            override fun onTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {
-                viewModel!!.getDoctors(bindingDialog.searchDoctors.text.toString())
-            }
-
-            override fun afterTextChanged(editable: Editable) {
-            }
-        })
-        viewModel!!.getDoctorsResponse.observe(this, Observer {
-            if (it!!.data.isNullOrEmpty()) {
-                //errorMessage if data coming is null;
-                bindingDialog.tvEmptyList.setVisibility(View.VISIBLE)
-                bindingDialog.progressBar.setVisibility(View.GONE)
-            } else {
-                //show data in recyclerView
-                bindingDialog.progressBar.setVisibility(View.GONE)
-                adapter = GetDoctorsAdapter(it.data)
-                bindingDialog.recyclerDoctors.setAdapter(adapter)
-                adapter!!.setOnItemClickListener(GetDoctorsAdapter.OnItemClickListener { pos, dataItem ->
-                    doctorsID=dataItem.id
-                    doctorsName=dataItem.text
-                    dialog.dismiss()
-                })
-            }
-        })
-        bindingDialog.ivCancelDialog.setOnClickListener {
-            dialog.dismiss()
-        }
     }
 
     override fun onSupportNavigateUp(): Boolean {

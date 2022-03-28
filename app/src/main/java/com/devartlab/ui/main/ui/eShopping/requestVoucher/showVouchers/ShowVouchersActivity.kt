@@ -60,14 +60,14 @@ class ShowVouchersActivity : AppCompatActivity() {
     }
 
     private fun handleObserver() {
-        viewModel!!.errorMessage.observe(this, { integer: Int ->
+        viewModel!!.errorMessage.observe(this) { integer: Int ->
             if (integer == 1) {
                 Log.e("xxx", "error")
                 Toast.makeText(this, "error in response data", Toast.LENGTH_SHORT).show()
             } else {
                 Toast.makeText(this, "error in Network", Toast.LENGTH_SHORT).show()
             }
-        })
+        }
 
         viewModel!!.deliverVoucherResponse.observe(this, Observer {
             viewModel!!.getVouchers(_id!!)

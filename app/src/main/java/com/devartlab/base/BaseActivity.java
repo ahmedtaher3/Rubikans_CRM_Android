@@ -137,7 +137,7 @@ public abstract class BaseActivity <T extends ViewDataBinding> extends AppCompat
         startActivity(intent);
     }
 
-    public void showWelcomePostDialog(String image) {
+    public void showWelcomePostDialog(String image,String webLink) {
         Dialog dialog = new Dialog(this);
         DialogWelcomePostBinding binding = DataBindingUtil.inflate(dialog.getLayoutInflater(), R.layout.dialog_welcome_post, null, false);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -146,7 +146,7 @@ public abstract class BaseActivity <T extends ViewDataBinding> extends AppCompat
         dialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
         dialog.setContentView(binding.getRoot());
         Picasso.get()
-                .load("https://4eshopping.com"+image)
+                .load(image)
                 .centerCrop()
                 .resize(800, 800)
                 .error(android.R.drawable.stat_notify_error)
@@ -155,6 +155,12 @@ public abstract class BaseActivity <T extends ViewDataBinding> extends AppCompat
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
+            }
+        });
+        binding.ivPost.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openWebPage(webLink);
             }
         });
         dialog.show();

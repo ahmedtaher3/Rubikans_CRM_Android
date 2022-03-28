@@ -602,6 +602,7 @@
     <string name="action_event">حدث</string>
     <string name="action_holiday">إجازة</string>
     <string name="action_meeting_room">قاعة الاجتماعات</string>
+    <string name="empty_list">لا يوجد بيانات</string>
 
 
 </resources>

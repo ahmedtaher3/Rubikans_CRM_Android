@@ -49,8 +49,6 @@ import com.devartlab.ui.auth.login.LoginActivity
 import com.devartlab.ui.main.ui.devartlink.model.WelcomePostResponse
 import com.devartlab.ui.main.ui.eShopping.main.model.login4EShopping.Login4EShoppingRequest
 import com.devartlab.ui.main.ui.eShopping.main.model.login4EShopping.Login4EShoppingResponse
-import com.devartlab.ui.main.ui.eShopping.pharmacyBinding.uploadPharmacyFiles.model.pharmacydata.GetInfoPharmacyResponse
-import com.devartlab.ui.main.ui.eShopping.utils.UserPreferenceHelper
 import com.devartlab.utils.CommonUtilities
 import com.google.gson.Gson
 import io.reactivex.Completable
@@ -507,7 +505,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     }
     //function welcome post
     fun getWelcomePost() {
-        RetrofitClient.getApis4EShopping().getWelcomePost()!!
+        RetrofitClient.getApis().getWelcomePost()!!
             .enqueue(object : Callback<WelcomePostResponse?> {
                 override fun onResponse(
                     call: Call<WelcomePostResponse?>,

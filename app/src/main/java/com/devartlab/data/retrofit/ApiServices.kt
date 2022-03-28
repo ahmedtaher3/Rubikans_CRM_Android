@@ -64,6 +64,8 @@ import com.devartlab.ui.main.ui.eShopping.ticket.model.deleteMessages.DeleteMess
 import com.devartlab.ui.main.ui.eShopping.ticket.model.deleteTickets.DeleteTicketsResponse
 import com.devartlab.ui.main.ui.eShopping.ticket.model.fetchMessages.FetchMessagesResponse
 import com.devartlab.ui.main.ui.eShopping.ticket.model.getContacts.GetContactsResponse
+import com.devartlab.ui.main.ui.moreDetailsAds.model.SeeMoreRequest
+import com.devartlab.ui.main.ui.moreDetailsAds.model.SeeMoreResponse
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import io.reactivex.Observable
@@ -997,6 +999,11 @@ interface ApiServices {
         @Body request: DeliverVoucherRequest?
     ): Call<DeliverVoucherResponse?>?
 
-    @GET("v")
+    @GET("version")
     fun getWelcomePost(): Call<WelcomePostResponse?>?
+
+    @POST("ads/see_more")
+    fun getSeeMore(
+        @Body request: SeeMoreRequest?
+    ): Call<SeeMoreResponse?>?
 }
