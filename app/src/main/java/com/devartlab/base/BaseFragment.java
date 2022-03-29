@@ -95,6 +95,5 @@ public abstract class BaseFragment<T extends ViewDataBinding> extends Fragment {
     public void openWebPage(String url) {
         Uri uri = Uri.parse(url);
         Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-        startActivity(intent);
     }
 }

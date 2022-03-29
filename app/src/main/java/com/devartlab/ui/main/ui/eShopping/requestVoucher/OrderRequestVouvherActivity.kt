@@ -56,7 +56,7 @@ class OrderRequestVouvherActivity : AppCompatActivity() {
 
         binding.edSelectDoctors.setOnClickListener {
             val intent = Intent(this, GetDoctorsActivity::class.java)
-            startActivity(intent)
+            startActivityForResult(intent , 100)
         }
 
         binding.edCount.addTextChangedListener(object : TextWatcher {

@@ -3,8 +3,10 @@ package com.devartlab.ui.auth.login
 import android.app.Application
 import android.util.Log
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
+import com.devartlab.GetDeviceToken
 import com.devartlab.base.BaseApplication
 import com.devartlab.data.retrofit.ApiServices
 import com.devartlab.data.retrofit.ResponseModel
@@ -15,6 +17,8 @@ import com.devartlab.data.room.authority.AuthorityEntity
 import com.devartlab.data.shared.DataManager
 import com.devartlab.model.AdModelList
 import com.devartlab.model.AuthorityDatum
+import com.devartlab.ui.main.ui.eShopping.main.model.login4EShopping.Login4EShoppingRequest
+import com.devartlab.ui.main.ui.eShopping.main.model.login4EShopping.Login4EShoppingResponse
 import com.devartlab.utils.CommonUtilities
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
@@ -23,6 +27,9 @@ import io.reactivex.Observer
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import retrofit2.Retrofit
 
 
@@ -34,6 +41,10 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
     val responseLiveUpdatePermission: MutableLiveData<ResponseModel>
     val progress: MutableLiveData<Int>
     val checkData: MutableLiveData<Boolean>
+    var errorMessage: MutableLiveData<Int>
+        protected set
+    var login4EShoppingResponse: MutableLiveData<Login4EShoppingResponse?>
+        protected set
     var authorityDao: AuthorityDao? = null
     var myAPI: ApiServices? = null
     var retrofit: Retrofit? = null
@@ -61,6 +72,8 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
         checkData = MutableLiveData()
         databaseReference = FirebaseDatabase.getInstance().reference
         authorityDao = DatabaseClient.getInstance(application)?.appDatabase?.authorityDao()
+        errorMessage = MutableLiveData()//error message
+        login4EShoppingResponse = MutableLiveData()//login 4eshopping
 
     }
 
@@ -261,4 +274,45 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
 
     }
 
+    //function login 4EShopping
+    fun getUserModel(activity: AppCompatActivity, login4EShoppingRequest: Login4EShoppingRequest) {
+
+        val getToken = GetDeviceToken(activity)
+        getToken.getToken(object : GetDeviceToken.TokenResult() {
+            override fun success(token: String?) {
+                var myToken = ""
+                myToken = if (token.isNullOrBlank()) {
+                    dataManager.deviceToken!!
+                } else {
+                    token
+                }
+
+                login4EShoppingRequest.fcm = myToken
+                RetrofitClient.getApis4EShopping().LOGIN4ESHOPPING(login4EShoppingRequest)!!
+                    .enqueue(object : Callback<Login4EShoppingResponse?> {
+                        override fun onResponse(
+                            call: Call<Login4EShoppingResponse?>,
+                            response: Response<Login4EShoppingResponse?>
+                        ) {
+                            if (response.isSuccessful) {
+                                login4EShoppingResponse.postValue(response.body())
+                            } else {
+                                login4EShoppingResponse.postValue(response.body())
+                            }
+                        }
+
+                        override fun onFailure(call: Call<Login4EShoppingResponse?>, t: Throwable) {
+                            errorMessage.postValue(1)
+                        }
+                    })
+            }
+
+            override fun failure(msg: String?) {
+
+
+            }
+
+        })
+
+    }
 }

@@ -5,6 +5,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
@@ -17,6 +18,7 @@ import com.devartlab.base.BaseApplication
 import com.devartlab.data.shared.DataManager
 import com.devartlab.databinding.Activity4eshoppingBinding
 import com.devartlab.model.AdModel
+import com.devartlab.ui.auth.login.LoginActivity
 import com.devartlab.ui.main.ui.eShopping.addProductsToThePharmacy.AddProductsPharmacyActivity
 import com.devartlab.ui.main.ui.eShopping.orientationVideos.OrientationVideosActivity
 import com.devartlab.ui.main.ui.eShopping.pharmacyBinding.PharmacyBindingActivity
@@ -54,6 +56,7 @@ class Home4EShoppingActivity : AppCompatActivity(),
         dataManager = (getApplication() as BaseApplication).dataManager!!
         setUpRecycler()
         ads()
+        deepLink()
     }
 
     private fun setUpRecycler() {
@@ -207,5 +210,17 @@ class Home4EShoppingActivity : AppCompatActivity(),
     override fun onStop() {
         super.onStop()
         binding.videoView.stop()
+    }
+    fun deepLink() {
+        val uri = intent.data
+        if (uri != null) {
+            if (viewModel.dataManager.isLogin) {
+                val path = uri.toString()
+                Toast.makeText(this@Home4EShoppingActivity, "path = $path", Toast.LENGTH_LONG).show()
+            } else {
+                val intent = Intent(this, LoginActivity::class.java)
+                startActivity(intent)
+            }
+        }
     }
 }

@@ -348,7 +348,7 @@ class EmployeeSalaryFragment : BaseFragment<FragmentEmployeeSalaryBinding>(),
             }
         }
 
-        if (model.webPageLink.equals("")) {
+        if (model.webPageLink.isNullOrBlank()) {
             binding.cardviewAds.setOnClickListener {
                 openWebPage(model.webPageLink)
             }

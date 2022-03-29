@@ -303,7 +303,17 @@
             android:exported="false" />
         <activity
             android:name=".ui.main.ui.eShopping.main.Home4EShoppingActivity"
-            android:exported="true" />
+            android:exported="true" >
+            <intent-filter android:label="4eShopping">
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+
+                <data android:scheme="https"
+                    android:host="www.4eshopping.com"
+                    android:pathPrefix="/ar"/>
+            </intent-filter>
+        </activity>
         <activity
             android:name=".ui.main.ui.eShopping.pharmacyBinding.addLocation.AddLocationActivity"
             android:exported="false" />

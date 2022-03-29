@@ -34,6 +34,7 @@ import com.devartlab.databinding.ActivityMainBinding
 import com.devartlab.databinding.NavHeaderMainBinding
 import com.devartlab.model.AdModel
 import com.devartlab.model.CardModel
+import com.devartlab.ui.auth.login.LoginActivity
 import com.devartlab.ui.main.ui.callmanagement.CallManagementActivity
 import com.devartlab.ui.main.ui.callmanagement.home.MenuListAdapter
 import com.devartlab.ui.main.ui.callmanagement.syncdata.SyncDataDialog
@@ -76,10 +77,6 @@ class MainActivity : BaseActivity<ActivityMainBinding?>(), View.OnClickListener,
     lateinit var viewModel: MainViewModel
     lateinit var adapter: MenuListAdapter
     lateinit var mediaSource: SimpleMediaSource
-    var name: String? = null
-    var pass: String? = null
-    var token: String? = null
-    lateinit var login4EShoppingRequest: Login4EShoppingRequest//request login 4EShopping
 
     private var toggle: ActionBarDrawerToggle? = null
     var textCartItemCount: RelativeLayout? = null
@@ -185,12 +182,6 @@ class MainActivity : BaseActivity<ActivityMainBinding?>(), View.OnClickListener,
         viewModel.getWelcomePost()
         //login 4EShopping
         //change device_type in request
-        name = viewModel.dataManager.user.userName
-        pass = viewModel.dataManager.user.password
-        token = viewModel.dataManager.token
-        login4EShoppingRequest =
-            Login4EShoppingRequest(name!!, pass!!, "mr", token!!, AppConstants.DeviceType)
-        viewModel.getUserModel(this, login4EShoppingRequest)
         val getToken = GetDeviceToken(this)
         getToken.getToken(object : GetDeviceToken.TokenResult() {
             override fun success(token: String?) {
@@ -265,20 +256,6 @@ class MainActivity : BaseActivity<ActivityMainBinding?>(), View.OnClickListener,
                 Toast.makeText(this, it.rerurnMessage, Toast.LENGTH_SHORT).show()
             }
 
-        })
-
-        //login 4EShopping
-        viewModel.errorMessage.observe(this) { integer: Int ->
-            if (integer == 1) {
-                Log.e("xxx", "error")
-                Toast.makeText(this, "error in response data", Toast.LENGTH_SHORT)
-                    .show()
-            } else {
-                Toast.makeText(this, "error in Network", Toast.LENGTH_SHORT).show()
-            }
-        }
-        viewModel.login4EShoppingResponse.observe(this, Observer {
-            UserPreferenceHelper.saveUserProfile(it)
         })
     }
 

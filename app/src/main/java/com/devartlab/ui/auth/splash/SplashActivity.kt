@@ -14,6 +14,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.biometric.BiometricPrompt
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import com.devartlab.AppConstants
 import com.devartlab.R
 import com.devartlab.base.BaseActivity
 import com.devartlab.databinding.ActivitySplashBinding
@@ -21,11 +22,13 @@ import com.devartlab.model.Cycle
 import com.devartlab.ui.auth.login.LoginActivity
 import com.devartlab.ui.auth.login.LoginViewModel
 import com.devartlab.ui.main.MainActivity
+import com.devartlab.ui.main.ui.eShopping.main.model.login4EShopping.Login4EShoppingRequest
+import com.devartlab.ui.main.ui.eShopping.utils.UserPreferenceHelper
 import com.devartlab.utils.CommonUtilities
 import com.devartlab.utils.ProgressLoading
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
- import io.reactivex.Completable
+import io.reactivex.Completable
 import io.reactivex.Single
 import io.reactivex.SingleObserver
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -37,6 +40,10 @@ import java.util.concurrent.TimeUnit
 
 class SplashActivity : BaseActivity<ActivitySplashBinding>() {
     lateinit var binding: ActivitySplashBinding
+    var name: String? = null
+    var pass: String? = null
+    var token: String? = null
+    lateinit var login4EShoppingRequest: Login4EShoppingRequest//request login 4EShopping
 
 
     private lateinit var executor: Executor
@@ -61,8 +68,7 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
 
         versionCode = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
             packageManager.getPackageInfo(packageName, 0).longVersionCode.toInt()
-        }
-        else {
+        } else {
             packageManager.getPackageInfo(packageName, 0).versionCode
         }
 
@@ -230,7 +236,14 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
                                                            }
                                                        }
                                                        */
-
+                                                if (UserPreferenceHelper.getUser().token == null) {
+                                                    name = viewModel.dataManager.user.userName
+                                                    pass = viewModel.dataManager.user.password
+                                                    token = viewModel.dataManager.token
+                                                    login4EShoppingRequest =
+                                                        Login4EShoppingRequest(name!!, pass!!, "mr", token!!, AppConstants.DeviceType)
+                                                    viewModel.getUserModel(this@SplashActivity, login4EShoppingRequest)
+                                                }
                                                 startActivity(
                                                     Intent(
                                                         this@SplashActivity,
@@ -359,6 +372,14 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
 
             if (t.isSuccesed) {
 
+                if (UserPreferenceHelper.getUser().token == null) {
+                    name = viewModel.dataManager.user.userName
+                    pass = viewModel.dataManager.user.password
+                    token = viewModel.dataManager.token
+                    login4EShoppingRequest =
+                        Login4EShoppingRequest(name!!, pass!!, "mr", token!!, AppConstants.DeviceType)
+                    viewModel.getUserModel(this@SplashActivity, login4EShoppingRequest)
+                }
 
                 startActivity(Intent(this@SplashActivity, MainActivity::class.java))
                 finish()
@@ -500,6 +521,21 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
 
             }
         })
+
+
+        //login 4EShopping
+        viewModel.errorMessage.observe(this) { integer: Int ->
+            if (integer == 1) {
+                Log.e("xxx", "error")
+                Toast.makeText(this, "error in response data", Toast.LENGTH_SHORT)
+                    .show()
+            } else {
+                Toast.makeText(this, "error in Network", Toast.LENGTH_SHORT).show()
+            }
+        }
+        viewModel.login4EShoppingResponse.observe(this, Observer {
+            UserPreferenceHelper.saveUserProfile(it)
+        })
     }
 
 
@@ -625,6 +661,14 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
 
                                     override fun onError(e: Throwable) {}
                                     override fun onSuccess(t: Long) {
+                                        if (UserPreferenceHelper.getUser().token == null) {
+                                            name = viewModel.dataManager.user.userName
+                                            pass = viewModel.dataManager.user.password
+                                            token = viewModel.dataManager.token
+                                            login4EShoppingRequest =
+                                                Login4EShoppingRequest(name!!, pass!!, "mr", token!!, AppConstants.DeviceType)
+                                            viewModel.getUserModel(this@SplashActivity, login4EShoppingRequest)
+                                        }
 
                                         startActivity(
                                             Intent(
@@ -657,5 +701,4 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
     override fun getLayoutId(): Int {
         return R.layout.activity_splash
     }
-
 }

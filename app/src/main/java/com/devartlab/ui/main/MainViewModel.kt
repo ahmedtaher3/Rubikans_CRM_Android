@@ -76,8 +76,6 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     val allProducts: MutableLiveData<List<ProductEntity>>
     var errorMessage: MutableLiveData<Int>
         protected set
-    var login4EShoppingResponse: MutableLiveData<Login4EShoppingResponse?>
-        protected set
     var welcomePostResponse: MutableLiveData<WelcomePostResponse?>
         protected set
 
@@ -125,7 +123,6 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         myAPI = retrofit!!.create(ApiServices::class.java)
         myAPI2 = retrofit2!!.create(ApiServicesGoogle::class.java)
         errorMessage = MutableLiveData()//error message
-        login4EShoppingResponse = MutableLiveData()//login 4eshopping
         welcomePostResponse= MutableLiveData()//welcome post
 
         progress = MutableLiveData()
@@ -461,48 +458,6 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     }
 
-
-    //function login 4EShopping
-    fun getUserModel(activity: AppCompatActivity, login4EShoppingRequest: Login4EShoppingRequest) {
-
-        val getToken = GetDeviceToken(activity)
-        getToken.getToken(object : GetDeviceToken.TokenResult() {
-            override fun success(token: String?) {
-                var myToken = ""
-                myToken = if (token.isNullOrBlank()) {
-                    dataManager.deviceToken!!
-                } else {
-                    token
-                }
-
-                login4EShoppingRequest.fcm = myToken
-                RetrofitClient.getApis4EShopping().LOGIN4ESHOPPING(login4EShoppingRequest)!!
-                    .enqueue(object : Callback<Login4EShoppingResponse?> {
-                        override fun onResponse(
-                            call: Call<Login4EShoppingResponse?>,
-                            response: Response<Login4EShoppingResponse?>
-                        ) {
-                            if (response.isSuccessful) {
-                                login4EShoppingResponse.postValue(response.body())
-                            } else {
-                                login4EShoppingResponse.postValue(response.body())
-                            }
-                        }
-
-                        override fun onFailure(call: Call<Login4EShoppingResponse?>, t: Throwable) {
-                            errorMessage.postValue(1)
-                        }
-                    })
-            }
-
-            override fun failure(msg: String?) {
-
-
-            }
-
-        })
-
-    }
     //function welcome post
     fun getWelcomePost() {
         RetrofitClient.getApis().getWelcomePost()!!

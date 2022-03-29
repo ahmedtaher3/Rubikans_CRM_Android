@@ -3,12 +3,14 @@ package com.devartlab.ui.auth.login
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import com.devartlab.AppConstants
 import com.devartlab.R
 import com.devartlab.base.BaseActivity
 import com.devartlab.databinding.ActivityLoginBinding
@@ -16,6 +18,8 @@ import com.devartlab.model.Cycle
 import com.devartlab.model.CycleDatum
 import com.devartlab.model.User
 import com.devartlab.ui.main.MainActivity
+import com.devartlab.ui.main.ui.eShopping.main.model.login4EShopping.Login4EShoppingRequest
+import com.devartlab.ui.main.ui.eShopping.utils.UserPreferenceHelper
 import com.devartlab.utils.CommonUtilities
 import com.devartlab.utils.ProgressLoading
 import com.google.firebase.database.DatabaseReference
@@ -33,6 +37,10 @@ class LoginActivity : BaseActivity<ActivityLoginBinding?>(), View.OnClickListene
     lateinit var binding: ActivityLoginBinding
     lateinit var viewModel: LoginViewModel
     lateinit var  database: FirebaseDatabase
+    var name: String? = null
+    var pass: String? = null
+    var token: String? = null
+    lateinit var login4EShoppingRequest: Login4EShoppingRequest//request login 4EShopping
     var versionCode: Int = 0
 
     var updateText = ""
@@ -304,6 +312,13 @@ class LoginActivity : BaseActivity<ActivityLoginBinding?>(), View.OnClickListene
 
 
                     viewModel?.dataManager?.saveIsLogin(true)
+                    name = viewModel.dataManager.user.userName
+                    pass = viewModel.dataManager.user.password
+                    token = viewModel.dataManager.token
+                    login4EShoppingRequest =
+                        Login4EShoppingRequest(name!!, pass!!, "mr", token!!, AppConstants.DeviceType)
+                    viewModel.getUserModel(this@LoginActivity, login4EShoppingRequest)
+
                     startActivity(Intent(this, MainActivity::class.java))
                     this.finish()
 
@@ -336,6 +351,19 @@ class LoginActivity : BaseActivity<ActivityLoginBinding?>(), View.OnClickListene
 
                 }
             }
+        })
+        //login 4EShopping
+        viewModel.errorMessage.observe(this) { integer: Int ->
+            if (integer == 1) {
+                Log.e("xxx", "error")
+                Toast.makeText(this, "error in response data", Toast.LENGTH_SHORT)
+                    .show()
+            } else {
+                Toast.makeText(this, "error in Network", Toast.LENGTH_SHORT).show()
+            }
+        }
+        viewModel.login4EShoppingResponse.observe(this, Observer {
+            UserPreferenceHelper.saveUserProfile(it)
         })
     }
 
@@ -428,6 +456,12 @@ class LoginActivity : BaseActivity<ActivityLoginBinding?>(), View.OnClickListene
                             override fun onSuccess(t: Long) {
 
                                 viewModel?.dataManager?.saveIsLogin(true)
+                                name = viewModel.dataManager.user.userName
+                                pass = viewModel.dataManager.user.password
+                                token = viewModel.dataManager.token
+                                login4EShoppingRequest =
+                                    Login4EShoppingRequest(name!!, pass!!, "mr", token!!, AppConstants.DeviceType)
+                                viewModel.getUserModel(this@LoginActivity, login4EShoppingRequest)
                                 startActivity(Intent(this@LoginActivity, MainActivity::class.java))
                                 finish()
 
