@@ -19,6 +19,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.devartlab.R
 import com.devartlab.databinding.ActivityRequestVoucherBinding
+import com.devartlab.ui.auth.login.LoginActivity
 import com.devartlab.ui.main.ui.eShopping.requestVoucher.model.myVoucherRequest.Data
 import com.devartlab.ui.main.ui.eShopping.requestVoucher.model.voucherRequest.VoucherRequestRequest
 import com.devartlab.ui.main.ui.eShopping.requestVoucher.showVouchers.ShowVouchersActivity
@@ -82,7 +83,12 @@ class RequestVoucherActivity : AppCompatActivity() {
                 //errorMessage if data coming is null;
                 binding.tvEmptyList.setVisibility(View.VISIBLE)
                 binding.progressBar.setVisibility(View.GONE)
-            } else {
+            }else if(it.code==401){
+                Toast.makeText(this, "please login again", Toast.LENGTH_LONG)
+                    .show()
+                val intent = Intent(this, LoginActivity::class.java)
+                startActivity(intent)
+            } else{
                 //show data in recyclerView
                 binding.progressBar.setVisibility(View.GONE)
                 adapter = MyVoucherRequestAdapter(it.data)

@@ -276,7 +276,6 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
 
     //function login 4EShopping
     fun getUserModel(activity: AppCompatActivity, login4EShoppingRequest: Login4EShoppingRequest) {
-
         val getToken = GetDeviceToken(activity)
         getToken.getToken(object : GetDeviceToken.TokenResult() {
             override fun success(token: String?) {

@@ -13,6 +13,17 @@ public class Login4EShoppingResponse{
 	@SerializedName("type_code")
 	private String type_code;
 
+	@SerializedName("status")
+	private String status;
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
 	public String getType_code() {
 		return type_code;
 	}

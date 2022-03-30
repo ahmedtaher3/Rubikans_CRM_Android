@@ -20,13 +20,14 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.devartlab.R
 import com.devartlab.databinding.ActivityOrderRequestVouvherBinding
+import com.devartlab.ui.auth.login.LoginActivity
 import com.devartlab.ui.main.ui.eShopping.requestVoucher.model.voucherRequest.VoucherRequestRequest
 
 class OrderRequestVouvherActivity : AppCompatActivity() {
     lateinit var binding: ActivityOrderRequestVouvherBinding
     var viewModel: RequestVoucherViewModel? = null
     var compaignVouchersID: Int = 0
-    var doctorsID: String ?= null
+    var doctorsID: String? = null
     var doctorsName: String? = null
     lateinit var request: VoucherRequestRequest
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -56,7 +57,7 @@ class OrderRequestVouvherActivity : AppCompatActivity() {
 
         binding.edSelectDoctors.setOnClickListener {
             val intent = Intent(this, GetDoctorsActivity::class.java)
-            startActivityForResult(intent , 100)
+            startActivityForResult(intent, 100)
         }
 
         binding.edCount.addTextChangedListener(object : TextWatcher {
@@ -121,27 +122,34 @@ class OrderRequestVouvherActivity : AppCompatActivity() {
             }
         }
         viewModel!!.voucherRequestResponse.observe(this, Observer {
-            if (it!!.code == 200) {
+            if (it!!.code == 401) {
+                Toast.makeText(this, "please login again", Toast.LENGTH_SHORT)
+                    .show()
+                val intent = Intent(this, LoginActivity::class.java)
+                startActivity(intent)
+            } else {
                 Toast.makeText(this, "done!", Toast.LENGTH_SHORT).show()
                 val intent = Intent(this, RequestVoucherActivity::class.java)
                 startActivity(intent)
-            } else {
-                Toast.makeText(this, "error in Network", Toast.LENGTH_SHORT).show()
             }
         })
         viewModel!!.compaignVouchersResponse.observe(this, Observer {
-            val countryBrandsPopUp = PopupMenu(this, binding.edVoucher)
-            for (i in 0 until it!!.size) {
-                countryBrandsPopUp.getMenu()
-                    .add(i, i, i, it.get(i).voucher_translates_title.get(0).title)
-            }
-            countryBrandsPopUp.setOnMenuItemClickListener(PopupMenu.OnMenuItemClickListener { item ->
-                binding.edVoucher.setText(it.get(item.getItemId()).voucher_translates_title.get(0).title)
-                compaignVouchersID = it.get(item.getItemId()).id
-                Log.e("popupCarBrands", "onMenuItemClick: $compaignVouchersID")
-                return@OnMenuItemClickListener false
-            })
-            countryBrandsPopUp.show()
+                val countryBrandsPopUp = PopupMenu(this, binding.edVoucher)
+                for (i in 0 until it!!.size) {
+                    countryBrandsPopUp.getMenu()
+                        .add(i, i, i, it.get(i).voucher_translates_title.get(0).title)
+                }
+                countryBrandsPopUp.setOnMenuItemClickListener(PopupMenu.OnMenuItemClickListener { item ->
+                    binding.edVoucher.setText(
+                        it.get(item.getItemId()).voucher_translates_title.get(
+                            0
+                        ).title
+                    )
+                    compaignVouchersID = it.get(item.getItemId()).id
+                    Log.e("popupCarBrands", "onMenuItemClick: $compaignVouchersID")
+                    return@OnMenuItemClickListener false
+                })
+                countryBrandsPopUp.show()
         })
     }
 

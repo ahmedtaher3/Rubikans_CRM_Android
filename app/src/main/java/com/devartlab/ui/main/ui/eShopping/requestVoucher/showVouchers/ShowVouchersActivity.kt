@@ -13,6 +13,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.devartlab.R
 import com.devartlab.databinding.ActivityShowVouchersBinding
+import com.devartlab.ui.auth.login.LoginActivity
 import com.devartlab.ui.main.ui.eShopping.requestVoucher.RequestVoucherViewModel
 import com.devartlab.ui.main.ui.eShopping.requestVoucher.ShowVouchersAdapter
 import com.devartlab.ui.main.ui.eShopping.requestVoucher.model.deliverVoucher.DeliverVoucherRequest
@@ -70,14 +71,27 @@ class ShowVouchersActivity : AppCompatActivity() {
         }
 
         viewModel!!.deliverVoucherResponse.observe(this, Observer {
-            viewModel!!.getVouchers(_id!!)
-            Toast.makeText(this, "done!", Toast.LENGTH_SHORT).show()
+            if(it!!.code==401) {
+                Toast.makeText(this, "please login again", Toast.LENGTH_SHORT)
+                    .show()
+                val intent = Intent(this, LoginActivity::class.java)
+                startActivity(intent)
+            }else{
+                viewModel!!.getVouchers(_id!!)
+                Toast.makeText(this, "done!", Toast.LENGTH_SHORT).show()
+            }
         })
 
         viewModel!!.getVoucherResponse.observe(this, Observer {
-            if (it!!.data == null) {
+            if (it!!.data.isNullOrEmpty()) {
                 //errorMessage if data coming is null;
                 binding.tvEmptyList.setVisibility(View.VISIBLE)
+                binding.progressBar.setVisibility(View.GONE)
+            } else if(it.code==401){
+                Toast.makeText(this, "please login again", Toast.LENGTH_LONG)
+                    .show()
+                val intent = Intent(this, LoginActivity::class.java)
+                startActivity(intent)
             } else {
                 //show data in recyclerView
                 binding.progressBar.setVisibility(View.GONE)

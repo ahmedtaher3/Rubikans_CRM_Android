@@ -5,12 +5,15 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.devartlab.R
 import com.devartlab.databinding.ActivityGetDoctorsBinding
+import com.devartlab.ui.auth.login.LoginActivity
 
 class GetDoctorsActivity : AppCompatActivity() {
     lateinit var binding:ActivityGetDoctorsBinding
@@ -44,11 +47,24 @@ class GetDoctorsActivity : AppCompatActivity() {
     }
 
     private fun handleObserver() {
+        viewModel!!.errorMessage.observe(this) { integer: Int ->
+            if (integer == 1) {
+                Log.e("xxx", "error")
+                Toast.makeText(this, "error in response data", Toast.LENGTH_SHORT)
+                    .show()
+            } else {
+                Toast.makeText(this, "error in Network", Toast.LENGTH_SHORT).show()
+            }
+        }
         viewModel!!.getDoctorsResponse.observe(this, Observer {
-            if (it!!.data.isNullOrEmpty()) {
+            if (it!!.data.isNullOrEmpty()||it.code==401) {
                 //errorMessage if data coming is null;
                 binding.tvEmptyList.setVisibility(View.VISIBLE)
                 binding.progressBar.setVisibility(View.GONE)
+                Toast.makeText(this, "please login again", Toast.LENGTH_SHORT)
+                    .show()
+                val intent = Intent(this, LoginActivity::class.java)
+                startActivity(intent)
             } else {
                 //show data in recyclerView
                 binding.progressBar.setVisibility(View.GONE)

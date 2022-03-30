@@ -3,7 +3,6 @@ package com.devartlab.ui.main.ui.eShopping.requestVoucher
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import com.devartlab.a4eshopping.orientationVideos.model.ResponseVideos
 import com.devartlab.base.BaseApplication
 import com.devartlab.data.retrofit.RetrofitClient
 import com.devartlab.data.shared.DataManager

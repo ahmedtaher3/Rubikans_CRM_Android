@@ -9,5 +9,6 @@ data class MyVoucherRequestResponse(
     val path: String,
     val per_page: Int,
     val prev_page_url: Any,
+    val code: Int,
     val to: Int
 )

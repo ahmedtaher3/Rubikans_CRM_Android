@@ -12,6 +12,7 @@ class DeliverVoucherResponse (
     val request_id: Int,
     val taken: Int,
     val to: Int,
+    val code: Int,
     val updated_at: String,
     val value: String,
     val voucher_values_written: Int
