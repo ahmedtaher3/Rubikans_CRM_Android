@@ -1,5 +1,6 @@
 package com.devartlab.ui.main.ui.eShopping.orientationVideos
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -7,6 +8,7 @@ import com.devartlab.R
 import com.devartlab.databinding.ActivityVideoBinding
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
+
 
 class VideoActivity : AppCompatActivity() {
     lateinit var binding: ActivityVideoBinding
@@ -43,6 +45,15 @@ class VideoActivity : AppCompatActivity() {
         if (intent.hasExtra("_name_channel")) {
             _name_channel = intent.getStringExtra("_name_channel")
             binding.nameChannel.setText(_name_channel)
+        }
+        binding.ivShare.setOnClickListener {
+            val sendIntent = Intent(Intent.ACTION_SEND)
+            sendIntent.type = "text/plain"
+            val shareBody = _name+" "+_dec+" "+_name_channel+" "+"https://www.youtube.com/watch?v=$_id"
+            val shareSub = "https://www.youtube.com/watch?v=$_id"
+            sendIntent.putExtra(Intent.EXTRA_SUBJECT, shareSub)
+            sendIntent.putExtra(Intent.EXTRA_TEXT, shareBody)
+            startActivity(Intent.createChooser(sendIntent, "Share video $_name"))
         }
     }
 

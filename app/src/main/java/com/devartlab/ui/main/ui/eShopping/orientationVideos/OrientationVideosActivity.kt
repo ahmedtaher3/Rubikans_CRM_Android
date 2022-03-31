@@ -77,7 +77,7 @@ class OrientationVideosActivity : AppCompatActivity() {
     }
 
     fun handleObserver() {
-        viewModel!!.errorMessage.observe(this, { integer: Int ->
+        viewModel!!.errorMessage.observe(this) { integer: Int ->
             if (integer == 1) {
                 Log.e("xxx", "error")
                 Toast.makeText(this, "error in response data", Toast.LENGTH_SHORT)
@@ -85,7 +85,7 @@ class OrientationVideosActivity : AppCompatActivity() {
             } else {
                 Toast.makeText(this, "error in Network", Toast.LENGTH_SHORT).show()
             }
-        })
+        }
         viewModel!!.responseVideos.observe(this, Observer {
             if (it!!.items == null) {
                 //errorMessage if data coming is null;
