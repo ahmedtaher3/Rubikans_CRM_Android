@@ -171,7 +171,7 @@ public abstract class BaseFragment<T extends ViewDataBinding> extends Fragment {
                 break;
             case 19:
                 intent = new Intent(context, EmployeeServicesActivity.class);
-                intent.putExtra("pageFragment", "EmployeeSalaryFragment");
+                intent.putExtra("PAGE_NUMBER", "4");
                 startActivity(intent);
                 break;
             case 20:

@@ -239,7 +239,7 @@ public abstract class BaseActivity<T extends ViewDataBinding> extends AppCompatA
                 break;
             case 19:
                 intent = new Intent(context, EmployeeServicesActivity.class);
-                intent.putExtra("pageFragment", "EmployeeSalaryFragment");
+                intent.putExtra("PAGE_NUMBER", "4");
                 startActivity(intent);
                 break;
             case 20:
