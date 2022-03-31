@@ -214,9 +214,15 @@ class DevartLinkActivity : BaseActivity<ActivityDevartLinkBinding>(),
             }
         }
 
-        if (!model.webPageLink.equals("")) {
-            binding.cardviewAds.setOnClickListener {
-                openWebPage(model.webPageLink)
+        if (!model.webPageLink.isNullOrBlank()) {
+            if(model.is_external!!){
+                binding.cardviewAds.setOnClickListener {
+                    openWebPage(model.webPageLink)
+                }
+            }else{
+                binding.cardviewAds.setOnClickListener {
+                    meuNav(model.webPageLink!!.toInt(),this@DevartLinkActivity)
+                }
             }
         }
         when (model.type) {

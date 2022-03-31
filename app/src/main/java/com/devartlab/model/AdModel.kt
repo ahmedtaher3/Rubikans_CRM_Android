@@ -71,6 +71,9 @@ data class AdModel(
     @field:SerializedName("show_more")
     val show_more: Boolean? = null,
 
+    @field:SerializedName("is_external")
+    val is_external: Boolean? = null,
+
     @field:SerializedName("active")
     val active: Boolean? = null,
 

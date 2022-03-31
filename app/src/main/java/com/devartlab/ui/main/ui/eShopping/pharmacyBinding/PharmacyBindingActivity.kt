@@ -73,7 +73,7 @@ class PharmacyBindingActivity : AppCompatActivity() {
     }
 
     fun handleObserver() {
-        viewModel!!.errorMessage.observe(this, { integer: Int ->
+        viewModel!!.errorMessage.observe(this) { integer: Int ->
             if (integer == 1) {
                 Log.e("xxx", "error")
                 Toast.makeText(this, "error in response data", Toast.LENGTH_SHORT)
@@ -81,7 +81,7 @@ class PharmacyBindingActivity : AppCompatActivity() {
             } else {
                 Toast.makeText(this, "error in Network", Toast.LENGTH_SHORT).show()
             }
-        })
+        }
         viewModel!!.ConnetctedPharmaciesResponse.observe(this, Observer {
             if (it!!.data == null) {
                 //errorMessage if data coming is null;

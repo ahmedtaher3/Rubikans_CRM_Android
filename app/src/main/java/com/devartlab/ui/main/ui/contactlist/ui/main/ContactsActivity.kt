@@ -1,11 +1,10 @@
 package com.devartlab.ui.main.ui.contactlist.ui.main
 
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import android.text.Editable
-import android.text.Html
 import android.text.TextWatcher
 import android.util.Log
 import android.view.MenuItem
@@ -17,7 +16,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -29,10 +27,15 @@ import com.devartlab.R
 import com.devartlab.base.BaseApplication
 import com.devartlab.data.shared.DataManager
 import com.devartlab.model.AdModel
-import com.devartlab.ui.main.ui.callmanagement.plan.addplan.doubleextra.FilterListExtraFragment
-import com.devartlab.ui.main.ui.callmanagement.plan.choosestartpoint.StartPointAdapter
+import com.devartlab.ui.main.MainActivity
+import com.devartlab.ui.main.ui.callmanagement.employee.EmployeeReportActivity
 import com.devartlab.ui.main.ui.contactlist.pojo.Contactlist
 import com.devartlab.ui.main.ui.contactlist.pojo.Request
+import com.devartlab.ui.main.ui.devartlink.DevartLinkActivity
+import com.devartlab.ui.main.ui.devartlink.faq.FAQActivity
+import com.devartlab.ui.main.ui.eShopping.main.Home4EShoppingActivity
+import com.devartlab.ui.main.ui.eShopping.orientationVideos.OrientationVideosActivity
+import com.devartlab.ui.main.ui.market.MarketRequestTypesActivity
 import com.devartlab.ui.main.ui.moreDetailsAds.MoreDetailsAdsActivity
 import com.devartlab.utils.Constants
 import com.devartlab.utils.MainSliderAdapter
@@ -217,11 +220,17 @@ class ContactsActivity : AppCompatActivity() {
             }
         }
 
-        if (!model.webPageLink.equals("")) {
-            cardviewAds.setOnClickListener {
-                val uri = Uri.parse(model.webPageLink)
-                val intent = Intent(Intent.ACTION_VIEW, uri)
-                startActivity(intent)
+        if (!model.webPageLink.isNullOrBlank()) {
+            if(model.is_external!!){
+                cardviewAds.setOnClickListener {
+                    val uri = Uri.parse(model.webPageLink)
+                    val intent = Intent(Intent.ACTION_VIEW, uri)
+                    startActivity(intent)
+                }
+            }else{
+                cardviewAds.setOnClickListener {
+                    meuNav(model.webPageLink!!.toInt(),this@ContactsActivity)
+                }
             }
         }
         when (model.type) {
@@ -286,6 +295,19 @@ class ContactsActivity : AppCompatActivity() {
                 intent.putExtra("pageCode", model.pageCode)
                 startActivity(intent)
             }
+        }
+    }
+
+    fun meuNav(id: Int, context: Context) {
+        when (id) {
+            1 -> context.startActivity(Intent(context, MainActivity::class.java))
+            4 -> context.startActivity(Intent(context, DevartLinkActivity::class.java))
+            7 -> context.startActivity(Intent(context, EmployeeReportActivity::class.java))
+            10 -> context.startActivity(Intent(context, MarketRequestTypesActivity::class.java))
+            14 -> context.startActivity(Intent(context, ContactsActivity::class.java))
+            23 -> context.startActivity(Intent(context, Home4EShoppingActivity::class.java))
+            26 -> context.startActivity(Intent(context, OrientationVideosActivity::class.java))
+            31 -> context.startActivity(Intent(context, FAQActivity::class.java))
         }
     }
 }

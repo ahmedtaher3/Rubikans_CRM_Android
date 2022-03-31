@@ -342,7 +342,8 @@ class SelfServiceHomeFragment : BaseFragment<FragmentSelfServiceHomeBinding>(),
                 binding.constrAds.setVisibility(View.VISIBLE)
                 if (model.resourceLink.equals(null)
                     && model.paragraph.equals(null)
-                    && model.slideImages == null) {
+                    && model.slideImages == null
+                ) {
                     binding.constrAds.setVisibility(View.VISIBLE)
                     binding.imageView.visibility = View.VISIBLE
                     Glide.with(this).load(model.default_ad_image)
@@ -364,9 +365,15 @@ class SelfServiceHomeFragment : BaseFragment<FragmentSelfServiceHomeBinding>(),
             Glide.with(this).load(model.default_ad_image)
                 .centerCrop().placeholder(R.drawable.dr_hussain).into(binding.imageView)
         }
-        if (!model.webPageLink.equals("")) {
-            binding.cardviewAds.setOnClickListener {
-                openWebPage(model.webPageLink)
+        if (!model.webPageLink.isNullOrBlank()) {
+            if (model.is_external!!) {
+                binding.cardviewAds.setOnClickListener {
+                    openWebPage(model.webPageLink)
+                }
+            } else {
+                binding.cardviewAds.setOnClickListener {
+                    meuNav(model.webPageLink!!.toInt(), context)
+                }
             }
         }
         when (model.type) {

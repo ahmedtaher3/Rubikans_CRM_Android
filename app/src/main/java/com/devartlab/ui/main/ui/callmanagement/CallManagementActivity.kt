@@ -37,6 +37,7 @@ import com.devartlab.ui.main.ui.callmanagement.ranks.planandcover.PlanAndCoverFr
 import com.devartlab.ui.main.ui.callmanagement.report.ReportFragment
 import com.devartlab.ui.main.ui.callmanagement.report.superreport.ManagerReportFragment
 import com.devartlab.ui.main.ui.callmanagement.sync.SyncFragment
+import com.devartlab.ui.main.ui.employeeservices.home.SelfServiceHomeFragment
 import com.devartlab.ui.main.ui.profile.ProfileActivity
 import com.devartlab.utils.ProgressLoading
 import io.reactivex.Completable
@@ -46,6 +47,7 @@ import io.reactivex.schedulers.Schedulers
 class CallManagementActivity : BaseActivity<ActivityCallManagementBinding?>(), ChooseEmployeeInterFace {
     lateinit var binding: ActivityCallManagementBinding
     private var toggle: ActionBarDrawerToggle? = null
+    var pageFragment: String? = null
     private var activeFragment: String? = null
     lateinit var viewModel: MainViewModel
     var chooseEmployee: ChooseEmployee? = null
@@ -66,6 +68,10 @@ class CallManagementActivity : BaseActivity<ActivityCallManagementBinding?>(), C
         super.onCreate(savedInstanceState)
         binding = viewDataBinding!!
         viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
+
+        if (intent.hasExtra("pageFragment")) {
+            pageFragment = intent.getStringExtra("pageFragment")
+        }
 
 
 
@@ -169,6 +175,7 @@ class CallManagementActivity : BaseActivity<ActivityCallManagementBinding?>(), C
         setUpNavDrawer()
         setUpNavHeader()
         setObservers()
+        openFragmentFromAds()
     }
 
     private fun setObservers() {
@@ -464,5 +471,15 @@ class CallManagementActivity : BaseActivity<ActivityCallManagementBinding?>(), C
 
     }
 
+    fun openFragmentFromAds(){
+        when (pageFragment) {
+            "PlanFragment" -> replace_fragment(PlanFragment(), "PlanFragment")
+            "HomeFragment" ->replace_fragment(HomeFragment(), "HomeFragment")
+            "ReportFragment" ->replace_fragment(ReportFragment(), "ReportFragment")
+            "DVReportFragment"->replace_fragment(DVReportFragment(), "DVReportFragment")
+            "ListFragment"->replace_fragment(TypesFragment(), "ListFragment")
+            "SyncFragment"->replace_fragment(SyncFragment(), "SyncFragment")
+        }
+    }
 
 }

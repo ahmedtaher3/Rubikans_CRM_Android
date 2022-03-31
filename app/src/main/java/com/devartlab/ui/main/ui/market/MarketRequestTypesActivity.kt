@@ -257,9 +257,15 @@ class MarketRequestTypesActivity : BaseActivity<FragmentMarketRequestTypesBindin
             }
         }
 
-        if (!model.webPageLink.equals("")) {
-            openWebPage(model.webPageLink)
-            binding.cardviewAds.setOnClickListener {
+        if (!model.webPageLink.isNullOrBlank()) {
+            if(model.is_external!!){
+                binding.cardviewAds.setOnClickListener {
+                    openWebPage(model.webPageLink)
+                }
+            }else{
+                binding.cardviewAds.setOnClickListener {
+                    meuNav(model.webPageLink!!.toInt(),this@MarketRequestTypesActivity)
+                }
             }
         }
         when (model.type) {

@@ -357,9 +357,15 @@ class SyncFragment : BaseFragment<SyncFragmentBinding>() {
             }
         }
 
-        if (!model.webPageLink.equals(null)) {
-            binding.cardviewAds.setOnClickListener {
-                openWebPage(model.webPageLink)
+        if (!model.webPageLink.isNullOrBlank()) {
+            if (model.is_external!!) {
+                binding.cardviewAds.setOnClickListener {
+                    openWebPage(model.webPageLink)
+                }
+            } else {
+                binding.cardviewAds.setOnClickListener {
+                    meuNav(model.webPageLink!!.toInt(), context)
+                }
             }
         }
         when (model.type) {

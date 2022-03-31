@@ -265,7 +265,7 @@ class MainActivity : BaseActivity<ActivityMainBinding?>(), View.OnClickListener,
         list.add(CardModel(2, resources.getString(R.string.self_service), R.drawable.self_service))
         list.add(CardModel(3, resources.getString(R.string.my_profile), R.drawable.employee))
         list.add(CardModel(4, resources.getString(R.string.market_request), R.drawable.money))
-       // list.add(CardModel(5, "DevartLink", R.drawable.devartlink))
+//        list.add(CardModel(5, "DevartLink", R.drawable.devartlink))
         list.add(CardModel(6, "4eShopping", R.drawable.e_shopping))
        // list.add(CardModel(7, "DevartLab Team", R.drawable.ic_team))
 
@@ -656,8 +656,14 @@ class MainActivity : BaseActivity<ActivityMainBinding?>(), View.OnClickListener,
         if (model != null) {
 
             if (!model.webPageLink.isNullOrBlank()) {
-                binding.cardviewAds.setOnClickListener {
-                    openWebPage(model.webPageLink)
+                if(model.is_external!!){
+                    binding.cardviewAds.setOnClickListener {
+                        openWebPage(model.webPageLink)
+                    }
+                }else{
+                    binding.cardviewAds.setOnClickListener {
+                        meuNav(model.webPageLink!!.toInt(),this@MainActivity)
+                    }
                 }
             }
             when (model.type) {

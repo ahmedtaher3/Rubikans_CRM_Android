@@ -643,9 +643,15 @@ class EmployeeReportActivity : BaseActivity<ActivityEmployeeReportBinding>(), Ch
             }
         }
 
-        if (!model.webPageLink.equals("")) {
-            binding.cardviewAds.setOnClickListener {
-                openWebPage(model.webPageLink)
+        if (!model.webPageLink.isNullOrBlank()) {
+            if(model.is_external!!){
+                binding.cardviewAds.setOnClickListener {
+                    openWebPage(model.webPageLink)
+                }
+            }else{
+                binding.cardviewAds.setOnClickListener {
+                    meuNav(model.webPageLink!!.toInt(),this@EmployeeReportActivity)
+                }
             }
         }
         when (model.type) {

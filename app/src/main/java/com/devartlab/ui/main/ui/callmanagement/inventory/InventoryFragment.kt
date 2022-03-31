@@ -223,9 +223,15 @@ class InventoryFragment : BaseFragment<FragmentTradeReportsBinding>(),
             }
         }
 
-        if (!model.webPageLink.equals(null)) {
-            cardviewAds.setOnClickListener {
-                openWebPage(model.webPageLink)
+        if (!model.webPageLink.isNullOrBlank()) {
+            if (model.is_external!!) {
+                cardviewAds.setOnClickListener {
+                    openWebPage(model.webPageLink)
+                }
+            } else {
+                cardviewAds.setOnClickListener {
+                    meuNav(model.webPageLink!!.toInt(), context)
+                }
             }
         }
         when (model.type) {

@@ -1,5 +1,6 @@
 package com.devartlab.ui.main.ui.devartlink.faq
 
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
@@ -18,8 +19,18 @@ import com.devartlab.base.BaseApplication
 import com.devartlab.data.shared.DataManager
 import com.devartlab.databinding.ActivityFaqBinding
 import com.devartlab.model.AdModel
+import com.devartlab.ui.main.MainActivity
+import com.devartlab.ui.main.ui.callmanagement.CallManagementActivity
+import com.devartlab.ui.main.ui.callmanagement.employee.EmployeeReportActivity
+import com.devartlab.ui.main.ui.contactlist.ui.main.ContactsActivity
+import com.devartlab.ui.main.ui.devartlink.DevartLinkActivity
 import com.devartlab.ui.main.ui.devartlink.faq.model.faq.FAQResponseItem
 import com.devartlab.ui.main.ui.devartlink.faq.subFAQ.SubFAQActivity
+import com.devartlab.ui.main.ui.eShopping.main.Home4EShoppingActivity
+import com.devartlab.ui.main.ui.eShopping.orientationVideos.OrientationVideosActivity
+import com.devartlab.ui.main.ui.employeeservices.EmployeeServicesActivity
+import com.devartlab.ui.main.ui.employeeservices.SelfServiceActivity
+import com.devartlab.ui.main.ui.market.MarketRequestTypesActivity
 import com.devartlab.ui.main.ui.moreDetailsAds.MoreDetailsAdsActivity
 import com.devartlab.utils.Constants
 import com.devartlab.utils.MainSliderAdapter
@@ -137,8 +148,14 @@ class FAQActivity : AppCompatActivity() {
         if (model != null) {
 
             if (!model.webPageLink.isNullOrBlank()) {
-                binding.cardviewAds.setOnClickListener {
-                    openWebPage(model.webPageLink)
+                if(model.is_external!!){
+                    binding.cardviewAds.setOnClickListener {
+                        openWebPage(model.webPageLink)
+                    }
+                }else{
+                    binding.cardviewAds.setOnClickListener {
+                        meuNav(model.webPageLink!!.toInt())
+                    }
                 }
             }
             when (model.type) {
@@ -211,5 +228,78 @@ class FAQActivity : AppCompatActivity() {
     override fun onStop() {
         super.onStop()
         binding.videoView.stop()
+    }
+
+    fun meuNav(id: Int) {
+        when (id) {
+            1 -> startActivity(Intent(this@FAQActivity, MainActivity::class.java))
+            2, 8 -> {
+                intent = Intent(this@FAQActivity, CallManagementActivity::class.java)
+                intent.putExtra("pageFragment", "PlanFragment")
+                startActivity(intent)
+            }
+            3 -> {
+                intent = Intent(this@FAQActivity, SelfServiceActivity::class.java)
+                intent.putExtra("pageFragment", "SelfServiceHomeFragment")
+                startActivity(intent)
+            }
+            4 -> startActivity(Intent(this@FAQActivity, DevartLinkActivity::class.java))
+            5 -> {
+                intent = Intent(this@FAQActivity, CallManagementActivity::class.java)
+                intent.putExtra("pageFragment", "HomeFragment")
+                startActivity(intent)
+            }
+            6 -> {
+                intent = Intent(this@FAQActivity, CallManagementActivity::class.java)
+                intent.putExtra("pageFragment", "ReportFragment")
+                startActivity(intent)
+            }
+            7 -> startActivity(Intent(this@FAQActivity, EmployeeReportActivity::class.java))
+            10 -> startActivity(Intent(this@FAQActivity, MarketRequestTypesActivity::class.java))
+            12 -> {
+                intent = Intent(this@FAQActivity, EmployeeServicesActivity::class.java)
+                intent.putExtra("pageFragment", "AttendanceFragment")
+                startActivity(intent)
+            }
+            14 -> startActivity(Intent(this@FAQActivity, ContactsActivity::class.java))
+            15 -> {
+                intent = Intent(this@FAQActivity, CallManagementActivity::class.java)
+                intent.putExtra("pageFragment", "DVReportFragment")
+                startActivity(intent)
+            }
+            16 -> {
+                intent = Intent(this@FAQActivity, SelfServiceActivity::class.java)
+                intent.putExtra("pageFragment", "MealsFragment")
+                startActivity(intent)
+            }
+            17 -> {
+                intent = Intent(this@FAQActivity, CallManagementActivity::class.java)
+                intent.putExtra("pageFragment", "ListFragment")
+                startActivity(intent)
+            }
+            19 -> {
+                intent = Intent(this@FAQActivity, EmployeeServicesActivity::class.java)
+                intent.putExtra("pageFragment", "EmployeeSalaryFragment")
+                startActivity(intent)
+            }
+            20 -> {
+                intent = Intent(this@FAQActivity, EmployeeServicesActivity::class.java)
+                intent.putExtra("pageFragment", "ShowAllWorkFromHomeFragment")
+                startActivity(intent)
+            }
+            21 -> {
+                intent = Intent(this@FAQActivity, CallManagementActivity::class.java)
+                intent.putExtra("pageFragment", "SyncFragment")
+                startActivity(intent)
+            }
+            22 -> {
+                intent = Intent(this@FAQActivity, EmployeeServicesActivity::class.java)
+                intent.putExtra("pageFragment", "WorkFromHomeFragment")
+                startActivity(intent)
+            }
+            23 -> startActivity(Intent(this@FAQActivity, Home4EShoppingActivity::class.java))
+            26 -> startActivity(Intent(this@FAQActivity, OrientationVideosActivity::class.java))
+            31 -> startActivity(Intent(this@FAQActivity, FAQActivity::class.java))
+        }
     }
 }

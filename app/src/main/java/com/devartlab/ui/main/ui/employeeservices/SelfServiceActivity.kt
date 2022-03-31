@@ -18,10 +18,18 @@ import com.devartlab.databinding.ActivitySelfServiceBinding
 import com.devartlab.databinding.NavHeaderMainBinding
 import com.devartlab.ui.auth.devartsite.DevartActivity
 import com.devartlab.ui.auth.login.LoginActivity
+import com.devartlab.ui.main.MainActivity
 import com.devartlab.ui.main.MainViewModel
+import com.devartlab.ui.main.ui.callmanagement.employee.EmployeeReportActivity
+import com.devartlab.ui.main.ui.contactlist.ui.main.ContactsActivity
+import com.devartlab.ui.main.ui.devartlink.DevartLinkActivity
+import com.devartlab.ui.main.ui.devartlink.faq.FAQActivity
+import com.devartlab.ui.main.ui.eShopping.main.Home4EShoppingActivity
+import com.devartlab.ui.main.ui.eShopping.orientationVideos.OrientationVideosActivity
 import com.devartlab.ui.main.ui.employeeservices.home.SelfServiceHomeFragment
 import com.devartlab.ui.main.ui.employeeservices.hrrequest.EmployeeRequestsFragment
 import com.devartlab.ui.main.ui.employeeservices.meals.MealsFragment
+import com.devartlab.ui.main.ui.market.MarketRequestTypesActivity
 import com.devartlab.ui.main.ui.profile.ProfileActivity
 import com.google.android.material.navigation.NavigationView
 
@@ -30,6 +38,7 @@ class SelfServiceActivity : BaseActivity<ActivitySelfServiceBinding?>() {
     private var binding: ActivitySelfServiceBinding? = null
     private var toggle: ActionBarDrawerToggle? = null
     private var activeFragment: String = ""
+    var pageFragment: String? = null
     lateinit var viewModel: MainViewModel
 
     override fun getLayoutId(): Int {
@@ -43,6 +52,9 @@ class SelfServiceActivity : BaseActivity<ActivitySelfServiceBinding?>() {
 
         setSupportActionBar(binding!!.toolbar)
 
+        if (intent.hasExtra("pageFragment")) {
+            pageFragment = intent.getStringExtra("pageFragment")
+        }
         replace_fragment(SelfServiceHomeFragment(), "SelfServiceHomeFragment")
         val drawer = findViewById<DrawerLayout>(R.id.drawer_layout)
         val navigationView = findViewById<NavigationView>(R.id.nav_view)
@@ -164,7 +176,7 @@ class SelfServiceActivity : BaseActivity<ActivitySelfServiceBinding?>() {
             }
             true
         }
-
+        openFragmentFromAds()
     }
 
     fun replace_fragment(fragment: Fragment?, tag: String?) {
@@ -198,6 +210,11 @@ class SelfServiceActivity : BaseActivity<ActivitySelfServiceBinding?>() {
             super.onBackPressed()
         }
     }
-
-
+    fun openFragmentFromAds(){
+        when (pageFragment) {
+            "SelfServiceHomeFragment" -> replace_fragment(SelfServiceHomeFragment(), "SelfServiceHomeFragment")
+            "MealsFragment" ->replace_fragment(MealsFragment(), "MealsFragment")
+            "SelfServiceHomeFragment" -> replace_fragment(SelfServiceHomeFragment(), "SelfServiceHomeFragment")
+        }
+    }
 }

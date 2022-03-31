@@ -8,6 +8,7 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Base64
+import android.util.Log
 import android.util.TypedValue
 import android.view.Menu
 import android.view.MenuInflater
@@ -348,9 +349,15 @@ class EmployeeSalaryFragment : BaseFragment<FragmentEmployeeSalaryBinding>(),
             }
         }
 
-        if (model.webPageLink.isNullOrBlank()) {
-            binding.cardviewAds.setOnClickListener {
-                openWebPage(model.webPageLink)
+        if (!model.webPageLink.isNullOrBlank()) {
+            if (model.is_external!!) {
+                binding.cardviewAds.setOnClickListener {
+                    openWebPage(model.webPageLink)
+                }
+            } else {
+                binding.cardviewAds.setOnClickListener {
+                    meuNav(model.webPageLink!!.toInt(), context)
+                }
             }
         }
         when (model.type) {

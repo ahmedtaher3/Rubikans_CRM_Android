@@ -21,10 +21,14 @@ import com.devartlab.ui.main.ui.employeeservices.salary.EmployeeSalaryFragment
 import io.reactivex.Completable
 import io.reactivex.schedulers.Schedulers
 import com.devartlab.base.BaseApplication
+import com.devartlab.ui.main.ui.employeeservices.home.SelfServiceHomeFragment
+import com.devartlab.ui.main.ui.employeeservices.workfromhome.WorkFromHomeFragment
+
 class EmployeeServicesActivity : BaseActivity<ActivityEmploteeServicesBinding>(),
         BottomNavigationView.OnNavigationItemSelectedListener, ChooseEmployeeInterFace {
     lateinit var binding: ActivityEmploteeServicesBinding
     var active: String? = null
+    var pageFragment: String? = null
     lateinit var empModel: FilterDataEntity
     lateinit var authorityDao: AuthorityDao
     lateinit var dataManager: DataManager
@@ -35,6 +39,10 @@ class EmployeeServicesActivity : BaseActivity<ActivityEmploteeServicesBinding>()
         binding = viewDataBinding
         setSupportActionBar(binding.toolbar)
         dataManager = (getApplication() as BaseApplication).dataManager!!
+
+        if (intent.hasExtra("pageFragment")) {
+            pageFragment = intent.getStringExtra("pageFragment")
+        }
 
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         supportActionBar!!.title = "Expenses"
@@ -155,7 +163,7 @@ class EmployeeServicesActivity : BaseActivity<ActivityEmploteeServicesBinding>()
             active = "ExpensesFragment"
         }
 
-
+        openFragmentFromAds()
     }
 
 
@@ -259,6 +267,13 @@ class EmployeeServicesActivity : BaseActivity<ActivityEmploteeServicesBinding>()
 
     override fun chooseEmployee(model: FilterDataEntity?) {
         empModel = model!!
+    }
+    fun openFragmentFromAds(){
+        when (pageFragment) {
+            "AttendanceFragment" -> replace_fragment(AttendanceFragment(), "AttendanceFragment")
+            "WorkFromHomeFragment" -> replace_fragment(WorkFromHomeFragment(), "WorkFromHomeFragment")
+            "ShowAllWorkFromHomeFragment" -> replace_fragment(WorkFromHomeFragment(), "ShowAllWorkFromHomeFragment")
+        }
     }
 
 }

@@ -19,6 +19,12 @@ import com.devartlab.data.shared.DataManager
 import com.devartlab.databinding.Activity4eshoppingBinding
 import com.devartlab.model.AdModel
 import com.devartlab.ui.auth.login.LoginActivity
+import com.devartlab.ui.main.MainActivity
+import com.devartlab.ui.main.ui.callmanagement.CallManagementActivity
+import com.devartlab.ui.main.ui.callmanagement.employee.EmployeeReportActivity
+import com.devartlab.ui.main.ui.contactlist.ui.main.ContactsActivity
+import com.devartlab.ui.main.ui.devartlink.DevartLinkActivity
+import com.devartlab.ui.main.ui.devartlink.faq.FAQActivity
 import com.devartlab.ui.main.ui.eShopping.addProductsToThePharmacy.AddProductsPharmacyActivity
 import com.devartlab.ui.main.ui.eShopping.orientationVideos.OrientationVideosActivity
 import com.devartlab.ui.main.ui.eShopping.pharmacyBinding.PharmacyBindingActivity
@@ -26,6 +32,9 @@ import com.devartlab.ui.main.ui.eShopping.pharmacySales.PharmacySalesActivity
 import com.devartlab.ui.main.ui.eShopping.report.Report4eShoppingActivity
 import com.devartlab.ui.main.ui.eShopping.requestVoucher.RequestVoucherActivity
 import com.devartlab.ui.main.ui.eShopping.ticket.TicketActivity
+import com.devartlab.ui.main.ui.employeeservices.EmployeeServicesActivity
+import com.devartlab.ui.main.ui.employeeservices.SelfServiceActivity
+import com.devartlab.ui.main.ui.market.MarketRequestTypesActivity
 import com.devartlab.ui.main.ui.moreDetailsAds.MoreDetailsAdsActivity
 import com.devartlab.utils.Constants
 import com.devartlab.utils.MainSliderAdapter
@@ -135,8 +144,14 @@ class Home4EShoppingActivity : AppCompatActivity(),
         if (model != null) {
 
             if (!model.webPageLink.isNullOrBlank()) {
-                binding.cardviewAds.setOnClickListener {
-                    openWebPage(model.webPageLink)
+                if(model.is_external!!){
+                    binding.cardviewAds.setOnClickListener {
+                        openWebPage(model.webPageLink)
+                    }
+                }else{
+                    binding.cardviewAds.setOnClickListener {
+                        meuNav(model.webPageLink!!.toInt())
+                    }
                 }
             }
             when (model.type) {
@@ -221,6 +236,79 @@ class Home4EShoppingActivity : AppCompatActivity(),
                 val intent = Intent(this, LoginActivity::class.java)
                 startActivity(intent)
             }
+        }
+    }
+
+    fun meuNav(id: Int) {
+        when (id) {
+            1 -> startActivity(Intent(this@Home4EShoppingActivity, MainActivity::class.java))
+            2, 8 -> {
+                intent = Intent(this@Home4EShoppingActivity, CallManagementActivity::class.java)
+                intent.putExtra("pageFragment", "PlanFragment")
+                startActivity(intent)
+            }
+            3 -> {
+                intent = Intent(this@Home4EShoppingActivity, SelfServiceActivity::class.java)
+                intent.putExtra("pageFragment", "SelfServiceHomeFragment")
+                startActivity(intent)
+            }
+            4 -> startActivity(Intent(this@Home4EShoppingActivity, DevartLinkActivity::class.java))
+            5 -> {
+                intent = Intent(this@Home4EShoppingActivity, CallManagementActivity::class.java)
+                intent.putExtra("pageFragment", "HomeFragment")
+                startActivity(intent)
+            }
+            6 -> {
+                intent = Intent(this@Home4EShoppingActivity, CallManagementActivity::class.java)
+                intent.putExtra("pageFragment", "ReportFragment")
+                startActivity(intent)
+            }
+            7 -> startActivity(Intent(this@Home4EShoppingActivity, EmployeeReportActivity::class.java))
+            10 -> startActivity(Intent(this@Home4EShoppingActivity, MarketRequestTypesActivity::class.java))
+            12 -> {
+                intent = Intent(this@Home4EShoppingActivity, EmployeeServicesActivity::class.java)
+                intent.putExtra("pageFragment", "AttendanceFragment")
+                startActivity(intent)
+            }
+            14 -> startActivity(Intent(this@Home4EShoppingActivity, ContactsActivity::class.java))
+            15 -> {
+                intent = Intent(this@Home4EShoppingActivity, CallManagementActivity::class.java)
+                intent.putExtra("pageFragment", "DVReportFragment")
+                startActivity(intent)
+            }
+            16 -> {
+                intent = Intent(this@Home4EShoppingActivity, SelfServiceActivity::class.java)
+                intent.putExtra("pageFragment", "MealsFragment")
+                startActivity(intent)
+            }
+            17 -> {
+                intent = Intent(this@Home4EShoppingActivity, CallManagementActivity::class.java)
+                intent.putExtra("pageFragment", "ListFragment")
+                startActivity(intent)
+            }
+            19 -> {
+                intent = Intent(this@Home4EShoppingActivity, EmployeeServicesActivity::class.java)
+                intent.putExtra("pageFragment", "EmployeeSalaryFragment")
+                startActivity(intent)
+            }
+            20 -> {
+                intent = Intent(this@Home4EShoppingActivity, EmployeeServicesActivity::class.java)
+                intent.putExtra("pageFragment", "ShowAllWorkFromHomeFragment")
+                startActivity(intent)
+            }
+            21 -> {
+                intent = Intent(this@Home4EShoppingActivity, CallManagementActivity::class.java)
+                intent.putExtra("pageFragment", "SyncFragment")
+                startActivity(intent)
+            }
+            22 -> {
+                intent = Intent(this@Home4EShoppingActivity, EmployeeServicesActivity::class.java)
+                intent.putExtra("pageFragment", "WorkFromHomeFragment")
+                startActivity(intent)
+            }
+            23 -> startActivity(Intent(this@Home4EShoppingActivity, Home4EShoppingActivity::class.java))
+            26 -> startActivity(Intent(this@Home4EShoppingActivity, OrientationVideosActivity::class.java))
+            31 -> startActivity(Intent(this@Home4EShoppingActivity, FAQActivity::class.java))
         }
     }
 }
