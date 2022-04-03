@@ -65,7 +65,7 @@ class Home4EShoppingActivity : AppCompatActivity(),
         dataManager = (getApplication() as BaseApplication).dataManager!!
         setUpRecycler()
         ads()
-        deepLink()
+        deeplink()
     }
 
     private fun setUpRecycler() {
@@ -206,7 +206,7 @@ class Home4EShoppingActivity : AppCompatActivity(),
                 }
             }
             if (model.show_more == true) {
-                binding.tvMoreThanAds.setVisibility(View.VISIBLE)
+                binding.tvMoreThanAds.visibility = View.VISIBLE
                 binding.tvMoreThanAds.setOnClickListener {
                     intent = Intent(this, MoreDetailsAdsActivity::class.java)
                     intent.putExtra("pageCode", model.pageCode)
@@ -226,7 +226,7 @@ class Home4EShoppingActivity : AppCompatActivity(),
         super.onStop()
         binding.videoView.stop()
     }
-    fun deepLink() {
+    fun deeplink() {
         val uri = intent.data
         if (uri != null) {
             if (viewModel.dataManager.isLogin) {

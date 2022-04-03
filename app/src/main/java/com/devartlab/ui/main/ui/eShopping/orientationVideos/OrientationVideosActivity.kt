@@ -1,6 +1,5 @@
 package com.devartlab.ui.main.ui.eShopping.orientationVideos
 
-import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
@@ -21,6 +20,7 @@ import com.devartlab.base.BaseApplication
 import com.devartlab.data.shared.DataManager
 import com.devartlab.databinding.ActivityOrientationVideosBinding
 import com.devartlab.model.AdModel
+import com.devartlab.ui.auth.login.LoginActivity
 import com.devartlab.ui.main.MainActivity
 import com.devartlab.ui.main.ui.callmanagement.CallManagementActivity
 import com.devartlab.ui.main.ui.callmanagement.employee.EmployeeReportActivity
@@ -79,7 +79,6 @@ class OrientationVideosActivity : AppCompatActivity() {
     fun handleObserver() {
         viewModel!!.errorMessage.observe(this) { integer: Int ->
             if (integer == 1) {
-                Log.e("xxx", "error")
                 Toast.makeText(this, "error in response data", Toast.LENGTH_SHORT)
                     .show()
             } else {
@@ -87,9 +86,15 @@ class OrientationVideosActivity : AppCompatActivity() {
             }
         }
         viewModel!!.responseVideos.observe(this, Observer {
-            if (it!!.items == null) {
+            if (it!!.items.isEmpty()) {
                 //errorMessage if data coming is null;
                 binding.tvEmptyList.setVisibility(View.VISIBLE)
+                binding.progressBar.setVisibility(View.GONE)
+            }else if (it.code == 401) {
+                Toast.makeText(this, "please login again", Toast.LENGTH_SHORT)
+                    .show()
+                val intent = Intent(this, LoginActivity::class.java)
+                startActivity(intent)
             } else {
                 //show data in recyclerView
                 binding.progressBar.setVisibility(View.GONE)

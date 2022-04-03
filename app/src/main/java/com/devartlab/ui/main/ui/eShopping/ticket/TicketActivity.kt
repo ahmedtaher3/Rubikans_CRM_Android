@@ -19,6 +19,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.devartlab.R
 import com.devartlab.databinding.ActivityTicketBinding
+import com.devartlab.ui.auth.login.LoginActivity
 import com.devartlab.ui.main.ui.eShopping.ticket.model.addTicket.AddTicketRequest
 import com.pusher.client.Pusher
 import com.pusher.client.PusherOptions
@@ -39,7 +40,8 @@ class TicketActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(
             this,
-            R.layout.activity_ticket)
+            R.layout.activity_ticket
+        )
         setSupportActionBar(binding.toolbar)
         supportActionBar!!.title = getString(R.string.ticket)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
@@ -91,8 +93,9 @@ class TicketActivity : AppCompatActivity() {
         binding.tvPeopleSearch.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {}
             override fun onTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {
-                viewModel!!.getGetContacts("",binding.tvPeopleSearch.text.toString())
+                viewModel!!.getGetContacts("", binding.tvPeopleSearch.text.toString())
             }
+
             override fun afterTextChanged(editable: Editable) {
             }
         })
@@ -100,23 +103,28 @@ class TicketActivity : AppCompatActivity() {
     }
 
     fun handleObserver() {
-        viewModel!!.errorMessage.observe(this, { integer: Int ->
+        viewModel!!.errorMessage.observe(this) { integer: Int ->
             if (integer == 1) {
                 Toast.makeText(this, "error in response data", Toast.LENGTH_SHORT)
                     .show()
             } else {
                 Toast.makeText(this, "error in Network", Toast.LENGTH_SHORT).show()
             }
-        })
+        }
         viewModel!!.deleteTicketsResponse.observe(this, Observer {
             finish()
             startActivity(getIntent())
         })
         viewModel!!.getContactsResponse.observe(this, Observer {
-            if (it!!.data == null) {
+            if (it!!.data.isEmpty()) {
                 //errorMessage if data coming is null;
                 binding.tvEmptyList.setVisibility(View.VISIBLE)
                 binding.progressBar.setVisibility(View.GONE)
+            } else if (it.code == 401) {
+                Toast.makeText(this, "please login again", Toast.LENGTH_SHORT)
+                    .show()
+                val intent = Intent(this, LoginActivity::class.java)
+                startActivity(intent)
             } else {
                 //show data in recyclerView
                 binding.progressBar.setVisibility(View.GONE)
@@ -131,7 +139,7 @@ class TicketActivity : AppCompatActivity() {
                 })
 
                 adapter!!.setOnItemClickListener2(GetContactsAdapter.OnItemClickListener2 { pos, noOrder, status ->
-                    if (status == "1"||status == "4") {
+                    if (status == "1" || status == "4") {
                         deleteMessagesDialog(noOrder)
                     }
                 })

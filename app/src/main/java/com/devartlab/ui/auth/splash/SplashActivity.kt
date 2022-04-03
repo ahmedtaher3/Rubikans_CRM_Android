@@ -23,6 +23,7 @@ import com.devartlab.ui.auth.login.LoginActivity
 import com.devartlab.ui.auth.login.LoginViewModel
 import com.devartlab.ui.main.MainActivity
 import com.devartlab.ui.main.ui.eShopping.main.model.login4EShopping.Login4EShoppingRequest
+import com.devartlab.ui.main.ui.eShopping.orientationVideos.VideoActivity
 import com.devartlab.ui.main.ui.eShopping.utils.UserPreferenceHelper
 import com.devartlab.utils.CommonUtilities
 import com.devartlab.utils.ProgressLoading
@@ -153,6 +154,7 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
 
 
         setObservers()
+        deeplink()
     }
 
     private fun setObservers() {
@@ -700,5 +702,21 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
 
     override fun getLayoutId(): Int {
         return R.layout.activity_splash
+    }
+    fun deeplink() {
+        val uri = intent.data
+        if (uri != null) {
+            if (viewModel.dataManager.isLogin) {
+                val path = uri.toString()
+                val id = "path".split("=").toTypedArray()
+                Toast.makeText(this@SplashActivity, "path = $path", Toast.LENGTH_LONG).show()
+                val intent = Intent(this, VideoActivity::class.java)
+                intent.putExtra("_id", id[1])
+                startActivity(intent)
+            } else {
+                val intent = Intent(this, LoginActivity::class.java)
+                startActivity(intent)
+            }
+        }
     }
 }

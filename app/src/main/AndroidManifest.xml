@@ -193,6 +193,60 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
+            <intent-filter android:label="Video 4eShopping">
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+
+                <data android:scheme="https"
+                    android:host="www.youtube.com"
+                    android:pathPrefix="/watch?v=5CmRnS6ZQdE"/>
+
+                <data android:scheme="https"
+                    android:host="www.youtube.com"
+                    android:pathPrefix="/watch?v=L4HWjVsnX2I"/>
+
+                <data android:scheme="https"
+                    android:host="www.youtube.com"
+                    android:pathPrefix="/watch?v=QaufpZVAjCU"/>
+
+                <data android:scheme="https"
+                    android:host="www.youtube.com"
+                    android:pathPrefix="/watch?v=QfHA3ScEElM"/>
+
+                <data android:scheme="https"
+                    android:host="www.youtube.com"
+                    android:pathPrefix="/watch?v=oyQo_fgM8gc"/>
+
+                <data android:scheme="https"
+                    android:host="www.youtube.com"
+                    android:pathPrefix="/watch?v=0M4uWa3pTR8"/>
+
+                <data android:scheme="https"
+                    android:host="www.youtube.com"
+                    android:pathPrefix="/watch?v=XB-NqHz9tRE"/>
+
+                <data android:scheme="https"
+                    android:host="www.youtube.com"
+                    android:pathPrefix="/watch?v=3kNZ-kYOhF4"/>
+
+                <data android:scheme="https"
+                    android:host="www.youtube.com"
+                    android:pathPrefix="/watch?v=4eBvMdv7pGU"/>
+
+                <data android:scheme="https"
+                    android:host="www.youtube.com"
+                    android:pathPrefix="/watch?v=8kXZCJ-Mp0Y"/>
+
+                <data android:scheme="https"
+                    android:host="www.youtube.com"
+                    android:pathPrefix="/watch?v=3T4X06kaVlg"/>
+
+                <data android:scheme="https"
+                    android:host="www.youtube.com"
+                    android:pathPrefix="/watch?v=Ata5UWvTzSU"/>
+            </intent-filter>
         </activity>
         <activity
             android:name=".ui.slider.ImagesSlider"

@@ -1,40 +1,37 @@
 package com.devartlab.ui.main.ui.eShopping.requestVoucher
 
-import android.app.Dialog
 import android.content.Intent
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextUtils
 import android.text.TextWatcher
 import android.util.Log
 import android.view.View
-import android.view.Window
-import android.view.WindowManager
 import android.widget.*
-import androidx.appcompat.app.AppCompatActivity
-import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.RecyclerView
 import com.devartlab.R
+import com.devartlab.base.BaseActivity
 import com.devartlab.databinding.ActivityOrderRequestVouvherBinding
 import com.devartlab.ui.auth.login.LoginActivity
 import com.devartlab.ui.main.ui.eShopping.requestVoucher.model.voucherRequest.VoucherRequestRequest
 
-class OrderRequestVouvherActivity : AppCompatActivity() {
+class OrderRequestVouvherActivity : BaseActivity<ActivityOrderRequestVouvherBinding?>() {
     lateinit var binding: ActivityOrderRequestVouvherBinding
     var viewModel: RequestVoucherViewModel? = null
     var compaignVouchersID: Int = 0
     var doctorsID: String? = null
     var doctorsName: String? = null
     lateinit var request: VoucherRequestRequest
+
+
+    override fun getLayoutId(): Int {
+        return R.layout.activity_order_request_vouvher
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(
-            this, R.layout.activity_order_request_vouvher
-        )
+        binding = viewDataBinding!!
         if (intent.hasExtra("_id")) {
             doctorsID = intent.getStringExtra("_id")
         }

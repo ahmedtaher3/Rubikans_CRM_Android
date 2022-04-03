@@ -22,6 +22,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.devartlab.R
 import com.devartlab.a4eshopping.PharmacyBinding.PharmacyBindingViewModel
 import com.devartlab.databinding.ActivityPharmacyBindingBinding
+import com.devartlab.ui.auth.login.LoginActivity
 import com.devartlab.ui.main.ui.eShopping.pharmacyBinding.model.searchForPharmacy.SearchForPharmacyRequest
 import com.devartlab.ui.main.ui.eShopping.pharmacyBinding.addLocation.AddLocationActivity
 import com.devartlab.ui.main.ui.eShopping.pharmacyBinding.allComments.AllCommentsActivity
@@ -39,7 +40,8 @@ class PharmacyBindingActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(
             this,
-            R.layout.activity_pharmacy_binding)
+            R.layout.activity_pharmacy_binding
+        )
         setSupportActionBar(binding.toolbar)
         supportActionBar!!.title = getString(R.string.Pharmacy_binding)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
@@ -64,6 +66,7 @@ class PharmacyBindingActivity : AppCompatActivity() {
             override fun onTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {
                 viewModel!!.getConnetctedPharmacies(binding.searchBarVideo.text.toString())
             }
+
             override fun afterTextChanged(editable: Editable) {
             }
         })
@@ -75,7 +78,6 @@ class PharmacyBindingActivity : AppCompatActivity() {
     fun handleObserver() {
         viewModel!!.errorMessage.observe(this) { integer: Int ->
             if (integer == 1) {
-                Log.e("xxx", "error")
                 Toast.makeText(this, "error in response data", Toast.LENGTH_SHORT)
                     .show()
             } else {
@@ -83,10 +85,15 @@ class PharmacyBindingActivity : AppCompatActivity() {
             }
         }
         viewModel!!.ConnetctedPharmaciesResponse.observe(this, Observer {
-            if (it!!.data == null) {
+            if (it!!.data.isEmpty()) {
                 //errorMessage if data coming is null;
                 binding.tvEmptyList.setVisibility(View.VISIBLE)
                 binding.progressBar.setVisibility(View.GONE)
+            } else if (it.code == 401) {
+                Toast.makeText(this, "please login again", Toast.LENGTH_SHORT)
+                    .show()
+                val intent = Intent(this, LoginActivity::class.java)
+                startActivity(intent)
             } else {
                 //show data in recyclerView
                 binding.progressBar.setVisibility(View.GONE)
@@ -110,10 +117,14 @@ class PharmacyBindingActivity : AppCompatActivity() {
             }
         })
         viewModel!!.searchForPharmacyResponse.observe(this, Observer {
-            if(it!!.data==null){
-                Toast.makeText(this, "تم ربط الصدليه من قبل او لا توجد صيدليه بهذا الرقم", Toast.LENGTH_SHORT).show()
-            }else{
-                showSearchForPharmacyDialog(it!!)
+            if (it!!.data == null) {
+                Toast.makeText(
+                    this,
+                    "تم ربط الصدليه من قبل او لا توجد صيدليه بهذا الرقم",
+                    Toast.LENGTH_SHORT
+                ).show()
+            } else {
+                showSearchForPharmacyDialog(it)
             }
         })
 
@@ -136,12 +147,12 @@ class PharmacyBindingActivity : AppCompatActivity() {
         val TvType_of_customer = dialog.findViewById<TextView>(R.id.tv_name_pharmacy)
         val TvPhoneNo = dialog.findViewById<TextView>(R.id.tv_start_date)
         val TvEmail = dialog.findViewById<TextView>(R.id.tv_update_date)
-        TvName.text =searchForPharmacyResponse.data.id.toString()
-        TvType_of_customer.text =searchForPharmacyResponse.data.type_code_ar
-        TvPhoneNo.text =searchForPharmacyResponse.data.phone
-        TvEmail.text =searchForPharmacyResponse.data.email
+        TvName.text = searchForPharmacyResponse.data.id.toString()
+        TvType_of_customer.text = searchForPharmacyResponse.data.type_code_ar
+        TvPhoneNo.text = searchForPharmacyResponse.data.phone
+        TvEmail.text = searchForPharmacyResponse.data.email
         BtnConnect.setOnClickListener {
-            searchForPharmacy= SearchForPharmacyRequest(searchForPharmacyResponse.data.id)
+            searchForPharmacy = SearchForPharmacyRequest(searchForPharmacyResponse.data.id)
             viewModel!!.connetctedPharmacies(searchForPharmacy)
         }
         BtnCancel.setOnClickListener {
@@ -163,6 +174,7 @@ class PharmacyBindingActivity : AppCompatActivity() {
             binding.progressBar.setVisibility(View.VISIBLE)
         }
     }
+
     private fun filter(text: String) {
         val filteredList: ArrayList<DataX> = ArrayList()
 

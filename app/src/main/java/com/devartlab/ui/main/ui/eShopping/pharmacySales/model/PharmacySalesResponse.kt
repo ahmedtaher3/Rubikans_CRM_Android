@@ -5,6 +5,7 @@ data class PharmacySalesResponse(
     val `data`: List<Data>,
     val first_page_url: String,
     val from: Int,
+    val code: Int,
     val next_page_url: String,
     val path: String,
     val per_page: Int,
