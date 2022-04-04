@@ -1,5 +1,6 @@
 package com.devartlab.ui.main.ui.eShopping.requestVoucher
 
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -12,27 +13,31 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.devartlab.R
+import com.devartlab.base.BaseFragment
 import com.devartlab.databinding.ActivityGetDoctorsBinding
 import com.devartlab.ui.auth.login.LoginActivity
+import com.devartlab.utils.CommonUtilities
 
-class GetDoctorsActivity : AppCompatActivity() {
+class GetDoctorsFragment : BaseFragment<ActivityGetDoctorsBinding>(){
     lateinit var binding:ActivityGetDoctorsBinding
     var viewModel: RequestVoucherViewModel? = null
     private var adapter: GetDoctorsAdapter? = null
+
+    override fun getLayoutId(): Int {
+        return R.layout.activity_get_doctors
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(
-            this, R.layout.activity_get_doctors
-        )
-        setSupportActionBar(binding.toolbar)
-        supportActionBar!!.title = getString(R.string.doctors)
-        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         viewModel = ViewModelProvider(this)[RequestVoucherViewModel::class.java]
         adapter = GetDoctorsAdapter(null)
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        binding = viewDataBinding!!
         onClickListener()
         handleObserver()
     }
-
     private fun onClickListener() {
         viewModel!!.getDoctors("")
         binding.searchDoctors.addTextChangedListener(object : TextWatcher {
@@ -47,23 +52,23 @@ class GetDoctorsActivity : AppCompatActivity() {
     }
 
     private fun handleObserver() {
-        viewModel!!.errorMessage.observe(this) { integer: Int ->
+        viewModel!!.errorMessage.observe(viewLifecycleOwner) { integer: Int ->
             if (integer == 1) {
                 Log.e("xxx", "error")
-                Toast.makeText(this, "error in response data", Toast.LENGTH_SHORT)
+                Toast.makeText(context, "error in response data", Toast.LENGTH_SHORT)
                     .show()
             } else {
-                Toast.makeText(this, "error in Network", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "error in Network", Toast.LENGTH_SHORT).show()
             }
         }
-        viewModel!!.getDoctorsResponse.observe(this, Observer {
+        viewModel!!.getDoctorsResponse.observe(viewLifecycleOwner, Observer {
             if (it!!.data.isNullOrEmpty()||it.code==401) {
                 //errorMessage if data coming is null;
                 binding.tvEmptyList.setVisibility(View.VISIBLE)
                 binding.progressBar.setVisibility(View.GONE)
-                Toast.makeText(this, "please login again", Toast.LENGTH_SHORT)
+                Toast.makeText(context, "please login again", Toast.LENGTH_SHORT)
                     .show()
-                val intent = Intent(this, LoginActivity::class.java)
+                val intent = Intent(context, LoginActivity::class.java)
                 startActivity(intent)
             } else {
                 //show data in recyclerView
@@ -71,7 +76,7 @@ class GetDoctorsActivity : AppCompatActivity() {
                 adapter = GetDoctorsAdapter(it.data)
                 binding.recyclerDoctors.setAdapter(adapter)
                 adapter!!.setOnItemClickListener(GetDoctorsAdapter.OnItemClickListener { pos, dataItem ->
-                    val intent = Intent(this, OrderRequestVouvherActivity::class.java)
+                    val intent = Intent(context, OrderRequestVouvherActivity::class.java)
                     intent.putExtra("_id", dataItem.id.toString())
                     intent.putExtra("_name", dataItem.text)
                     startActivity(intent)
@@ -79,9 +84,17 @@ class GetDoctorsActivity : AppCompatActivity() {
             }
         })
     }
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        try {
+            (activity as AppCompatActivity?)!!.supportActionBar!!.title = getString(R.string.doctors)
 
-    override fun onSupportNavigateUp(): Boolean {
-        finish()
-        return true
+        } catch (e: Exception) {
+        }
+
+        try {
+            CommonUtilities.sendMessage(baseActivity!!, false)
+        } catch (e: Exception) {
+        }
     }
 }

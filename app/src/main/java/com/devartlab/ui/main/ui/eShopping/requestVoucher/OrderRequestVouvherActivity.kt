@@ -8,6 +8,8 @@ import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import android.widget.*
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.devartlab.R
@@ -53,8 +55,7 @@ class OrderRequestVouvherActivity : BaseActivity<ActivityOrderRequestVouvherBind
         }
 
         binding.edSelectDoctors.setOnClickListener {
-            val intent = Intent(this, GetDoctorsActivity::class.java)
-            startActivityForResult(intent, 100)
+            replace_fragment(GetDoctorsFragment(), "GetDoctorsFragment")
         }
 
         binding.edCount.addTextChangedListener(object : TextWatcher {
@@ -148,6 +149,25 @@ class OrderRequestVouvherActivity : BaseActivity<ActivityOrderRequestVouvherBind
                 countryBrandsPopUp.show()
         })
     }
+
+    fun replace_fragment(fragment: Fragment?, tag: String?) {
+        supportFragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
+        supportFragmentManager
+            .beginTransaction()
+            .setCustomAnimations(
+                R.anim.slide_in_left,
+                R.anim.slide_out_left,
+                R.anim.slide_in_left,
+                R.anim.slide_out_left
+            )
+            .add(
+                R.id.container,
+                fragment!!
+            )
+            .addToBackStack(tag)
+            .commit()
+    }
+
 
     override fun onSupportNavigateUp(): Boolean {
         finish()
