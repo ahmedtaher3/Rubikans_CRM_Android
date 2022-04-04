@@ -39,7 +39,7 @@ class OrderRequestVouvherActivity : BaseActivity<ActivityOrderRequestVouvherBind
         }
         if (intent.hasExtra("_name")) {
             doctorsName = intent.getStringExtra("_name")
-            binding.edSelectDoctors.setText(doctorsName)
+            binding.edSelectDoctors.text = doctorsName
         }
         setSupportActionBar(binding.toolbar)
         supportActionBar!!.title = getString(R.string.order_request_voucher)
@@ -64,24 +64,24 @@ class OrderRequestVouvherActivity : BaseActivity<ActivityOrderRequestVouvherBind
             override fun onTextChanged(
                 charSequence: CharSequence, i: Int, i1: Int, i2: Int
             ) {
-                val text: String = binding.edCount.getText().toString()
+                val text: String = binding.edCount.text.toString()
                 try {
                     val num = text.toInt()
                     Log.i("", "$num is a number")
                     if (TextUtils.isEmpty(
-                            binding.edCount.getText().toString()
-                        ) || binding.edCount.getText().toString()
-                            .toInt() <= 0 || binding.edCount.getText()
+                            binding.edCount.text.toString()
+                        ) || binding.edCount.text.toString()
+                            .toInt() <= 0 || binding.edCount.text
                             .toString() === "-"
                     ) {
-                        binding.edCount.setError("please enter right number")
+                        binding.edCount.error = "please enter right number"
                     } else {
-                        binding.tvNoVouchers.setVisibility(View.VISIBLE)
-                        binding.tvNoVouchers.setText(" عدد الكوبونات " + num * 50 + " كوبون ")
+                        binding.tvNoVouchers.visibility = View.VISIBLE
+                        binding.tvNoVouchers.text = " عدد الكوبونات " + num * 50 + " كوبون "
                     }
                 } catch (e: NumberFormatException) {
                     Log.i("", "$text is not a number")
-                    binding.edCount.setError("please enter right number")
+                    binding.edCount.error = "please enter right number"
                 }
             }
 
@@ -89,22 +89,28 @@ class OrderRequestVouvherActivity : BaseActivity<ActivityOrderRequestVouvherBind
         })
 
         binding.btnAddProblem.setOnClickListener {
-            if (compaignVouchersID == 0) {
-                binding.edVoucher.setError("please select voucher")
-            } else if (doctorsID.equals(null)) {
-                binding.edSelectDoctors.setError("please select doctor")
-            } else if (TextUtils.isEmpty(binding.edCount.getText().toString())) {
-                binding.edCount.setError("please enter count")
-            } else if (TextUtils.isEmpty(binding.edSelectDoctors.getText().toString())) {
-                binding.edSelectDoctors.setError("please enter doctors")
-            } else {
-                request = VoucherRequestRequest(
-                    compaignVouchersID,
-                    binding.edCount.text.toString(),
-                    doctorsID!!.toInt(),
-                    doctorsName!!
-                )
-                viewModel!!.getVoucherRequest(request)
+            when {
+                compaignVouchersID == 0 -> {
+                    binding.edVoucher.error = "please select voucher"
+                }
+                doctorsID.equals(null) -> {
+                    binding.edSelectDoctors.error = "please select doctor"
+                }
+                TextUtils.isEmpty(binding.edCount.text.toString()) -> {
+                    binding.edCount.error = "please enter count"
+                }
+                TextUtils.isEmpty(binding.edSelectDoctors.text.toString()) -> {
+                    binding.edSelectDoctors.error = "please enter doctors"
+                }
+                else -> {
+                    request = VoucherRequestRequest(
+                        compaignVouchersID,
+                        binding.edCount.text.toString(),
+                        doctorsID!!.toInt(),
+                        doctorsName!!
+                    )
+                    viewModel!!.getVoucherRequest(request)
+                }
             }
         }
     }
@@ -133,16 +139,14 @@ class OrderRequestVouvherActivity : BaseActivity<ActivityOrderRequestVouvherBind
         viewModel!!.compaignVouchersResponse.observe(this, Observer {
                 val countryBrandsPopUp = PopupMenu(this, binding.edVoucher)
                 for (i in 0 until it!!.size) {
-                    countryBrandsPopUp.getMenu()
+                    countryBrandsPopUp.menu
                         .add(i, i, i, it.get(i).voucher_translates_title.get(0).title)
                 }
                 countryBrandsPopUp.setOnMenuItemClickListener(PopupMenu.OnMenuItemClickListener { item ->
-                    binding.edVoucher.setText(
-                        it.get(item.getItemId()).voucher_translates_title.get(
-                            0
-                        ).title
-                    )
-                    compaignVouchersID = it.get(item.getItemId()).id
+                    binding.edVoucher.text = it.get(item.itemId).voucher_translates_title.get(
+                        0
+                    ).title
+                    compaignVouchersID = it.get(item.itemId).id
                     Log.e("popupCarBrands", "onMenuItemClick: $compaignVouchersID")
                     return@OnMenuItemClickListener false
                 })

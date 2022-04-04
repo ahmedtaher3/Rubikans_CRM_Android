@@ -9,7 +9,6 @@ import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import android.widget.Toast
-import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.devartlab.R
@@ -64,18 +63,18 @@ class GetDoctorsFragment : BaseFragment<ActivityGetDoctorsBinding>(){
         viewModel!!.getDoctorsResponse.observe(viewLifecycleOwner, Observer {
             if (it!!.data.isNullOrEmpty()||it.code==401) {
                 //errorMessage if data coming is null;
-                binding.tvEmptyList.setVisibility(View.VISIBLE)
-                binding.progressBar.setVisibility(View.GONE)
+                binding.tvEmptyList.visibility = View.VISIBLE
+                binding.progressBar.visibility = View.GONE
                 Toast.makeText(context, "please login again", Toast.LENGTH_SHORT)
                     .show()
                 val intent = Intent(context, LoginActivity::class.java)
                 startActivity(intent)
             } else {
                 //show data in recyclerView
-                binding.progressBar.setVisibility(View.GONE)
+                binding.progressBar.visibility = View.GONE
                 adapter = GetDoctorsAdapter(it.data)
-                binding.recyclerDoctors.setAdapter(adapter)
-                adapter!!.setOnItemClickListener(GetDoctorsAdapter.OnItemClickListener { pos, dataItem ->
+                binding.recyclerDoctors.adapter = adapter
+                adapter!!.setOnItemClickListener(GetDoctorsAdapter.OnItemClickListener { _, dataItem ->
                     val intent = Intent(context, OrderRequestVouvherActivity::class.java)
                     intent.putExtra("_id", dataItem.id.toString())
                     intent.putExtra("_name", dataItem.text)
