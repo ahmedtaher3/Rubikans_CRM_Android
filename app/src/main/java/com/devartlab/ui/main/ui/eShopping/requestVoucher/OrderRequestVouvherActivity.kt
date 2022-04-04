@@ -111,7 +111,6 @@ class OrderRequestVouvherActivity : BaseActivity<ActivityOrderRequestVouvherBind
     private fun handleObserver() {
         viewModel!!.errorMessage.observe(this) { integer: Int ->
             if (integer == 1) {
-                Log.e("xxx", "error")
                 Toast.makeText(this, "error in response data", Toast.LENGTH_SHORT)
                     .show()
             } else {

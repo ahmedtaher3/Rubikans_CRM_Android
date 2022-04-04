@@ -158,6 +158,20 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
     }
 
     private fun setObservers() {
+        //login 4EShopping
+        viewModel.errorMessage.observe(this) { integer: Int ->
+            if (integer == 1) {
+                Log.e("xxx", "error")
+                Toast.makeText(this, "error in response data", Toast.LENGTH_SHORT)
+                    .show()
+            } else {
+                Toast.makeText(this, "error in Network", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        viewModel.login4EShoppingResponse.observe(this, Observer {
+            UserPreferenceHelper.saveUserProfile(it)
+        })
 
         viewModel.responseLive.observe(this, Observer { t ->
 
@@ -523,21 +537,6 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
 
             }
         })
-
-
-        //login 4EShopping
-        viewModel.errorMessage.observe(this) { integer: Int ->
-            if (integer == 1) {
-                Log.e("xxx", "error")
-                Toast.makeText(this, "error in response data", Toast.LENGTH_SHORT)
-                    .show()
-            } else {
-                Toast.makeText(this, "error in Network", Toast.LENGTH_SHORT).show()
-            }
-        }
-        viewModel.login4EShoppingResponse.observe(this, Observer {
-            UserPreferenceHelper.saveUserProfile(it)
-        })
     }
 
 
@@ -708,10 +707,9 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
         if (uri != null) {
             if (viewModel.dataManager.isLogin) {
                 val path = uri.toString()
-                val id = "path".split("=").toTypedArray()
-                Toast.makeText(this@SplashActivity, "path = $path", Toast.LENGTH_LONG).show()
-                val intent = Intent(this, VideoActivity::class.java)
-                intent.putExtra("_id", id[1])
+                val id: List<String> = path.split("/")
+                val intent = Intent(this@SplashActivity, VideoActivity::class.java)
+                intent.putExtra("_id", id[3])
                 startActivity(intent)
             } else {
                 val intent = Intent(this, LoginActivity::class.java)

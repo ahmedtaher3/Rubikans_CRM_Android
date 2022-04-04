@@ -85,15 +85,15 @@ class PharmacyBindingActivity : AppCompatActivity() {
             }
         }
         viewModel!!.ConnetctedPharmaciesResponse.observe(this, Observer {
-            if (it!!.data.isEmpty()) {
-                //errorMessage if data coming is null;
-                binding.tvEmptyList.setVisibility(View.VISIBLE)
-                binding.progressBar.setVisibility(View.GONE)
-            } else if (it.code == 401) {
+            if (it!!.code == 401) {
                 Toast.makeText(this, "please login again", Toast.LENGTH_SHORT)
                     .show()
                 val intent = Intent(this, LoginActivity::class.java)
                 startActivity(intent)
+            } else if (it.data.isNullOrEmpty()) {
+                //errorMessage if data coming is null;
+                binding.tvEmptyList.setVisibility(View.VISIBLE)
+                binding.progressBar.setVisibility(View.GONE)
             } else {
                 //show data in recyclerView
                 binding.progressBar.setVisibility(View.GONE)

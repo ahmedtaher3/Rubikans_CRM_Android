@@ -27,9 +27,6 @@ import com.devartlab.ui.main.ui.eShopping.requestVoucher.showVouchers.ShowVouche
 class RequestVoucherActivity : AppCompatActivity() {
     lateinit var binding: ActivityRequestVoucherBinding
     var viewModel: RequestVoucherViewModel? = null
-    var compaignVouchersID: Int = 0
-    var doctorsID: Int = 0
-    var doctorsName: String? = null
     val list = ArrayList<Data>()
     private val doctors: List<String> = java.util.ArrayList()
     private var adapterDoctors: ArrayAdapter<String>? = null
@@ -79,16 +76,16 @@ class RequestVoucherActivity : AppCompatActivity() {
         }
 
         viewModel!!.myVoucherRequestResponse.observe(this, Observer {
-            if (it!!.data.isNullOrEmpty()) {
-                //errorMessage if data coming is null;
-                binding.tvEmptyList.setVisibility(View.VISIBLE)
-                binding.progressBar.setVisibility(View.GONE)
-            }else if(it.code==401){
+            if (it!!.code == 401) {
                 Toast.makeText(this, "please login again", Toast.LENGTH_LONG)
                     .show()
                 val intent = Intent(this, LoginActivity::class.java)
                 startActivity(intent)
-            } else{
+            } else if (it.data.isNullOrEmpty()) {
+                //errorMessage if data coming is null;
+                binding.tvEmptyList.setVisibility(View.VISIBLE)
+                binding.progressBar.setVisibility(View.GONE)
+            } else {
                 //show data in recyclerView
                 binding.progressBar.setVisibility(View.GONE)
                 adapter = MyVoucherRequestAdapter(it.data)
@@ -117,6 +114,7 @@ class RequestVoucherActivity : AppCompatActivity() {
         finish()
         return true
     }
+
     private fun filter(text: String) {
         val filteredList: ArrayList<Data> = ArrayList()
 

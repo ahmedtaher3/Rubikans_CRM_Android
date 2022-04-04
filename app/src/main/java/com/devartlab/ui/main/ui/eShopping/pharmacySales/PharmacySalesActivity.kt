@@ -64,16 +64,16 @@ class PharmacySalesActivity : AppCompatActivity() {
         }
         viewModel!!.pharmacySalesResponse.observe(this, Observer {
             when {
-                it!!.data.isEmpty() -> {
-                    //errorMessage if data coming is null;
-                    binding.tvEmptyList.setVisibility(View.VISIBLE)
-                    binding.progressBar.setVisibility(View.GONE)
-                }
-                it.code == 401 -> {
+                it!!.code == 401 -> {
                     Toast.makeText(this, "please login again", Toast.LENGTH_SHORT)
                         .show()
                     val intent = Intent(this, LoginActivity::class.java)
                     startActivity(intent)
+                }
+                it.data.isNullOrEmpty() -> {
+                    //errorMessage if data coming is null;
+                    binding.tvEmptyList.setVisibility(View.VISIBLE)
+                    binding.progressBar.setVisibility(View.GONE)
                 }
                 else -> {
                     //show data in recyclerView

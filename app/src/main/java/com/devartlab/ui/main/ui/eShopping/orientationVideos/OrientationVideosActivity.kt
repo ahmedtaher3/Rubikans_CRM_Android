@@ -49,7 +49,8 @@ class OrientationVideosActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(
-            this, R.layout.activity_orientation_videos)
+            this, R.layout.activity_orientation_videos
+        )
         setSupportActionBar(binding.toolbar)
         supportActionBar!!.title = getString(R.string.orientation_videos)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
@@ -86,15 +87,15 @@ class OrientationVideosActivity : AppCompatActivity() {
             }
         }
         viewModel!!.responseVideos.observe(this, Observer {
-            if (it!!.items.isEmpty()) {
-                //errorMessage if data coming is null;
-                binding.tvEmptyList.setVisibility(View.VISIBLE)
-                binding.progressBar.setVisibility(View.GONE)
-            }else if (it.code == 401) {
+            if (it!!.code == 401) {
                 Toast.makeText(this, "please login again", Toast.LENGTH_SHORT)
                     .show()
                 val intent = Intent(this, LoginActivity::class.java)
                 startActivity(intent)
+            } else if (it.items.isNullOrEmpty()) {
+                //errorMessage if data coming is null;
+                binding.tvEmptyList.setVisibility(View.VISIBLE)
+                binding.progressBar.setVisibility(View.GONE)
             } else {
                 //show data in recyclerView
                 binding.progressBar.setVisibility(View.GONE)
@@ -121,7 +122,7 @@ class OrientationVideosActivity : AppCompatActivity() {
         for (item in list) {
             if (item.snippet.title.toLowerCase().contains(text.toLowerCase())) {
                 filteredList.add(item)
-                Log.e("xxx",item.toString())
+                Log.e("xxx", item.toString())
             }
         }
         adapter!!.filterData(filteredList)
@@ -160,11 +161,11 @@ class OrientationVideosActivity : AppCompatActivity() {
         if (model != null) {
 
             if (!model.webPageLink.isNullOrBlank()) {
-                if(model.is_external!!){
+                if (model.is_external!!) {
                     binding.cardviewAds.setOnClickListener {
                         openWebPage(model.webPageLink)
                     }
-                }else{
+                } else {
                     binding.cardviewAds.setOnClickListener {
                         meuNav(model.webPageLink!!.toInt())
                     }
@@ -231,11 +232,13 @@ class OrientationVideosActivity : AppCompatActivity() {
             }
         }
     }
+
     fun openWebPage(url: String?) {
         val uri = Uri.parse(url)
         val intent = Intent(Intent.ACTION_VIEW, uri)
         startActivity(intent)
     }
+
     override fun onStop() {
         super.onStop()
         binding.videoView.stop()
@@ -254,7 +257,12 @@ class OrientationVideosActivity : AppCompatActivity() {
                 intent.putExtra("pageFragment", "SelfServiceHomeFragment")
                 startActivity(intent)
             }
-            4 -> startActivity(Intent(this@OrientationVideosActivity, DevartLinkActivity::class.java))
+            4 -> startActivity(
+                Intent(
+                    this@OrientationVideosActivity,
+                    DevartLinkActivity::class.java
+                )
+            )
             5 -> {
                 intent = Intent(this@OrientationVideosActivity, CallManagementActivity::class.java)
                 intent.putExtra("pageFragment", "HomeFragment")
@@ -265,14 +273,30 @@ class OrientationVideosActivity : AppCompatActivity() {
                 intent.putExtra("pageFragment", "ReportFragment")
                 startActivity(intent)
             }
-            7 -> startActivity(Intent(this@OrientationVideosActivity, EmployeeReportActivity::class.java))
-            10 -> startActivity(Intent(this@OrientationVideosActivity, MarketRequestTypesActivity::class.java))
+            7 -> startActivity(
+                Intent(
+                    this@OrientationVideosActivity,
+                    EmployeeReportActivity::class.java
+                )
+            )
+            10 -> startActivity(
+                Intent(
+                    this@OrientationVideosActivity,
+                    MarketRequestTypesActivity::class.java
+                )
+            )
             12 -> {
-                intent = Intent(this@OrientationVideosActivity, EmployeeServicesActivity::class.java)
+                intent =
+                    Intent(this@OrientationVideosActivity, EmployeeServicesActivity::class.java)
                 intent.putExtra("pageFragment", "AttendanceFragment")
                 startActivity(intent)
             }
-            14 -> startActivity(Intent(this@OrientationVideosActivity, ContactsActivity::class.java))
+            14 -> startActivity(
+                Intent(
+                    this@OrientationVideosActivity,
+                    ContactsActivity::class.java
+                )
+            )
             15 -> {
                 intent = Intent(this@OrientationVideosActivity, CallManagementActivity::class.java)
                 intent.putExtra("pageFragment", "DVReportFragment")
@@ -289,12 +313,14 @@ class OrientationVideosActivity : AppCompatActivity() {
                 startActivity(intent)
             }
             19 -> {
-                intent = Intent(this@OrientationVideosActivity, EmployeeServicesActivity::class.java)
+                intent =
+                    Intent(this@OrientationVideosActivity, EmployeeServicesActivity::class.java)
                 intent.putExtra("pageFragment", "EmployeeSalaryFragment")
                 startActivity(intent)
             }
             20 -> {
-                intent = Intent(this@OrientationVideosActivity, EmployeeServicesActivity::class.java)
+                intent =
+                    Intent(this@OrientationVideosActivity, EmployeeServicesActivity::class.java)
                 intent.putExtra("pageFragment", "ShowAllWorkFromHomeFragment")
                 startActivity(intent)
             }
@@ -304,12 +330,23 @@ class OrientationVideosActivity : AppCompatActivity() {
                 startActivity(intent)
             }
             22 -> {
-                intent = Intent(this@OrientationVideosActivity, EmployeeServicesActivity::class.java)
+                intent =
+                    Intent(this@OrientationVideosActivity, EmployeeServicesActivity::class.java)
                 intent.putExtra("pageFragment", "WorkFromHomeFragment")
                 startActivity(intent)
             }
-            23 -> startActivity(Intent(this@OrientationVideosActivity, Home4EShoppingActivity::class.java))
-            26 -> startActivity(Intent(this@OrientationVideosActivity, OrientationVideosActivity::class.java))
+            23 -> startActivity(
+                Intent(
+                    this@OrientationVideosActivity,
+                    Home4EShoppingActivity::class.java
+                )
+            )
+            26 -> startActivity(
+                Intent(
+                    this@OrientationVideosActivity,
+                    OrientationVideosActivity::class.java
+                )
+            )
             31 -> startActivity(Intent(this@OrientationVideosActivity, FAQActivity::class.java))
         }
     }

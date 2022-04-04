@@ -116,7 +116,7 @@ class TicketActivity : AppCompatActivity() {
             startActivity(getIntent())
         })
         viewModel!!.getContactsResponse.observe(this, Observer {
-            if (it!!.data.isEmpty()) {
+            if (it!!.data.isNullOrEmpty()) {
                 //errorMessage if data coming is null;
                 binding.tvEmptyList.setVisibility(View.VISIBLE)
                 binding.progressBar.setVisibility(View.GONE)

@@ -117,13 +117,15 @@ class AddProductsPharmacyActivity : AppCompatActivity() {
             }
         }
         viewModel!!.SearchAllPharmacyResponse.observe(this, Observer {
-            if (it!!.data.isEmpty()) {
-                Toast.makeText(this, "not Authorized", Toast.LENGTH_SHORT).show()
-            } else if (it.code == 401) {
+            if (it!!.code == 401) {
                 Toast.makeText(this, "please login again", Toast.LENGTH_SHORT)
                     .show()
                 val intent = Intent(this, LoginActivity::class.java)
                 startActivity(intent)
+            } else if (it.data.isNullOrEmpty()) {
+                //errorMessage if data coming is null;
+                binding.tvEmptyList.setVisibility(View.VISIBLE)
+                binding.progressBar.setVisibility(View.GONE)
             } else {
                 val countryBrandsPopUp = PopupMenu(this, binding.edPharmacySearch)
                 for (i in 0 until it!!.data.size) {

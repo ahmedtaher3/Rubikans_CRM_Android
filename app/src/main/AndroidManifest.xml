@@ -200,52 +200,52 @@
                 <category android:name="android.intent.category.DEFAULT"/>
 
                 <data android:scheme="https"
-                    android:host="www.youtube.com"
-                    android:pathPrefix="/watch?v=5CmRnS6ZQdE"/>
+                    android:host="m.youtube.com"
+                    android:pathPrefix="/5CmRnS6ZQdE"/>
 
                 <data android:scheme="https"
-                    android:host="www.youtube.com"
-                    android:pathPrefix="/watch?v=L4HWjVsnX2I"/>
+                    android:host="m.youtube.com"
+                    android:pathPrefix="/L4HWjVsnX2I"/>
 
                 <data android:scheme="https"
-                    android:host="www.youtube.com"
-                    android:pathPrefix="/watch?v=QaufpZVAjCU"/>
+                    android:host="m.youtube.com"
+                    android:pathPrefix="/QaufpZVAjCU"/>
 
                 <data android:scheme="https"
-                    android:host="www.youtube.com"
-                    android:pathPrefix="/watch?v=QfHA3ScEElM"/>
+                    android:host="m.youtube.com"
+                    android:pathPrefix="/QfHA3ScEElM"/>
 
                 <data android:scheme="https"
-                    android:host="www.youtube.com"
-                    android:pathPrefix="/watch?v=oyQo_fgM8gc"/>
+                    android:host="m.youtube.com"
+                    android:pathPrefix="/oyQo_fgM8gc"/>
 
                 <data android:scheme="https"
-                    android:host="www.youtube.com"
-                    android:pathPrefix="/watch?v=0M4uWa3pTR8"/>
+                    android:host="m.youtube.com"
+                    android:pathPrefix="/0M4uWa3pTR8"/>
 
                 <data android:scheme="https"
-                    android:host="www.youtube.com"
-                    android:pathPrefix="/watch?v=XB-NqHz9tRE"/>
+                    android:host="m.youtube.com"
+                    android:pathPrefix="/XB-NqHz9tRE"/>
 
                 <data android:scheme="https"
-                    android:host="www.youtube.com"
-                    android:pathPrefix="/watch?v=3kNZ-kYOhF4"/>
+                    android:host="m.youtube.com"
+                    android:pathPrefix="/3kNZ-kYOhF4"/>
 
                 <data android:scheme="https"
-                    android:host="www.youtube.com"
-                    android:pathPrefix="/watch?v=4eBvMdv7pGU"/>
+                    android:host="m.youtube.com"
+                    android:pathPrefix="/4eBvMdv7pGU"/>
 
                 <data android:scheme="https"
-                    android:host="www.youtube.com"
-                    android:pathPrefix="/watch?v=8kXZCJ-Mp0Y"/>
+                    android:host="m.youtube.com"
+                    android:pathPrefix="/8kXZCJ-Mp0Y"/>
 
                 <data android:scheme="https"
-                    android:host="www.youtube.com"
-                    android:pathPrefix="/watch?v=3T4X06kaVlg"/>
+                    android:host="m.youtube.com"
+                    android:pathPrefix="/3T4X06kaVlg"/>
 
                 <data android:scheme="https"
-                    android:host="www.youtube.com"
-                    android:pathPrefix="/watch?v=Ata5UWvTzSU"/>
+                    android:host="m.youtube.com"
+                    android:pathPrefix="/Ata5UWvTzSU"/>
             </intent-filter>
         </activity>
         <activity
