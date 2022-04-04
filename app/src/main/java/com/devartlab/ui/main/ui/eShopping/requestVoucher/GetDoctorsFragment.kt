@@ -17,14 +17,15 @@ import com.devartlab.databinding.ActivityGetDoctorsBinding
 import com.devartlab.ui.auth.login.LoginActivity
 import com.devartlab.utils.CommonUtilities
 
-class GetDoctorsFragment : BaseFragment<ActivityGetDoctorsBinding>(){
-    lateinit var binding:ActivityGetDoctorsBinding
+class GetDoctorsFragment(private val listener:OnDoctorSelect) : BaseFragment<ActivityGetDoctorsBinding>() {
+    lateinit var binding: ActivityGetDoctorsBinding
     var viewModel: RequestVoucherViewModel? = null
     private var adapter: GetDoctorsAdapter? = null
 
     override fun getLayoutId(): Int {
         return R.layout.activity_get_doctors
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel = ViewModelProvider(this)[RequestVoucherViewModel::class.java]
@@ -37,6 +38,7 @@ class GetDoctorsFragment : BaseFragment<ActivityGetDoctorsBinding>(){
         onClickListener()
         handleObserver()
     }
+
     private fun onClickListener() {
         viewModel!!.getDoctors("")
         binding.searchDoctors.addTextChangedListener(object : TextWatcher {
@@ -61,7 +63,7 @@ class GetDoctorsFragment : BaseFragment<ActivityGetDoctorsBinding>(){
             }
         }
         viewModel!!.getDoctorsResponse.observe(viewLifecycleOwner, Observer {
-            if (it!!.data.isNullOrEmpty()||it.code==401) {
+            if (it!!.data.isNullOrEmpty() || it.code == 401) {
                 //errorMessage if data coming is null;
                 binding.tvEmptyList.visibility = View.VISIBLE
                 binding.progressBar.visibility = View.GONE
@@ -75,18 +77,19 @@ class GetDoctorsFragment : BaseFragment<ActivityGetDoctorsBinding>(){
                 adapter = GetDoctorsAdapter(it.data)
                 binding.recyclerDoctors.adapter = adapter
                 adapter!!.setOnItemClickListener(GetDoctorsAdapter.OnItemClickListener { _, dataItem ->
-                    val intent = Intent(context, OrderRequestVouvherActivity::class.java)
-                    intent.putExtra("_id", dataItem.id.toString())
-                    intent.putExtra("_name", dataItem.text)
-                    startActivity(intent)
+
+                    listener.setOnDoctorSelect (dataItem.id.toString() , dataItem.text)
+                   baseActivity.onBackPressed()
                 })
             }
         })
     }
+
     override fun onAttach(context: Context) {
         super.onAttach(context)
         try {
-            (activity as AppCompatActivity?)!!.supportActionBar!!.title = getString(R.string.doctors)
+            (activity as AppCompatActivity?)!!.supportActionBar!!.title =
+                getString(R.string.doctors)
 
         } catch (e: Exception) {
         }
@@ -95,5 +98,9 @@ class GetDoctorsFragment : BaseFragment<ActivityGetDoctorsBinding>(){
             CommonUtilities.sendMessage(baseActivity!!, false)
         } catch (e: Exception) {
         }
+    }
+
+    interface OnDoctorSelect {
+        fun setOnDoctorSelect(id: String, name: String)
     }
 }

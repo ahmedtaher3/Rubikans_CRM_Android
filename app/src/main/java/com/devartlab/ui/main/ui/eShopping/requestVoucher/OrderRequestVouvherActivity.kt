@@ -18,7 +18,8 @@ import com.devartlab.databinding.ActivityOrderRequestVouvherBinding
 import com.devartlab.ui.auth.login.LoginActivity
 import com.devartlab.ui.main.ui.eShopping.requestVoucher.model.voucherRequest.VoucherRequestRequest
 
-class OrderRequestVouvherActivity : BaseActivity<ActivityOrderRequestVouvherBinding?>() {
+class OrderRequestVouvherActivity : BaseActivity<ActivityOrderRequestVouvherBinding?>(),
+    GetDoctorsFragment.OnDoctorSelect {
     lateinit var binding: ActivityOrderRequestVouvherBinding
     var viewModel: RequestVoucherViewModel? = null
     var compaignVouchersID: Int = 0
@@ -34,13 +35,7 @@ class OrderRequestVouvherActivity : BaseActivity<ActivityOrderRequestVouvherBind
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = viewDataBinding!!
-        if (intent.hasExtra("_id")) {
-            doctorsID = intent.getStringExtra("_id")
-        }
-        if (intent.hasExtra("_name")) {
-            doctorsName = intent.getStringExtra("_name")
-            binding.edSelectDoctors.text = doctorsName
-        }
+
         setSupportActionBar(binding.toolbar)
         supportActionBar!!.title = getString(R.string.order_request_voucher)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
@@ -55,7 +50,7 @@ class OrderRequestVouvherActivity : BaseActivity<ActivityOrderRequestVouvherBind
         }
 
         binding.edSelectDoctors.setOnClickListener {
-            replace_fragment(GetDoctorsFragment(), "GetDoctorsFragment")
+            replace_fragment(GetDoctorsFragment(this), "GetDoctorsFragment")
         }
 
         binding.edCount.addTextChangedListener(object : TextWatcher {
@@ -176,5 +171,12 @@ class OrderRequestVouvherActivity : BaseActivity<ActivityOrderRequestVouvherBind
     override fun onSupportNavigateUp(): Boolean {
         finish()
         return true
+    }
+
+    override fun setOnDoctorSelect(id: String, name: String) {
+            doctorsID = id
+            doctorsName = name
+            binding.edSelectDoctors.text = doctorsName
+
     }
 }
