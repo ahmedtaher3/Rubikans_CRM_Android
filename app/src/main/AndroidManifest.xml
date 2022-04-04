@@ -192,61 +192,7 @@
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-
-            <intent-filter android:label="Video 4eShopping">
-                <action android:name="android.intent.action.VIEW"/>
-                <category android:name="android.intent.category.BROWSABLE"/>
-                <category android:name="android.intent.category.DEFAULT"/>
-
-                <data android:scheme="https"
-                    android:host="m.youtube.com"
-                    android:pathPrefix="/5CmRnS6ZQdE"/>
-
-                <data android:scheme="https"
-                    android:host="m.youtube.com"
-                    android:pathPrefix="/L4HWjVsnX2I"/>
-
-                <data android:scheme="https"
-                    android:host="m.youtube.com"
-                    android:pathPrefix="/QaufpZVAjCU"/>
-
-                <data android:scheme="https"
-                    android:host="m.youtube.com"
-                    android:pathPrefix="/QfHA3ScEElM"/>
-
-                <data android:scheme="https"
-                    android:host="m.youtube.com"
-                    android:pathPrefix="/oyQo_fgM8gc"/>
-
-                <data android:scheme="https"
-                    android:host="m.youtube.com"
-                    android:pathPrefix="/0M4uWa3pTR8"/>
-
-                <data android:scheme="https"
-                    android:host="m.youtube.com"
-                    android:pathPrefix="/XB-NqHz9tRE"/>
-
-                <data android:scheme="https"
-                    android:host="m.youtube.com"
-                    android:pathPrefix="/3kNZ-kYOhF4"/>
-
-                <data android:scheme="https"
-                    android:host="m.youtube.com"
-                    android:pathPrefix="/4eBvMdv7pGU"/>
-
-                <data android:scheme="https"
-                    android:host="m.youtube.com"
-                    android:pathPrefix="/8kXZCJ-Mp0Y"/>
-
-                <data android:scheme="https"
-                    android:host="m.youtube.com"
-                    android:pathPrefix="/3T4X06kaVlg"/>
-
-                <data android:scheme="https"
-                    android:host="m.youtube.com"
-                    android:pathPrefix="/Ata5UWvTzSU"/>
-            </intent-filter>
+            </intent-filter>F
         </activity>
         <activity
             android:name=".ui.slider.ImagesSlider"
@@ -379,7 +325,62 @@
             android:exported="false" />
         <activity
             android:name=".ui.main.ui.eShopping.orientationVideos.OrientationVideosActivity"
-            android:windowSoftInputMode="stateHidden" />
+            android:windowSoftInputMode="stateHidden"
+            android:exported="true">
+            <intent-filter android:label="Video 4eShopping">
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+
+                <data android:scheme="https"
+                    android:host="m.youtube.com"
+                    android:pathPrefix="/5CmRnS6ZQdE"/>
+
+                <data android:scheme="https"
+                    android:host="m.youtube.com"
+                    android:pathPrefix="/L4HWjVsnX2I"/>
+
+                <data android:scheme="https"
+                    android:host="m.youtube.com"
+                    android:pathPrefix="/QaufpZVAjCU"/>
+
+                <data android:scheme="https"
+                    android:host="m.youtube.com"
+                    android:pathPrefix="/QfHA3ScEElM"/>
+
+                <data android:scheme="https"
+                    android:host="m.youtube.com"
+                    android:pathPrefix="/oyQo_fgM8gc"/>
+
+                <data android:scheme="https"
+                    android:host="m.youtube.com"
+                    android:pathPrefix="/0M4uWa3pTR8"/>
+
+                <data android:scheme="https"
+                    android:host="m.youtube.com"
+                    android:pathPrefix="/XB-NqHz9tRE"/>
+
+                <data android:scheme="https"
+                    android:host="m.youtube.com"
+                    android:pathPrefix="/3kNZ-kYOhF4"/>
+
+                <data android:scheme="https"
+                    android:host="m.youtube.com"
+                    android:pathPrefix="/4eBvMdv7pGU"/>
+
+                <data android:scheme="https"
+                    android:host="m.youtube.com"
+                    android:pathPrefix="/8kXZCJ-Mp0Y"/>
+
+                <data android:scheme="https"
+                    android:host="m.youtube.com"
+                    android:pathPrefix="/3T4X06kaVlg"/>
+
+                <data android:scheme="https"
+                    android:host="m.youtube.com"
+                    android:pathPrefix="/Ata5UWvTzSU"/>
+            </intent-filter>
+        </activity>
         <activity
             android:name=".ui.main.ui.devartlink.letsTalk.ChatThread.ChatThreadActivity"
             android:exported="false" />

@@ -5,14 +5,20 @@ import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.ViewModelProvider
 import com.devartlab.R
+import com.devartlab.base.BaseApplication
+import com.devartlab.data.shared.DataManager
 import com.devartlab.databinding.ActivityVideoBinding
+import com.devartlab.ui.auth.login.LoginActivity
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
 
 
 class VideoActivity : AppCompatActivity() {
     lateinit var binding: ActivityVideoBinding
+    var viewModel: VideosViewModel? = null
+    lateinit var dataManager: DataManager
     var _id: String? = null
     var _name: String? = null
     var _dec: String? = null
@@ -26,6 +32,8 @@ class VideoActivity : AppCompatActivity() {
         setSupportActionBar(binding.toolbar)
         supportActionBar!!.title = getString(R.string.video)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+        viewModel = ViewModelProvider(this).get(VideosViewModel::class.java)
+        dataManager = (getApplication() as BaseApplication).dataManager!!
         if (intent.hasExtra("_id")) {
             _id = intent.getStringExtra("_id")
             binding.youtubePlayerView.addYouTubePlayerListener(object :

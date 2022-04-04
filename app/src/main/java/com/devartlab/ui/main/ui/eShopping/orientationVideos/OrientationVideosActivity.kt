@@ -15,7 +15,6 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.devartlab.R
-import com.devartlab.a4eshopping.orientationVideos.model.Item
 import com.devartlab.base.BaseApplication
 import com.devartlab.data.shared.DataManager
 import com.devartlab.databinding.ActivityOrientationVideosBinding
@@ -28,6 +27,7 @@ import com.devartlab.ui.main.ui.contactlist.ui.main.ContactsActivity
 import com.devartlab.ui.main.ui.devartlink.DevartLinkActivity
 import com.devartlab.ui.main.ui.devartlink.faq.FAQActivity
 import com.devartlab.ui.main.ui.eShopping.main.Home4EShoppingActivity
+import com.devartlab.ui.main.ui.eShopping.orientationVideos.model.ItemsVideos
 import com.devartlab.ui.main.ui.employeeservices.EmployeeServicesActivity
 import com.devartlab.ui.main.ui.employeeservices.SelfServiceActivity
 import com.devartlab.ui.main.ui.market.MarketRequestTypesActivity
@@ -43,7 +43,7 @@ class OrientationVideosActivity : AppCompatActivity() {
     lateinit var binding: ActivityOrientationVideosBinding
     var viewModel: VideosViewModel? = null
     private var adapter: VideoListAdapter? = null
-    val list = ArrayList<Item>()
+    val list = ArrayList<ItemsVideos>()
     lateinit var dataManager: DataManager
     lateinit var mediaSource: SimpleMediaSource
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -60,13 +60,6 @@ class OrientationVideosActivity : AppCompatActivity() {
         onClickListener()
         handleObserver()
         ads()
-        binding.searchBarVideo.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
-            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
-            override fun afterTextChanged(s: Editable) {
-                filter(s.toString())
-            }
-        })
     }
 
     private fun onClickListener() {
@@ -74,7 +67,13 @@ class OrientationVideosActivity : AppCompatActivity() {
         binding.swipeRefreshLayout.setOnRefreshListener {
             refresh()
         }
-
+        binding.searchBarVideo.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
+            override fun afterTextChanged(s: Editable) {
+                filter(s.toString())
+            }
+        })
     }
 
     fun handleObserver() {
@@ -92,15 +91,16 @@ class OrientationVideosActivity : AppCompatActivity() {
                     .show()
                 val intent = Intent(this, LoginActivity::class.java)
                 startActivity(intent)
-            } else if (it.items.isNullOrEmpty()) {
+            } else if (it.itemsVideos.isNullOrEmpty()) {
                 //errorMessage if data coming is null;
                 binding.tvEmptyList.setVisibility(View.VISIBLE)
                 binding.progressBar.setVisibility(View.GONE)
             } else {
                 //show data in recyclerView
                 binding.progressBar.setVisibility(View.GONE)
-                adapter = VideoListAdapter(it.items)
-                list.addAll(it.items)
+                adapter = VideoListAdapter(it.itemsVideos)
+                list.addAll(it.itemsVideos)
+                deeplink()
                 binding.recyclerListVideos.setAdapter(adapter)
                 adapter!!.setOnItemClickListener(VideoListAdapter.OnItemClickListener { pos, dataItem ->
 
@@ -117,7 +117,7 @@ class OrientationVideosActivity : AppCompatActivity() {
 
 
     private fun filter(text: String) {
-        val filteredList: ArrayList<Item> = ArrayList()
+        val filteredList: ArrayList<ItemsVideos> = ArrayList()
 
         for (item in list) {
             if (item.snippet.title.toLowerCase().contains(text.toLowerCase())) {
@@ -348,6 +348,33 @@ class OrientationVideosActivity : AppCompatActivity() {
                 )
             )
             31 -> startActivity(Intent(this@OrientationVideosActivity, FAQActivity::class.java))
+        }
+    }
+    fun deeplink() {
+        val uri = intent.data
+        if (uri != null) {
+            if (viewModel!!.dataManager.isLogin) {
+                val path = uri.toString()
+                val id: List<String> = path.split("/")
+                Log.e("idddddddddd",id[3])
+                var model: ItemsVideos? = null
+                for (m in list) {
+                    if (m.snippet.resourceId.videoId == id[3]) {
+                        Log.e("wwwwwwwwww",id[3])
+                        model = m
+                        val intent = Intent(this, VideoActivity::class.java)
+                        intent.putExtra("_id", model.snippet.resourceId.videoId)
+                        intent.putExtra("_name", model.snippet.title)
+                        intent.putExtra("_dec", model.snippet.description)
+                        intent.putExtra("_name_channel", model.snippet.channelTitle)
+                        startActivity(intent)
+                        break
+                    }
+                }
+            } else {
+                val intent = Intent(this, LoginActivity::class.java)
+                startActivity(intent)
+            }
         }
     }
 }

@@ -15,7 +15,6 @@ import com.devartlab.a4eshopping.addProductsToThePharmacy.model.addProduct.AddTo
 import com.devartlab.a4eshopping.addProductsToThePharmacy.model.searchAllPharmacy.SearchAllPharmacyResponse
 import com.devartlab.ui.main.ui.eShopping.main.model.login4EShopping.Login4EShoppingRequest
 import com.devartlab.ui.main.ui.eShopping.ticket.model.sendMessages.SendMessagesResponse
-import com.devartlab.a4eshopping.orientationVideos.model.ResponseVideos
 import com.devartlab.data.room.activity.ActivityEntity
 import com.devartlab.data.room.filterdata.FilterDataEntity
 import com.devartlab.data.room.list.ListEntity
@@ -40,6 +39,7 @@ import com.devartlab.ui.main.ui.devartlink.model.WelcomePostResponse
 import com.devartlab.ui.main.ui.eShopping.pharmacyBinding.uploadPharmacyFiles.model.pharmacydata.GetInfoPharmacyResponse
 import com.devartlab.ui.main.ui.eShopping.addProductsToThePharmacy.model.showCart.ShowCartResponse
 import com.devartlab.ui.main.ui.eShopping.main.model.login4EShopping.Login4EShoppingResponse
+import com.devartlab.ui.main.ui.eShopping.orientationVideos.model.ResponseVideos
 import com.devartlab.ui.main.ui.eShopping.pharmacyBinding.allComments.model.AllCommentsResponse
 import com.devartlab.ui.main.ui.eShopping.pharmacyBinding.model.connectPharmacy.ConnectPharmacyResponse
 import com.devartlab.ui.main.ui.eShopping.pharmacyBinding.model.searchForPharmacy.ConnetctedPharmaciesResponse

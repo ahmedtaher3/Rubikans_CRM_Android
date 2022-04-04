@@ -4,26 +4,21 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.devartlab.R;
-import com.devartlab.a4eshopping.orientationVideos.model.Item;
 import com.devartlab.databinding.ListVideoItemBinding;
-import com.squareup.picasso.Picasso;
+import com.devartlab.ui.main.ui.eShopping.orientationVideos.model.ItemsVideos;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.ViewHolder> {
 
-    List<Item> dataItems;
+    List<ItemsVideos> dataItems;
     private Context context;
 
-    public VideoListAdapter(List<Item> dataItems) {
+    public VideoListAdapter(List<ItemsVideos> dataItems) {
         this.dataItems = dataItems;
     }
 
@@ -38,7 +33,7 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, final int position) {
-        final Item dataItem = dataItems.get(position);
+        final ItemsVideos dataItem = dataItems.get(position);
         viewHolder.binding.dec.setText(dataItem.getSnippet().getDescription());
         viewHolder.binding.nameChannel.setText(dataItem.getSnippet().getChannelTitle());
         int postion=dataItem.getSnippet().getPosition()+1;
@@ -99,9 +94,9 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
     }
 
     public interface OnItemClickListener {
-        void onItemClick(int pos, Item dataItem);
+        void onItemClick(int pos, ItemsVideos dataItem);
     }
-    public void filterData(ArrayList<Item> newList ){
+    public void filterData(ArrayList<ItemsVideos> newList ){
         this.dataItems = newList;
         notifyDataSetChanged(); // refresh
     }

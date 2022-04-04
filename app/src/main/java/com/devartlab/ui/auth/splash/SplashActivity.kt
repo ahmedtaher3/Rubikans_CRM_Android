@@ -154,7 +154,6 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
 
 
         setObservers()
-        deeplink()
     }
 
     private fun setObservers() {
@@ -701,20 +700,5 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
 
     override fun getLayoutId(): Int {
         return R.layout.activity_splash
-    }
-    fun deeplink() {
-        val uri = intent.data
-        if (uri != null) {
-            if (viewModel.dataManager.isLogin) {
-                val path = uri.toString()
-                val id: List<String> = path.split("/")
-                val intent = Intent(this@SplashActivity, VideoActivity::class.java)
-                intent.putExtra("_id", id[3])
-                startActivity(intent)
-            } else {
-                val intent = Intent(this, LoginActivity::class.java)
-                startActivity(intent)
-            }
-        }
     }
 }
