@@ -142,15 +142,18 @@ class Home4EShoppingActivity : AppCompatActivity(),
         }
 
         if (model != null) {
-
             if (!model.webPageLink.isNullOrBlank()) {
-                if(model.is_external!!){
-                    binding.cardviewAds.setOnClickListener {
-                        openWebPage(model.webPageLink)
+                Log.e("dddddddddddd", model.webPageLink!!)
+                when {
+                    model.is_external!! -> {
+                        binding.cardviewAds.setOnClickListener {
+                            openWebPage(model.webPageLink)
+                        }
                     }
-                }else{
-                    binding.cardviewAds.setOnClickListener {
-                        meuNav(model.webPageLink!!.toInt())
+                    else -> {
+                        binding.cardviewAds.setOnClickListener {
+                            meuNav(model.webPageLink!!.toInt())
+                        }
                     }
                 }
             }
@@ -240,6 +243,7 @@ class Home4EShoppingActivity : AppCompatActivity(),
     }
 
     fun meuNav(id: Int) {
+        Log.e("wwwwwwwwww", id.toString())
         when (id) {
             1 -> startActivity(Intent(this@Home4EShoppingActivity, MainActivity::class.java))
             2, 8 -> {
