@@ -58,7 +58,7 @@ class VideoActivity : AppCompatActivity() {
         binding.ivShare.setOnClickListener {
             val sendIntent = Intent(Intent.ACTION_SEND)
             sendIntent.type = "text/plain"
-            val shareBody = _name+" "+_dec+" "+_name_channel+" "+"https://m.youtube.com/$_id"
+            val shareBody = _name+" "+_dec+" "+_name_channel+" "+"https://www.4eshopping.com/$_id"
             sendIntent.putExtra(Intent.EXTRA_TEXT, shareBody)
             startActivity(Intent.createChooser(sendIntent, "Share video $_name"))
         }
