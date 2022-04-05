@@ -314,7 +314,7 @@
             android:name=".ui.main.ui.eShopping.orientationVideos.OrientationVideosActivity"
             android:windowSoftInputMode="stateHidden"
             android:exported="true">
-            <intent-filter android:label="Video 4eShopping">
+            <intent-filter android:label="Video 4eShopping CRM">
                 <action android:name="android.intent.action.VIEW"/>
                 <category android:name="android.intent.category.BROWSABLE"/>
                 <category android:name="android.intent.category.DEFAULT"/>
