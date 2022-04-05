@@ -14,7 +14,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.devartlab.R;
 import com.devartlab.a4eshopping.addProductsToThePharmacy.model.Pharmacy.Prod;
-import com.devartlab.a4eshopping.orientationVideos.model.Item;
 import com.devartlab.databinding.AddProductsPharmacyItemBinding;
 
 import java.util.ArrayList;
