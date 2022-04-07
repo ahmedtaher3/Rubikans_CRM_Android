@@ -45,6 +45,7 @@ import com.devartlab.utils.ProgressLoading.show
 import com.jarvanmo.exoplayerview.media.SimpleMediaSource
 import com.jarvanmo.exoplayerview.ui.ExoVideoView
 import ss.com.bannerslider.Slider
+import ss.com.bannerslider.event.OnSlideClickListener
 import java.util.*
 
 class ContactsActivity : AppCompatActivity() {
@@ -274,6 +275,22 @@ class ContactsActivity : AppCompatActivity() {
                     list.add(i?.link!!)
                 }
                 bannerslider?.setAdapter(MainSliderAdapter(list))
+                bannerslider.setOnSlideClickListener {
+                    bannerslider.setOnSlideClickListener(OnSlideClickListener {
+                        if (!model.webPageLink.isNullOrBlank()) {
+                            when {
+                                model.is_external!! -> {
+                                    val uri = Uri.parse(model.webPageLink)
+                                    val intent = Intent(Intent.ACTION_VIEW, uri)
+                                    startActivity(intent)
+                                }
+                                else -> {
+                                    meuNav(model.webPageLink!!.toInt(),this@ContactsActivity)
+                                }
+                            }
+                        }
+                    })
+                }
             }
         }
         if (model.show_ad == true) {

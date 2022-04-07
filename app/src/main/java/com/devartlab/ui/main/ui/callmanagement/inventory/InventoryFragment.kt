@@ -40,6 +40,7 @@ import com.google.gson.Gson
 import com.jarvanmo.exoplayerview.media.SimpleMediaSource
 import com.jarvanmo.exoplayerview.ui.ExoVideoView
 import ss.com.bannerslider.Slider
+import ss.com.bannerslider.event.OnSlideClickListener
 
 
 class InventoryFragment : BaseFragment<FragmentTradeReportsBinding>(),
@@ -275,6 +276,20 @@ class InventoryFragment : BaseFragment<FragmentTradeReportsBinding>(),
                     list.add(i?.link!!)
                 }
                 bannerslider?.setAdapter(MainSliderAdapter(list))
+                bannerslider.setOnSlideClickListener {
+                    bannerslider.setOnSlideClickListener(OnSlideClickListener {
+                        if (!model.webPageLink.isNullOrBlank()) {
+                            when {
+                                model.is_external!! -> {
+                                    openWebPage(model.webPageLink)
+                                }
+                                else -> {
+                                    meuNav(model.webPageLink!!.toInt(),context)
+                                }
+                            }
+                        }
+                    })
+                }
             }
         }
         if (model.show_ad == true) {

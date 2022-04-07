@@ -65,6 +65,7 @@ import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_new_customer.*
 import qruz.t.qruzdriverapp.ui.main.fragments.profile.changelang.ChangeLanguage
 import ss.com.bannerslider.Slider
+import ss.com.bannerslider.event.OnSlideClickListener
 import java.util.*
 import java.util.concurrent.TimeUnit
 import kotlin.collections.ArrayList
@@ -703,6 +704,20 @@ class MainActivity : BaseActivity<ActivityMainBinding?>(), View.OnClickListener,
                         list.add(i?.link!!)
                     }
                     binding.bannerSlider?.setAdapter(MainSliderAdapter(list))
+                    binding.bannerSlider.setOnSlideClickListener {
+                        binding.bannerSlider.setOnSlideClickListener(OnSlideClickListener {
+                            if (!model.webPageLink.isNullOrBlank()) {
+                                when {
+                                    model.is_external!! -> {
+                                        openWebPage(model.webPageLink)
+                                    }
+                                    else -> {
+                                        meuNav(model.webPageLink!!.toInt(),this@MainActivity)
+                                    }
+                                }
+                            }
+                        })
+                    }
                 }
             }
             if (model.show_ad == true) {

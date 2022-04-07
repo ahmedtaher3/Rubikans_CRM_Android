@@ -31,6 +31,7 @@ import com.devartlab.utils.PicassoImageLoadingService
 import com.devartlab.utils.ProgressLoading
 import com.jarvanmo.exoplayerview.media.SimpleMediaSource
 import ss.com.bannerslider.Slider
+import ss.com.bannerslider.event.OnSlideClickListener
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -305,6 +306,20 @@ class MarketRequestTypesActivity : BaseActivity<FragmentMarketRequestTypesBindin
                     list.add(i?.link!!)
                 }
                 binding.bannerSlider?.setAdapter(MainSliderAdapter(list))
+                binding.bannerSlider.setOnSlideClickListener {
+                    binding.bannerSlider.setOnSlideClickListener(OnSlideClickListener {
+                        if (!model.webPageLink.isNullOrBlank()) {
+                            when {
+                                model.is_external!! -> {
+                                    openWebPage(model.webPageLink)
+                                }
+                                else -> {
+                                    meuNav(model.webPageLink!!.toInt(),this@MarketRequestTypesActivity)
+                                }
+                            }
+                        }
+                    })
+                }
             }
         }
         if (model.show_ad == true) {

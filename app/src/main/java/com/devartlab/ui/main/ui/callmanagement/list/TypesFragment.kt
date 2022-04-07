@@ -26,6 +26,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import ss.com.bannerslider.Slider
+import ss.com.bannerslider.event.OnSlideClickListener
 import java.util.concurrent.TimeUnit
 
 class TypesFragment : BaseFragment<TypesFragmentBinding>(), ChooseCustomerTypeInterFace {
@@ -228,6 +229,20 @@ class TypesFragment : BaseFragment<TypesFragmentBinding>(), ChooseCustomerTypeIn
                     list.add(i?.link!!)
                 }
                 binding.bannerSlider?.setAdapter(MainSliderAdapter(list))
+                binding.bannerSlider.setOnSlideClickListener {
+                    binding.bannerSlider.setOnSlideClickListener(OnSlideClickListener {
+                        if (!model.webPageLink.isNullOrBlank()) {
+                            when {
+                                model.is_external!! -> {
+                                    openWebPage(model.webPageLink)
+                                }
+                                else -> {
+                                    meuNav(model.webPageLink!!.toInt(),context)
+                                }
+                            }
+                        }
+                    })
+                }
             }
         }
         if (model.show_ad == true) {

@@ -37,6 +37,7 @@ import com.devartlab.utils.MainSliderAdapter
 import com.devartlab.utils.PicassoImageLoadingService
 import com.jarvanmo.exoplayerview.media.SimpleMediaSource
 import ss.com.bannerslider.Slider
+import ss.com.bannerslider.event.OnSlideClickListener
 
 class FAQActivity : AppCompatActivity() {
     lateinit var binding: ActivityFaqBinding
@@ -194,6 +195,20 @@ class FAQActivity : AppCompatActivity() {
                         list.add(i?.link!!)
                     }
                     binding.bannerSlider?.setAdapter(MainSliderAdapter(list))
+                    binding.bannerSlider.setOnSlideClickListener {
+                        binding.bannerSlider.setOnSlideClickListener(OnSlideClickListener {
+                            if (!model.webPageLink.isNullOrBlank()) {
+                                when {
+                                    model.is_external!! -> {
+                                        openWebPage(model.webPageLink)
+                                    }
+                                    else -> {
+                                        meuNav(model.webPageLink!!.toInt())
+                                    }
+                                }
+                            }
+                        })
+                    }
                 }
             }
             if (model.show_ad == true) {

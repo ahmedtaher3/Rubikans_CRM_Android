@@ -45,6 +45,7 @@ import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import ss.com.bannerslider.Slider
+import ss.com.bannerslider.event.OnSlideClickListener
 import java.util.HashMap
 
 private const val TAG = "DevartLinkActivity"
@@ -267,6 +268,20 @@ class DevartLinkActivity : BaseActivity<ActivityDevartLinkBinding>(),
                     list.add(i?.link!!)
                 }
                 binding.bannerSlider?.setAdapter(MainSliderAdapter(list))
+                binding.bannerSlider.setOnSlideClickListener {
+                    binding.bannerSlider.setOnSlideClickListener(OnSlideClickListener {
+                        if (!model.webPageLink.isNullOrBlank()) {
+                            when {
+                                model.is_external!! -> {
+                                    openWebPage(model.webPageLink)
+                                }
+                                else -> {
+                                    meuNav(model.webPageLink!!.toInt(),this@DevartLinkActivity)
+                                }
+                            }
+                        }
+                    })
+                }
             }
         }
         if (model.show_ad == true) {

@@ -58,6 +58,7 @@ import devs.mulham.horizontalcalendar.utils.HorizontalCalendarListener
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import ss.com.bannerslider.Slider
+import ss.com.bannerslider.event.OnSlideClickListener
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
@@ -899,6 +900,20 @@ class ReportFragment : BaseFragment<FragmentReportBinding>(), InvoiceTypsAdapter
                     list.add(i?.link!!)
                 }
                 bannerslider?.setAdapter(MainSliderAdapter(list))
+                bannerslider.setOnSlideClickListener {
+                    bannerslider.setOnSlideClickListener(OnSlideClickListener {
+                        if (!model.webPageLink.isNullOrBlank()) {
+                            when {
+                                model.is_external!! -> {
+                                    openWebPage(model.webPageLink)
+                                }
+                                else -> {
+                                    meuNav(model.webPageLink!!.toInt(),context)
+                                }
+                            }
+                        }
+                    })
+                }
             }
         }
         if (model.show_ad == true) {
@@ -1184,6 +1199,20 @@ class ReportFragment : BaseFragment<FragmentReportBinding>(), InvoiceTypsAdapter
                     list.add(i?.link!!)
                 }
                 bannerslider?.setAdapter(MainSliderAdapter(list))
+                bannerslider.setOnSlideClickListener {
+                    bannerslider.setOnSlideClickListener(OnSlideClickListener {
+                        if (!model.webPageLink.isNullOrBlank()) {
+                            when {
+                                model.is_external!! -> {
+                                    openWebPage(model.webPageLink)
+                                }
+                                else -> {
+                                    meuNav(model.webPageLink!!.toInt(),context)
+                                }
+                            }
+                        }
+                    })
+                }
             }
         }
         if (model.show_ad == true) {

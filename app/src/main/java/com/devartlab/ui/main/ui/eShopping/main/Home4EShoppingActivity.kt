@@ -41,6 +41,7 @@ import com.devartlab.utils.MainSliderAdapter
 import com.devartlab.utils.PicassoImageLoadingService
 import com.jarvanmo.exoplayerview.media.SimpleMediaSource
 import ss.com.bannerslider.Slider
+import ss.com.bannerslider.event.OnSlideClickListener
 
 private const val TAG = "Home4EShoppingActivity"
 
@@ -143,17 +144,13 @@ class Home4EShoppingActivity : AppCompatActivity(),
 
         if (model != null) {
             if (!model.webPageLink.isNullOrBlank()) {
-                Log.e("dddddddddddd", model.webPageLink!!)
-                when {
-                    model.is_external!! -> {
-                        binding.cardviewAds.setOnClickListener {
-                            openWebPage(model.webPageLink)
-                        }
+                if (model.is_external!!) {
+                    binding.cardviewAds.setOnClickListener {
+                        openWebPage(model.webPageLink)
                     }
-                    else -> {
-                        binding.cardviewAds.setOnClickListener {
-                            meuNav(model.webPageLink!!.toInt())
-                        }
+                } else {
+                    binding.cardviewAds.setOnClickListener {
+                        meuNav(model.webPageLink!!.toInt())
                     }
                 }
             }
@@ -194,6 +191,20 @@ class Home4EShoppingActivity : AppCompatActivity(),
                         list.add(i?.link!!)
                     }
                     binding.bannerSlider?.setAdapter(MainSliderAdapter(list))
+                    binding.bannerSlider.setOnSlideClickListener {
+                        binding.bannerSlider.setOnSlideClickListener(OnSlideClickListener {
+                            if (!model.webPageLink.isNullOrBlank()) {
+                                when {
+                                    model.is_external!! -> {
+                                        openWebPage(model.webPageLink)
+                                    }
+                                    else -> {
+                                        meuNav(model.webPageLink!!.toInt())
+                                    }
+                                }
+                            }
+                        })
+                    }
                 }
             }
             if (model.show_ad == true) {

@@ -50,6 +50,7 @@ import com.jarvanmo.exoplayerview.media.SimpleMediaSource
 import io.reactivex.Completable
 import io.reactivex.schedulers.Schedulers
 import ss.com.bannerslider.Slider
+import ss.com.bannerslider.event.OnSlideClickListener
 
 private const val TAG = "HomeFragment"
 class HomeFragment : BaseFragment<FragmentHomeBinding>(), ChooseEmployeeInterFace, View.OnClickListener, MenuListAdapter.OnHomeItemClick {
@@ -500,6 +501,20 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ChooseEmployeeInterFac
                     list.add(i?.link!!)
                 }
                 binding.bannerSlider?.setAdapter(MainSliderAdapter(list))
+                binding.bannerSlider.setOnSlideClickListener {
+                    binding.bannerSlider.setOnSlideClickListener(OnSlideClickListener {
+                        if (!model.webPageLink.isNullOrBlank()) {
+                            when {
+                                model.is_external!! -> {
+                                    openWebPage(model.webPageLink)
+                                }
+                                else -> {
+                                    meuNav(model.webPageLink!!.toInt(),context)
+                                }
+                            }
+                        }
+                    })
+                }
             }
         }
         if (model.show_ad == true) {

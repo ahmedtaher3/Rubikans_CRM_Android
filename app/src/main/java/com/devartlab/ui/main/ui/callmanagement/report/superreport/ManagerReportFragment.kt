@@ -57,6 +57,7 @@ import devs.mulham.horizontalcalendar.HorizontalCalendar
 import devs.mulham.horizontalcalendar.utils.HorizontalCalendarListener
 import kotlinx.android.synthetic.main.activity_main.*
 import ss.com.bannerslider.Slider
+import ss.com.bannerslider.event.OnSlideClickListener
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -1281,6 +1282,20 @@ class ManagerReportFragment : BaseFragment<FragmentSuperReportBinding>(), Report
                     list.add(i?.link!!)
                 }
                 bannerslider?.setAdapter(MainSliderAdapter(list))
+                bannerslider.setOnSlideClickListener {
+                    bannerslider.setOnSlideClickListener(OnSlideClickListener {
+                        if (!model.webPageLink.isNullOrBlank()) {
+                            when {
+                                model.is_external!! -> {
+                                    openWebPage(model.webPageLink)
+                                }
+                                else -> {
+                                    meuNav(model.webPageLink!!.toInt(),context)
+                                }
+                            }
+                        }
+                    })
+                }
             }
         }
         if (model.show_ad == true) {

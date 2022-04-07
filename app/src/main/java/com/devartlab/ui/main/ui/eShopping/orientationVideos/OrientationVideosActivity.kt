@@ -37,6 +37,7 @@ import com.devartlab.utils.MainSliderAdapter
 import com.devartlab.utils.PicassoImageLoadingService
 import com.jarvanmo.exoplayerview.media.SimpleMediaSource
 import ss.com.bannerslider.Slider
+import ss.com.bannerslider.event.OnSlideClickListener
 
 
 class OrientationVideosActivity : AppCompatActivity() {
@@ -122,7 +123,6 @@ class OrientationVideosActivity : AppCompatActivity() {
         for (item in list) {
             if (item.snippet.title.toLowerCase().contains(text.toLowerCase())) {
                 filteredList.add(item)
-                Log.e("xxx", item.toString())
             }
         }
         adapter!!.filterData(filteredList)
@@ -208,6 +208,20 @@ class OrientationVideosActivity : AppCompatActivity() {
                         list.add(i?.link!!)
                     }
                     binding.bannerSlider?.setAdapter(MainSliderAdapter(list))
+                    binding.bannerSlider.setOnSlideClickListener {
+                        binding.bannerSlider.setOnSlideClickListener(OnSlideClickListener {
+                            if (!model.webPageLink.isNullOrBlank()) {
+                                when {
+                                    model.is_external!! -> {
+                                        openWebPage(model.webPageLink)
+                                    }
+                                    else -> {
+                                        meuNav(model.webPageLink!!.toInt())
+                                    }
+                                }
+                            }
+                        })
+                    }
                 }
             }
             if (model.show_ad == true) {
@@ -356,11 +370,9 @@ class OrientationVideosActivity : AppCompatActivity() {
             if (viewModel!!.dataManager.isLogin) {
                 val path = uri.toString()
                 val id: List<String> = path.split("/")
-                Log.e("idddddddddd",id[3])
                 var model: ItemsVideos? = null
                 for (m in list) {
                     if (m.snippet.resourceId.videoId == id[3]) {
-                        Log.e("wwwwwwwwww",id[3])
                         model = m
                         val intent = Intent(this, VideoActivity::class.java)
                         intent.putExtra("_id", model.snippet.resourceId.videoId)

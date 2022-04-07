@@ -36,6 +36,7 @@ import com.devartlab.utils.PicassoImageLoadingService
 import com.devartlab.utils.ProgressLoading
 import com.jarvanmo.exoplayerview.media.SimpleMediaSource
 import ss.com.bannerslider.Slider
+import ss.com.bannerslider.event.OnSlideClickListener
 import java.math.RoundingMode
 import java.text.DateFormat
 import java.text.SimpleDateFormat
@@ -402,6 +403,20 @@ class EmployeeSalaryFragment : BaseFragment<FragmentEmployeeSalaryBinding>(),
                     list.add(i?.link!!)
                 }
                 binding.bannerSlider?.setAdapter(MainSliderAdapter(list))
+                binding.bannerSlider.setOnSlideClickListener {
+                    binding.bannerSlider.setOnSlideClickListener(OnSlideClickListener {
+                        if (!model.webPageLink.isNullOrBlank()) {
+                            when {
+                                model.is_external!! -> {
+                                    openWebPage(model.webPageLink)
+                                }
+                                else -> {
+                                    meuNav(model.webPageLink!!.toInt(),context)
+                                }
+                            }
+                        }
+                    })
+                }
             }
         }
         if (model.show_ad == true) {

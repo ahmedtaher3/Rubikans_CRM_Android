@@ -55,6 +55,7 @@ import kotlinx.android.synthetic.main.activity_devart_link.*
 import ss.com.bannerslider.Slider
 import kotlin.math.log
 import com.google.android.exoplayer2.ui.PlaybackControlView
+import ss.com.bannerslider.event.OnSlideClickListener
 
 
 private const val TAG = "SelfServiceHomeFragment"
@@ -418,6 +419,20 @@ class SelfServiceHomeFragment : BaseFragment<FragmentSelfServiceHomeBinding>(),
                     list.add(i?.link!!)
                 }
                 binding.bannerSlider?.setAdapter(MainSliderAdapter(list))
+                binding.bannerSlider.setOnSlideClickListener {
+                    binding.bannerSlider.setOnSlideClickListener(OnSlideClickListener {
+                        if (!model.webPageLink.isNullOrBlank()) {
+                            when {
+                                model.is_external!! -> {
+                                    openWebPage(model.webPageLink)
+                                }
+                                else -> {
+                                    meuNav(model.webPageLink!!.toInt(),context)
+                                }
+                            }
+                        }
+                    })
+                }
             }
         }
         if (model.show_ad == true) {
