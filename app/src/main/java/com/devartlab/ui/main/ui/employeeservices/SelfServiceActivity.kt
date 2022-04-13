@@ -23,7 +23,6 @@ import com.devartlab.ui.main.MainViewModel
 import com.devartlab.ui.main.ui.callmanagement.employee.EmployeeReportActivity
 import com.devartlab.ui.main.ui.contactlist.ui.main.ContactsActivity
 import com.devartlab.ui.main.ui.devartlink.DevartLinkActivity
-import com.devartlab.ui.main.ui.devartlink.faq.FAQActivity
 import com.devartlab.ui.main.ui.eShopping.main.Home4EShoppingActivity
 import com.devartlab.ui.main.ui.eShopping.orientationVideos.OrientationVideosActivity
 import com.devartlab.ui.main.ui.employeeservices.home.SelfServiceHomeFragment

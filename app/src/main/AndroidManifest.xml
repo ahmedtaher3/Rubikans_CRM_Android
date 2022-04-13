@@ -46,12 +46,6 @@
             android:name=".ui.main.ui.devartlink.handBook.HandBookActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.main.ui.devartlink.faq.subFAQ.SubFAQActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.main.ui.devartlink.faq.sectionFAQ.SectionsFAQActivity"
-            android:exported="false" />
-        <activity
             android:name=".ui.main.ui.devartlink.devartAcademy.DevartAcademyActivity"
             android:exported="false" />
         <activity
@@ -62,9 +56,6 @@
             android:exported="false" />
         <activity
             android:name=".ui.main.ui.devartlink.devartCommunity.DevartCommunityActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.main.ui.devartlink.faq.FAQActivity"
             android:exported="false" />
         <activity
             android:name=".ui.main.ui.devartLabTeam.DevartLabTeamActivity"

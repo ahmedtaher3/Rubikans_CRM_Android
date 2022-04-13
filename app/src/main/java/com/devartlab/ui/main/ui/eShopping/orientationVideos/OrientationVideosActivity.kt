@@ -25,7 +25,6 @@ import com.devartlab.ui.main.ui.callmanagement.CallManagementActivity
 import com.devartlab.ui.main.ui.callmanagement.employee.EmployeeReportActivity
 import com.devartlab.ui.main.ui.contactlist.ui.main.ContactsActivity
 import com.devartlab.ui.main.ui.devartlink.DevartLinkActivity
-import com.devartlab.ui.main.ui.devartlink.faq.FAQActivity
 import com.devartlab.ui.main.ui.eShopping.main.Home4EShoppingActivity
 import com.devartlab.ui.main.ui.eShopping.orientationVideos.model.ItemsVideos
 import com.devartlab.ui.main.ui.employeeservices.EmployeeServicesActivity
@@ -361,7 +360,6 @@ class OrientationVideosActivity : AppCompatActivity() {
                     OrientationVideosActivity::class.java
                 )
             )
-            31 -> startActivity(Intent(this@OrientationVideosActivity, FAQActivity::class.java))
         }
     }
     fun deeplink() {

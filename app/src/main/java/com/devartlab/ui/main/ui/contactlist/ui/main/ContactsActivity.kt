@@ -32,7 +32,6 @@ import com.devartlab.ui.main.ui.callmanagement.employee.EmployeeReportActivity
 import com.devartlab.ui.main.ui.contactlist.pojo.Contactlist
 import com.devartlab.ui.main.ui.contactlist.pojo.Request
 import com.devartlab.ui.main.ui.devartlink.DevartLinkActivity
-import com.devartlab.ui.main.ui.devartlink.faq.FAQActivity
 import com.devartlab.ui.main.ui.eShopping.main.Home4EShoppingActivity
 import com.devartlab.ui.main.ui.eShopping.orientationVideos.OrientationVideosActivity
 import com.devartlab.ui.main.ui.market.MarketRequestTypesActivity
@@ -324,7 +323,6 @@ class ContactsActivity : AppCompatActivity() {
             14 -> context.startActivity(Intent(context, ContactsActivity::class.java))
             23 -> context.startActivity(Intent(context, Home4EShoppingActivity::class.java))
             26 -> context.startActivity(Intent(context, OrientationVideosActivity::class.java))
-            31 -> context.startActivity(Intent(context, FAQActivity::class.java))
         }
     }
 }

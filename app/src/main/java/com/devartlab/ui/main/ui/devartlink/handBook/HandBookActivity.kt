@@ -79,6 +79,7 @@ class HandBookActivity : AppCompatActivity() {
                 it!!.data.isEmpty() -> {
                     //errorMessage if data coming is null;
                     binding.tvEmptyList.setVisibility(View.VISIBLE)
+                    binding.progressBar.setVisibility(View.GONE)
                 }
                 else -> {
                     //show data in recyclerView

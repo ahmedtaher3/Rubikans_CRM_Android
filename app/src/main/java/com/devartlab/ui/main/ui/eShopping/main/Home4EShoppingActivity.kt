@@ -24,7 +24,6 @@ import com.devartlab.ui.main.ui.callmanagement.CallManagementActivity
 import com.devartlab.ui.main.ui.callmanagement.employee.EmployeeReportActivity
 import com.devartlab.ui.main.ui.contactlist.ui.main.ContactsActivity
 import com.devartlab.ui.main.ui.devartlink.DevartLinkActivity
-import com.devartlab.ui.main.ui.devartlink.faq.FAQActivity
 import com.devartlab.ui.main.ui.eShopping.addProductsToThePharmacy.AddProductsPharmacyActivity
 import com.devartlab.ui.main.ui.eShopping.orientationVideos.OrientationVideosActivity
 import com.devartlab.ui.main.ui.eShopping.pharmacyBinding.PharmacyBindingActivity
@@ -323,7 +322,6 @@ class Home4EShoppingActivity : AppCompatActivity(),
             }
             23 -> startActivity(Intent(this@Home4EShoppingActivity, Home4EShoppingActivity::class.java))
             26 -> startActivity(Intent(this@Home4EShoppingActivity, OrientationVideosActivity::class.java))
-            31 -> startActivity(Intent(this@Home4EShoppingActivity, FAQActivity::class.java))
         }
     }
 }

@@ -22,7 +22,6 @@ import com.devartlab.ui.main.ui.callmanagement.employee.EmployeeReportActivity;
 import com.devartlab.ui.main.ui.callmanagement.plan.PlanFragment;
 import com.devartlab.ui.main.ui.contactlist.ui.main.ContactsActivity;
 import com.devartlab.ui.main.ui.devartlink.DevartLinkActivity;
-import com.devartlab.ui.main.ui.devartlink.faq.FAQActivity;
 import com.devartlab.ui.main.ui.eShopping.main.Home4EShoppingActivity;
 import com.devartlab.ui.main.ui.eShopping.orientationVideos.OrientationVideosActivity;
 import com.devartlab.ui.main.ui.employeeservices.EmployeeServicesActivity;
@@ -194,9 +193,6 @@ public abstract class BaseFragment<T extends ViewDataBinding> extends Fragment {
                 break;
             case 26:
                 context.startActivity(new Intent(context, OrientationVideosActivity.class));
-                break;
-            case 31:
-                context.startActivity(new Intent(context, FAQActivity.class));
                 break;
         }
     }

@@ -25,7 +25,6 @@ import com.devartlab.ui.main.ui.callmanagement.home.MenuListAdapter
 import com.devartlab.ui.main.ui.devartlink.calender.CalenderActivity
 import com.devartlab.ui.main.ui.devartlink.devartAcademy.DevartAcademyActivity
 import com.devartlab.ui.main.ui.devartlink.devartCommunity.DevartCommunityActivity
-import com.devartlab.ui.main.ui.devartlink.faq.FAQActivity
 import com.devartlab.ui.main.ui.devartlink.handBook.HandBookActivity
 import com.devartlab.ui.main.ui.devartlink.letsTalk.ChatThread.ChatListViewModel
 import com.devartlab.ui.main.ui.devartlink.letsTalk.LetsTalkActivity
@@ -81,7 +80,7 @@ class DevartLinkActivity : BaseActivity<ActivityDevartLinkBinding>(),
 
         val list = ArrayList<CardModel>()
 
-        list.add(CardModel(1, resources.getString(R.string.lets_talk), R.drawable.ic_talk_icon_02))
+//        list.add(CardModel(1, resources.getString(R.string.lets_talk), R.drawable.ic_talk_icon_02))
         list.add(CardModel(2, resources.getString(R.string.faq), R.drawable.ic_faq))
         list.add(CardModel(3, resources.getString(R.string.community), R.drawable.ic_community))
         list.add(CardModel(4, resources.getString(R.string.academy), R.drawable.ic_academy))

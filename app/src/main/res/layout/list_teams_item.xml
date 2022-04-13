@@ -11,7 +11,7 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/homeScreen_list"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="140dp"
         app:cardBackgroundColor="@android:color/white"
         app:cardCornerRadius="5dp"
         app:cardElevation="2dp"
@@ -21,7 +21,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:padding="10dp">
+            android:padding="5dp">
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/image"
@@ -29,7 +29,7 @@
                 android:layout_height="60dp"
                 app:civ_border_width="1dp"
                 app:civ_border_color="@color/blue"
-                android:src="@drawable/ic_team"/>
+                tools:src="@drawable/ic_team"/>
                 <TextView
                     android:id="@+id/name"
                     android:layout_width="wrap_content"
@@ -43,7 +43,6 @@
                     android:id="@+id/tv_dec_team"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="5dp"
                     android:visibility="visible"
                     tools:text="Mostafa kamel kameldfdsfdsfdsfsdfsdfscxcxzccxdfdsfsdfsdfsd"
                     android:textColor="@color/colorGray4"

@@ -1,6 +1,8 @@
 package com.devartlab.ui.main.ui.devartlink.handBook;
 
 import android.content.Context;
+import android.os.Build;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,7 +42,12 @@ public class IndexSubHandBookAdapter extends RecyclerView.Adapter<IndexSubHandBo
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, final int position) {
         final Sub dataItem = dataItems.get(position);
-        viewHolder.binding.tvSubjectTitle.setText(dataItem.getTitle());
+//        viewHolder.binding.tvSubjectTitle.setText(dataItem.getTitle());
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            viewHolder.binding.tvSubjectTitle.setText(
+                    Html.fromHtml(dataItem.getTitle(), Html.FROM_HTML_MODE_LEGACY));
+        } else
+            viewHolder.binding.tvSubjectTitle.setText(Html.fromHtml(dataItem.getTitle()));
 
         viewHolder.binding.ivHideShowTitle.setOnClickListener(new View.OnClickListener() {
             @Override
