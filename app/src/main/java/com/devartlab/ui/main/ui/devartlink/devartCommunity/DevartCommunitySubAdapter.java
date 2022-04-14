@@ -1,6 +1,8 @@
 package com.devartlab.ui.main.ui.devartlink.devartCommunity;
 
 import android.content.Context;
+import android.os.Build;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,7 +42,12 @@ public class DevartCommunitySubAdapter extends RecyclerView.Adapter<DevartCommun
 
         viewHolder.binding.name.setText(dataItem.getName());
         Glide.with(context).load("https://devartlink.devartlab.com/assets/images/"+dataItem.getImage()).centerCrop().into(viewHolder.binding.image);
-        viewHolder.binding.tvDecTeam.setText( dataItem.getSubtitle());
+//        viewHolder.binding.tvDecTeam.setText( dataItem.getSubtitle());
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            viewHolder.binding.tvDecTeam.setText(
+                    Html.fromHtml(dataItem.getSubtitle(), Html.FROM_HTML_MODE_LEGACY));
+        } else
+            viewHolder.binding.tvDecTeam.setText(Html.fromHtml(dataItem.getSubtitle()));
         if (onItemClickListener != null) {
             viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

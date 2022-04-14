@@ -311,51 +311,51 @@
                 <category android:name="android.intent.category.DEFAULT"/>
 
                 <data android:scheme="https"
-                    android:host="www.4eshopping.com"
+                    android:host="youtu.be"
                     android:pathPrefix="/5CmRnS6ZQdE"/>
 
                 <data android:scheme="https"
-                    android:host="www.4eshopping.com"
+                    android:host="youtu.be"
                     android:pathPrefix="/L4HWjVsnX2I"/>
 
                 <data android:scheme="https"
-                    android:host="www.4eshopping.com"
+                    android:host="youtu.be"
                     android:pathPrefix="/QaufpZVAjCU"/>
 
                 <data android:scheme="https"
-                    android:host="www.4eshopping.com"
+                    android:host="youtu.be"
                     android:pathPrefix="/QfHA3ScEElM"/>
 
                 <data android:scheme="https"
-                    android:host="www.4eshopping.com"
+                    android:host="youtu.be"
                     android:pathPrefix="/oyQo_fgM8gc"/>
 
                 <data android:scheme="https"
-                    android:host="www.4eshopping.com"
+                    android:host="youtu.be"
                     android:pathPrefix="/0M4uWa3pTR8"/>
 
                 <data android:scheme="https"
-                    android:host="www.4eshopping.com"
+                    android:host="youtu.be"
                     android:pathPrefix="/XB-NqHz9tRE"/>
 
                 <data android:scheme="https"
-                    android:host="www.4eshopping.com"
+                    android:host="youtu.be"
                     android:pathPrefix="/3kNZ-kYOhF4"/>
 
                 <data android:scheme="https"
-                    android:host="www.4eshopping.com"
+                    android:host="youtu.be"
                     android:pathPrefix="/4eBvMdv7pGU"/>
 
                 <data android:scheme="https"
-                    android:host="www.4eshopping.com"
+                    android:host="youtu.be"
                     android:pathPrefix="/8kXZCJ-Mp0Y"/>
 
                 <data android:scheme="https"
-                    android:host="www.4eshopping.com"
+                    android:host="youtu.be"
                     android:pathPrefix="/3T4X06kaVlg"/>
 
                 <data android:scheme="https"
-                    android:host="www.4eshopping.com"
+                    android:host="youtu.be"
                     android:pathPrefix="/Ata5UWvTzSU"/>
             </intent-filter>
         </activity>

@@ -1,5 +1,6 @@
 package com.devartlab.ui.main.ui.devartlink.devartCommunity
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.databinding.DataBindingUtil
@@ -46,6 +47,13 @@ class DevartCommunityVideoActivity : AppCompatActivity() {
             _name_channel = intent.getStringExtra("_name_channel")
             binding.nameChannel.loadDataWithBaseURL(
                 null, _name_channel!!, "text/html", "utf-8", null)
+        }
+        binding.ivShare.setOnClickListener {
+            val sendIntent = Intent(Intent.ACTION_SEND)
+            sendIntent.type = "text/plain"
+            val shareBody = "$_name $_name_channel https://youtu.be/$_id"
+            sendIntent.putExtra(Intent.EXTRA_TEXT, shareBody)
+            startActivity(Intent.createChooser(sendIntent, "Share video $_name"))
         }
     }
 

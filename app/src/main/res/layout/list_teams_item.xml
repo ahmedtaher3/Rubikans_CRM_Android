@@ -11,7 +11,7 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/homeScreen_list"
         android:layout_width="match_parent"
-        android:layout_height="140dp"
+        android:layout_height="wrap_content"
         app:cardBackgroundColor="@android:color/white"
         app:cardCornerRadius="5dp"
         app:cardElevation="2dp"
