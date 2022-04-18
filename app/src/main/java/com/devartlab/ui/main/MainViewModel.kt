@@ -74,7 +74,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     val responseLiveRequests: MutableLiveData<GoogleRequestResponse>
     val syncOfflineData: MutableLiveData<ResponseModel>
     val allProducts: MutableLiveData<List<ProductEntity>>
-    var errorMessage: MutableLiveData<Int>
+    var errorMessage: MutableLiveData<String>
         protected set
     var welcomePostResponse: MutableLiveData<WelcomePostResponse?>
         protected set
@@ -469,12 +469,12 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
                     if (response.isSuccessful) {
                         welcomePostResponse.postValue(response.body())
                     } else {
-                        welcomePostResponse.postValue(response.body())
+                        Toast.makeText(getApplication(), "error in response data", Toast.LENGTH_SHORT).show()
                     }
                 }
 
                 override fun onFailure(call: Call<WelcomePostResponse?>, t: Throwable) {
-                    errorMessage.postValue(1)
+                    errorMessage.postValue(t.localizedMessage)
                 }
             })
     }

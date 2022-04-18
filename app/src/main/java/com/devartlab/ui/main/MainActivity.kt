@@ -201,15 +201,17 @@ class MainActivity : BaseActivity<ActivityMainBinding?>(), View.OnClickListener,
     private fun setObservers() {
         //welcome post dialog
         viewModel.welcomePostResponse.observe(this, Observer {
-            if (UserPreferenceHelper.getWelcomeDialog()!=null){
-                if (UserPreferenceHelper.getWelcomeDialog().image!=it!!.data.image
-                    ||UserPreferenceHelper.getWelcomeDialog().link!=it!!.data.link){
+            if (it!!.code==200){
+                if (UserPreferenceHelper.getWelcomeDialog()!=null){
+                    if (UserPreferenceHelper.getWelcomeDialog().image!=it!!.data.image
+                        ||UserPreferenceHelper.getWelcomeDialog().link!=it!!.data.link){
+                        showWelcomePostDialog(it!!.data.image,it.data.link)
+                        UserPreferenceHelper.saveWelcomeDialog(it.data)
+                    }
+                }else{
                     showWelcomePostDialog(it!!.data.image,it.data.link)
                     UserPreferenceHelper.saveWelcomeDialog(it.data)
                 }
-            }else{
-                showWelcomePostDialog(it!!.data.image,it.data.link)
-                UserPreferenceHelper.saveWelcomeDialog(it.data)
             }
         })
         viewModel.progress.observe(this, Observer { integer ->

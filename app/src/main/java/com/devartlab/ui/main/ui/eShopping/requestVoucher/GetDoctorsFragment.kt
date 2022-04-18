@@ -55,7 +55,6 @@ class GetDoctorsFragment(private val listener:OnDoctorSelect) : BaseFragment<Act
     private fun handleObserver() {
         viewModel!!.errorMessage.observe(viewLifecycleOwner) { integer: Int ->
             if (integer == 1) {
-                Log.e("xxx", "error")
                 Toast.makeText(context, "error in response data", Toast.LENGTH_SHORT)
                     .show()
             } else {

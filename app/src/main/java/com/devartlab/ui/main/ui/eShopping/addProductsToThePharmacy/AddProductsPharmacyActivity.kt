@@ -10,7 +10,6 @@ import android.view.View
 import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.devartlab.a4eshopping.addProductsToThePharmacy.model.addOrderToCart.AddOrderToCartRequest
 import com.devartlab.a4eshopping.addProductsToThePharmacy.model.addOrderToCart.Cart
@@ -19,7 +18,6 @@ import com.devartlab.a4eshopping.addProductsToThePharmacy.model.addProduct.AddTo
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.util.ArrayList
 import com.devartlab.R
 import com.devartlab.a4eshopping.addProductsToThePharmacy.model.Pharmacy.Prod
 import com.devartlab.data.retrofit.RetrofitClient
@@ -27,6 +25,7 @@ import com.devartlab.databinding.ActivityAddProductsPharmacyBinding
 import com.devartlab.ui.auth.login.LoginActivity
 import com.devartlab.ui.main.ui.eShopping.main.Home4EShoppingActivity
 import com.devartlab.ui.main.ui.eShopping.utils.UserPreferenceHelper
+import java.util.*
 
 
 class AddProductsPharmacyActivity : AppCompatActivity() {
@@ -39,7 +38,7 @@ class AddProductsPharmacyActivity : AppCompatActivity() {
     var id_pharmacies: Int = 0
     lateinit var request: AddOrderToCartRequest
     var addToCardRequest: AddToCardRequest? = null
-    var pharmacyID: Int = 0
+    private var pharmacyID: Int = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(
@@ -50,9 +49,7 @@ class AddProductsPharmacyActivity : AppCompatActivity() {
         supportActionBar!!.title = getString(R.string.Add_products_to_Pharmacy)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         adapter = AddProductsPharmaciesAdapter(null)
-//        binding.recyclerDetailsPharmacies.setNestedScrollingEnabled(false)
-//        binding.recyclerDetailsPharmacies.setHasFixedSize(false)
-        viewModel = ViewModelProvider(this).get(SearchAllPharmacyViewModel::class.java)
+        viewModel = ViewModelProvider(this)[SearchAllPharmacyViewModel::class.java]
         onClickListener()
         handleObserver()
     }
@@ -66,9 +63,6 @@ class AddProductsPharmacyActivity : AppCompatActivity() {
                 filter(s.toString())
             }
         })
-//        binding.swipeRefreshLayout.setOnRefreshListener {
-//            refresh()
-//        }
         binding.edPharmacySearch.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {}
             override fun onTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {
@@ -76,33 +70,36 @@ class AddProductsPharmacyActivity : AppCompatActivity() {
 
             override fun afterTextChanged(editable: Editable) {
                 viewModel!!.getSearchAllPharmacy(binding.edPharmacySearch.text.toString())
-                binding.ivRemoveSearch.setVisibility(View.VISIBLE)
+                binding.ivRemoveSearch.visibility = View.VISIBLE
             }
         })
 
         binding.ivRemoveSearch.setOnClickListener {
-            binding.edPharmacyNo.setHint("...............")
-            binding.edPharmacyName.setHint("...............")
-            binding.edPharmacyNo.setText(null)
-            binding.edPharmacyName.setText(null)
-            binding.tvTotalMoney.setText("0")
-            binding.tvTotalCoinssss.setText("0")
-            binding.tvTotalRoi.setText("0%")
-            binding.tvAddToCard.setText("0")
+            binding.edPharmacyNo.hint = "..............."
+            binding.edPharmacyName.hint = "..............."
+            binding.edPharmacyNo.text = null
+            binding.edPharmacyName.text = null
+            binding.tvTotalMoney.text = "0"
+            binding.tvTotalCoinssss.text = "0"
+            binding.tvTotalRoi.text = "0%"
+            binding.tvAddToCard.text = "0"
             binding.edPharmacySearch.setHint(R.string.name_no_pharmacy_search)
-            binding.edPharmacySearch.setText(null)
-            //viewModel!!.getCategoryv2Pharmacy()
+            binding.edPharmacySearch.text = null
         }
         binding.btnAddToPharmacy.setOnClickListener {
-            if (cart.size == 0) {
-                Toast.makeText(this, "please add product", Toast.LENGTH_SHORT)
-                    .show()
-            } else if (pharmacyID == 0) {
-                Toast.makeText(this, "please choose pharmacy", Toast.LENGTH_SHORT)
-                    .show()
-            } else {
-                request = AddOrderToCartRequest(cart, pharmacyID)
-                viewModel!!.getAddOrderToCart(request)
+            when {
+                cart.isEmpty() -> {
+                    Toast.makeText(this, "please add product", Toast.LENGTH_SHORT)
+                        .show()
+                }
+                pharmacyID == 0 -> {
+                    Toast.makeText(this, "please choose pharmacy", Toast.LENGTH_SHORT)
+                        .show()
+                }
+                else -> {
+                    request = AddOrderToCartRequest(cart, pharmacyID)
+                    viewModel!!.getAddOrderToCart(request)
+                }
             }
         }
     }
@@ -116,51 +113,55 @@ class AddProductsPharmacyActivity : AppCompatActivity() {
                 Toast.makeText(this, "error in Network", Toast.LENGTH_SHORT).show()
             }
         }
-        viewModel!!.SearchAllPharmacyResponse.observe(this, Observer {
-            if (it!!.code == 401) {
-                Toast.makeText(this, "please login again", Toast.LENGTH_SHORT)
-                    .show()
-                val intent = Intent(this, LoginActivity::class.java)
-                startActivity(intent)
-            } else if (it.data.isNullOrEmpty()) {
-                //errorMessage if data coming is null;
-                binding.tvEmptyList.setVisibility(View.VISIBLE)
-                binding.progressBar.setVisibility(View.GONE)
-            } else {
-                val countryBrandsPopUp = PopupMenu(this, binding.edPharmacySearch)
-                for (i in 0 until it!!.data.size) {
-                    countryBrandsPopUp.getMenu()
-                        .add(i, i, i, it.data.get(i).id.toString() + it.data.get(i).name)
+        viewModel!!.SearchAllPharmacyResponse.observe(this) {
+            when {
+                it!!.code == 401 -> {
+                    Toast.makeText(this, "please login again", Toast.LENGTH_SHORT)
+                        .show()
+                    val intent = Intent(this, LoginActivity::class.java)
+                    startActivity(intent)
                 }
-                countryBrandsPopUp.setOnMenuItemClickListener(PopupMenu.OnMenuItemClickListener { item ->
-                    binding.edPharmacyName.setText(it.data.get(item.getItemId()).name)
-                    binding.edPharmacyNo.setText(it.data.get(item.getItemId()).id.toString())
-                    viewModel!!.getCategoryv2Pharmacy(it.data.get(item.getItemId()).type_code)
-                    id_pharmacies = it.data.get(item.getItemId()).id
-                    binding.tvTotalMoney.setText("0")
-                    binding.tvTotalCoinssss.setText("0")
-                    binding.tvTotalRoi.setText("0%")
-                    binding.tvAddToCard.setText("0")
-                    no_product = 0
-                    pharmacyID = it.data.get(item.getItemId()).id
-                    return@OnMenuItemClickListener false;
-                })
-                countryBrandsPopUp.show()
+                it.data.isNullOrEmpty() -> {
+                    //errorMessage if data coming is null;
+                    binding.tvEmptyList.visibility = View.VISIBLE
+                    binding.progressBar.visibility = View.GONE
+                }
+                else -> {
+                    val countryBrandsPopUp = PopupMenu(this, binding.edPharmacySearch)
+                    for (i in 0 until it.data.size) {
+                        countryBrandsPopUp.menu
+                            .add(i, i, i, it.data[i].id.toString() + it.data[i].name)
+                    }
+                    countryBrandsPopUp.setOnMenuItemClickListener(PopupMenu.OnMenuItemClickListener { item ->
+                        binding.edPharmacyName.text = it.data[item.itemId].name
+                        binding.edPharmacyNo.text = it.data[item.itemId].id.toString()
+                        viewModel!!.getCategoryv2Pharmacy(it.data[item.itemId].type_code)
+                        id_pharmacies = it.data[item.itemId].id
+                        binding.tvTotalMoney.text = "0"
+                        binding.tvTotalCoinssss.text = "0"
+                        binding.tvTotalRoi.text = "0%"
+                        binding.tvAddToCard.text = "0"
+                        no_product = 0
+                        pharmacyID = it.data[item.itemId].id
+                        return@OnMenuItemClickListener false
+                    })
+                    countryBrandsPopUp.show()
+                }
             }
-        })
-        viewModel!!.categoryPharmacyResponse.observe(this, Observer {
-            if (it!!.data == null) {
+        }
+        viewModel!!.categoryPharmacyResponse.observe(this) {
+            if (it!!.data.prods.isEmpty()) {
                 //errorMessage if data coming is null;
-                binding.tvEmptyList.setVisibility(View.VISIBLE)
-                binding.progressBar.setVisibility(View.GONE)
+                binding.tvEmptyList.visibility = View.VISIBLE
+                binding.progressBar.visibility = View.GONE
             } else {
                 //show data in recyclerView
                 addToCardRequest = AddToCardRequest("mr", no_product, id_pharmacies)
-                binding.progressBar.setVisibility(View.GONE)
+                binding.progressBar.visibility = View.GONE
                 adapter = AddProductsPharmaciesAdapter(it.data.prods)
-                binding.recyclerDetailsPharmacies.setAdapter(adapter)
+                binding.recyclerDetailsPharmacies.adapter = adapter
                 list.addAll(it.data.prods)
-                adapter!!.setOnItemClickListener(AddProductsPharmaciesAdapter.OnItemClickListener { pos, id, amount ->
+                adapter!!.setOnItemClickListener { _, id, amount ->
                     RetrofitClient.getApis4EShopping().getAddToCard(
                         "Bearer " + UserPreferenceHelper.getUser().token,
                         id, amount,
@@ -172,11 +173,11 @@ class AddProductsPharmacyActivity : AppCompatActivity() {
                                 response: Response<AddToCardResponse?>
                             ) {
                                 if (response.isSuccessful) {
-                                    binding.tvTotalMoney.setText(response.body()!!.totalPrice.toString())
-                                    binding.tvTotalCoinssss.setText(response.body()!!.totalCoins.toString())
-                                    binding.tvTotalRoi.setText(response.body()!!.roi.toString() + "%")
+                                    binding.tvTotalMoney.text = response.body()!!.totalPrice.toString()
+                                    binding.tvTotalCoinssss.text = response.body()!!.totalCoins.toString()
+                                    binding.tvTotalRoi.text = response.body()!!.roi.toString() + "%"
                                     no_product++
-                                    binding.tvAddToCard.setText(no_product.toString())
+                                    binding.tvAddToCard.text = no_product.toString()
                                     addToCardRequest =
                                         AddToCardRequest("mr", no_product, id_pharmacies)
                                     Log.e("no_product++", no_product.toString())
@@ -185,11 +186,10 @@ class AddProductsPharmacyActivity : AppCompatActivity() {
                             }
 
                             override fun onFailure(call: Call<AddToCardResponse?>, t: Throwable) {
-                                Log.e("xssxx", t.message.toString())
                             }
                         })
-                })
-                adapter!!.setOnItemClickListener2(AddProductsPharmaciesAdapter.OnItemClickListener2 { pos, id, amount ->
+                }
+                adapter!!.setOnItemClickListener2 { _, id, amount ->
                     RetrofitClient.getApis4EShopping().getRemoveToCard(
                         "Bearer " + UserPreferenceHelper.getUser().token,
                         id,
@@ -200,12 +200,13 @@ class AddProductsPharmacyActivity : AppCompatActivity() {
                             response: Response<AddToCardResponse?>
                         ) {
                             if (response.isSuccessful) {
-                                binding.tvTotalMoney.setText(response.body()!!.totalPrice.toString())
-                                binding.tvTotalCoinssss.setText(response.body()!!.totalCoins.toString())
-                                binding.tvTotalRoi.setText(response.body()!!.roi.toString() + "%")
+                                binding.tvTotalMoney.text = response.body()!!.totalPrice.toString()
+                                binding.tvTotalCoinssss.text =
+                                    response.body()!!.totalCoins.toString()
+                                binding.tvTotalRoi.text = response.body()!!.roi.toString() + "%"
                                 no_product--
-                                binding.tvAddToCard.setText(no_product.toString())
-                                Log.e("no_product--", no_product.toString());
+                                binding.tvAddToCard.text = no_product.toString()
+                                Log.e("no_product--", no_product.toString())
                                 (cart as ArrayList<Cart>).remove(Cart(id, amount))
                             }
                         }
@@ -214,10 +215,10 @@ class AddProductsPharmacyActivity : AppCompatActivity() {
                             //   errorMessage.postValue(1);
                         }
                     })
-                })
+                }
             }
-        })
-        viewModel!!.addOrderToCartResponse.observe(this, Observer {
+        }
+        viewModel!!.addOrderToCartResponse.observe(this) {
             if (it!!.success == 200) {
                 Toast.makeText(this, " تمت اضافة المنتجات للصيدليه بنجاح", Toast.LENGTH_SHORT)
                     .show()
@@ -227,17 +228,8 @@ class AddProductsPharmacyActivity : AppCompatActivity() {
                 Toast.makeText(this, "error in response data", Toast.LENGTH_SHORT)
                     .show()
             }
-        })
+        }
     }
-
-
-//    private fun refresh() {
-//        synchronized(this) {
-//            viewModel!!.getCategoryv2Pharmacy()
-//            binding.swipeRefreshLayout.isRefreshing = false
-//            binding.progressBar.setVisibility(View.VISIBLE)
-//        }
-//    }
 
     override fun onSupportNavigateUp(): Boolean {
         finish()
@@ -248,9 +240,8 @@ class AddProductsPharmacyActivity : AppCompatActivity() {
         val filteredList: ArrayList<Prod> = ArrayList()
 
         for (item in list) {
-            if (item.name.toLowerCase().contains(text.toLowerCase())) {
+            if (item.name.lowercase(Locale.getDefault()).contains(text.lowercase(Locale.getDefault()))) {
                 filteredList.add(item)
-                Log.e("xxx", item.toString())
             }
         }
         adapter!!.filterData(filteredList)

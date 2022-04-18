@@ -1,6 +1,7 @@
 package com.devartlab.ui.main.ui.eShopping.addProductsToThePharmacy
 
 import android.app.Application
+import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import com.devartlab.a4eshopping.addProductsToThePharmacy.model.Pharmacy.CategoryPharmacyResponse
@@ -41,7 +42,7 @@ class SearchAllPharmacyViewModel(application: Application) : AndroidViewModel(ap
                     if (response.isSuccessful) {
                         SearchAllPharmacyResponse.postValue(response.body())
                     } else {
-                        SearchAllPharmacyResponse.postValue(response.body())
+                        Toast.makeText(getApplication(), "error in response data", Toast.LENGTH_SHORT).show()
                     }
                 }
 
@@ -62,7 +63,7 @@ class SearchAllPharmacyViewModel(application: Application) : AndroidViewModel(ap
                     if (response.isSuccessful) {
                         categoryPharmacyResponse.postValue(response.body())
                     } else {
-                        categoryPharmacyResponse.postValue(response.body())
+                        Toast.makeText(getApplication(), "error in response data", Toast.LENGTH_SHORT).show()
                     }
                 }
 
@@ -83,7 +84,7 @@ class SearchAllPharmacyViewModel(application: Application) : AndroidViewModel(ap
                     if (response.isSuccessful) {
                         addOrderToCartResponse.postValue(response.body())
                     } else {
-                        addOrderToCartResponse.postValue(response.body())
+                        Toast.makeText(getApplication(), "error in response data", Toast.LENGTH_SHORT).show()
                     }
                 }
 
@@ -104,7 +105,7 @@ class SearchAllPharmacyViewModel(application: Application) : AndroidViewModel(ap
                     if (response.isSuccessful) {
                         showCartResponse.postValue(response.body())
                     } else {
-                        showCartResponse.postValue(response.body())
+                        Toast.makeText(getApplication(), "error in response data", Toast.LENGTH_SHORT).show()
                     }
                 }
 
