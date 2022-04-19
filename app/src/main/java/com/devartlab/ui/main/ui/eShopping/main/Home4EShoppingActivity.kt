@@ -5,7 +5,6 @@ import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
@@ -18,7 +17,6 @@ import com.devartlab.base.BaseApplication
 import com.devartlab.data.shared.DataManager
 import com.devartlab.databinding.Activity4eshoppingBinding
 import com.devartlab.model.AdModel
-import com.devartlab.ui.auth.login.LoginActivity
 import com.devartlab.ui.main.MainActivity
 import com.devartlab.ui.main.ui.callmanagement.CallManagementActivity
 import com.devartlab.ui.main.ui.callmanagement.employee.EmployeeReportActivity
@@ -40,7 +38,6 @@ import com.devartlab.utils.MainSliderAdapter
 import com.devartlab.utils.PicassoImageLoadingService
 import com.jarvanmo.exoplayerview.media.SimpleMediaSource
 import ss.com.bannerslider.Slider
-import ss.com.bannerslider.event.OnSlideClickListener
 
 private const val TAG = "Home4EShoppingActivity"
 
@@ -61,11 +58,10 @@ class Home4EShoppingActivity : AppCompatActivity(),
         setSupportActionBar(binding.toolbar)
         supportActionBar!!.title = getString(R.string.eshopping)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-        viewModel = ViewModelProvider(this).get(Home4EShoppingViewModel::class.java)
-        dataManager = (getApplication() as BaseApplication).dataManager!!
+        viewModel = ViewModelProvider(this)[Home4EShoppingViewModel::class.java]
+        dataManager = (application as BaseApplication).dataManager!!
         setUpRecycler()
         ads()
-        deeplink()
     }
 
     private fun setUpRecycler() {
@@ -130,9 +126,9 @@ class Home4EShoppingActivity : AppCompatActivity(),
             Log.d(TAG, "ads: ${m.pageCode}")
             if (m.pageCode?.toInt() == Constants.HOME_4ESHOPPING) {
                 model = m
-                binding.constrAds.setVisibility(View.VISIBLE)
+                binding.constrAds.visibility = View.VISIBLE
                 if (model.resourceLink.equals(null) && model.paragraph.equals(null) && model.slideImages == null) {
-                    binding.constrAds.setVisibility(View.VISIBLE)
+                    binding.constrAds.visibility = View.VISIBLE
                     binding.imageView.visibility = View.VISIBLE
                     Glide.with(this).load(model.default_ad_image).centerCrop()
                         .into(binding.imageView)
@@ -157,7 +153,7 @@ class Home4EShoppingActivity : AppCompatActivity(),
                 "Video" -> {
                     binding.videoView.visibility = View.VISIBLE
                     mediaSource = SimpleMediaSource(model.resourceLink)
-                    binding.videoView.play(mediaSource);
+                    binding.videoView.play(mediaSource)
                 }
                 "Image" -> {
 
@@ -168,7 +164,7 @@ class Home4EShoppingActivity : AppCompatActivity(),
                 "GIF" -> {
                     binding.imageView.visibility = View.VISIBLE
                     Glide.with(this).asGif().load(model.resourceLink).centerCrop()
-                        .placeholder(R.drawable.dr_hussain).into(binding.imageView);
+                        .placeholder(R.drawable.dr_hussain).into(binding.imageView)
                 }
                 "Paragraph" -> {
                     binding.textView.visibility = View.VISIBLE
@@ -191,7 +187,7 @@ class Home4EShoppingActivity : AppCompatActivity(),
                     }
                     binding.bannerSlider?.setAdapter(MainSliderAdapter(list))
                     binding.bannerSlider.setOnSlideClickListener {
-                        binding.bannerSlider.setOnSlideClickListener(OnSlideClickListener {
+                        binding.bannerSlider.setOnSlideClickListener {
                             if (!model.webPageLink.isNullOrBlank()) {
                                 when {
                                     model.is_external!! -> {
@@ -202,18 +198,18 @@ class Home4EShoppingActivity : AppCompatActivity(),
                                     }
                                 }
                             }
-                        })
+                        }
                     }
                 }
             }
             if (model.show_ad == true) {
-                binding.btnHideShowAds.setVisibility(View.VISIBLE)
+                binding.btnHideShowAds.visibility = View.VISIBLE
                 binding.btnHideShowAds.setOnClickListener {
                     if (binding.constrAds.visibility == View.VISIBLE) {
-                        binding.constrAds.setVisibility(View.GONE)
+                        binding.constrAds.visibility = View.GONE
                         binding.btnHideShowAds.setImageResource(R.drawable.ic_show_hide_ads)
                     } else {
-                        binding.constrAds.setVisibility(View.VISIBLE)
+                        binding.constrAds.visibility = View.VISIBLE
                         binding.btnHideShowAds.setImageResource(R.drawable.ic_hide_show_ads)
                     }
                 }
@@ -239,21 +235,8 @@ class Home4EShoppingActivity : AppCompatActivity(),
         super.onStop()
         binding.videoView.stop()
     }
-    fun deeplink() {
-        val uri = intent.data
-        if (uri != null) {
-            if (viewModel.dataManager.isLogin) {
-                val path = uri.toString()
-                Toast.makeText(this@Home4EShoppingActivity, "path = $path", Toast.LENGTH_LONG).show()
-            } else {
-                val intent = Intent(this, LoginActivity::class.java)
-                startActivity(intent)
-            }
-        }
-    }
 
     fun meuNav(id: Int) {
-        Log.e("wwwwwwwwww", id.toString())
         when (id) {
             1 -> startActivity(Intent(this@Home4EShoppingActivity, MainActivity::class.java))
             2, 8 -> {

@@ -9,9 +9,7 @@ import androidx.databinding.DataBindingUtil
 import android.text.Editable
 
 import android.text.TextWatcher
-import android.util.Log
 import android.widget.Toast
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.devartlab.R
@@ -36,7 +34,8 @@ import com.devartlab.utils.MainSliderAdapter
 import com.devartlab.utils.PicassoImageLoadingService
 import com.jarvanmo.exoplayerview.media.SimpleMediaSource
 import ss.com.bannerslider.Slider
-import ss.com.bannerslider.event.OnSlideClickListener
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 class OrientationVideosActivity : AppCompatActivity() {
@@ -55,8 +54,8 @@ class OrientationVideosActivity : AppCompatActivity() {
         supportActionBar!!.title = getString(R.string.orientation_videos)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         adapter = VideoListAdapter(null)
-        viewModel = ViewModelProvider(this).get(VideosViewModel::class.java)
-        dataManager = (getApplication() as BaseApplication).dataManager!!
+        viewModel = ViewModelProvider(this)[VideosViewModel::class.java]
+        dataManager = (application as BaseApplication).dataManager!!
         onClickListener()
         handleObserver()
         ads()
@@ -85,34 +84,38 @@ class OrientationVideosActivity : AppCompatActivity() {
                 Toast.makeText(this, "error in Network", Toast.LENGTH_SHORT).show()
             }
         }
-        viewModel!!.responseVideos.observe(this, Observer {
-            if (it!!.code == 401) {
-                Toast.makeText(this, "please login again", Toast.LENGTH_SHORT)
-                    .show()
-                val intent = Intent(this, LoginActivity::class.java)
-                startActivity(intent)
-            } else if (it.itemsVideos.isNullOrEmpty()) {
-                //errorMessage if data coming is null;
-                binding.tvEmptyList.setVisibility(View.VISIBLE)
-                binding.progressBar.setVisibility(View.GONE)
-            } else {
-                //show data in recyclerView
-                binding.progressBar.setVisibility(View.GONE)
-                adapter = VideoListAdapter(it.itemsVideos)
-                list.addAll(it.itemsVideos)
-                deeplink()
-                binding.recyclerListVideos.setAdapter(adapter)
-                adapter!!.setOnItemClickListener(VideoListAdapter.OnItemClickListener { pos, dataItem ->
-
-                    val intent = Intent(this, VideoActivity::class.java)
-                    intent.putExtra("_id", dataItem.snippet.resourceId.videoId)
-                    intent.putExtra("_name", dataItem.snippet.title)
-                    intent.putExtra("_dec", dataItem.snippet.description)
-                    intent.putExtra("_name_channel", dataItem.snippet.channelTitle)
+        viewModel!!.responseVideos.observe(this) {
+            when {
+                it!!.code == 401 -> {
+                    Toast.makeText(this, "please login again", Toast.LENGTH_SHORT)
+                        .show()
+                    val intent = Intent(this, LoginActivity::class.java)
                     startActivity(intent)
-                })
+                }
+                it.itemsVideos.isNullOrEmpty() -> {
+                    //errorMessage if data coming is null;
+                    binding.tvEmptyList.visibility = View.VISIBLE
+                    binding.progressBar.visibility = View.GONE
+                }
+                else -> {
+                    //show data in recyclerView
+                    binding.progressBar.visibility = View.GONE
+                    adapter = VideoListAdapter(it.itemsVideos)
+                    list.addAll(it.itemsVideos)
+                    deeplink()
+                    binding.recyclerListVideos.adapter = adapter
+                    adapter!!.setOnItemClickListener { _, dataItem ->
+
+                        val intent = Intent(this, VideoActivity::class.java)
+                        intent.putExtra("_id", dataItem.snippet.resourceId.videoId)
+                        intent.putExtra("_name", dataItem.snippet.title)
+                        intent.putExtra("_dec", dataItem.snippet.description)
+                        intent.putExtra("_name_channel", dataItem.snippet.channelTitle)
+                        startActivity(intent)
+                    }
+                }
             }
-        })
+        }
     }
 
 
@@ -120,7 +123,7 @@ class OrientationVideosActivity : AppCompatActivity() {
         val filteredList: ArrayList<ItemsVideos> = ArrayList()
 
         for (item in list) {
-            if (item.snippet.title.toLowerCase().contains(text.toLowerCase())) {
+            if (item.snippet.title.lowercase(Locale.getDefault()).contains(text.lowercase(Locale.getDefault()))) {
                 filteredList.add(item)
             }
         }
@@ -132,7 +135,7 @@ class OrientationVideosActivity : AppCompatActivity() {
         synchronized(this) {
             viewModel!!.getVideos()
             binding.swipeRefreshLayout.isRefreshing = false
-            binding.progressBar.setVisibility(View.VISIBLE)
+            binding.progressBar.visibility = View.VISIBLE
         }
     }
 
@@ -146,9 +149,9 @@ class OrientationVideosActivity : AppCompatActivity() {
         for (m in viewModel!!.dataManager.ads.ads!!) {
             if (m.pageCode?.toInt() == Constants.FAQ_TUTORIAL) {
                 model = m
-                binding.constrAds.setVisibility(View.VISIBLE)
+                binding.constrAds.visibility = View.VISIBLE
                 if (model.resourceLink.equals(null) && model.paragraph.equals(null) && model.slideImages == null) {
-                    binding.constrAds.setVisibility(View.VISIBLE)
+                    binding.constrAds.visibility = View.VISIBLE
                     binding.imageView.visibility = View.VISIBLE
                     Glide.with(this).load(model.default_ad_image).centerCrop()
                         .into(binding.imageView)
@@ -174,7 +177,7 @@ class OrientationVideosActivity : AppCompatActivity() {
                 "Video" -> {
                     binding.videoView.visibility = View.VISIBLE
                     mediaSource = SimpleMediaSource(model.resourceLink)
-                    binding.videoView.play(mediaSource);
+                    binding.videoView.play(mediaSource)
                 }
                 "Image" -> {
 
@@ -185,7 +188,7 @@ class OrientationVideosActivity : AppCompatActivity() {
                 "GIF" -> {
                     binding.imageView.visibility = View.VISIBLE
                     Glide.with(this).asGif().load(model.resourceLink).centerCrop()
-                        .placeholder(R.drawable.dr_hussain).into(binding.imageView);
+                        .placeholder(R.drawable.dr_hussain).into(binding.imageView)
                 }
                 "Paragraph" -> {
                     binding.textView.visibility = View.VISIBLE
@@ -208,7 +211,7 @@ class OrientationVideosActivity : AppCompatActivity() {
                     }
                     binding.bannerSlider?.setAdapter(MainSliderAdapter(list))
                     binding.bannerSlider.setOnSlideClickListener {
-                        binding.bannerSlider.setOnSlideClickListener(OnSlideClickListener {
+                        binding.bannerSlider.setOnSlideClickListener {
                             if (!model.webPageLink.isNullOrBlank()) {
                                 when {
                                     model.is_external!! -> {
@@ -219,24 +222,24 @@ class OrientationVideosActivity : AppCompatActivity() {
                                     }
                                 }
                             }
-                        })
+                        }
                     }
                 }
             }
             if (model.show_ad == true) {
-                binding.btnHideShowAds.setVisibility(View.VISIBLE)
+                binding.btnHideShowAds.visibility = View.VISIBLE
                 binding.btnHideShowAds.setOnClickListener {
                     if (binding.constrAds.visibility == View.VISIBLE) {
-                        binding.constrAds.setVisibility(View.GONE)
+                        binding.constrAds.visibility = View.GONE
                         binding.btnHideShowAds.setImageResource(R.drawable.ic_show_hide_ads)
                     } else {
-                        binding.constrAds.setVisibility(View.VISIBLE)
+                        binding.constrAds.visibility = View.VISIBLE
                         binding.btnHideShowAds.setImageResource(R.drawable.ic_hide_show_ads)
                     }
                 }
             }
             if (model.show_more == true) {
-                binding.tvMoreThanAds.setVisibility(View.VISIBLE)
+                binding.tvMoreThanAds.visibility = View.VISIBLE
                 binding.tvMoreThanAds.setOnClickListener {
                     intent = Intent(this, MoreDetailsAdsActivity::class.java)
                     intent.putExtra("pageCode", model.pageCode)
@@ -362,13 +365,13 @@ class OrientationVideosActivity : AppCompatActivity() {
             )
         }
     }
-    fun deeplink() {
+    private fun deeplink() {
         val uri = intent.data
         if (uri != null) {
             if (viewModel!!.dataManager.isLogin) {
                 val path = uri.toString()
                 val id: List<String> = path.split("/")
-                var model: ItemsVideos? = null
+                val model: ItemsVideos?
                 for (m in list) {
                     if (m.snippet.resourceId.videoId == id[3]) {
                         model = m

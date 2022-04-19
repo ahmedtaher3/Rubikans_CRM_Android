@@ -1,6 +1,4 @@
 package com.devartlab.ui.main.ui.eShopping.orientationVideos;
-
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +14,6 @@ import java.util.List;
 public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.ViewHolder> {
 
     List<ItemsVideos> dataItems;
-    private Context context;
 
     public VideoListAdapter(List<ItemsVideos> dataItems) {
         this.dataItems = dataItems;
@@ -27,7 +24,6 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.list_video_item, parent, false);
-        context = parent.getContext();
         return new ViewHolder(view);
     }
 
@@ -36,23 +32,11 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
         final ItemsVideos dataItem = dataItems.get(position);
         viewHolder.binding.dec.setText(dataItem.getSnippet().getDescription());
         viewHolder.binding.nameChannel.setText(dataItem.getSnippet().getChannelTitle());
-        int postion=dataItem.getSnippet().getPosition()+1;
-        viewHolder.binding.numberVideo.setText(String.valueOf(postion));
-//        Picasso.get()
-//                .load(dataItem.getSnippet().getThumbnails().getDefault().getUrl())
-//                .centerCrop()
-//                .resize(320 , 180)
-//                .placeholder(R.drawable.ic_baseline_replay_24)
-//                .error(android.R.drawable.stat_notify_error)
-//                .into(viewHolder.binding.image);
+        int pos=dataItem.getSnippet().getPosition()+1;
+        viewHolder.binding.numberVideo.setText(String.valueOf(pos));
         viewHolder.binding.name.setText(dataItem.getSnippet().getTitle());
         if (onItemClickListener != null) {
-            viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    onItemClickListener.onItemClick(position, dataItem);
-                }
-            });
+            viewHolder.itemView.setOnClickListener(v -> onItemClickListener.onItemClick(position, dataItem));
         }
     }
 
@@ -63,7 +47,7 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
         return dataItems.size();
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder {
+    static class ViewHolder extends RecyclerView.ViewHolder {
 
         ListVideoItemBinding binding;
 
@@ -76,12 +60,6 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
         void bind() {
             if (binding == null) {
                 binding = DataBindingUtil.bind(itemView);
-            }
-        }
-
-        void unbind() {
-            if (binding != null) {
-                binding.unbind();
             }
         }
 
