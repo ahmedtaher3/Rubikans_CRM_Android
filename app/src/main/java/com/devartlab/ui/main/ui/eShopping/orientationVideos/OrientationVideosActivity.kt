@@ -25,6 +25,7 @@ import com.devartlab.ui.main.ui.contactlist.ui.main.ContactsActivity
 import com.devartlab.ui.main.ui.devartlink.DevartLinkActivity
 import com.devartlab.ui.main.ui.eShopping.main.Home4EShoppingActivity
 import com.devartlab.ui.main.ui.eShopping.orientationVideos.model.ItemsVideos
+import com.devartlab.ui.main.ui.eShopping.utils.UserPreferenceHelper
 import com.devartlab.ui.main.ui.employeeservices.EmployeeServicesActivity
 import com.devartlab.ui.main.ui.employeeservices.SelfServiceActivity
 import com.devartlab.ui.main.ui.market.MarketRequestTypesActivity
@@ -87,9 +88,12 @@ class OrientationVideosActivity : AppCompatActivity() {
         viewModel!!.responseVideos.observe(this) {
             when {
                 it!!.code == 401 -> {
+                    viewModel!!.dataManager.clear()
+                    UserPreferenceHelper.clean()
                     Toast.makeText(this, "please login again", Toast.LENGTH_SHORT)
                         .show()
                     val intent = Intent(this, LoginActivity::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                     startActivity(intent)
                 }
                 it.itemsVideos.isNullOrEmpty() -> {

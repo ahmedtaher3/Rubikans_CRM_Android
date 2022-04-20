@@ -13,6 +13,7 @@ import com.devartlab.R
 import com.devartlab.a4eshopping.pharmacySales.PharmacySalesViewModel
 import com.devartlab.databinding.ActivityPharmacySalesBinding
 import com.devartlab.ui.auth.login.LoginActivity
+import com.devartlab.ui.main.ui.eShopping.utils.UserPreferenceHelper
 
 class PharmacySalesActivity : AppCompatActivity() {
     lateinit var binding: ActivityPharmacySalesBinding
@@ -62,9 +63,12 @@ class PharmacySalesActivity : AppCompatActivity() {
         viewModel!!.pharmacySalesResponse.observe(this) {
             when {
                 it!!.code == 401 -> {
+                    viewModel!!.dataManager.clear()
+                    UserPreferenceHelper.clean()
                     Toast.makeText(this, "please login again", Toast.LENGTH_SHORT)
                         .show()
                     val intent = Intent(this, LoginActivity::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                     startActivity(intent)
                 }
                 it.data.isNullOrEmpty() -> {

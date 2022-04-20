@@ -3,7 +3,9 @@ package com.devartlab.a4eshopping.PharmacyBinding
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
+import com.devartlab.base.BaseApplication
 import com.devartlab.data.retrofit.RetrofitClient
+import com.devartlab.data.shared.DataManager
 import com.devartlab.ui.main.ui.eShopping.pharmacyBinding.model.connectPharmacy.ConnectPharmacyResponse
 import com.devartlab.ui.main.ui.eShopping.pharmacyBinding.model.searchForPharmacy.ConnetctedPharmaciesResponse
 import com.devartlab.ui.main.ui.eShopping.pharmacyBinding.model.searchForPharmacy.SearchForPharmacyRequest
@@ -22,6 +24,7 @@ class PharmacyBindingViewModel(application: Application) : AndroidViewModel(appl
         protected set
     var connectPharmacyResponse: MutableLiveData<ConnectPharmacyResponse?>
         protected set
+    var dataManager: DataManager
 
     fun getConnetctedPharmacies(q: String) {
         RetrofitClient.getApis4EShopping().getConnetctedPharmacies("Bearer "+ UserPreferenceHelper.getUser().token,q)!!
@@ -85,5 +88,6 @@ class PharmacyBindingViewModel(application: Application) : AndroidViewModel(appl
         errorMessage = MutableLiveData()
         searchForPharmacyResponse = MutableLiveData()
         connectPharmacyResponse = MutableLiveData()
+        dataManager = (getApplication() as BaseApplication).dataManager!!
     }
 }

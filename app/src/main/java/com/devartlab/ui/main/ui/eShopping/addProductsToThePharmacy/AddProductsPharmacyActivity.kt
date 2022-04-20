@@ -116,9 +116,12 @@ class AddProductsPharmacyActivity : AppCompatActivity() {
         viewModel!!.SearchAllPharmacyResponse.observe(this) {
             when {
                 it!!.code == 401 -> {
+                    viewModel!!.dataManager.clear()
+                    UserPreferenceHelper.clean()
                     Toast.makeText(this, "please login again", Toast.LENGTH_SHORT)
                         .show()
                     val intent = Intent(this, LoginActivity::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                     startActivity(intent)
                 }
                 it.data.isNullOrEmpty() -> {

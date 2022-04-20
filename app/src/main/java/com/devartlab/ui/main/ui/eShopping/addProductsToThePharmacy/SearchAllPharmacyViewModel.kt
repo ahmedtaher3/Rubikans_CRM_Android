@@ -10,7 +10,9 @@ import com.devartlab.a4eshopping.addProductsToThePharmacy.model.addOrderToCart.A
 import com.devartlab.a4eshopping.addProductsToThePharmacy.model.addProduct.AddToCardRequest
 import com.devartlab.a4eshopping.addProductsToThePharmacy.model.addProduct.AddToCardResponse
 import com.devartlab.a4eshopping.addProductsToThePharmacy.model.searchAllPharmacy.SearchAllPharmacyResponse
+import com.devartlab.base.BaseApplication
 import com.devartlab.data.retrofit.RetrofitClient
+import com.devartlab.data.shared.DataManager
 import com.devartlab.ui.main.ui.eShopping.addProductsToThePharmacy.model.showCart.ShowCartResponse
 import com.devartlab.ui.main.ui.eShopping.utils.UserPreferenceHelper
 import retrofit2.Call
@@ -30,6 +32,7 @@ class SearchAllPharmacyViewModel(application: Application) : AndroidViewModel(ap
         protected set
     var showCartResponse: MutableLiveData<ShowCartResponse?>
         protected set
+    var dataManager: DataManager
 
     fun getSearchAllPharmacy(q: String) {
         RetrofitClient.getApis4EShopping()
@@ -121,5 +124,6 @@ class SearchAllPharmacyViewModel(application: Application) : AndroidViewModel(ap
         addToCardResponse = MutableLiveData()
         addOrderToCartResponse= MutableLiveData()
         showCartResponse= MutableLiveData()
+        dataManager = (getApplication() as BaseApplication).dataManager!!
     }
 }

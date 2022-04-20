@@ -4,7 +4,9 @@ import android.app.Application
 import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
+import com.devartlab.base.BaseApplication
 import com.devartlab.data.retrofit.RetrofitClient
+import com.devartlab.data.shared.DataManager
 import com.devartlab.ui.main.ui.eShopping.pharmacySales.model.PharmacySalesResponse
 import com.devartlab.ui.main.ui.eShopping.pharmacySales.model.detailsPharmacySales.DetailsPharmacySalesResponse
 import com.devartlab.ui.main.ui.eShopping.utils.UserPreferenceHelper
@@ -19,6 +21,7 @@ class PharmacySalesViewModel(application: Application) : AndroidViewModel(applic
         protected set
     var DetailsPharmacySalesResponse: MutableLiveData<DetailsPharmacySalesResponse?>
         protected set
+    var dataManager: DataManager
 
     fun getPharmacySales(q: String) {
         RetrofitClient.getApis4EShopping().getPharmacySales("Bearer "+ UserPreferenceHelper.getUser().token,q)!!
@@ -63,5 +66,6 @@ class PharmacySalesViewModel(application: Application) : AndroidViewModel(applic
         pharmacySalesResponse = MutableLiveData()
         errorMessage = MutableLiveData()
         DetailsPharmacySalesResponse= MutableLiveData()
+        dataManager = (getApplication() as BaseApplication).dataManager!!
     }
 }

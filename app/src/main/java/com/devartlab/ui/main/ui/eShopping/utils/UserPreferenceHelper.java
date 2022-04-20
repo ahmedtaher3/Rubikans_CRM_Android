@@ -18,6 +18,9 @@ public class UserPreferenceHelper {
     private UserPreferenceHelper() {
 
     }
+    public static void clean() {
+        sharedPreferences.edit().clear().apply();
+    }
 
     public static SharedPreferences getSharedPreferenceInstance(Context context) {
         if (sharedPreferences != null) return sharedPreferences;

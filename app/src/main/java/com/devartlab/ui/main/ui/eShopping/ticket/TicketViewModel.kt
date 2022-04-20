@@ -4,7 +4,9 @@ import android.app.Application
 import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
+import com.devartlab.base.BaseApplication
 import com.devartlab.data.retrofit.RetrofitClient
+import com.devartlab.data.shared.DataManager
 import com.devartlab.ui.main.ui.eShopping.ticket.model.addRate.AddRateRequest
 import com.devartlab.ui.main.ui.eShopping.ticket.model.addRate.AddRateResponse
 import com.devartlab.ui.main.ui.eShopping.ticket.model.addTicket.AddTicketRequest
@@ -38,6 +40,7 @@ class TicketViewModel(application: Application) : AndroidViewModel(application) 
         protected set
     var deleteMessagesResponse: MutableLiveData<DeleteMessagesResponse?>
         protected set
+    var dataManager: DataManager
 
     fun getGetContacts(status: String,q: String) {
         RetrofitClient.getApis4EShopping().getGetContacts("Bearer " + UserPreferenceHelper.getUser().token,status,q)!!
@@ -211,5 +214,6 @@ class TicketViewModel(application: Application) : AndroidViewModel(application) 
         addRateResponse= MutableLiveData()
         deleteTicketsResponse= MutableLiveData()
         deleteMessagesResponse=MutableLiveData()
+        dataManager = (getApplication() as BaseApplication).dataManager!!
     }
 }

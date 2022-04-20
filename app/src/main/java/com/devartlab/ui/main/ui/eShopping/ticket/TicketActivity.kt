@@ -21,6 +21,7 @@ import com.devartlab.R
 import com.devartlab.databinding.ActivityTicketBinding
 import com.devartlab.ui.auth.login.LoginActivity
 import com.devartlab.ui.main.ui.eShopping.ticket.model.addTicket.AddTicketRequest
+import com.devartlab.ui.main.ui.eShopping.utils.UserPreferenceHelper
 import com.pusher.client.Pusher
 import com.pusher.client.PusherOptions
 import com.pusher.client.channel.Channel
@@ -123,9 +124,12 @@ class TicketActivity : AppCompatActivity() {
                     binding.progressBar.visibility = View.GONE
                 }
                 it.code == 401 -> {
+                    viewModel!!.dataManager.clear()
+                    UserPreferenceHelper.clean()
                     Toast.makeText(this, "please login again", Toast.LENGTH_SHORT)
                         .show()
                     val intent = Intent(this, LoginActivity::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                     startActivity(intent)
                 }
                 else -> {

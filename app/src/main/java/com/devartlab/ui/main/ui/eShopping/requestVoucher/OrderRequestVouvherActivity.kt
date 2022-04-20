@@ -16,6 +16,7 @@ import com.devartlab.base.BaseActivity
 import com.devartlab.databinding.ActivityOrderRequestVouvherBinding
 import com.devartlab.ui.auth.login.LoginActivity
 import com.devartlab.ui.main.ui.eShopping.requestVoucher.model.voucherRequest.VoucherRequestRequest
+import com.devartlab.ui.main.ui.eShopping.utils.UserPreferenceHelper
 
 class OrderRequestVouvherActivity : BaseActivity<ActivityOrderRequestVouvherBinding?>(),
     GetDoctorsFragment.OnDoctorSelect {
@@ -120,9 +121,12 @@ class OrderRequestVouvherActivity : BaseActivity<ActivityOrderRequestVouvherBind
         }
         viewModel!!.voucherRequestResponse.observe(this) {
             if (it!!.code == 401) {
+                viewModel!!.dataManager.clear()
+                UserPreferenceHelper.clean()
                 Toast.makeText(this, "please login again", Toast.LENGTH_SHORT)
                     .show()
                 val intent = Intent(this, LoginActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                 startActivity(intent)
             } else {
                 Toast.makeText(this, "done!", Toast.LENGTH_SHORT).show()

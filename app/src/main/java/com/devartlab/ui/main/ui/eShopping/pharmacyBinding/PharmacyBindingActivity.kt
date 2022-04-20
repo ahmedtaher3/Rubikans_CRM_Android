@@ -29,6 +29,7 @@ import com.devartlab.ui.main.ui.eShopping.pharmacyBinding.allComments.AllComment
 import com.devartlab.ui.main.ui.eShopping.pharmacyBinding.model.searchForPharmacy.DataX
 import com.devartlab.ui.main.ui.eShopping.pharmacyBinding.model.searchForPharmacy.SearchForPharmacyResponse
 import com.devartlab.ui.main.ui.eShopping.pharmacyBinding.uploadPharmacyFiles.UploadPharmacyFilesActivity
+import com.devartlab.ui.main.ui.eShopping.utils.UserPreferenceHelper
 
 class PharmacyBindingActivity : AppCompatActivity() {
     lateinit var binding: ActivityPharmacyBindingBinding
@@ -86,9 +87,12 @@ class PharmacyBindingActivity : AppCompatActivity() {
         }
         viewModel!!.ConnetctedPharmaciesResponse.observe(this, Observer {
             if (it!!.code == 401) {
+                viewModel!!.dataManager.clear()
+                UserPreferenceHelper.clean()
                 Toast.makeText(this, "please login again", Toast.LENGTH_SHORT)
                     .show()
                 val intent = Intent(this, LoginActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                 startActivity(intent)
             } else if (it.data.isNullOrEmpty()) {
                 //errorMessage if data coming is null;

@@ -13,6 +13,7 @@ import com.devartlab.R
 import com.devartlab.base.BaseFragment
 import com.devartlab.databinding.ActivityGetDoctorsBinding
 import com.devartlab.ui.auth.login.LoginActivity
+import com.devartlab.ui.main.ui.eShopping.utils.UserPreferenceHelper
 import com.devartlab.utils.CommonUtilities
 
 class GetDoctorsFragment(private val listener:OnDoctorSelect) : BaseFragment<ActivityGetDoctorsBinding>() {
@@ -60,23 +61,31 @@ class GetDoctorsFragment(private val listener:OnDoctorSelect) : BaseFragment<Act
             }
         }
         viewModel!!.getDoctorsResponse.observe(viewLifecycleOwner) {
-            if (it!!.data.isNullOrEmpty() || it.code == 401) {
-                //errorMessage if data coming is null;
-                binding.tvEmptyList.visibility = View.VISIBLE
-                binding.progressBar.visibility = View.GONE
-                Toast.makeText(context, "please login again", Toast.LENGTH_SHORT)
-                    .show()
-                val intent = Intent(context, LoginActivity::class.java)
-                startActivity(intent)
-            } else {
-                //show data in recyclerView
-                binding.progressBar.visibility = View.GONE
-                adapter = GetDoctorsAdapter(it.data)
-                binding.recyclerDoctors.adapter = adapter
-                adapter!!.setOnItemClickListener { _, dataItem ->
+            when {
+                it!!.code == 401 -> {
+                    viewModel!!.dataManager.clear()
+                    UserPreferenceHelper.clean()
+                    Toast.makeText(context, "please login again", Toast.LENGTH_SHORT)
+                        .show()
+                    val intent = Intent(context, LoginActivity::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                    startActivity(intent)
+                }
+                it.data.isNullOrEmpty() -> {
+                    //errorMessage if data coming is null;
+                    binding.tvEmptyList.visibility = View.VISIBLE
+                    binding.progressBar.visibility = View.GONE
+                }
+                else -> {
+                    //show data in recyclerView
+                    binding.progressBar.visibility = View.GONE
+                    adapter = GetDoctorsAdapter(it.data)
+                    binding.recyclerDoctors.adapter = adapter
+                    adapter!!.setOnItemClickListener { _, dataItem ->
 
-                    listener.setOnDoctorSelect(dataItem.id.toString(), dataItem.text)
-                    baseActivity.onBackPressed()
+                        listener.setOnDoctorSelect(dataItem.id.toString(), dataItem.text)
+                        baseActivity.onBackPressed()
+                    }
                 }
             }
         }
