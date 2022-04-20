@@ -87,7 +87,7 @@ class DevartAcademyActivity : AppCompatActivity() {
         viewModel!!.devartCommunityResponse.observe(this, Observer {
             supportActionBar!!.title = it!!.name
             Glide.with(this)
-                .load("https://devartlink.devartlab.com/assets/images/" + it!!.image)
+                .load("https://devartlink.4eshopping.com/assets/images/" + it!!.image)
                 .fitCenter().into(binding.imageView)
             when {
                 it.sub.size != 0 -> {

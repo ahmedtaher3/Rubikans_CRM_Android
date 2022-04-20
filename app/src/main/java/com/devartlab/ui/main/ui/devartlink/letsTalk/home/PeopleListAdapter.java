@@ -78,7 +78,7 @@ public class PeopleListAdapter extends RecyclerView.Adapter<PeopleListAdapter.Vi
         }
 
         Picasso.get()
-                .load("https://devartlink.devartlab.com/api/imagev3?id="+dataItem.getUserapi().getId()+".png")
+                .load("https://devartlink.4eshopping.com/api/imagev3?id="+dataItem.getUserapi().getId()+".png")
                 .centerCrop()
                 .resize(66, 66)
                 .placeholder(R.drawable.user_defult)

@@ -39,7 +39,7 @@ public class DevartLabIncentiveAdapter extends RecyclerView.Adapter<DevartLabInc
         final Incentive dataItem = dataItems.get(position);
 
         viewHolder.binding.name.setText(dataItem.getName());
-        Glide.with(context).load("https://devartlink.devartlab.com/assets/images/"+dataItem.getImage()).centerCrop().into(viewHolder.binding.image);
+        Glide.with(context).load("https://devartlink.4eshopping.com/assets/images/"+dataItem.getImage()).centerCrop().into(viewHolder.binding.image);
         viewHolder.binding.tvDecTeam.setText( dataItem.getSubtitle());
         if (onItemClickListener != null) {
             viewHolder.itemView.setOnClickListener(new View.OnClickListener() {

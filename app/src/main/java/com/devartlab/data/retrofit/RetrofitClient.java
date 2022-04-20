@@ -108,7 +108,7 @@ public class RetrofitClient extends Application {
 
         if (ourInstance3 == null)
             ourInstance3 = new Retrofit.Builder()
-                    .baseUrl("https://devartlink.devartlab.com/")// eslam
+                    .baseUrl("https://devartlink.4eshopping.com/")// eslam
                     .client(okHttpClient)
                     .addConverterFactory(GsonConverterFactory.create())
                     .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
@@ -133,7 +133,7 @@ public class RetrofitClient extends Application {
             retrofit = new Retrofit.Builder()
                     .addConverterFactory(GsonConverterFactory.create())
                     .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                    .baseUrl("https://devartlink.devartlab.com/api/")
+                    .baseUrl("https://devartlink.4eshopping.com/api/")
                     .client(client)
                     .build();
         }

@@ -37,7 +37,7 @@ public class SectionsAdapter extends RecyclerView.Adapter<SectionsAdapter.ViewHo
         viewHolder.binding.tvSubjectTitle.loadDataWithBaseURL(
                 null, dataItem.getTitle(), "text/html", "utf-8", null);
         Glide.with(context)
-                .load("https://devartlink.devartlab.com/assets/images/" + dataItem.getImage())
+                .load("https://devartlink.4eshopping.com/assets/images/" + dataItem.getImage())
                     .fitCenter().into(viewHolder.binding.imgSubject);
         viewHolder.binding.wbSections.loadDataWithBaseURL(
                 null, dataItem.getDescription(), "text/html", "utf-8", null);

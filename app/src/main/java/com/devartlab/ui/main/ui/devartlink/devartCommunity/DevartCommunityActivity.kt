@@ -8,14 +8,13 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.devartlab.R
-import com.devartlab.base.BaseApplication
-import com.devartlab.data.shared.DataManager
 import com.devartlab.databinding.ActivityDevartCommunityBinding
 import com.devartlab.ui.main.ui.devartlink.devartCommunity.model.Youtube
+import java.util.*
+import kotlin.collections.ArrayList
 
 class DevartCommunityActivity : AppCompatActivity() {
     lateinit var binding: ActivityDevartCommunityBinding
@@ -33,7 +32,7 @@ class DevartCommunityActivity : AppCompatActivity() {
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         adapter2 = DevartCommunityAdapter(null)
         adapter = DevartCommunitySubAdapter(null)
-        viewModel = ViewModelProvider(this).get(DevartCommunityViewModel::class.java)
+        viewModel = ViewModelProvider(this)[DevartCommunityViewModel::class.java]
         if (intent.hasExtra("_id")) {
             _id = intent.getStringExtra("_id")
             viewModel!!.getDevartCommunity(_id!!)
@@ -57,76 +56,77 @@ class DevartCommunityActivity : AppCompatActivity() {
         }
         binding.btnHideShowAds.setOnClickListener {
             if (binding.constrAds.visibility == View.VISIBLE) {
-                binding.constrAds.setVisibility(View.GONE)
+                binding.constrAds.visibility = View.GONE
                 binding.btnHideShowAds.setImageResource(R.drawable.ic_show_hide_ads)
             } else {
-                binding.constrAds.setVisibility(View.VISIBLE)
+                binding.constrAds.visibility = View.VISIBLE
                 binding.btnHideShowAds.setImageResource(R.drawable.ic_hide_show_ads)
             }
         }
     }
 
     private fun handleObserver() {
-        viewModel!!.errorMessage.observe(this, Observer { integer: Int ->
+        viewModel!!.errorMessage.observe(this) { integer: Int ->
             if (integer == 1) {
                 Toast.makeText(this, "error in response data", Toast.LENGTH_SHORT)
                     .show()
             } else {
                 Toast.makeText(this, "error in Network", Toast.LENGTH_SHORT).show()
             }
-        })
+        }
 
-        viewModel!!.devartCommunityResponse.observe(this, Observer {
+        viewModel!!.devartCommunityResponse.observe(this) {
             supportActionBar!!.title = it!!.name
             Glide.with(this)
-                .load("https://devartlink.devartlab.com/assets/images/" + it!!.image)
+                .load("https://devartlink.4eshopping.com/assets/images/" + it.image)
                 .fitCenter().into(binding.imageView)
             when {
                 it.sub.isNotEmpty() -> {
                     //show data in recyclerView
-                    binding.recyclerListTeams.setVisibility(View.VISIBLE)
-                    binding.decTeam.setVisibility(View.VISIBLE)
+                    binding.recyclerListTeams.visibility = View.VISIBLE
+                    binding.decTeam.visibility = View.VISIBLE
                     binding.decTeam.loadDataWithBaseURL(
-                        null, it.description, "text/html", "utf-8", null)
-                    binding.progressBar.setVisibility(View.GONE)
+                        null, it.description, "text/html", "utf-8", null
+                    )
+                    binding.progressBar.visibility = View.GONE
                     adapter = DevartCommunitySubAdapter(it.sub)
-                    binding.recyclerListTeams.setAdapter(adapter)
-                    adapter!!.setOnItemClickListener(DevartCommunitySubAdapter.OnItemClickListener { pos, dataItem ->
+                    binding.recyclerListTeams.adapter = adapter
+                    adapter!!.setOnItemClickListener { _, dataItem ->
                         val intent = Intent(this, DevartCommunityActivity::class.java)
                         intent.putExtra("_id", dataItem._id)
                         startActivity(intent)
-                    })
+                    }
                 }
                 it.youtube.isNotEmpty() -> {
                     //show data in recyclerView
-                    binding.recyclerListVideos.setVisibility(View.VISIBLE)
-                    binding.searchBarVideo.setVisibility(View.VISIBLE)
-                    binding.progressBar.setVisibility(View.GONE)
+                    binding.recyclerListVideos.visibility = View.VISIBLE
+                    binding.searchBarVideo.visibility = View.VISIBLE
+                    binding.progressBar.visibility = View.GONE
                     adapter2 = DevartCommunityAdapter(it.youtube)
                     list.addAll(it.youtube)
-                    binding.recyclerListVideos.setAdapter(adapter2)
-                    adapter2!!.setOnItemClickListener(DevartCommunityAdapter.OnItemClickListener { pos, dataItem ->
+                    binding.recyclerListVideos.adapter = adapter2
+                    adapter2!!.setOnItemClickListener { _, dataItem ->
                         val intent = Intent(this, DevartCommunityVideoActivity::class.java)
                         intent.putExtra("_id", dataItem.video_id)
                         intent.putExtra("_name", dataItem.title)
                         intent.putExtra("_dec", dataItem.description)
                         intent.putExtra("_name_channel", dataItem.sub_title)
                         startActivity(intent)
-                    })
+                    }
                 }
                 else -> {
                     //errorMessage if data coming is null;
-                    binding.tvEmptyList.setVisibility(View.VISIBLE)
+                    binding.tvEmptyList.visibility = View.VISIBLE
                 }
             }
-        })
+        }
     }
 
     private fun filter(text: String) {
         val filteredList: ArrayList<Youtube> = ArrayList()
 
         for (item in list) {
-            if (item.title.toLowerCase().contains(text.toLowerCase())) {
+            if (item.title.lowercase(Locale.getDefault()).contains(text.lowercase(Locale.getDefault()))) {
                 filteredList.add(item)
             }
         }
@@ -141,7 +141,7 @@ class DevartCommunityActivity : AppCompatActivity() {
                 viewModel!!.getDevartCommunity("0")
             }
             binding.swipeRefreshLayout.isRefreshing = false
-            binding.progressBar.setVisibility(View.VISIBLE)
+            binding.progressBar.visibility = View.VISIBLE
         }
     }
 

@@ -1,6 +1,7 @@
 package com.devartlab.a4eshopping.pharmacySales
 
 import android.app.Application
+import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import com.devartlab.data.retrofit.RetrofitClient
@@ -28,7 +29,7 @@ class DevartLabTeamViewModel(application: Application) : AndroidViewModel(applic
                     if (response.isSuccessful) {
                         devartLabTeamResponse.postValue(response.body())
                     } else {
-                        devartLabTeamResponse.postValue(response.body())
+                        Toast.makeText(getApplication(), "error in response data", Toast.LENGTH_SHORT).show()
                     }
                 }
 
@@ -48,7 +49,7 @@ class DevartLabTeamViewModel(application: Application) : AndroidViewModel(applic
                     if (response.isSuccessful) {
                         devartLabIncentiveResponse.postValue(response.body())
                     } else {
-                        devartLabIncentiveResponse.postValue(response.body())
+                        Toast.makeText(getApplication(), "error in response data", Toast.LENGTH_SHORT).show()
                     }
                 }
 

@@ -1,6 +1,7 @@
 package com.devartlab.ui.main.ui.devartlink.devartCommunity
 
 import android.app.Application
+import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import com.devartlab.base.BaseApplication
@@ -27,7 +28,7 @@ class DevartCommunityViewModel(application: Application) : AndroidViewModel(appl
                     if (response.isSuccessful) {
                         devartCommunityResponse.postValue(response.body())
                     } else {
-                        devartCommunityResponse.postValue(response.body())
+                        Toast.makeText(getApplication(), "error in response data", Toast.LENGTH_SHORT).show()
                     }
                 }
 

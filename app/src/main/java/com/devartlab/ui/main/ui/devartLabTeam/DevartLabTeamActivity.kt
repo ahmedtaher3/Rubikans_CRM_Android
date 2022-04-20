@@ -27,7 +27,7 @@ class DevartLabTeamActivity : AppCompatActivity() {
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         adapter = DevartLabSubAdapter(null)
         adapter2 = DevartLabTeamAdapter(null)
-        viewModel = ViewModelProvider(this).get(DevartLabTeamViewModel::class.java)
+        viewModel = ViewModelProvider(this)[DevartLabTeamViewModel::class.java]
         if (intent.hasExtra("_id")) {
             _id = intent.getStringExtra("_id")
             viewModel!!.getDevartLabTeam(_id!!)
@@ -41,10 +41,10 @@ class DevartLabTeamActivity : AppCompatActivity() {
     private fun onClickListener() {
         binding.btnHideShowAds.setOnClickListener {
             if (binding.constrAds.visibility == View.VISIBLE) {
-                binding.constrAds.setVisibility(View.GONE)
+                binding.constrAds.visibility = View.GONE
                 binding.btnHideShowAds.setImageResource(R.drawable.ic_show_hide_ads)
             } else {
-                binding.constrAds.setVisibility(View.VISIBLE)
+                binding.constrAds.visibility = View.VISIBLE
                 binding.btnHideShowAds.setImageResource(R.drawable.ic_hide_show_ads)
             }
         }
@@ -61,10 +61,10 @@ class DevartLabTeamActivity : AppCompatActivity() {
         }
 
         viewModel!!.devartLabTeamResponse.observe(this) {
-            binding.progressBar.setVisibility(View.GONE)
+            binding.progressBar.visibility = View.GONE
 
             Glide.with(this)
-                .load("https://devartlink.devartlab.com/assets/images/" + it!!.image)
+                .load("https://devartlink.4eshopping.com/assets/images/" + it!!.image)
                 .fitCenter().into(binding.imageView)
             supportActionBar!!.title = it.name
             binding.decTeam.loadDataWithBaseURL(
@@ -73,10 +73,10 @@ class DevartLabTeamActivity : AppCompatActivity() {
             when {
                 it.sub.isNotEmpty() -> {
                     //show data in recyclerView
-                    binding.progressBar.setVisibility(View.GONE)
+                    binding.progressBar.visibility = View.GONE
                     adapter = DevartLabSubAdapter(it.sub)
-                    binding.recyclerListTeams.setAdapter(adapter)
-                    adapter!!.setOnItemClickListener { pos, dataItem ->
+                    binding.recyclerListTeams.adapter = adapter
+                    adapter!!.setOnItemClickListener { _, dataItem ->
                         val intent = Intent(this, DevartLabTeamActivity::class.java)
                         intent.putExtra("_id", dataItem._id)
                         startActivity(intent)
@@ -84,10 +84,10 @@ class DevartLabTeamActivity : AppCompatActivity() {
                 }
                 it.team.isNotEmpty() -> {
                     //show data in recyclerView
-                    binding.progressBar.setVisibility(View.GONE)
+                    binding.progressBar.visibility = View.GONE
                     adapter2 = DevartLabTeamAdapter(it.team)
-                    binding.recyclerListTeams.setAdapter(adapter2)
-                    adapter2!!.setOnItemClickListener { pos, dataItem ->
+                    binding.recyclerListTeams.adapter = adapter2
+                    adapter2!!.setOnItemClickListener { _, dataItem ->
                         val intent = Intent(this, DevartLabTeamActivity::class.java)
                         intent.putExtra("_id", dataItem._id)
                         startActivity(intent)
@@ -95,7 +95,7 @@ class DevartLabTeamActivity : AppCompatActivity() {
                 }
                 else -> {
                     //errorMessage if data coming is null;
-                    binding.recyclerListTeams.setVisibility(View.GONE)
+                    binding.recyclerListTeams.visibility = View.GONE
                 }
             }
         }

@@ -67,7 +67,7 @@ class IncentiveRuleActivity : AppCompatActivity() {
             binding.progressBar.setVisibility(View.GONE)
 
             Glide.with(this)
-                .load("https://devartlink.devartlab.com/assets/images/" + it!!.image)
+                .load("https://devartlink.4eshopping.com/assets/images/" + it!!.image)
                 .fitCenter().into(binding.imageView)
             supportActionBar!!.title = it.name
             binding.decTeam.loadDataWithBaseURL(

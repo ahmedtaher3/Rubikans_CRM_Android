@@ -9,7 +9,6 @@ import android.text.TextWatcher
 import android.view.View
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.devartlab.R
 import com.devartlab.databinding.ActivityHandBookBinding
@@ -17,12 +16,12 @@ import com.devartlab.ui.main.ui.devartlink.handBook.model.Data
 import android.view.WindowManager
 
 import android.graphics.drawable.ColorDrawable
-import android.util.Log
 import android.view.Window
-import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
+import java.util.*
+import kotlin.collections.ArrayList
 
 class HandBookActivity : AppCompatActivity() {
     lateinit var binding: ActivityHandBookBinding
@@ -30,8 +29,8 @@ class HandBookActivity : AppCompatActivity() {
     private var adapter: SubjectsAdapter? = null
     private var adapter2: IndexHandBookAdapter? = null
     val list = ArrayList<Data>()
-    val list2 = ArrayList<Data>()
-    var recViewIndex: RecyclerView? = null
+    private val list2 = ArrayList<Data>()
+    private var recViewIndex: RecyclerView? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(
@@ -42,7 +41,7 @@ class HandBookActivity : AppCompatActivity() {
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         adapter = SubjectsAdapter(null)
         adapter2 = IndexHandBookAdapter(null)
-        viewModel = ViewModelProvider(this).get(HandBookViewModel::class.java)
+        viewModel = ViewModelProvider(this)[HandBookViewModel::class.java]
         onClickListener()
         handleObserver()
     }
@@ -65,38 +64,38 @@ class HandBookActivity : AppCompatActivity() {
     }
 
     private fun handleObserver() {
-        viewModel!!.errorMessage.observe(this, Observer { integer: Int ->
+        viewModel!!.errorMessage.observe(this) { integer: Int ->
             if (integer == 1) {
                 Toast.makeText(this, "error in response data", Toast.LENGTH_SHORT)
                     .show()
             } else {
                 Toast.makeText(this, "error in Network", Toast.LENGTH_SHORT).show()
             }
-        })
+        }
 
-        viewModel!!.handBookResponse.observe(this, Observer {
+        viewModel!!.handBookResponse.observe(this) {
             when {
                 it!!.data.isEmpty() -> {
                     //errorMessage if data coming is null;
-                    binding.tvEmptyList.setVisibility(View.VISIBLE)
-                    binding.progressBar.setVisibility(View.GONE)
+                    binding.tvEmptyList.visibility = View.VISIBLE
+                    binding.progressBar.visibility = View.GONE
                 }
                 else -> {
                     //show data in recyclerView
                     list.addAll(it.data)
-                    binding.progressBar.setVisibility(View.GONE)
+                    binding.progressBar.visibility = View.GONE
                     adapter = SubjectsAdapter(it.data)
-                    binding.recyclerListSubjects.setAdapter(adapter)
+                    binding.recyclerListSubjects.adapter = adapter
                 }
             }
-        })
+        }
     }
 
     private fun refresh() {
         synchronized(this) {
             viewModel!!.getHandBook()
             binding.swipeRefreshLayout.isRefreshing = false
-            binding.progressBar.setVisibility(View.VISIBLE)
+            binding.progressBar.visibility = View.VISIBLE
         }
     }
 
@@ -104,7 +103,7 @@ class HandBookActivity : AppCompatActivity() {
         val filteredList: ArrayList<Data> = ArrayList()
 
         for (item in list) {
-            if (item.title.toLowerCase().contains(text.toLowerCase())) {
+            if (item.title.lowercase(Locale.getDefault()).contains(text.lowercase(Locale.getDefault()))) {
                 filteredList.add(item)
             }
         }
@@ -115,7 +114,7 @@ class HandBookActivity : AppCompatActivity() {
         val filteredList: ArrayList<Data> = ArrayList()
 
         for (item in list2) {
-            if (item.title.toLowerCase().contains(text.toLowerCase())) {
+            if (item.title.lowercase(Locale.getDefault()).contains(text.lowercase(Locale.getDefault()))) {
                 filteredList.add(item)
             }
         }
@@ -127,7 +126,7 @@ class HandBookActivity : AppCompatActivity() {
         return true
     }
 
-    fun showIndexsDialog() {
+    private fun showIndexsDialog() {
         val dialog = Dialog(this)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setCancelable(false)
@@ -140,7 +139,7 @@ class HandBookActivity : AppCompatActivity() {
         )
         viewModel!!.getHandBook()
         val BtnCancel = dialog.findViewById<ImageView>(R.id.iv_cancel_dialog)
-        recViewIndex = dialog.findViewById<RecyclerView>(R.id.recycler_list_subjects)
+        recViewIndex = dialog.findViewById(R.id.recycler_list_subjects)
         val searchBarVideo = dialog.findViewById<EditText>(R.id.search_bar_video)
         searchBarVideo.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
@@ -149,7 +148,7 @@ class HandBookActivity : AppCompatActivity() {
                 filter2(s.toString())
             }
         })
-        viewModel!!.handBookResponse.observe(this, Observer {
+        viewModel!!.handBookResponse.observe(this) {
             when {
                 it!!.data.isEmpty() -> {
                     //errorMessage if data coming is null;
@@ -158,17 +157,17 @@ class HandBookActivity : AppCompatActivity() {
                 else -> {
                     //show data in recyclerView
                     adapter2 = IndexHandBookAdapter(it.data)
-                    recViewIndex!!.setAdapter(adapter2)
+                    recViewIndex!!.adapter = adapter2
                     list2.addAll(it.data)
-                    adapter2!!.setOnItemClickListener(IndexHandBookAdapter.OnItemClickListener {
+                    adapter2!!.setOnItemClickListener {
                         binding.recyclerListSubjects.post {
                             binding.recyclerListSubjects.layoutManager?.scrollToPosition(it)
                         }
                         dialog.dismiss()
-                    })
+                    }
                 }
             }
-        })
+        }
         BtnCancel.setOnClickListener {
             dialog.dismiss()
         }

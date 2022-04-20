@@ -116,7 +116,7 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ViewHo
                 jObject = new JSONObject(result);
                 String aJsonString = jObject.getString("new_name");
                 Glide.with(context)
-                        .load("https://devartlink.devartlab.com/storage/attachments/" +
+                        .load("https://devartlink.4eshopping.com/storage/attachments/" +
                                 aJsonString)
                         .into(viewHolder.attachment);
             } catch (JSONException e) {
@@ -157,7 +157,7 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ViewHo
                 }
             });
             Picasso.get()
-                    .load("https://devartlink.devartlab.com/api/imagev3?id="+dataItem.getUserapi().getId()+".png")
+                    .load("https://devartlink.4eshopping.com/api/imagev3?id="+dataItem.getUserapi().getId()+".png")
                     .centerCrop()
                     .resize(50, 50)
                     .placeholder(R.drawable.user_defult)
@@ -206,7 +206,7 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ViewHo
 
             if (isConnected()) {
                 Picasso.get()
-                        .load("https://devartlink.devartlab.com/api/imagev3?id="+dataItem.getUserapi().getId()+".png")
+                        .load("https://devartlink.4eshopping.com/api/imagev3?id="+dataItem.getUserapi().getId()+".png")
                         .centerCrop()
                         .resize(50, 50)
                         .placeholder(R.drawable.user_defult)

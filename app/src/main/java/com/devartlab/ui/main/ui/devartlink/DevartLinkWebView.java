@@ -93,7 +93,7 @@ public class DevartLinkWebView extends BaseActivity<ActivityDevartLinkWebviewBin
         String name =  dataManager.getUser().getUserName();
         String pass =  dataManager.getUser().getPassword();
         String token =  dataManager.getToken();
-        binding.mWebView.loadUrl("https://devartlink.devartlab.com/en/crm-chat?u=" +name+ "&p=" +pass+ "&fcm="+token);//put here your website
+        binding.mWebView.loadUrl("https://devartlink.4eshopping.com/en/crm-chat?u=" +name+ "&p=" +pass+ "&fcm="+token);//put here your website
 
         binding.mWebView.setWebViewClient(new WebViewClient() {
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
