@@ -47,7 +47,7 @@ public class DevartLabTeamAdapter extends RecyclerView.Adapter<DevartLabTeamAdap
         final Team dataItem = dataItems.get(position);
 
         viewHolder.binding.name.setText(dataItem.getName());
-        Glide.with(context).load("https://devartlink.4eshopping.com/assets/images/" + dataItem.getImage()).centerCrop().into(viewHolder.binding.image);
+        Glide.with(context).load("https://devartlink.4eshopping.com/assets/images/" + dataItem.getImage()).fitCenter().into(viewHolder.binding.image);
 //        viewHolder.binding.tvDecTeam.setText(dataItem.getSubtitle());
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             viewHolder.binding.tvDecTeam.setText(
