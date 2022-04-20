@@ -48,12 +48,12 @@ import java.util.HashMap
 class ChatThread4EShoppingActivity : AppCompatActivity() {
     lateinit var binding: ActivityChatEShoppingThreadBinding
     private var viewModel: TicketViewModel? = null
-    var ticket_id: String? = null
+    private var ticket_id: String? = null
     var status: String? = null
     var subject: String? = null
     var adapter: ChatListAdapter? = null
-    var volleyFileObjs: List<VolleyFileObj> = ArrayList<VolleyFileObj>()
-    var pusher: Pusher? = null
+    private var volleyFileObjs: List<VolleyFileObj> = ArrayList<VolleyFileObj>()
+    private var pusher: Pusher? = null
     var channel: Channel? = null
     lateinit var request: AddRateRequest
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -61,7 +61,7 @@ class ChatThread4EShoppingActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_chat_e_shopping_thread)
         setSupportActionBar(binding.toolbar)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-        viewModel = ViewModelProvider(this).get(TicketViewModel::class.java)
+        viewModel = ViewModelProvider(this)[TicketViewModel::class.java]
         if (intent.hasExtra("ticket_id")) {
             ticket_id = intent.getStringExtra("ticket_id")
             viewModel!!.getChatList(ticket_id!!)
@@ -98,17 +98,17 @@ class ChatThread4EShoppingActivity : AppCompatActivity() {
                 requestCameraPermission()
             }
         }
-        binding.send.setOnClickListener(View.OnClickListener {
+        binding.send.setOnClickListener {
             if (TextUtils.isEmpty(binding.message.text.toString())) {
                 binding.message.error = "please enter message"
             } else {
                 binding.send.isEnabled = false
                 submit()
             }
-        })
-        binding.btnRate.setOnClickListener(View.OnClickListener {
+        }
+        binding.btnRate.setOnClickListener {
             addRateDialog()
-        })
+        }
     }
 
     fun handleObserver() {
@@ -124,49 +124,53 @@ class ChatThread4EShoppingActivity : AppCompatActivity() {
                     .show()
             }
         }
-        viewModel!!.fetchMessagesResponse.observe(this, Observer {
+        viewModel!!.fetchMessagesResponse.observe(this) {
             binding.progressBar.visibility = View.GONE
             adapter = ChatListAdapter(it!!.data)
             binding.recyclerView.adapter = adapter
-            adapter!!.setOnItemClickListener(ChatListAdapter.OnItemLongClickListener { pos, dataItem ->
-                if (status == "1"||status=="2"||status=="4") {
+            adapter!!.setOnItemClickListener { _, dataItem ->
+                if (status == "1" || status == "2" || status == "4") {
                     deleteMessagesDialog(dataItem.id.toString())
                 }
-            })
-            if (it!!.rate != null) {
+            }
+            if (it.rate != null) {
                 binding.tvRateRating.visibility = View.VISIBLE
                 binding.tvRate.visibility = View.VISIBLE
                 binding.msgRate.visibility = View.VISIBLE
                 binding.send.visibility = View.GONE
                 binding.sendIMG.visibility = View.GONE
                 binding.message.visibility = View.GONE
-                binding.tvRateRating.rating = it!!.rate.rate.toFloat()
-                binding.msgRate.text = it!!.rate.message
-            } else if (it!!.rate == null) {
-                if (status != "1" && status != "2"&& status != "4") {
+                binding.tvRateRating.rating = it.rate.rate.toFloat()
+                binding.msgRate.text = it.rate.message
+            } else if (it.rate == null) {
+                if (status != "1" && status != "2" && status != "4") {
                     binding.btnRate.visibility = View.VISIBLE
                     binding.send.visibility = View.GONE
                     binding.sendIMG.visibility = View.GONE
                     binding.message.visibility = View.GONE
                 }
             }
-        })
-        viewModel!!.sendMessagesResponse.observe(this, Observer {
+        }
+        viewModel!!.sendMessagesResponse.observe(this) {
             binding.message.setText("")
             binding.sendIMG.setImageResource(R.drawable.ic_attach_file)
             (volleyFileObjs as ArrayList<VolleyFileObj>).clear()
             binding.send.isEnabled = true
-        })
-        viewModel!!.addRateResponse.observe(this, Observer {
+        }
+        viewModel!!.addRateResponse.observe(this) {
             finish()
-            startActivity(getIntent())
-            Toast.makeText(this@ChatThread4EShoppingActivity, "تم التقييم بنجاح", Toast.LENGTH_SHORT)
+            startActivity(intent)
+            Toast.makeText(
+                this@ChatThread4EShoppingActivity,
+                "تم التقييم بنجاح",
+                Toast.LENGTH_SHORT
+            )
                 .show()
-        })
-        viewModel!!.deleteMessagesResponse.observe(this, Observer {
+        }
+        viewModel!!.deleteMessagesResponse.observe(this) {
             finish()
-            startActivity(getIntent())
-        })
+            startActivity(intent)
+        }
     }
 
     private fun pusher() {
@@ -188,7 +192,7 @@ class ChatThread4EShoppingActivity : AppCompatActivity() {
             ) {
                 Log.i(
                     "Pusher",
-                    "There was a problem connecting! code ($code), " + "message ($message), exception($e)"
+                    "There was a problem connecting! code ($code), message ($message), exception($e)"
                 )
             }
         }, ConnectionState.ALL)
@@ -209,8 +213,7 @@ class ChatThread4EShoppingActivity : AppCompatActivity() {
             Log.i("Pusher", "client-seen: $event")
             viewModel!!.getChatList(ticket_id!!)
         }
-        channel!!.bind("client-delete-message") { event ->
-            android.util.Log.i("Pusher", "Received event with data: $event")
+        channel!!.bind("client-delete-message") {
             if (intent.hasExtra("ticket_id")) {
                 ticket_id = intent.getStringExtra("ticket_id")
                 viewModel!!.getChatList(ticket_id!!)
@@ -227,17 +230,21 @@ class ChatThread4EShoppingActivity : AppCompatActivity() {
         val builder = AlertDialog.Builder(this)
         builder.setTitle(getString(R.string.labal_choose_method_img))
         builder.setItems(options) { dialog, item ->
-            if (options[item] == getString(R.string.labal_from_camera)) {
-                val i = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-                startActivityForResult(i, 0)
-            } else if (options[item] == getString(R.string.labal_from_library_imgs)) {
-                val intent = Intent(
-                    Intent.ACTION_PICK,
-                    MediaStore.Images.Media.EXTERNAL_CONTENT_URI
-                )
-                startActivityForResult(intent, 2)
-            } else if (options[item] == getString(R.string.labal_cancel)) {
-                dialog.dismiss()
+            when {
+                options[item] == getString(R.string.labal_from_camera) -> {
+                    val i = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+                    startActivityForResult(i, 0)
+                }
+                options[item] == getString(R.string.labal_from_library_imgs) -> {
+                    val intent = Intent(
+                        Intent.ACTION_PICK,
+                        MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+                    )
+                    startActivityForResult(intent, 2)
+                }
+                options[item] == getString(R.string.labal_cancel) -> {
+                    dialog.dismiss()
+                }
             }
         }
         builder.show()
@@ -283,7 +290,7 @@ class ChatThread4EShoppingActivity : AppCompatActivity() {
         }
     }
 
-    fun getImageUri(inContext: Context, inImage: Bitmap): Uri? {
+    private fun getImageUri(inContext: Context, inImage: Bitmap): Uri? {
         val bytes = ByteArrayOutputStream()
         inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes)
         val path = MediaStore.Images.Media.insertImage(
@@ -322,12 +329,12 @@ class ChatThread4EShoppingActivity : AppCompatActivity() {
         map["message"] = message
         Log.e("message", binding.message.text.toString())
 
-        if (volleyFileObjs.size == 0) {
+        if (volleyFileObjs.isEmpty()) {
             viewModel!!.sendMessages(map)
         } else {
             val sendMGSReqBody: RequestBody = RequestBody.create(
                 "image/*".toMediaTypeOrNull(),
-                volleyFileObjs.get(0).file
+                volleyFileObjs[0].file
             )
             val part: MultipartBody.Part = MultipartBody.Part.createFormData(
                 volleyFileObjs[0].paramName,
@@ -337,7 +344,7 @@ class ChatThread4EShoppingActivity : AppCompatActivity() {
         }
     }
 
-    fun addRateDialog() {
+    private fun addRateDialog() {
         val dialog = Dialog(this)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setCancelable(false)
@@ -357,21 +364,25 @@ class ChatThread4EShoppingActivity : AppCompatActivity() {
             dialog.dismiss()
         }
         BtnSubmit.setOnClickListener {
-            if (TextUtils.isEmpty(MSGRate.getText().toString())) {
-                MSGRate.setError("please enter message")
-            } else if (TextUtils.isEmpty(RateBar.rating.toString())) {
-                Toast.makeText(this@ChatThread4EShoppingActivity, "please enter rate", Toast.LENGTH_SHORT)
-                    .show()
-            } else {
-                request = AddRateRequest(ticket_id!!, MSGRate.text.toString(), RateBar.rating)
-                viewModel!!.addRate(request)
-                dialog.dismiss()
+            when {
+                TextUtils.isEmpty(MSGRate.getText().toString()) -> {
+                    MSGRate.setError("please enter message")
+                }
+                TextUtils.isEmpty(RateBar.rating.toString()) -> {
+                    Toast.makeText(this@ChatThread4EShoppingActivity, "please enter rate", Toast.LENGTH_SHORT)
+                        .show()
+                }
+                else -> {
+                    request = AddRateRequest(ticket_id!!, MSGRate.text.toString(), RateBar.rating)
+                    viewModel!!.addRate(request)
+                    dialog.dismiss()
+                }
             }
         }
         dialog.show()
     }
 
-    fun deleteMessagesDialog(id_messages: String) {
+    private fun deleteMessagesDialog(id_messages: String) {
         val dialog = Dialog(this)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setCancelable(false)
@@ -399,14 +410,14 @@ class ChatThread4EShoppingActivity : AppCompatActivity() {
         finish()
         return true
     }
-    fun requestCameraPermission() {
+    private fun requestCameraPermission() {
         if (ActivityCompat.shouldShowRequestPermissionRationale(this@ChatThread4EShoppingActivity, Manifest.permission.CAMERA)) {
             android.app.AlertDialog.Builder(this@ChatThread4EShoppingActivity)
                 .setTitle("permission denied")
                 .setMessage("ask for permission again")
-                .setPositiveButton("ok") { dialog, which -> ActivityCompat.requestPermissions(this@ChatThread4EShoppingActivity, arrayOf(
+                .setPositiveButton("ok") { _, _ -> ActivityCompat.requestPermissions(this@ChatThread4EShoppingActivity, arrayOf(
                     Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE), 22) }
-                .setNegativeButton("cancel") { dialog, which -> dialog.dismiss() }
+                .setNegativeButton("cancel") { dialog, _ -> dialog.dismiss() }
                 .create().show()
         } else {
             ActivityCompat.requestPermissions(this@ChatThread4EShoppingActivity, arrayOf(Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE), 22)

@@ -1,6 +1,7 @@
 package com.devartlab.a4eshopping.PharmacyBinding.addLocation
 
 import android.app.Application
+import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import com.devartlab.a4eshopping.PharmacyBinding.addLocation.model.areas.AreasResponse
@@ -62,7 +63,7 @@ class AddLocationViewModel(application: Application) : AndroidViewModel(applicat
                     if (response.isSuccessful) {
                         citiesResponse.postValue(response.body())
                     } else {
-                        citiesResponse.postValue(response.body())
+                        Toast.makeText(getApplication(), "error in response data", Toast.LENGTH_SHORT).show()
                     }
                 }
 
@@ -82,7 +83,7 @@ class AddLocationViewModel(application: Application) : AndroidViewModel(applicat
                     if (response.isSuccessful) {
                         areasResponse.postValue(response.body())
                     } else {
-                        areasResponse.postValue(response.body())
+                        Toast.makeText(getApplication(), "error in response data", Toast.LENGTH_SHORT).show()
                     }
                 }
 
@@ -102,7 +103,7 @@ class AddLocationViewModel(application: Application) : AndroidViewModel(applicat
                     if (response.isSuccessful) {
                         districtsResponse.postValue(response.body())
                     } else {
-                        districtsResponse.postValue(response.body())
+                        Toast.makeText(getApplication(), "error in response data", Toast.LENGTH_SHORT).show()
                     }
                 }
 
@@ -122,7 +123,7 @@ class AddLocationViewModel(application: Application) : AndroidViewModel(applicat
                     if (response.isSuccessful) {
                         UpdateAddressResponse.postValue(response.body())
                     } else {
-                        UpdateAddressResponse.postValue(response.body())
+                        Toast.makeText(getApplication(), "error in response data", Toast.LENGTH_SHORT).show()
                     }
                 }
 
@@ -142,7 +143,7 @@ class AddLocationViewModel(application: Application) : AndroidViewModel(applicat
                     if (response.isSuccessful) {
                         getUserAddressResponse.postValue(response.body())
                     } else {
-                        getUserAddressResponse.postValue(response.body())
+                        Toast.makeText(getApplication(), "error in response data", Toast.LENGTH_SHORT).show()
                     }
                 }
 

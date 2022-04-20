@@ -1,6 +1,7 @@
 package com.devartlab.ui.main.ui.eShopping.pharmacyBinding.uploadPharmacyFiles
 
 import android.app.Application
+import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import com.devartlab.data.retrofit.RetrofitClient
@@ -34,7 +35,7 @@ class UploadPharmacyViewModel(application: Application) : AndroidViewModel(appli
                     if (response.isSuccessful()) {
                         updatePharmacyDetails.postValue(response.body())
                     } else {
-                        updatePharmacyDetails.postValue(response.body())
+                        Toast.makeText(getApplication(), "error in response data", Toast.LENGTH_SHORT).show()
                     }
                 }
 
@@ -54,7 +55,7 @@ class UploadPharmacyViewModel(application: Application) : AndroidViewModel(appli
                     if (response.isSuccessful) {
                         getInfoPharmacyResponse.postValue(response.body())
                     } else {
-                        getInfoPharmacyResponse.postValue(response.body())
+                        Toast.makeText(getApplication(), "error in response data", Toast.LENGTH_SHORT).show()
                     }
                 }
 

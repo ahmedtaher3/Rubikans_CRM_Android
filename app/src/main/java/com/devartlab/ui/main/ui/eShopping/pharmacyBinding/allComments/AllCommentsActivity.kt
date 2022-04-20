@@ -2,11 +2,9 @@ package com.devartlab.ui.main.ui.eShopping.pharmacyBinding.allComments
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.devartlab.R
 import com.devartlab.databinding.ActivityAllCommentsBinding
@@ -14,7 +12,7 @@ import com.devartlab.databinding.ActivityAllCommentsBinding
 class AllCommentsActivity : AppCompatActivity() {
     lateinit var binding: ActivityAllCommentsBinding
     var viewModel: AllCommentsViewModel? = null
-    var idPharmacies: String? = null
+    private var idPharmacies: String? = null
     private var adapter: AllCommentsAdapter? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,7 +26,7 @@ class AllCommentsActivity : AppCompatActivity() {
             idPharmacies = intent.getStringExtra("pharmacies_id")
         }
         adapter = AllCommentsAdapter(null)
-        viewModel = ViewModelProvider(this).get(AllCommentsViewModel::class.java)
+        viewModel = ViewModelProvider(this)[AllCommentsViewModel::class.java]
         onClickListener()
         handleObserver()
     }
@@ -36,27 +34,26 @@ class AllCommentsActivity : AppCompatActivity() {
         viewModel!!.getSearchForPharmacy(idPharmacies!!)
     }
     private fun handleObserver(){
-        viewModel!!.errorMessage.observe(this, { integer: Int ->
+        viewModel!!.errorMessage.observe(this) { integer: Int ->
             if (integer == 1) {
-                Log.e("xxx", "error")
                 Toast.makeText(this, "error in response data", Toast.LENGTH_SHORT)
                     .show()
             } else {
                 Toast.makeText(this, "error in Network", Toast.LENGTH_SHORT).show()
             }
-        })
-        viewModel!!.allCommentsResponse.observe(this, Observer {
-            if (it!!.data.size==0) {
+        }
+        viewModel!!.allCommentsResponse.observe(this) {
+            if (it!!.data.isEmpty()) {
                 //errorMessage if data coming is null;
-                binding.tvEmptyList.setVisibility(View.VISIBLE)
-                binding.progressBar.setVisibility(View.GONE)
+                binding.tvEmptyList.visibility = View.VISIBLE
+                binding.progressBar.visibility = View.GONE
             } else {
                 //show data in recyclerView
-                binding.progressBar.setVisibility(View.GONE)
+                binding.progressBar.visibility = View.GONE
                 adapter = AllCommentsAdapter(it.data)
-                binding.recyclerAllComments.setAdapter(adapter)
+                binding.recyclerAllComments.adapter = adapter
             }
-        })
+        }
     }
 
     override fun onSupportNavigateUp(): Boolean {

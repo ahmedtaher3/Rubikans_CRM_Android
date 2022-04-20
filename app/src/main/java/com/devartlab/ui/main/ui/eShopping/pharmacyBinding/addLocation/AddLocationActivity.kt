@@ -12,7 +12,6 @@ import android.view.View
 import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.devartlab.GetMyLocation
 import com.devartlab.R
@@ -22,7 +21,6 @@ import com.devartlab.databinding.ActivityAddLocationBinding
 import com.devartlab.utils.CommonUtilities
 import com.devartlab.utils.LocationUtils
 import com.devartlab.utils.ProgressLoading
-import kotlinx.android.synthetic.main.plan_item.*
 import android.location.Geocoder
 import com.devartlab.ui.main.ui.eShopping.pharmacyBinding.PharmacyBindingActivity
 import java.lang.Exception
@@ -30,15 +28,15 @@ import java.util.*
 
 
 class AddLocationActivity : AppCompatActivity() {
-    var idPharmacies: String? = null
+    private var idPharmacies: String? = null
     lateinit var binding: ActivityAddLocationBinding
     var viewModel: AddLocationViewModel? = null
-    var countryID: Int = 0
-    var cityID: Int = 0
-    var areaID: Int = 0
-    var districtID: Int = 0
+    private var countryID: Int = 0
+    private var cityID: Int = 0
+    private var areaID: Int = 0
+    private var districtID: Int = 0
     var lat_lng: String? = null
-    lateinit var updateAddressRequest: UpdateAddressRequest
+    private lateinit var updateAddressRequest: UpdateAddressRequest
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(
@@ -51,7 +49,7 @@ class AddLocationActivity : AppCompatActivity() {
         if (intent.hasExtra("pharmacies_id")) {
             idPharmacies = intent.getStringExtra("pharmacies_id")
         }
-        viewModel = ViewModelProvider(this).get(AddLocationViewModel::class.java)
+        viewModel = ViewModelProvider(this)[AddLocationViewModel::class.java]
         onClickListener()
         handleObserver()
     }
@@ -86,7 +84,7 @@ class AddLocationActivity : AppCompatActivity() {
                                 lat_lng = "1" + "," + "1"
                             } else {
                                 lat_lng = location?.latitude.toString() + "," + location?.longitude.toString()
-                                binding.edLanLng.setText(getAddressFromLatLng(this@AddLocationActivity,location?.latitude,location?.longitude))
+                                binding.edLanLng.text = getAddressFromLatLng(this@AddLocationActivity,location?.latitude,location?.longitude)
                             }
                         } else {
                             runOnUiThread {
@@ -104,53 +102,59 @@ class AddLocationActivity : AppCompatActivity() {
             }
         }
         binding.btnUpdate.setOnClickListener {
-            if (countryID == 0) {
-                binding.edCountry.setError("please enter country")
-            } else if (cityID == 0) {
-                binding.edCity.setError("please enter city")
-            } else if (areaID == 0) {
-                binding.edCity.setError("please enter area")
-            } else if (districtID == 0) {
-                binding.edCity.setError("please enter district")
-            } else if (TextUtils.isEmpty(binding.edAddress.getText().toString())) {
-                binding.edCity.setError("please enter address")
-            } else if (lat_lng == null) {
-                binding.edLanLng.setError("please click to get current location")
-            } else {
-                updateAddressRequest = UpdateAddressRequest(
-                    idPharmacies,
-                    countryID,
-                    cityID,
-                    areaID,
-                    districtID,
-                    binding.edAddress.getText().toString(),
-                    lat_lng!!
-                )
-                viewModel!!.updateAddress(updateAddressRequest)
+            when {
+                countryID == 0 -> {
+                    binding.edCountry.error = "please enter country"
+                }
+                cityID == 0 -> {
+                    binding.edCity.error = "please enter city"
+                }
+                areaID == 0 -> {
+                    binding.edCity.error = "please enter area"
+                }
+                districtID == 0 -> {
+                    binding.edCity.error = "please enter district"
+                }
+                TextUtils.isEmpty(binding.edAddress.text.toString()) -> {
+                    binding.edCity.error = "please enter address"
+                }
+                lat_lng == null -> {
+                    binding.edLanLng.error = "please click to get current location"
+                }
+                else -> {
+                    updateAddressRequest = UpdateAddressRequest(
+                        idPharmacies,
+                        countryID,
+                        cityID,
+                        areaID,
+                        districtID,
+                        binding.edAddress.text.toString(),
+                        lat_lng!!
+                    )
+                    viewModel!!.updateAddress(updateAddressRequest)
+                }
             }
         }
     }
 
     fun handleObserver() {
-        viewModel!!.errorMessage.observe(this, { integer: Int ->
+        viewModel!!.errorMessage.observe(this) { integer: Int ->
             if (integer == 1) {
-                Log.e("xxx", "error")
                 Toast.makeText(this, "error in response data", Toast.LENGTH_SHORT)
                     .show()
             } else {
                 Toast.makeText(this, "error in Network", Toast.LENGTH_SHORT).show()
             }
-        })
-        viewModel!!.CountryResponse.observe(this, Observer {
+        }
+        viewModel!!.CountryResponse.observe(this) {
 
             val countryBrandsPopUp = PopupMenu(this, binding.edCountry)
             for (i in 0 until it!!.size) {
-                countryBrandsPopUp.getMenu().add(i, i, i, it.get(i).country_name)
+                countryBrandsPopUp.menu.add(i, i, i, it[i].country_name)
             }
             countryBrandsPopUp.setOnMenuItemClickListener(PopupMenu.OnMenuItemClickListener { item ->
-                binding.edCountry
-                    .setText(it.get(item.getItemId()).country_name)
-                countryID = it.get(item.getItemId()).id.toInt()
+                binding.edCountry.text = it[item.itemId].country_name
+                countryID = it[item.itemId].id
                 binding.edCity.setText(R.string.select)
                 binding.edArea.setText(R.string.select)
                 binding.edDistrict.setText(R.string.select)
@@ -158,56 +162,53 @@ class AddLocationActivity : AppCompatActivity() {
                 return@OnMenuItemClickListener false
             })
             countryBrandsPopUp.show()
-        })
-        viewModel!!.citiesResponse.observe(this, Observer {
+        }
+        viewModel!!.citiesResponse.observe(this) {
 
             val citiesBrandsPopUp = PopupMenu(this, binding.edCity)
             for (i in 0 until it!!.data.size) {
-                citiesBrandsPopUp.getMenu().add(i, i, i, it.data.get(i).name)
+                citiesBrandsPopUp.menu.add(i, i, i, it.data[i].name)
             }
             citiesBrandsPopUp.setOnMenuItemClickListener(PopupMenu.OnMenuItemClickListener { item ->
-                binding.edCity
-                    .setText(it.data.get(item.getItemId()).name)
-                cityID = it.data.get(item.getItemId()).id.toInt()
+                binding.edCity.text = it.data[item.itemId].name
+                cityID = it.data[item.itemId].id
                 binding.edArea.setText(R.string.select)
                 binding.edDistrict.setText(R.string.select)
                 Log.e("popupCarBrands", "onMenuItemClick: $cityID")
                 return@OnMenuItemClickListener false
             })
             citiesBrandsPopUp.show()
-        })
-        viewModel!!.areasResponse.observe(this, Observer {
+        }
+        viewModel!!.areasResponse.observe(this) {
 
             val areasBrandsPopUp = PopupMenu(this, binding.edArea)
             for (i in 0 until it!!.data.size) {
-                areasBrandsPopUp.getMenu().add(i, i, i, it.data.get(i).name)
+                areasBrandsPopUp.menu.add(i, i, i, it.data[i].name)
             }
             areasBrandsPopUp.setOnMenuItemClickListener(PopupMenu.OnMenuItemClickListener { item ->
-                binding.edArea
-                    .setText(it.data.get(item.getItemId()).name)
-                areaID = it.data.get(item.getItemId()).id.toInt()
+                binding.edArea.text = it.data[item.itemId].name
+                areaID = it.data[item.itemId].id
                 binding.edDistrict.setText(R.string.select)
                 Log.e("popupCarBrands", "onMenuItemClick: $areaID")
                 return@OnMenuItemClickListener false
             })
             areasBrandsPopUp.show()
-        })
-        viewModel!!.districtsResponse.observe(this, Observer {
+        }
+        viewModel!!.districtsResponse.observe(this) {
 
             val districtsBrandsPopUp = PopupMenu(this, binding.edDistrict)
             for (i in 0 until it!!.data.size) {
-                districtsBrandsPopUp.getMenu().add(i, i, i, it.data.get(i).name)
+                districtsBrandsPopUp.menu.add(i, i, i, it.data[i].name)
             }
             districtsBrandsPopUp.setOnMenuItemClickListener(PopupMenu.OnMenuItemClickListener { item ->
-                binding.edDistrict
-                    .setText(it.data.get(item.getItemId()).name)
-                districtID = it.data.get(item.getItemId()).id.toInt()
+                binding.edDistrict.text = it.data[item.itemId].name
+                districtID = it.data[item.itemId].id
                 Log.e("popupCarBrands", "onMenuItemClick: $districtID")
                 return@OnMenuItemClickListener false
             })
             districtsBrandsPopUp.show()
-        })
-        viewModel!!.UpdateAddressResponse.observe(this, Observer {
+        }
+        viewModel!!.UpdateAddressResponse.observe(this) {
             if (it!!.message) {
                 Toast.makeText(this, " تمت اضافة بنجاح", Toast.LENGTH_SHORT)
                     .show()
@@ -216,27 +217,31 @@ class AddLocationActivity : AppCompatActivity() {
             } else {
                 Toast.makeText(this, "error in Network", Toast.LENGTH_SHORT).show()
             }
-        })
-        viewModel!!.getUserAddressResponse.observe(this, Observer {
-            binding.progressBar.setVisibility(View.GONE)
+        }
+        viewModel!!.getUserAddressResponse.observe(this) {
+            binding.progressBar.visibility = View.GONE
             if (it != null) {
-                binding.edCountry.setText(it.country_name)
-                binding.edCity.setText(it.city_name)
-                binding.edArea.setText(it.area_name)
-                binding.edDistrict.setText(it.district_name)
+                binding.edCountry.text = it.country_name
+                binding.edCity.text = it.city_name
+                binding.edArea.text = it.area_name
+                binding.edDistrict.text = it.district_name
                 binding.edAddress.setText(it.fulladdress)
-                if (it.lat_lng!=null){
+                if (it.lat_lng != null) {
                     val strs = it.lat_lng.split(",").toTypedArray()
-                    val lat:Double=strs[0].toDouble()
-                    val lng:Double=strs[1].toDouble()
-                    binding.edLanLng.setText(getAddressFromLatLng(this@AddLocationActivity,lat,lng))
+                    val lat: Double = strs[0].toDouble()
+                    val lng: Double = strs[1].toDouble()
+                    binding.edLanLng.text = getAddressFromLatLng(
+                        this@AddLocationActivity,
+                        lat,
+                        lng
+                    )
                 }
                 countryID = it.country_id
                 cityID = it.city_id
                 areaID = it.area_id
                 districtID = it.district_id
             }
-        })
+        }
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -249,16 +254,16 @@ class AddLocationActivity : AppCompatActivity() {
         geocoder = Geocoder(context, Locale.getDefault())
         return try {
             addresses = geocoder.getFromLocation(lat, lng, 1)
-            if (addresses[0].getSubThoroughfare() == null && addresses[0].getThoroughfare() == null) {
+            if (addresses[0].subThoroughfare == null && addresses[0].thoroughfare == null) {
                 Log.e("TAG", "getAddressLine: ")
                 addresses[0].getAddressLine(0)
-            } else if (addresses[0].getSubThoroughfare() == null) {
+            } else if (addresses[0].subThoroughfare == null) {
                 Log.e("TAG", "getSubThoroughfare: ")
-                addresses[0].getThoroughfare().toString() + ", " + addresses[0].getAdminArea()
+                addresses[0].thoroughfare.toString() + ", " + addresses[0].adminArea
             } else {
                 Log.e("TAG", "getAddressFromLatLng: ")
-                addresses[0].getSubThoroughfare()
-                    .toString() + " " + addresses[0].getThoroughfare() + ", " + addresses[0].getAdminArea()
+                addresses[0].subThoroughfare
+                    .toString() + " " + addresses[0].thoroughfare + ", " + addresses[0].adminArea
             }
         } catch (e: Exception) {
             e.printStackTrace()

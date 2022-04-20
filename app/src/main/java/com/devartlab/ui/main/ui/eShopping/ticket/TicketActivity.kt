@@ -34,7 +34,7 @@ class TicketActivity : AppCompatActivity() {
     var viewModel: TicketViewModel? = null
     private var adapter: GetContactsAdapter? = null
     lateinit var request: AddTicketRequest
-    var pusher: Pusher? = null
+    private var pusher: Pusher? = null
     var channel: Channel? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,7 +45,7 @@ class TicketActivity : AppCompatActivity() {
         setSupportActionBar(binding.toolbar)
         supportActionBar!!.title = getString(R.string.ticket)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-        viewModel = ViewModelProvider(this).get(TicketViewModel::class.java)
+        viewModel = ViewModelProvider(this)[TicketViewModel::class.java]
         pusher()
         onClickListener()
         handleObserver()
@@ -60,9 +60,9 @@ class TicketActivity : AppCompatActivity() {
             addTicketDialog()
         }
         binding.edFilter.setOnClickListener {
-            val popupMenu: PopupMenu = PopupMenu(this, binding.edFilter)
+            val popupMenu = PopupMenu(this, binding.edFilter)
             popupMenu.menuInflater.inflate(R.menu.filter_popup_menu, popupMenu.menu)
-            popupMenu.setOnMenuItemClickListener(PopupMenu.OnMenuItemClickListener { item ->
+            popupMenu.setOnMenuItemClickListener { item ->
                 when (item.itemId) {
                     R.id.action_all -> {
                         binding.edFilter.setText(R.string.action_all)
@@ -86,7 +86,7 @@ class TicketActivity : AppCompatActivity() {
                     }
                 }
                 true
-            })
+            }
             popupMenu.show()
         }
 
@@ -111,40 +111,44 @@ class TicketActivity : AppCompatActivity() {
                 Toast.makeText(this, "error in Network", Toast.LENGTH_SHORT).show()
             }
         }
-        viewModel!!.deleteTicketsResponse.observe(this, Observer {
+        viewModel!!.deleteTicketsResponse.observe(this) {
             finish()
-            startActivity(getIntent())
-        })
-        viewModel!!.getContactsResponse.observe(this, Observer {
-            if (it!!.data.isNullOrEmpty()) {
-                //errorMessage if data coming is null;
-                binding.tvEmptyList.setVisibility(View.VISIBLE)
-                binding.progressBar.setVisibility(View.GONE)
-            } else if (it.code == 401) {
-                Toast.makeText(this, "please login again", Toast.LENGTH_SHORT)
-                    .show()
-                val intent = Intent(this, LoginActivity::class.java)
-                startActivity(intent)
-            } else {
-                //show data in recyclerView
-                binding.progressBar.setVisibility(View.GONE)
-                adapter = GetContactsAdapter(it.data)
-                binding.recHomePeople.setAdapter(adapter)
-                adapter!!.setOnItemClickListener(GetContactsAdapter.OnItemClickListener { pos, dataItem ->
-                    val intent = Intent(this, ChatThread4EShoppingActivity::class.java)
-                    intent.putExtra("ticket_id", dataItem.id.toString())
-                    intent.putExtra("status", dataItem.status.toString())
-                    intent.putExtra("subject", dataItem.subject)
+            startActivity(intent)
+        }
+        viewModel!!.getContactsResponse.observe(this) {
+            when {
+                it!!.data.isNullOrEmpty() -> {
+                    //errorMessage if data coming is null;
+                    binding.tvEmptyList.visibility = View.VISIBLE
+                    binding.progressBar.visibility = View.GONE
+                }
+                it.code == 401 -> {
+                    Toast.makeText(this, "please login again", Toast.LENGTH_SHORT)
+                        .show()
+                    val intent = Intent(this, LoginActivity::class.java)
                     startActivity(intent)
-                })
+                }
+                else -> {
+                    //show data in recyclerView
+                    binding.progressBar.visibility = View.GONE
+                    adapter = GetContactsAdapter(it.data)
+                    binding.recHomePeople.adapter = adapter
+                    adapter!!.setOnItemClickListener(GetContactsAdapter.OnItemClickListener { _, dataItem ->
+                        val intent = Intent(this, ChatThread4EShoppingActivity::class.java)
+                        intent.putExtra("ticket_id", dataItem.id.toString())
+                        intent.putExtra("status", dataItem.status.toString())
+                        intent.putExtra("subject", dataItem.subject)
+                        startActivity(intent)
+                    })
 
-                adapter!!.setOnItemClickListener2(GetContactsAdapter.OnItemClickListener2 { pos, noOrder, status ->
-                    if (status == "1" || status == "4") {
-                        deleteMessagesDialog(noOrder)
-                    }
-                })
+                    adapter!!.setOnItemClickListener2(GetContactsAdapter.OnItemClickListener2 { _, noOrder, status ->
+                        if (status == "1" || status == "4") {
+                            deleteMessagesDialog(noOrder)
+                        }
+                    })
+                }
             }
-        })
+        }
         viewModel!!.addTicketRsponse.observe(this, Observer {
             viewModel!!.getGetContacts("", "")
             Toast.makeText(this, "تم اضافة التيكيت بنجاح", Toast.LENGTH_SHORT)
@@ -156,7 +160,7 @@ class TicketActivity : AppCompatActivity() {
         synchronized(this) {
             viewModel!!.getGetContacts("", "")
             binding.swipeRefreshLayout.isRefreshing = false
-            binding.progressBar.setVisibility(View.VISIBLE)
+            binding.progressBar.visibility = View.VISIBLE
         }
     }
 
@@ -180,7 +184,7 @@ class TicketActivity : AppCompatActivity() {
             ) {
                 Log.i(
                     "Pusher",
-                    "There was a problem connecting! code ($code), " + "message ($message), exception($e)"
+                    "There was a problem connecting! code ($code), message ($message), exception($e)"
                 )
             }
         }, ConnectionState.ALL)
@@ -191,7 +195,7 @@ class TicketActivity : AppCompatActivity() {
         }
     }
 
-    fun deleteMessagesDialog(id_messages: String) {
+    private fun deleteMessagesDialog(id_messages: String) {
         val dialog = Dialog(this)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setCancelable(false)
@@ -215,7 +219,7 @@ class TicketActivity : AppCompatActivity() {
         dialog.show()
     }
 
-    fun addTicketDialog() {
+    private fun addTicketDialog() {
         val dialog = Dialog(this)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setCancelable(false)
@@ -233,59 +237,64 @@ class TicketActivity : AppCompatActivity() {
         val EdTitleProblem = dialog.findViewById<EditText>(R.id.ed_title_problem)
         val EdMessageProblem = dialog.findViewById<EditText>(R.id.ed_message_problem)
         TvSelectProblem.setOnClickListener {
-            val popupMenu: PopupMenu = PopupMenu(this, TvSelectProblem)
+            val popupMenu = PopupMenu(this, TvSelectProblem)
             popupMenu.menuInflater.inflate(R.menu.popup_menu, popupMenu.menu)
-            popupMenu.setOnMenuItemClickListener(PopupMenu.OnMenuItemClickListener { item ->
+            popupMenu.setOnMenuItemClickListener { item ->
                 when (item.itemId) {
                     R.id.action_problem_register -> {
                         TvSelectProblem.setText(R.string.action_problem_register)
-                        EdOther.setVisibility(View.GONE)
+                        EdOther.visibility = View.GONE
                     }
                     R.id.action_active_customer -> {
                         TvSelectProblem.setText(R.string.action_active_customer)
-                        EdOther.setVisibility(View.GONE)
+                        EdOther.visibility = View.GONE
                     }
                     R.id.action_order_problem -> {
                         TvSelectProblem.setText(R.string.action_order_problem)
-                        EdOther.setVisibility(View.VISIBLE)
-                        if (TextUtils.isEmpty(EdOther.getText().toString())) {
-                            EdOther.setError("please enter order number")
+                        EdOther.visibility = View.VISIBLE
+                        if (TextUtils.isEmpty(EdOther.text.toString())) {
+                            EdOther.error = "please enter order number"
                         }
                     }
                     R.id.action_problem_old_ticket -> {
-                        EdOther.setVisibility(View.GONE)
+                        EdOther.visibility = View.GONE
                         TvSelectProblem.setText(R.string.action_problem_old_ticket)
-                        EdOther.setVisibility(View.VISIBLE)
-                        if (TextUtils.isEmpty(EdOther.getText().toString())) {
-                            EdOther.setError("please enter order number")
+                        EdOther.visibility = View.VISIBLE
+                        if (TextUtils.isEmpty(EdOther.text.toString())) {
+                            EdOther.error = "please enter order number"
                         }
                     }
                     R.id.other -> {
-                        EdOther.setVisibility(View.VISIBLE)
+                        EdOther.visibility = View.VISIBLE
                         TvSelectProblem.setText(R.string.other)
                     }
 
                 }
                 true
-            })
+            }
             popupMenu.show()
         }
         BtnAddTicket.setOnClickListener {
-            if (TextUtils.isEmpty(TvSelectProblem.getText().toString())) {
-                TvSelectProblem.setError("please select problem")
-            } else if (TextUtils.isEmpty(EdTitleProblem.getText().toString())) {
-                EdTitleProblem.setError("please enter title")
-            } else if (TextUtils.isEmpty(EdMessageProblem.getText().toString())) {
-                EdMessageProblem.setError("please enter message")
-            } else {
-                request = AddTicketRequest(
-                    EdMessageProblem.text.toString(),
-                    EdOther.text.toString(),
-                    EdTitleProblem.text.toString(),
-                    TvSelectProblem.text.toString()
-                )
-                viewModel!!.addTicket(request)
-                dialog.dismiss()
+            when {
+                TextUtils.isEmpty(TvSelectProblem.text.toString()) -> {
+                    TvSelectProblem.error = "please select problem"
+                }
+                TextUtils.isEmpty(EdTitleProblem.text.toString()) -> {
+                    EdTitleProblem.error = "please enter title"
+                }
+                TextUtils.isEmpty(EdMessageProblem.text.toString()) -> {
+                    EdMessageProblem.error = "please enter message"
+                }
+                else -> {
+                    request = AddTicketRequest(
+                        EdMessageProblem.text.toString(),
+                        EdOther.text.toString(),
+                        EdTitleProblem.text.toString(),
+                        TvSelectProblem.text.toString()
+                    )
+                    viewModel!!.addTicket(request)
+                    dialog.dismiss()
+                }
             }
         }
         BtnCancel.setOnClickListener {

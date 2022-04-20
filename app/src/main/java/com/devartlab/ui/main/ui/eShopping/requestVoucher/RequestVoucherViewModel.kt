@@ -1,6 +1,7 @@
 package com.devartlab.ui.main.ui.eShopping.requestVoucher
 
 import android.app.Application
+import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import com.devartlab.base.BaseApplication
@@ -45,7 +46,7 @@ class RequestVoucherViewModel(application: Application) : AndroidViewModel(appli
                     if (response.isSuccessful) {
                         compaignVouchersResponse.postValue(response.body())
                     } else {
-                        compaignVouchersResponse.postValue(response.body())
+                        Toast.makeText(getApplication(), "error in response data", Toast.LENGTH_SHORT).show()
                     }
                 }
 
@@ -64,7 +65,7 @@ class RequestVoucherViewModel(application: Application) : AndroidViewModel(appli
                     if (response.isSuccessful) {
                         getDoctorsResponse.postValue(response.body())
                     } else {
-                        getDoctorsResponse.postValue(response.body())
+                        Toast.makeText(getApplication(), "error in response data", Toast.LENGTH_SHORT).show()
                     }
                 }
 
@@ -83,7 +84,7 @@ class RequestVoucherViewModel(application: Application) : AndroidViewModel(appli
                     if (response.isSuccessful) {
                         voucherRequestResponse.postValue(response.body())
                     } else {
-                        voucherRequestResponse.postValue(response.body())
+                        Toast.makeText(getApplication(), "error in response data", Toast.LENGTH_SHORT).show()
                     }
                 }
 
@@ -102,7 +103,7 @@ class RequestVoucherViewModel(application: Application) : AndroidViewModel(appli
                     if (response.isSuccessful) {
                         myVoucherRequestResponse.postValue(response.body())
                     } else {
-                        myVoucherRequestResponse.postValue(response.body())
+                        Toast.makeText(getApplication(), "error in response data", Toast.LENGTH_SHORT).show()
                     }
                 }
 
@@ -121,7 +122,7 @@ class RequestVoucherViewModel(application: Application) : AndroidViewModel(appli
                     if (response.isSuccessful) {
                         getVoucherResponse.postValue(response.body())
                     } else {
-                        getVoucherResponse.postValue(response.body())
+                        Toast.makeText(getApplication(), "error in response data", Toast.LENGTH_SHORT).show()
                     }
                 }
 
@@ -140,7 +141,7 @@ class RequestVoucherViewModel(application: Application) : AndroidViewModel(appli
                     if (response.isSuccessful) {
                         deliverVoucherResponse.postValue(response.body())
                     } else {
-                        deliverVoucherResponse.postValue(response.body())
+                        Toast.makeText(getApplication(), "error in response data", Toast.LENGTH_SHORT).show()
                     }
                 }
 

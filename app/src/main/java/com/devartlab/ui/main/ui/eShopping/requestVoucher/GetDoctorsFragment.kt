@@ -6,10 +6,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.View
 import android.widget.Toast
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.devartlab.R
 import com.devartlab.base.BaseFragment
@@ -61,7 +59,7 @@ class GetDoctorsFragment(private val listener:OnDoctorSelect) : BaseFragment<Act
                 Toast.makeText(context, "error in Network", Toast.LENGTH_SHORT).show()
             }
         }
-        viewModel!!.getDoctorsResponse.observe(viewLifecycleOwner, Observer {
+        viewModel!!.getDoctorsResponse.observe(viewLifecycleOwner) {
             if (it!!.data.isNullOrEmpty() || it.code == 401) {
                 //errorMessage if data coming is null;
                 binding.tvEmptyList.visibility = View.VISIBLE
@@ -75,13 +73,13 @@ class GetDoctorsFragment(private val listener:OnDoctorSelect) : BaseFragment<Act
                 binding.progressBar.visibility = View.GONE
                 adapter = GetDoctorsAdapter(it.data)
                 binding.recyclerDoctors.adapter = adapter
-                adapter!!.setOnItemClickListener(GetDoctorsAdapter.OnItemClickListener { _, dataItem ->
+                adapter!!.setOnItemClickListener { _, dataItem ->
 
-                    listener.setOnDoctorSelect (dataItem.id.toString() , dataItem.text)
-                   baseActivity.onBackPressed()
-                })
+                    listener.setOnDoctorSelect(dataItem.id.toString(), dataItem.text)
+                    baseActivity.onBackPressed()
+                }
             }
-        })
+        }
     }
 
     override fun onAttach(context: Context) {

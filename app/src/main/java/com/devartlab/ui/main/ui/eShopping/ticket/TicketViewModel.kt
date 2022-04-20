@@ -1,6 +1,7 @@
 package com.devartlab.ui.main.ui.eShopping.ticket
 
 import android.app.Application
+import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import com.devartlab.data.retrofit.RetrofitClient
@@ -48,7 +49,7 @@ class TicketViewModel(application: Application) : AndroidViewModel(application) 
                     if (response.isSuccessful) {
                         getContactsResponse.postValue(response.body())
                     } else {
-                        getContactsResponse.postValue(response.body())
+                        Toast.makeText(getApplication(), "error in response data", Toast.LENGTH_SHORT).show()
                     }
                 }
 
@@ -68,7 +69,7 @@ class TicketViewModel(application: Application) : AndroidViewModel(application) 
                     if (response.isSuccessful) {
                         fetchMessagesResponse.postValue(response.body())
                     } else {
-                        fetchMessagesResponse.postValue(response.body())
+                        Toast.makeText(getApplication(), "error in response data", Toast.LENGTH_SHORT).show()
                     }
                 }
 
@@ -89,7 +90,7 @@ class TicketViewModel(application: Application) : AndroidViewModel(application) 
                     if (response.isSuccessful) {
                         addTicketRsponse.postValue(response.body())
                     } else {
-                        addTicketRsponse.postValue(response.body())
+                        Toast.makeText(getApplication(), "error in response data", Toast.LENGTH_SHORT).show()
                     }
                 }
 
@@ -110,7 +111,7 @@ class TicketViewModel(application: Application) : AndroidViewModel(application) 
                     if (response.isSuccessful()) {
                         sendMessagesResponse.postValue(response.body())
                     } else {
-                        sendMessagesResponse.postValue(response.body())
+                        Toast.makeText(getApplication(), "error in response data", Toast.LENGTH_SHORT).show()
                     }
                 }
 
@@ -131,7 +132,7 @@ class TicketViewModel(application: Application) : AndroidViewModel(application) 
                     if (response.isSuccessful()) {
                         sendMessagesResponse.postValue(response.body())
                     } else {
-                        sendMessagesResponse.postValue(response.body())
+                        Toast.makeText(getApplication(), "error in response data", Toast.LENGTH_SHORT).show()
                     }
                 }
 
@@ -152,7 +153,7 @@ class TicketViewModel(application: Application) : AndroidViewModel(application) 
                     if (response.isSuccessful) {
                         addRateResponse.postValue(response.body())
                     } else {
-                        addRateResponse.postValue(response.body())
+                        Toast.makeText(getApplication(), "error in response data", Toast.LENGTH_SHORT).show()
                     }
                 }
 
@@ -172,7 +173,7 @@ class TicketViewModel(application: Application) : AndroidViewModel(application) 
                     if (response.isSuccessful) {
                         deleteTicketsResponse.postValue(response.body())
                     } else {
-                        deleteTicketsResponse.postValue(response.body())
+                        Toast.makeText(getApplication(), "error in response data", Toast.LENGTH_SHORT).show()
                     }
                 }
 
@@ -192,7 +193,7 @@ class TicketViewModel(application: Application) : AndroidViewModel(application) 
                     if (response.isSuccessful) {
                         deleteMessagesResponse.postValue(response.body())
                     } else {
-                        deleteMessagesResponse.postValue(response.body())
+                        Toast.makeText(getApplication(), "error in response data", Toast.LENGTH_SHORT).show()
                     }
                 }
 

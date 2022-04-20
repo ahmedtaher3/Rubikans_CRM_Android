@@ -1,21 +1,13 @@
 package com.devartlab.ui.main.ui.eShopping.requestVoucher
 
-import android.app.Dialog
 import android.content.Intent
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.text.Editable
-import android.text.TextUtils
 import android.text.TextWatcher
-import android.util.Log
 import android.view.View
-import android.view.Window
-import android.view.WindowManager
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.devartlab.R
 import com.devartlab.databinding.ActivityRequestVoucherBinding
@@ -23,13 +15,13 @@ import com.devartlab.ui.auth.login.LoginActivity
 import com.devartlab.ui.main.ui.eShopping.requestVoucher.model.myVoucherRequest.Data
 import com.devartlab.ui.main.ui.eShopping.requestVoucher.model.voucherRequest.VoucherRequestRequest
 import com.devartlab.ui.main.ui.eShopping.requestVoucher.showVouchers.ShowVouchersActivity
+import java.util.*
+import kotlin.collections.ArrayList
 
 class RequestVoucherActivity : AppCompatActivity() {
     lateinit var binding: ActivityRequestVoucherBinding
     var viewModel: RequestVoucherViewModel? = null
     val list = ArrayList<Data>()
-    private val doctors: List<String> = java.util.ArrayList()
-    private var adapterDoctors: ArrayAdapter<String>? = null
     private var adapter: MyVoucherRequestAdapter? = null
     lateinit var request: VoucherRequestRequest
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,7 +32,7 @@ class RequestVoucherActivity : AppCompatActivity() {
         setSupportActionBar(binding.toolbar)
         supportActionBar!!.title = getString(R.string.request_voucher)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-        viewModel = ViewModelProvider(this).get(RequestVoucherViewModel::class.java)
+        viewModel = ViewModelProvider(this)[RequestVoucherViewModel::class.java]
         adapter = MyVoucherRequestAdapter(null)
         onClickListener()
         handleObserver()
@@ -74,39 +66,43 @@ class RequestVoucherActivity : AppCompatActivity() {
             }
         }
 
-        viewModel!!.myVoucherRequestResponse.observe(this, Observer {
-            if (it!!.code == 401) {
-                Toast.makeText(this, "please login again", Toast.LENGTH_LONG)
-                    .show()
-                val intent = Intent(this, LoginActivity::class.java)
-                startActivity(intent)
-            } else if (it.data.isNullOrEmpty()) {
-                //errorMessage if data coming is null;
-                binding.tvEmptyList.setVisibility(View.VISIBLE)
-                binding.progressBar.setVisibility(View.GONE)
-            } else {
-                //show data in recyclerView
-                binding.progressBar.setVisibility(View.GONE)
-                adapter = MyVoucherRequestAdapter(it.data)
-                list.addAll(it.data!!)
-                binding.recOrderRequestVoucher.setAdapter(adapter)
-                adapter!!.setOnItemClickListener(MyVoucherRequestAdapter.OnItemClickListener { pos, dataItem ->
-                    val intent = Intent(this, ShowVouchersActivity::class.java)
-                    intent.putExtra("_id", dataItem.id.toString())
-                    intent.putExtra("_name", dataItem.doctor_name)
+        viewModel!!.myVoucherRequestResponse.observe(this) {
+            when {
+                it!!.code == 401 -> {
+                    Toast.makeText(this, "please login again", Toast.LENGTH_LONG)
+                        .show()
+                    val intent = Intent(this, LoginActivity::class.java)
                     startActivity(intent)
-                })
+                }
+                it.data.isNullOrEmpty() -> {
+                    //errorMessage if data coming is null;
+                    binding.tvEmptyList.visibility = View.VISIBLE
+                    binding.progressBar.visibility = View.GONE
+                }
+                else -> {
+                    //show data in recyclerView
+                    binding.progressBar.visibility = View.GONE
+                    adapter = MyVoucherRequestAdapter(it.data)
+                    list.addAll(it.data)
+                    binding.recOrderRequestVoucher.adapter = adapter
+                    adapter!!.setOnItemClickListener { _, dataItem ->
+                        val intent = Intent(this, ShowVouchersActivity::class.java)
+                        intent.putExtra("_id", dataItem.id.toString())
+                        intent.putExtra("_name", dataItem.doctor_name)
+                        startActivity(intent)
+                    }
+                }
             }
-        })
+        }
 
-        viewModel!!.voucherRequestResponse.observe(this, Observer {
+        viewModel!!.voucherRequestResponse.observe(this) {
             if (it!!.code == 200) {
                 Toast.makeText(this, "done!", Toast.LENGTH_SHORT).show()
                 viewModel!!.getMyVoucherRequest()
             } else {
                 Toast.makeText(this, "error in Network", Toast.LENGTH_SHORT).show()
             }
-        })
+        }
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -118,7 +114,7 @@ class RequestVoucherActivity : AppCompatActivity() {
         val filteredList: ArrayList<Data> = ArrayList()
 
         for (item in list) {
-            if (item.doctor_name.toLowerCase().contains(text.toLowerCase())) {
+            if (item.doctor_name.lowercase(Locale.getDefault()).contains(text.lowercase(Locale.getDefault()))) {
                 filteredList.add(item)
             }
         }
@@ -130,7 +126,7 @@ class RequestVoucherActivity : AppCompatActivity() {
         synchronized(this) {
             viewModel!!.getMyVoucherRequest()
             binding.swipeRefreshLayout.isRefreshing = false
-            binding.progressBar.setVisibility(View.VISIBLE)
+            binding.progressBar.visibility = View.VISIBLE
         }
     }
 }

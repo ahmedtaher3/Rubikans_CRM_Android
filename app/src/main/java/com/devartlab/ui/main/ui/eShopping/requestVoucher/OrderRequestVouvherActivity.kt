@@ -10,7 +10,6 @@ import android.view.View
 import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.devartlab.R
 import com.devartlab.base.BaseActivity
@@ -22,9 +21,9 @@ class OrderRequestVouvherActivity : BaseActivity<ActivityOrderRequestVouvherBind
     GetDoctorsFragment.OnDoctorSelect {
     lateinit var binding: ActivityOrderRequestVouvherBinding
     var viewModel: RequestVoucherViewModel? = null
-    var compaignVouchersID: Int = 0
-    var doctorsID: String? = null
-    var doctorsName: String? = null
+    private var compaignVouchersID: Int = 0
+    private var doctorsID: String? = null
+    private var doctorsName: String? = null
     lateinit var request: VoucherRequestRequest
 
 
@@ -119,7 +118,7 @@ class OrderRequestVouvherActivity : BaseActivity<ActivityOrderRequestVouvherBind
                 Toast.makeText(this, "error in Network", Toast.LENGTH_SHORT).show()
             }
         }
-        viewModel!!.voucherRequestResponse.observe(this, Observer {
+        viewModel!!.voucherRequestResponse.observe(this) {
             if (it!!.code == 401) {
                 Toast.makeText(this, "please login again", Toast.LENGTH_SHORT)
                     .show()
@@ -130,23 +129,21 @@ class OrderRequestVouvherActivity : BaseActivity<ActivityOrderRequestVouvherBind
                 val intent = Intent(this, RequestVoucherActivity::class.java)
                 startActivity(intent)
             }
-        })
-        viewModel!!.compaignVouchersResponse.observe(this, Observer {
-                val countryBrandsPopUp = PopupMenu(this, binding.edVoucher)
-                for (i in 0 until it!!.size) {
-                    countryBrandsPopUp.menu
-                        .add(i, i, i, it.get(i).voucher_translates_title.get(0).title)
-                }
-                countryBrandsPopUp.setOnMenuItemClickListener(PopupMenu.OnMenuItemClickListener { item ->
-                    binding.edVoucher.text = it.get(item.itemId).voucher_translates_title.get(
-                        0
-                    ).title
-                    compaignVouchersID = it.get(item.itemId).id
-                    Log.e("popupCarBrands", "onMenuItemClick: $compaignVouchersID")
-                    return@OnMenuItemClickListener false
-                })
-                countryBrandsPopUp.show()
-        })
+        }
+        viewModel!!.compaignVouchersResponse.observe(this) {
+            val countryBrandsPopUp = PopupMenu(this, binding.edVoucher)
+            for (i in 0 until it!!.size) {
+                countryBrandsPopUp.menu
+                    .add(i, i, i, it[i].voucher_translates_title[0].title)
+            }
+            countryBrandsPopUp.setOnMenuItemClickListener(PopupMenu.OnMenuItemClickListener { item ->
+                binding.edVoucher.text = it[item.itemId].voucher_translates_title[0].title
+                compaignVouchersID = it[item.itemId].id
+                Log.e("popupCarBrands", "onMenuItemClick: $compaignVouchersID")
+                return@OnMenuItemClickListener false
+            })
+            countryBrandsPopUp.show()
+        }
     }
 
     fun replace_fragment(fragment: Fragment?, tag: String?) {

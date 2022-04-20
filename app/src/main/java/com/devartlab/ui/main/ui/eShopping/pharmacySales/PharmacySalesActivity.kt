@@ -5,11 +5,9 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.devartlab.R
 import com.devartlab.a4eshopping.pharmacySales.PharmacySalesViewModel
@@ -30,7 +28,7 @@ class PharmacySalesActivity : AppCompatActivity() {
         supportActionBar!!.title = getString(R.string.Pharmacy_sales)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         adapter = PharmaciesSalesAdapter(null)
-        viewModel = ViewModelProvider(this).get(PharmacySalesViewModel::class.java)
+        viewModel = ViewModelProvider(this)[PharmacySalesViewModel::class.java]
         onClickListener()
         handleObserver()
     }
@@ -55,14 +53,13 @@ class PharmacySalesActivity : AppCompatActivity() {
     fun handleObserver() {
         viewModel!!.errorMessage.observe(this) { integer: Int ->
             if (integer == 1) {
-                Log.e("xxx", "error")
                 Toast.makeText(this, "error in response data", Toast.LENGTH_SHORT)
                     .show()
             } else {
                 Toast.makeText(this, "error in Network", Toast.LENGTH_SHORT).show()
             }
         }
-        viewModel!!.pharmacySalesResponse.observe(this, Observer {
+        viewModel!!.pharmacySalesResponse.observe(this) {
             when {
                 it!!.code == 401 -> {
                     Toast.makeText(this, "please login again", Toast.LENGTH_SHORT)
@@ -72,22 +69,22 @@ class PharmacySalesActivity : AppCompatActivity() {
                 }
                 it.data.isNullOrEmpty() -> {
                     //errorMessage if data coming is null;
-                    binding.tvEmptyList.setVisibility(View.VISIBLE)
-                    binding.progressBar.setVisibility(View.GONE)
+                    binding.tvEmptyList.visibility = View.VISIBLE
+                    binding.progressBar.visibility = View.GONE
                 }
                 else -> {
                     //show data in recyclerView
-                    binding.progressBar.setVisibility(View.GONE)
+                    binding.progressBar.visibility = View.GONE
                     adapter = PharmaciesSalesAdapter(it.data)
-                    binding.recyclerPharmacySalary.setAdapter(adapter)
-                    adapter!!.setOnItemClickListener(PharmaciesSalesAdapter.OnItemClickListener { pos, dataItem ->
+                    binding.recyclerPharmacySalary.adapter = adapter
+                    adapter!!.setOnItemClickListener { _, dataItem ->
                         val intent = Intent(this, DetailsPharmacySalesActivity::class.java)
                         intent.putExtra("order_number", dataItem.order_number)
                         startActivity(intent)
-                    })
+                    }
                 }
             }
-        })
+        }
     }
 
 
@@ -95,7 +92,7 @@ class PharmacySalesActivity : AppCompatActivity() {
         synchronized(this) {
             viewModel!!.getPharmacySales("")
             binding.swipeRefreshLayout.isRefreshing = false
-            binding.progressBar.setVisibility(View.VISIBLE)
+            binding.progressBar.visibility = View.VISIBLE
         }
     }
 

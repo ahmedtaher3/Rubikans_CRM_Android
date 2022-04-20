@@ -1,6 +1,7 @@
 package com.devartlab.a4eshopping.pharmacySales
 
 import android.app.Application
+import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import com.devartlab.data.retrofit.RetrofitClient
@@ -29,7 +30,7 @@ class PharmacySalesViewModel(application: Application) : AndroidViewModel(applic
                     if (response.isSuccessful) {
                         pharmacySalesResponse.postValue(response.body())
                     } else {
-                        pharmacySalesResponse.postValue(response.body())
+                        Toast.makeText(getApplication(), "error in response data", Toast.LENGTH_SHORT).show()
                     }
                 }
 
@@ -49,7 +50,7 @@ class PharmacySalesViewModel(application: Application) : AndroidViewModel(applic
                     if (response.isSuccessful) {
                         DetailsPharmacySalesResponse.postValue(response.body())
                     } else {
-                        DetailsPharmacySalesResponse.postValue(response.body())
+                        Toast.makeText(getApplication(), "error in response data", Toast.LENGTH_SHORT).show()
                     }
                 }
 

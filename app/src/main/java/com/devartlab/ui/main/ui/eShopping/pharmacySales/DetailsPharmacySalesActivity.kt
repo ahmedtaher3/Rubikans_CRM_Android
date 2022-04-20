@@ -2,12 +2,10 @@ package com.devartlab.ui.main.ui.eShopping.pharmacySales
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.devartlab.R
 import com.devartlab.a4eshopping.pharmacySales.PharmacySalesViewModel
@@ -20,7 +18,7 @@ class DetailsPharmacySalesActivity : AppCompatActivity() {
     lateinit var binding: ActivityDetailsPharmacySalesBinding
     var viewModel: PharmacySalesViewModel? = null
     private var adapter: DetailsPharmaciesSalesAdapter? = null
-    var order_number: String? = null
+    private var order_number: String? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(
@@ -33,7 +31,7 @@ class DetailsPharmacySalesActivity : AppCompatActivity() {
             order_number = intent.getStringExtra("order_number")
         }
         adapter = DetailsPharmaciesSalesAdapter(null)
-        viewModel = ViewModelProvider(this).get(PharmacySalesViewModel::class.java)
+        viewModel = ViewModelProvider(this)[PharmacySalesViewModel::class.java]
         onClickListener()
         handleObserver()
     }
@@ -43,40 +41,41 @@ class DetailsPharmacySalesActivity : AppCompatActivity() {
     }
 
     fun handleObserver() {
-        viewModel!!.errorMessage.observe(this, { integer: Int ->
+        viewModel!!.errorMessage.observe(this) { integer: Int ->
             if (integer == 1) {
                 Toast.makeText(this, "error in response data", Toast.LENGTH_SHORT)
                     .show()
             } else {
                 Toast.makeText(this, "error in Network", Toast.LENGTH_SHORT).show()
             }
-        })
-        viewModel!!.DetailsPharmacySalesResponse.observe(this, Observer {
-            binding.progressBar.setVisibility(View.GONE)
-            binding.edNoOrder.setText(order_number)
+        }
+        viewModel!!.DetailsPharmacySalesResponse.observe(this) {
+            binding.progressBar.visibility = View.GONE
+            binding.edNoOrder.text = order_number
             convertDateTime(it!!.order.created_at, binding.edCreatedAt)
-            binding.edCustomerName.setText(it!!.order.customer_name)
-            binding.edCustomerEmail.setText(it!!.order.customer_email)
-            binding.edCustomerPhone.setText(it!!.order.customer_phone)
-            binding.edCustomerAddress.setText(it!!.order.customer_address + it!!.order.customer_city)
-            binding.edShippingMethod.setText(it!!.order.shipping.name)
-            binding.edPaymentStatus.setText(it!!.order.status)
-            binding.edPayAmount.setText(it!!.order.pay_amount.toString() +" "+ it!!.order.currency_sign)
-            binding.edMethod.setText(it!!.order.method)
-            binding.edNoOperation.setText(it!!.order.id.toString())
-            if (it!!.details == null) {
+            binding.edCustomerName.text = it.order.customer_name
+            binding.edCustomerEmail.text = it.order.customer_email
+            binding.edCustomerPhone.text = it.order.customer_phone
+            binding.edCustomerAddress.text = it.order.customer_address + it.order.customer_city
+            binding.edShippingMethod.text = it.order.shipping.name
+            binding.edPaymentStatus.text = it.order.status
+            binding.edPayAmount.text = it.order.pay_amount.toString() + " " + it.order.currency_sign
+            binding.edMethod.text = it.order.method
+            binding.edNoOperation.text = it.order.id.toString()
+            if (it.details.isEmpty()) {
                 //errorMessage if data coming is null;
-                binding.tvEmptyList.setVisibility(View.VISIBLE)
+                binding.tvEmptyList.visibility = View.VISIBLE
+                binding.progressBar.visibility = View.GONE
             } else {
                 //show data in recyclerView
-                binding.progressBar.setVisibility(View.GONE)
+                binding.progressBar.visibility = View.GONE
                 adapter = DetailsPharmaciesSalesAdapter(it.details)
-                binding.recyclerDetailsPharmacySales.setAdapter(adapter)
+                binding.recyclerDetailsPharmacySales.adapter = adapter
             }
-        })
+        }
     }
 
-    fun convertDateTime(format: String?, date: TextView) {
+    private fun convertDateTime(format: String?, date: TextView) {
         val input = SimpleDateFormat("yyyy-MM-dd' 'HH:mm:ss")
         val output = SimpleDateFormat("dd/MM/yyyy")
         var d: Date? = null
