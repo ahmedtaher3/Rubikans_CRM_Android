@@ -2,7 +2,6 @@ package com.devartlab.ui.main.ui.eShopping.nearbyPharmacy
 
 import android.location.Address
 import android.location.Geocoder
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.android.volley.Request
 import com.android.volley.RequestQueue
@@ -12,6 +11,7 @@ import com.android.volley.toolbox.Volley
 import com.devartlab.R
 import com.devartlab.base.BaseActivity
 import com.devartlab.databinding.ActivityNearbyPharmacyBinding
+import com.mapbox.mapboxsdk.Mapbox
 import com.mapbox.mapboxsdk.geometry.LatLngBounds
 import com.mapbox.mapboxsdk.maps.MapboxMap
 import com.mapbox.mapboxsdk.maps.Style
@@ -34,6 +34,8 @@ class NearbyPharmacyActivity  : BaseActivity<ActivityNearbyPharmacyBinding?>(),
     val bounds= LatLngBounds.Builder()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Mapbox.getInstance(this, getString(R.string.mapbox_access_token))
+
         binding = viewDataBinding!!
 
         setSupportActionBar(binding.toolbar)
