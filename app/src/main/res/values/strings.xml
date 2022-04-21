@@ -620,6 +620,10 @@
     <string name="action_holiday">Holiday</string>
     <string name="action_meeting_room">Meeting Room</string>
     <string name="empty_list">Empty list</string>
+    <string name="action">Active</string>
+    <string name="unaction">Inactive</string>
+    <string name="zero_order">Zero Order</string>
+    <string name="nearby_pharmacy">nearby pharmacy</string>
 
 
 </resources>
