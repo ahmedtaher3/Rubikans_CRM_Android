@@ -11,7 +11,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:background="@android:color/transparent">
 
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/back"
@@ -31,18 +32,18 @@
 
 
         <LinearLayout
+            android:id="@+id/linlay_pens"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/text_padding_top_5dp"
             android:background="@drawable/rounded_white"
-            android:orientation="horizontal">
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/active_location"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:padding="10dp"
+                android:padding="5dp"
                 android:text="@string/action"
                 android:textColor="@color/green"
                 android:textSize="14sp"
@@ -53,8 +54,7 @@
                 android:id="@+id/inactive_location"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:padding="10dp"
+                android:padding="5dp"
                 android:text="@string/unaction"
                 android:textColor="@color/red"
                 android:textSize="14sp"
@@ -65,14 +65,37 @@
                 android:id="@+id/zero_order_location"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:padding="10dp"
+                android:padding="5dp"
                 android:text="@string/zero_order"
                 android:textColor="@color/yellow"
                 android:textSize="14sp"
                 android:textStyle="bold"
                 app:drawableStartCompat="@drawable/ic_zero_order_location" />
+
+            <TextView
+                android:id="@+id/coding_inactive_order_location"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:text="@string/coding_inactive"
+                android:textColor="@color/gray_active_icon"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:drawableStartCompat="@drawable/ic_location_coding_inactive" />
         </LinearLayout>
+
+        <ImageView
+            android:id="@+id/btn_hide_show_ads"
+            android:layout_width="wrap_content"
+            android:layout_height="26dp"
+            android:layout_gravity="end"
+            android:background="@drawable/custom_bg_btn_blue"
+            android:contentDescription="@string/img"
+            android:gravity="center"
+            android:src="@drawable/ic_hide_show_ads"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <androidx.coordinatorlayout.widget.CoordinatorLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

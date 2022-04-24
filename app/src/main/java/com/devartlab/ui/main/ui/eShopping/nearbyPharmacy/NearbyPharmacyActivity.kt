@@ -1,8 +1,13 @@
 package com.devartlab.ui.main.ui.eShopping.nearbyPharmacy
 
+import android.annotation.SuppressLint
 import android.location.Address
 import android.location.Geocoder
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
+import android.view.View
+import android.widget.Toast
 import com.android.volley.Request
 import com.android.volley.RequestQueue
 import com.android.volley.Response
@@ -11,66 +16,62 @@ import com.android.volley.toolbox.Volley
 import com.devartlab.R
 import com.devartlab.base.BaseActivity
 import com.devartlab.databinding.ActivityNearbyPharmacyBinding
+import com.mapbox.android.core.location.*
+import com.mapbox.android.core.permissions.PermissionsListener
+import com.mapbox.android.core.permissions.PermissionsManager
 import com.mapbox.mapboxsdk.Mapbox
+import com.mapbox.mapboxsdk.camera.CameraPosition
+import com.mapbox.mapboxsdk.camera.CameraUpdateFactory
+import com.mapbox.mapboxsdk.geometry.LatLng
 import com.mapbox.mapboxsdk.geometry.LatLngBounds
+import com.mapbox.mapboxsdk.location.LocationComponentActivationOptions
+import com.mapbox.mapboxsdk.location.modes.CameraMode
+import com.mapbox.mapboxsdk.location.modes.RenderMode
 import com.mapbox.mapboxsdk.maps.MapboxMap
+import com.mapbox.mapboxsdk.maps.OnMapReadyCallback
 import com.mapbox.mapboxsdk.maps.Style
 import org.json.JSONArray
 import org.json.JSONObject
 import java.util.*
 
-class NearbyPharmacyActivity  : BaseActivity<ActivityNearbyPharmacyBinding?>(),
-    MapboxMap.OnMarkerClickListener  {
-    lateinit var binding:ActivityNearbyPharmacyBinding
+
+class NearbyPharmacyActivity : BaseActivity<ActivityNearbyPharmacyBinding?>(),
+    MapboxMap.OnMarkerClickListener, OnMapReadyCallback, PermissionsListener {
+    lateinit var binding: ActivityNearbyPharmacyBinding
     lateinit var queue: RequestQueue
+    private lateinit var permissionsManager: PermissionsManager
+    private lateinit var locationEngine: LocationEngine
+    private lateinit var callback: LocationChangeListeningCallback
 
     override fun getLayoutId(): Int {
+        Mapbox.getInstance(this, getString(R.string.mapbox_access_token))
         return R.layout.activity_nearby_pharmacy
     }
 
-    // private var mapView: MapView? = null
-    private var map_boxMap: MapboxMap? = null
 
-    val bounds= LatLngBounds.Builder()
+    // private var mapView: MapView? = null
+    private lateinit var map_boxMap: MapboxMap
+
+    val bounds = LatLngBounds.Builder()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Mapbox.getInstance(this, getString(R.string.mapbox_access_token))
-
         binding = viewDataBinding!!
-
         setSupportActionBar(binding.toolbar)
         supportActionBar!!.title = getString(R.string.nearby_pharmacy)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         queue = Volley.newRequestQueue(this)
 
-        binding.mapView?.onCreate(savedInstanceState)
-        binding.mapView?.getMapAsync { mapboxMap ->
+        binding.mapView.onCreate(savedInstanceState)
+        binding.mapView.getMapAsync(this)
 
-
-            map_boxMap = mapboxMap
-            map_boxMap!!.setPadding(100, 100, 100, 100)
-
-            map_boxMap!!.getUiSettings().setZoomGesturesEnabled(true)
-            map_boxMap!!.getUiSettings().setScrollGesturesEnabled(true)
-            map_boxMap!!.getUiSettings().setAllGesturesEnabled(true)
-            map_boxMap!!.getUiSettings().setRotateGesturesEnabled(true)
-            map_boxMap!!.getUiSettings().getFocalPoint()
-            map_boxMap!!.getUiSettings().setRotateVelocityAnimationEnabled(true)
-            map_boxMap!!.getUiSettings().setTiltGesturesEnabled(true)
-            map_boxMap!!.getUiSettings().setScaleVelocityAnimationEnabled(true)
-            map_boxMap!!.getUiSettings().setCompassEnabled(false)
-            map_boxMap!!.getUiSettings().setDeselectMarkersOnTap(true)
-            map_boxMap!!.setOnMarkerClickListener(this)
-     //       System.out.println(" getDailyReport " + id)
-
- //           viewModel.getDailyReport(false, id?.toInt()!!, time?.toLong()!!, shift_id?.toInt()!!)
-            setObservers()
-
-
-            mapboxMap.setStyle(Style.MAPBOX_STREETS) {
-
+        binding.btnHideShowAds.setOnClickListener {
+            if (binding.linlayPens.visibility == View.VISIBLE) {
+                binding.linlayPens.visibility = View.GONE
+                binding.btnHideShowAds.setImageResource(R.drawable.ic_show_hide_ads)
+            } else {
+                binding.linlayPens.visibility = View.VISIBLE
+                binding.btnHideShowAds.setImageResource(R.drawable.ic_hide_show_ads)
             }
-
         }
     }
 
@@ -166,15 +167,14 @@ class NearbyPharmacyActivity  : BaseActivity<ActivityNearbyPharmacyBinding?>(),
                     System.out.println(" getLocationFormGoogle " + result.getString("formatted_address"))
 
 
-             //       binding.address.text = (title + "\n" + result.getString("formatted_address"))
+//                    binding.inactiveLocation.text = (title + "\n" + result.getString("formatted_address"))
 
                 } else {
                     System.out.println(" getLocationFormGoogle " + latLng)
 
                 }
 
-            }
-            , Response.ErrorListener() {})
+            }, Response.ErrorListener() {})
 
         queue.add(jsonObjectRequest)
 
@@ -187,4 +187,107 @@ class NearbyPharmacyActivity  : BaseActivity<ActivityNearbyPharmacyBinding?>(),
         finish()
         return true
     }
+
+    override fun onMapReady(mapboxMap: MapboxMap) {
+        map_boxMap = mapboxMap
+        callback = LocationChangeListeningCallback()
+        mapboxMap.setStyle(Style.MAPBOX_STREETS) {
+            enableLocationComponent(it)
+        }
+    }
+
+    @SuppressLint("MissingPermission")
+    private fun enableLocationComponent(loadedMapStyle: Style) {
+        if (PermissionsManager.areLocationPermissionsGranted(this)) {
+            val locationComponentActivationOptions =
+                LocationComponentActivationOptions.builder(this, loadedMapStyle)
+                    .useDefaultLocationEngine(false)
+                    .build()
+            map_boxMap.locationComponent.apply {
+                activateLocationComponent(locationComponentActivationOptions)
+                isLocationComponentEnabled =
+                    true                       // Enable to make component visible
+                cameraMode =
+                    CameraMode.TRACKING                        // Set the component's camera mode
+                renderMode =
+                    RenderMode.COMPASS                         // Set the component's render mode
+            }
+            initLocationEngine()
+        } else {
+            permissionsManager = PermissionsManager(this)
+            permissionsManager.requestLocationPermissions(this)
+        }
+    }
+
+    @SuppressLint("MissingPermission")
+    private fun initLocationEngine() {
+        locationEngine = LocationEngineProvider.getBestLocationEngine(this)
+        val request = LocationEngineRequest
+            .Builder(5000L)
+            .setPriority(LocationEngineRequest.PRIORITY_HIGH_ACCURACY)
+            .setMaxWaitTime(5000L * 5)
+            .build()
+        locationEngine.requestLocationUpdates(request, callback, mainLooper)
+        locationEngine.getLastLocation(callback)
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        permissionsManager.onRequestPermissionsResult(requestCode, permissions, grantResults)
+    }
+
+    private inner class LocationChangeListeningCallback :
+        LocationEngineCallback<LocationEngineResult> {
+
+        override fun onSuccess(result: LocationEngineResult?) {
+            result?.lastLocation
+                ?: return //BECAREFULL HERE, IF NAME LOCATION UPDATE DONT USER -> val resLoc = result.lastLocation ?: return
+            if (result.lastLocation != null) {
+                val lat = result.lastLocation?.latitude!!
+                val lng = result.lastLocation?.longitude!!
+                val latLng = LatLng(lat, lng)
+
+                if (result.lastLocation != null) {
+                    map_boxMap.locationComponent.forceLocationUpdate(result.lastLocation)
+                    val position = CameraPosition.Builder()
+                        .target(latLng)
+                        .zoom(13.0) //disable this for not follow zoom
+                        .tilt(10.0)
+                        .build()
+                    map_boxMap.animateCamera(CameraUpdateFactory.newCameraPosition(position))
+                    Toast.makeText(
+                        this@NearbyPharmacyActivity,
+                        "Location update : $latLng",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+
+        }
+
+        override fun onFailure(exception: Exception) {}
+    }
+
+    override fun onExplanationNeeded(permissionsToExplain: MutableList<String>?) {
+        Toast.makeText(this, "Permission not granted!!", Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onPermissionResult(granted: Boolean) {
+        if (granted) {
+            map_boxMap.getStyle {
+                enableLocationComponent(it)
+            }
+        } else {
+            Toast.makeText(this, "Permission not granted!! app will be EXIT", Toast.LENGTH_LONG)
+                .show()
+            Handler(Looper.getMainLooper()).postDelayed({
+                finish()
+            }, 3000)
+        }
+    }
+
 }
