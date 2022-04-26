@@ -37,6 +37,7 @@ import com.devartlab.ui.main.ui.callmanagement.ranks.planandcover.PlanAndCoverFr
 import com.devartlab.ui.main.ui.callmanagement.report.ReportFragment
 import com.devartlab.ui.main.ui.callmanagement.report.superreport.ManagerReportFragment
 import com.devartlab.ui.main.ui.callmanagement.sync.SyncFragment
+import com.devartlab.ui.main.ui.eShopping.utils.UserPreferenceHelper
 import com.devartlab.ui.main.ui.employeeservices.home.SelfServiceHomeFragment
 import com.devartlab.ui.main.ui.profile.ProfileActivity
 import com.devartlab.utils.ProgressLoading
@@ -401,7 +402,7 @@ class CallManagementActivity : BaseActivity<ActivityCallManagementBinding?>(), C
                     }
                 }
                 R.id.LogOut -> {
-
+                    UserPreferenceHelper.clean()
                     viewModel!!.dataManager.clear()
                     val intent = Intent(this@CallManagementActivity, LoginActivity::class.java)
                     intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK

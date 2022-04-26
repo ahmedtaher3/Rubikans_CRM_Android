@@ -24,6 +24,7 @@ import com.devartlab.ui.main.ui.employeeservices.SelfServiceActivity
 import com.devartlab.ui.main.ui.profile.ProfileActivity
 import com.devartlab.ui.main.ui.trade.manager.ManagerFragment
 import com.devartlab.ui.main.ui.callmanagement.trade.selectProductContract.SelectProductsActivity
+import com.devartlab.ui.main.ui.eShopping.utils.UserPreferenceHelper
 import com.devartlab.ui.main.ui.trade.report.TradeDailyReportFragment
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
@@ -112,7 +113,7 @@ class TradeActivity : BaseActivity<ActivityTradeBinding>() {
                     finish()
                 }
                 R.id.LogOut -> {
-
+                    UserPreferenceHelper.clean()
                     viewModel!!.dataManager.clear()
                     val intent = Intent(this@TradeActivity, LoginActivity::class.java)
                     intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK

@@ -25,6 +25,7 @@ import com.devartlab.ui.main.ui.contactlist.ui.main.ContactsActivity
 import com.devartlab.ui.main.ui.devartlink.DevartLinkActivity
 import com.devartlab.ui.main.ui.eShopping.main.Home4EShoppingActivity
 import com.devartlab.ui.main.ui.eShopping.orientationVideos.OrientationVideosActivity
+import com.devartlab.ui.main.ui.eShopping.utils.UserPreferenceHelper
 import com.devartlab.ui.main.ui.employeeservices.home.SelfServiceHomeFragment
 import com.devartlab.ui.main.ui.employeeservices.hrrequest.EmployeeRequestsFragment
 import com.devartlab.ui.main.ui.employeeservices.meals.MealsFragment
@@ -164,7 +165,7 @@ class SelfServiceActivity : BaseActivity<ActivitySelfServiceBinding?>() {
                 }
 
                 R.id.LogOut -> {
-
+                    UserPreferenceHelper.clean()
                     viewModel!!.dataManager.clear()
                     val intent = Intent(this@SelfServiceActivity, LoginActivity::class.java)
                     intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK

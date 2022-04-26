@@ -163,7 +163,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ChooseEmployeeInterFac
         list.add(CardModel(13, baseActivity.resources.getString(R.string.start_point_report), R.drawable.report_general))
         //list.add(CardModel(14, baseActivity.resources.getString(R.string.trade_reports), R.drawable.report_general))
         //list.add(CardModel(15, baseActivity.resources.getString(R.string.inventory), R.drawable.report_general))
-        list.add(CardModel(16, baseActivity.resources.getString(R.string.incentive_role), R.drawable.ic_incentive_role))// add Activity incentive role
+//        list.add(CardModel(16, baseActivity.resources.getString(R.string.incentive_role), R.drawable.ic_incentive_role))// add Activity incentive role
 
         adapter = MenuListAdapter(baseActivity, list, this)
         val layoutManager = GridLayoutManager(baseActivity, 2)

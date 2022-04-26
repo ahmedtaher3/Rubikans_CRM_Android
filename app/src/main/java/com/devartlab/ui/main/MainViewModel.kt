@@ -49,6 +49,7 @@ import com.devartlab.ui.auth.login.LoginActivity
 import com.devartlab.ui.main.ui.devartlink.model.WelcomePostResponse
 import com.devartlab.ui.main.ui.eShopping.main.model.login4EShopping.Login4EShoppingRequest
 import com.devartlab.ui.main.ui.eShopping.main.model.login4EShopping.Login4EShoppingResponse
+import com.devartlab.ui.main.ui.eShopping.utils.UserPreferenceHelper
 import com.devartlab.utils.CommonUtilities
 import com.google.gson.Gson
 import io.reactivex.Completable
@@ -446,6 +447,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
             startPointDao?.deleteTable()
 
             dataManager.clear()
+            UserPreferenceHelper.clean()
             val intentLogout = Intent(activity, LoginActivity::class.java)
             intentLogout.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             activity.startActivity(intentLogout)

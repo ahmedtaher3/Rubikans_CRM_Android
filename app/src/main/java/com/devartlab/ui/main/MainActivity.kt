@@ -268,9 +268,9 @@ class MainActivity : BaseActivity<ActivityMainBinding?>(), View.OnClickListener,
         list.add(CardModel(2, resources.getString(R.string.self_service), R.drawable.self_service))
         list.add(CardModel(3, resources.getString(R.string.my_profile), R.drawable.employee))
         list.add(CardModel(4, resources.getString(R.string.market_request), R.drawable.money))
-        list.add(CardModel(5, "DevartLink", R.drawable.devartlink))
+//        list.add(CardModel(5, "DevartLink", R.drawable.devartlink))
         list.add(CardModel(6, "4eShopping", R.drawable.e_shopping))
-        list.add(CardModel(7, "DevartLab Team", R.drawable.ic_team))
+//        list.add(CardModel(7, "DevartLab Team", R.drawable.ic_team))
 
         adapter = MenuListAdapter(this, list, this)
         val layoutManager = GridLayoutManager(this, 2)
