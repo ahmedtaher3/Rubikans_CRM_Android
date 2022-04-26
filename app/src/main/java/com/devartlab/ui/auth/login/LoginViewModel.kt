@@ -276,6 +276,7 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
 
     //function login 4EShopping
     fun getUserModel(activity: AppCompatActivity, login4EShoppingRequest: Login4EShoppingRequest) {
+        progress.postValue(1)
         val getToken = GetDeviceToken(activity)
         getToken.getToken(object : GetDeviceToken.TokenResult() {
             override fun success(token: String?) {
@@ -294,13 +295,16 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
                             response: Response<Login4EShoppingResponse?>
                         ) {
                             if (response.isSuccessful) {
+                                progress.postValue(0)
                                 login4EShoppingResponse.postValue(response.body())
                             } else {
-                                login4EShoppingResponse.postValue(response.body())
+                                progress.postValue(0)
+                                Toast.makeText(getApplication(), "error in response data", Toast.LENGTH_SHORT).show()
                             }
                         }
 
                         override fun onFailure(call: Call<Login4EShoppingResponse?>, t: Throwable) {
+                            progress.postValue(0)
                             errorMessage.postValue(1)
                         }
                     })
