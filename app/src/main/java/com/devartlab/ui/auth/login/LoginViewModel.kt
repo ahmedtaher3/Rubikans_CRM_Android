@@ -41,10 +41,6 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
     val responseLiveUpdatePermission: MutableLiveData<ResponseModel>
     val progress: MutableLiveData<Int>
     val checkData: MutableLiveData<Boolean>
-    var errorMessage: MutableLiveData<Int>
-        protected set
-    var login4EShoppingResponse: MutableLiveData<Login4EShoppingResponse?>
-        protected set
     var authorityDao: AuthorityDao? = null
     var myAPI: ApiServices? = null
     var retrofit: Retrofit? = null
@@ -72,8 +68,6 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
         checkData = MutableLiveData()
         databaseReference = FirebaseDatabase.getInstance().reference
         authorityDao = DatabaseClient.getInstance(application)?.appDatabase?.authorityDao()
-        errorMessage = MutableLiveData()//error message
-        login4EShoppingResponse = MutableLiveData()//login 4eshopping
 
     }
 
@@ -271,51 +265,6 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
 
         }.subscribeOn(Schedulers.io())
             .subscribe()
-
-    }
-
-    //function login 4EShopping
-    fun getUserModel(activity: AppCompatActivity, login4EShoppingRequest: Login4EShoppingRequest) {
-        progress.postValue(1)
-        val getToken = GetDeviceToken(activity)
-        getToken.getToken(object : GetDeviceToken.TokenResult() {
-            override fun success(token: String?) {
-                var myToken = ""
-                myToken = if (token.isNullOrBlank()) {
-                    dataManager.deviceToken!!
-                } else {
-                    token
-                }
-
-                login4EShoppingRequest.fcm = myToken
-                RetrofitClient.getApis4EShopping().LOGIN4ESHOPPING(login4EShoppingRequest)!!
-                    .enqueue(object : Callback<Login4EShoppingResponse?> {
-                        override fun onResponse(
-                            call: Call<Login4EShoppingResponse?>,
-                            response: Response<Login4EShoppingResponse?>
-                        ) {
-                            if (response.isSuccessful) {
-                                progress.postValue(0)
-                                login4EShoppingResponse.postValue(response.body())
-                            } else {
-                                progress.postValue(0)
-                                Toast.makeText(getApplication(), "error in response data", Toast.LENGTH_SHORT).show()
-                            }
-                        }
-
-                        override fun onFailure(call: Call<Login4EShoppingResponse?>, t: Throwable) {
-                            progress.postValue(0)
-                            errorMessage.postValue(1)
-                        }
-                    })
-            }
-
-            override fun failure(msg: String?) {
-
-
-            }
-
-        })
 
     }
 }

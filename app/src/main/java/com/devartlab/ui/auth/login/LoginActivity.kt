@@ -38,7 +38,6 @@ class LoginActivity : BaseActivity<ActivityLoginBinding?>(), View.OnClickListene
     lateinit var viewModel: LoginViewModel
     lateinit var database: FirebaseDatabase
     var token: String? = null
-    lateinit var login4EShoppingRequest: Login4EShoppingRequest//request login 4EShopping
     var versionCode: Int = 0
 
     var updateText = ""
@@ -72,19 +71,6 @@ class LoginActivity : BaseActivity<ActivityLoginBinding?>(), View.OnClickListene
 
 
     private fun setObservers() {
-        //login 4EShopping
-        viewModel.errorMessage.observe(this) { integer: Int ->
-            if (integer == 1) {
-                Log.e("xxx", "error")
-                Toast.makeText(this, "error in response data", Toast.LENGTH_SHORT)
-                    .show()
-            } else {
-                Toast.makeText(this, "error in Network", Toast.LENGTH_SHORT).show()
-            }
-        }
-        viewModel.login4EShoppingResponse.observe(this, Observer {
-            UserPreferenceHelper.saveUserProfile(it)
-        })
         viewModel?.responseLive?.observe(this, Observer { t ->
             if (t.isSuccesed) {
 
@@ -361,17 +347,6 @@ class LoginActivity : BaseActivity<ActivityLoginBinding?>(), View.OnClickListene
                     binding?.userName?.text.toString(),
                     binding?.password?.text.toString()
                 )
-
-                token = viewModel.dataManager.token
-                login4EShoppingRequest =
-                    Login4EShoppingRequest(
-                        binding?.userName?.text.toString(),
-                        binding?.password?.text.toString(),
-                        "mr",
-                        token!!,
-                        AppConstants.DeviceType
-                    )
-                viewModel.getUserModel(this@LoginActivity, login4EShoppingRequest)
             }
         }
     }
