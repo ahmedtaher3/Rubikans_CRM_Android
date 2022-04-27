@@ -109,6 +109,8 @@
         <entry key="..\:/work/DevartLab/DevartLabCRMproject/app/src/main/res/drawable/ic_clock.xml" value="0.20833333333333334" />
         <entry key="..\:/work/DevartLab/DevartLabCRMproject/app/src/main/res/drawable/ic_hide_event.xml" value="0.17685185185185184" />
         <entry key="..\:/work/DevartLab/DevartLabCRMproject/app/src/main/res/drawable/ic_hide_show_ads.xml" value="0.20833333333333334" />
+        <entry key="..\:/work/DevartLab/DevartLabCRMproject/app/src/main/res/drawable/ic_location_coding_inactive.xml" value="0.2" />
+        <entry key="..\:/work/DevartLab/DevartLabCRMproject/app/src/main/res/drawable/ic_location_inactive.xml" value="0.2" />
         <entry key="..\:/work/DevartLab/DevartLabCRMproject/app/src/main/res/drawable/ic_pre_declined.xml" value="0.1" />
         <entry key="..\:/work/DevartLab/DevartLabCRMproject/app/src/main/res/drawable/ic_show_event.xml" value="0.20833333333333334" />
         <entry key="..\:/work/DevartLab/DevartLabCRMproject/app/src/main/res/drawable/rounded_white.xml" value="0.1" />
@@ -138,7 +140,7 @@
         <entry key="..\:/work/DevartLab/DevartLabCRMproject/app/src/main/res/layout/activity_main.xml" value="0.1921875" />
         <entry key="..\:/work/DevartLab/DevartLabCRMproject/app/src/main/res/layout/activity_main_contacts.xml" value="0.1921875" />
         <entry key="..\:/work/DevartLab/DevartLabCRMproject/app/src/main/res/layout/activity_more_details_ads.xml" value="0.125" />
-        <entry key="..\:/work/DevartLab/DevartLabCRMproject/app/src/main/res/layout/activity_nearby_pharmacy.xml" value="0.25" />
+        <entry key="..\:/work/DevartLab/DevartLabCRMproject/app/src/main/res/layout/activity_nearby_pharmacy.xml" value="0.22" />
         <entry key="..\:/work/DevartLab/DevartLabCRMproject/app/src/main/res/layout/activity_order_request_vouvher.xml" value="0.1375" />
         <entry key="..\:/work/DevartLab/DevartLabCRMproject/app/src/main/res/layout/activity_pharmacy_binding.xml" value="0.18425925925925926" />
         <entry key="..\:/work/DevartLab/DevartLabCRMproject/app/src/main/res/layout/activity_request_voucher.xml" value="0.2" />
@@ -177,7 +179,7 @@
         <entry key="..\:/work/DevartLab/DevartLabCRMproject/app/src/main/res/layout/index_sec_hand_book_item.xml" value="0.1921875" />
         <entry key="..\:/work/DevartLab/DevartLabCRMproject/app/src/main/res/layout/index_sub_hand_book_item.xml" value="0.17232375979112272" />
         <entry key="..\:/work/DevartLab/DevartLabCRMproject/app/src/main/res/layout/info_nearby_pharmacy.xml" value="0.25" />
-        <entry key="..\:/work/DevartLab/DevartLabCRMproject/app/src/main/res/layout/info_nearby_pharmacy_dialog.xml" value="0.25" />
+        <entry key="..\:/work/DevartLab/DevartLabCRMproject/app/src/main/res/layout/info_nearby_pharmacy_dialog.xml" value="0.67" />
         <entry key="..\:/work/DevartLab/DevartLabCRMproject/app/src/main/res/layout/item_chat_user.xml" value="0.12222222222222222" />
         <entry key="..\:/work/DevartLab/DevartLabCRMproject/app/src/main/res/layout/list_teams_item.xml" value="0.33" />
         <entry key="..\:/work/DevartLab/DevartLabCRMproject/app/src/main/res/layout/list_video_item.xml" value="0.1" />

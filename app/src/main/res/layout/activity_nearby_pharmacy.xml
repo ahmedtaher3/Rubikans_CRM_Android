@@ -48,7 +48,7 @@
                 android:textColor="@color/green"
                 android:textSize="14sp"
                 android:textStyle="bold"
-                app:drawableStartCompat="@drawable/ic_active_location" />
+                app:drawableStartCompat="@drawable/mapbox_marker_green" />
 
             <TextView
                 android:id="@+id/inactive_location"
@@ -59,7 +59,7 @@
                 android:textColor="@color/red"
                 android:textSize="14sp"
                 android:textStyle="bold"
-                app:drawableStartCompat="@drawable/ic_unactive_location" />
+                app:drawableStartCompat="@drawable/mapbox_marker_icon_default" />
 
             <TextView
                 android:id="@+id/zero_order_location"
@@ -70,7 +70,7 @@
                 android:textColor="@color/yellow"
                 android:textSize="14sp"
                 android:textStyle="bold"
-                app:drawableStartCompat="@drawable/ic_zero_order_location" />
+                app:drawableStartCompat="@drawable/mapbox_marker_yellow" />
 
             <TextView
                 android:id="@+id/coding_inactive_order_location"
@@ -78,10 +78,21 @@
                 android:layout_height="wrap_content"
                 android:padding="5dp"
                 android:text="@string/coding_inactive"
+                android:textColor="@color/colorOrange"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:drawableStartCompat="@drawable/mapbox_marker_orange" />
+
+            <TextView
+                android:id="@+id/coding_under_review_order_location"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:text="@string/under_review"
                 android:textColor="@color/gray_active_icon"
                 android:textSize="14sp"
                 android:textStyle="bold"
-                app:drawableStartCompat="@drawable/ic_location_coding_inactive" />
+                app:drawableStartCompat="@drawable/mapbox_marker_gray" />
         </LinearLayout>
 
         <ImageView

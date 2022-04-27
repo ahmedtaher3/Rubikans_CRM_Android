@@ -627,6 +627,7 @@
     <string name="pharmacy">Pharmacy</string>
     <string name="coding_inactive">coded but inactive</string>
     <string name="mr">MR</string>
+    <string name="under_review">Under review</string>
 
 
 </resources>
