@@ -603,12 +603,12 @@
     <string name="action_holiday">إجازة</string>
     <string name="action_meeting_room">قاعة الاجتماعات</string>
     <string name="empty_list">لا يوجد بيانات</string>
-    <string name="action">نشط</string>
-    <string name="unaction">مفعلة لكن مرتبطة مع مندوب اخر</string>
+    <string name="action">مفعلة</string>
+    <string name="unaction">مفعلة مندوب اخر</string>
     <string name="zero_order">بدون طلبات</string>
     <string name="nearby_pharmacy">الصيدليات القريبة</string>
     <string name="pharmacy">الصيدلية</string>
-    <string name="coding_inactive">مكودة ولكن غير مفعلة</string>
+    <string name="coding_inactive">غير مفعلة</string>
     <string name="under_review">تحت مراجعة</string>
 
 

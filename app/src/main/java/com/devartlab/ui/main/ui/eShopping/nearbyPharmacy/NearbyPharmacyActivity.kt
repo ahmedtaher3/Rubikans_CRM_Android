@@ -121,7 +121,8 @@ class NearbyPharmacyActivity : BaseActivity<ActivityNearbyPharmacyBinding?>(),
                                             model.lng?.toDouble()!!
                                         )
                                     )
-                                        .title( resources.getString(R.string.pharmacy)+"  " + model.mpharmacy.name+("- ")
+                                        .title( resources.getString(R.string.unaction)+"\n"+
+                                                resources.getString(R.string.pharmacy)+"  " + model.mpharmacy.name+("- ")
                                                 +resources.getString(R.string.id)+" :"+model.mpharmacy.id+"\n"+
                                                 resources.getString(R.string.mr)+"  "+model.mpharmacy.mmndob.name+("- ")
                                                 +resources.getString(R.string.id)+" :"+model.mpharmacy.mmndob.id+("- ")
@@ -143,7 +144,8 @@ class NearbyPharmacyActivity : BaseActivity<ActivityNearbyPharmacyBinding?>(),
                                                 model.lng?.toDouble()!!
                                             )
                                         )
-                                                   .title( resources.getString(R.string.pharmacy)+"  " + model.mpharmacy.name+("- ")
+                                                   .title( resources.getString(R.string.zero_order)+"\n"+
+                                                       resources.getString(R.string.pharmacy)+"  " + model.mpharmacy.name+("- ")
                                                            +resources.getString(R.string.id)+" :"+model.mpharmacy.id+"\n"+
                                                            resources.getString(R.string.mr)+"  "+model.mpharmacy.mmndob.name+("- ")
                                                            +resources.getString(R.string.id)+" :"+model.mpharmacy.mmndob.id+("- ")
@@ -166,14 +168,15 @@ class NearbyPharmacyActivity : BaseActivity<ActivityNearbyPharmacyBinding?>(),
                                                         model.lng?.toDouble()!!
                                                     )
                                                 )
-                                                    .title( resources.getString(R.string.pharmacy)+"  " + model.mpharmacy.name+("- ")
+                                                    .title( resources.getString(R.string.coding_inactive)+"\n"+
+                                                        resources.getString(R.string.pharmacy)+"  " + model.mpharmacy.name+("- ")
                                                             +resources.getString(R.string.id)+" :"+model.mpharmacy.id+"\n"+
                                                             resources.getString(R.string.mr)+"  "+model.mpharmacy.mmndob.name+("- ")
                                                             +resources.getString(R.string.id)+" :"+model.mpharmacy.mmndob.id+("- ")
                                                             +model.mpharmacy.mmndob.line)
                                                     .icon(
                                                         IconFactory.getInstance(this)
-                                                            .fromResource(R.drawable.mapbox_marker_orange)
+                                                            .fromResource(R.drawable.mapbox_marker_blue)
                                                     )
                                             )
                                         } catch (e: Exception) {
@@ -188,7 +191,8 @@ class NearbyPharmacyActivity : BaseActivity<ActivityNearbyPharmacyBinding?>(),
                                                         model.lng?.toDouble()!!
                                                     )
                                                 )
-                                                    .title( resources.getString(R.string.pharmacy)+"  " + model.mpharmacy.name+("- ")
+                                                    .title( resources.getString(R.string.action)+"\n"+
+                                                        resources.getString(R.string.pharmacy)+"  " + model.mpharmacy.name+("- ")
                                                             +resources.getString(R.string.id)+" :"+model.mpharmacy.id+"\n"+
                                                             resources.getString(R.string.mr)+"  "+model.mpharmacy.mmndob.name+("- ")
                                                             +resources.getString(R.string.id)+" :"+model.mpharmacy.mmndob.id+("- ")
@@ -210,7 +214,8 @@ class NearbyPharmacyActivity : BaseActivity<ActivityNearbyPharmacyBinding?>(),
                                                         model.lng?.toDouble()!!
                                                     )
                                                 )
-                                                    .title( resources.getString(R.string.pharmacy)+"  " + model.mpharmacy.name+("- ")
+                                                    .title( resources.getString(R.string.under_review)+"\n"+
+                                                        resources.getString(R.string.pharmacy)+"  " + model.mpharmacy.name+("- ")
                                                             +resources.getString(R.string.id)+" :"+model.mpharmacy.id+"\n"+
                                                             resources.getString(R.string.mr)+"  "+model.mpharmacy.mmndob.name+("- ")
                                                             +resources.getString(R.string.id)+" :"+model.mpharmacy.mmndob.id+("- ")
@@ -377,9 +382,9 @@ private fun enableLocationComponent(loadedMapStyle: Style) {
 private fun initLocationEngine() {
     locationEngine = LocationEngineProvider.getBestLocationEngine(this)
     val request = LocationEngineRequest
-        .Builder(5000L)
+        .Builder(10000L)
         .setPriority(LocationEngineRequest.PRIORITY_HIGH_ACCURACY)
-        .setMaxWaitTime(5000L * 5)
+        .setMaxWaitTime(10000L * 15)
         .build()
     locationEngine.requestLocationUpdates(request, callback, mainLooper)
     locationEngine.getLastLocation(callback)
@@ -414,11 +419,11 @@ private inner class LocationChangeListeningCallback :
                     .build()
                 map_boxMap.animateCamera(CameraUpdateFactory.newCameraPosition(position))
                 viewModel!!.getNearbyPharmacy("$lat,$lng")
-                Toast.makeText(
-                    this@NearbyPharmacyActivity,
-                    "Location update : $latLng",
-                    Toast.LENGTH_SHORT
-                ).show()
+//                Toast.makeText(
+//                    this@NearbyPharmacyActivity,
+//                    "Location update : $latLng",
+//                    Toast.LENGTH_SHORT
+//                ).show()
             }
         }
 
