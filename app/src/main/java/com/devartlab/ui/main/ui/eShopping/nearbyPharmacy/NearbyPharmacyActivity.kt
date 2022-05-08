@@ -7,6 +7,7 @@ import android.location.Geocoder
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
@@ -364,12 +365,9 @@ private fun enableLocationComponent(loadedMapStyle: Style) {
                 .build()
         map_boxMap.locationComponent.apply {
             activateLocationComponent(locationComponentActivationOptions)
-            isLocationComponentEnabled =
-                true                       // Enable to make component visible
-            cameraMode =
-                CameraMode.TRACKING                        // Set the component's camera mode
-            renderMode =
-                RenderMode.COMPASS                         // Set the component's render mode
+            isLocationComponentEnabled = true                       // Enable to make component visible
+            cameraMode = CameraMode.TRACKING                        // Set the component's camera mode
+            renderMode = RenderMode.COMPASS                         // Set the component's render mode
         }
         initLocationEngine()
     } else {

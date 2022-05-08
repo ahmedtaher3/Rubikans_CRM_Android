@@ -8,7 +8,6 @@ import com.devartlab.base.BaseApplication
 import com.devartlab.data.retrofit.RetrofitClient
 import com.devartlab.data.shared.DataManager
 import com.devartlab.ui.main.ui.eShopping.nearbyPharmacy.model.NearbyPharmacyResponse
-import com.devartlab.ui.main.ui.eShopping.orientationVideos.model.ResponseVideos
 import com.devartlab.ui.main.ui.eShopping.utils.UserPreferenceHelper
 import retrofit2.Call
 import retrofit2.Callback

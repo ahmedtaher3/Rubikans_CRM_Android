@@ -83,7 +83,7 @@ class DevartLinkActivity : BaseActivity<ActivityDevartLinkBinding>(),
 //        list.add(CardModel(1, resources.getString(R.string.lets_talk), R.drawable.ic_talk_icon_02))
         list.add(CardModel(2, resources.getString(R.string.faq), R.drawable.ic_faq))
         list.add(CardModel(3, resources.getString(R.string.community), R.drawable.ic_community))
-        list.add(CardModel(4, resources.getString(R.string.academy), R.drawable.ic_academy))
+//        list.add(CardModel(4, resources.getString(R.string.academy), R.drawable.ic_academy))
 //        list.add(CardModel(5, resources.getString(R.string.calender), R.drawable.ic_calendar_month))
 
         adapter = MenuListAdapter(this, list, this)
