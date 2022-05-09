@@ -31,11 +31,13 @@
         </com.google.android.material.appbar.AppBarLayout>
 
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/linlay_pens"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/text_padding_top_5dp"
+            android:visibility="gone"
+            android:layout_marginTop="10dp"
             android:background="@drawable/rounded_white"
             android:orientation="vertical">
 
@@ -45,21 +47,28 @@
                 android:layout_height="wrap_content"
                 android:padding="5dp"
                 android:text="@string/action"
-                android:textColor="@color/green"
+                android:drawablePadding="5dp"
+                android:textColor="@color/black"
                 android:textSize="14sp"
                 android:textStyle="bold"
-                app:drawableStartCompat="@drawable/ic_active_location" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:drawableStartCompat="@drawable/mapbox_marker_green" />
 
             <TextView
                 android:id="@+id/inactive_location"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="5dp"
+                android:drawablePadding="5dp"
                 android:text="@string/unaction"
-                android:textColor="@color/red"
+                android:textColor="@color/black"
                 android:textSize="14sp"
                 android:textStyle="bold"
-                app:drawableStartCompat="@drawable/ic_unactive_location" />
+                app:layout_constraintTop_toTopOf="@+id/active_location"
+                app:layout_constraintBottom_toBottomOf="@+id/active_location"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:drawableStartCompat="@drawable/mapbox_marker_icon_default" />
 
             <TextView
                 android:id="@+id/zero_order_location"
@@ -67,10 +76,13 @@
                 android:layout_height="wrap_content"
                 android:padding="5dp"
                 android:text="@string/zero_order"
-                android:textColor="@color/yellow"
+                android:drawablePadding="5dp"
+                android:textColor="@color/black"
                 android:textSize="14sp"
                 android:textStyle="bold"
-                app:drawableStartCompat="@drawable/ic_zero_order_location" />
+                app:layout_constraintTop_toBottomOf="@id/active_location"
+                app:layout_constraintStart_toStartOf="@+id/active_location"
+                app:drawableStartCompat="@drawable/mapbox_marker_yellow" />
 
             <TextView
                 android:id="@+id/coding_inactive_order_location"
@@ -78,11 +90,29 @@
                 android:layout_height="wrap_content"
                 android:padding="5dp"
                 android:text="@string/coding_inactive"
-                android:textColor="@color/gray_active_icon"
+                android:drawablePadding="5dp"
+                android:textColor="@color/black"
                 android:textSize="14sp"
                 android:textStyle="bold"
-                app:drawableStartCompat="@drawable/ic_location_coding_inactive" />
-        </LinearLayout>
+                app:layout_constraintStart_toStartOf="@id/inactive_location"
+                app:layout_constraintTop_toTopOf="@id/zero_order_location"
+                app:layout_constraintBottom_toBottomOf="@id/zero_order_location"
+                app:drawableStartCompat="@drawable/mapbox_marker_blue" />
+
+            <TextView
+                android:id="@+id/coding_under_review_order_location"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:text="@string/under_review"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                android:drawablePadding="5dp"
+                android:textStyle="bold"
+                app:layout_constraintTop_toBottomOf="@id/zero_order_location"
+                app:layout_constraintStart_toStartOf="@+id/active_location"
+                app:drawableStartCompat="@drawable/mapbox_marker_gray" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <ImageView
             android:id="@+id/btn_hide_show_ads"
@@ -92,7 +122,7 @@
             android:background="@drawable/custom_bg_btn_blue"
             android:contentDescription="@string/img"
             android:gravity="center"
-            android:src="@drawable/ic_hide_show_ads"
+            android:src="@drawable/ic_show_hide_ads"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 

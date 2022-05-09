@@ -74,7 +74,7 @@ class Home4EShoppingActivity : AppCompatActivity(),
         list.add(CardModel(5, resources.getString(R.string.Add_ticket), "", R.drawable.ic_chat))
      //   list.add(CardModel(6, resources.getString(R.string.report), "", R.drawable.report))
         list.add(CardModel(7, resources.getString(R.string.request_voucher), "", R.drawable.ic_coupon))
-//        list.add(CardModel(8, resources.getString(R.string.nearby_pharmacy), "", R.drawable.ic_gps))
+        list.add(CardModel(8, resources.getString(R.string.nearby_pharmacy), "", R.drawable.ic_gps))
 
         adapter = MenuListAdapter(this, list, this)
         val layoutManager = GridLayoutManager(this, 2)

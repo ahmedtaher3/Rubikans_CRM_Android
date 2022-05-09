@@ -40,11 +40,6 @@ import java.util.concurrent.TimeUnit
 
 class SplashActivity : BaseActivity<ActivitySplashBinding>() {
     lateinit var binding: ActivitySplashBinding
-    var name: String? = null
-    var pass: String? = null
-    var token: String? = null
-    lateinit var login4EShoppingRequest: Login4EShoppingRequest//request login 4EShopping
-
 
     private lateinit var executor: Executor
     private lateinit var biometricPrompt: BiometricPrompt
@@ -176,20 +171,6 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
     }
 
     private fun setObservers() {
-        //login 4EShopping
-        viewModel.errorMessage.observe(this) { integer: Int ->
-            if (integer == 1) {
-                Log.e("xxx", "error")
-                Toast.makeText(this, "error in response data", Toast.LENGTH_SHORT)
-                    .show()
-            } else {
-                Toast.makeText(this, "error in Network", Toast.LENGTH_SHORT).show()
-            }
-        }
-
-        viewModel.login4EShoppingResponse.observe(this, Observer {
-            UserPreferenceHelper.saveUserProfile(it)
-        })
 
         viewModel.responseLive.observe(this, Observer { t ->
 
@@ -270,14 +251,6 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
                                                            }
                                                        }
                                                        */
-                                                if (UserPreferenceHelper.getUser().token == null) {
-                                                    name = viewModel.dataManager.user.userName
-                                                    pass = viewModel.dataManager.user.password
-                                                    token = viewModel.dataManager.token
-                                                    login4EShoppingRequest =
-                                                        Login4EShoppingRequest(name!!, pass!!, "mr", token!!, AppConstants.DeviceType)
-                                                    viewModel.getUserModel(this@SplashActivity, login4EShoppingRequest)
-                                                }
                                                 startActivity(
                                                     Intent(
                                                         this@SplashActivity,
@@ -405,15 +378,6 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
 
 
             if (t.isSuccesed) {
-
-                if (UserPreferenceHelper.getUser().token == null) {
-                    name = viewModel.dataManager.user.userName
-                    pass = viewModel.dataManager.user.password
-                    token = viewModel.dataManager.token
-                    login4EShoppingRequest =
-                        Login4EShoppingRequest(name!!, pass!!, "mr", token!!, AppConstants.DeviceType)
-                    viewModel.getUserModel(this@SplashActivity, login4EShoppingRequest)
-                }
 
                 startActivity(Intent(this@SplashActivity, MainActivity::class.java))
                 finish()
@@ -691,14 +655,6 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
 
                                     override fun onError(e: Throwable) {}
                                     override fun onSuccess(t: Long) {
-                                        if (UserPreferenceHelper.getUser().token == null) {
-                                            name = viewModel.dataManager.user.userName
-                                            pass = viewModel.dataManager.user.password
-                                            token = viewModel.dataManager.token
-                                            login4EShoppingRequest =
-                                                Login4EShoppingRequest(name!!, pass!!, "mr", token!!, AppConstants.DeviceType)
-                                            viewModel.getUserModel(this@SplashActivity, login4EShoppingRequest)
-                                        }
 
                                         startActivity(
                                             Intent(

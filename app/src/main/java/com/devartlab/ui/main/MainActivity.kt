@@ -77,6 +77,10 @@ class MainActivity : BaseActivity<ActivityMainBinding?>(), View.OnClickListener,
     lateinit var viewModel: MainViewModel
     lateinit var adapter: MenuListAdapter
     lateinit var mediaSource: SimpleMediaSource
+    lateinit var login4EShoppingRequest: Login4EShoppingRequest//request login 4EShopping
+    var name: String? = null
+    var pass: String? = null
+    var token: String? = null
 
     private var toggle: ActionBarDrawerToggle? = null
     var textCartItemCount: RelativeLayout? = null
@@ -178,6 +182,12 @@ class MainActivity : BaseActivity<ActivityMainBinding?>(), View.OnClickListener,
         setUpRecycler()
         ads()
 
+        name = viewModel.dataManager.user.userName
+        pass = viewModel.dataManager.user.password
+        token = viewModel.dataManager.token
+        login4EShoppingRequest =
+            Login4EShoppingRequest(name!!, pass!!, "mr", token!!, AppConstants.DeviceType)
+        viewModel.getUserModel(this@MainActivity, login4EShoppingRequest)
         //welcome post dialog
         viewModel.getWelcomePost()
         //login 4EShopping
@@ -226,6 +236,10 @@ class MainActivity : BaseActivity<ActivityMainBinding?>(), View.OnClickListener,
                     UserPreferenceHelper.saveWelcomeDialog(it.data)
                 }
             }
+        })
+        //login 4EShopping
+        viewModel.login4EShoppingResponse.observe(this, Observer {
+            UserPreferenceHelper.saveUserProfile(it)
         })
         viewModel.progress.observe(this, Observer { integer ->
             when (integer) {
@@ -283,9 +297,9 @@ class MainActivity : BaseActivity<ActivityMainBinding?>(), View.OnClickListener,
         list.add(CardModel(2, resources.getString(R.string.self_service), R.drawable.self_service))
         list.add(CardModel(3, resources.getString(R.string.my_profile), R.drawable.employee))
         list.add(CardModel(4, resources.getString(R.string.market_request), R.drawable.money))
-//        list.add(CardModel(5, "DevartLink", R.drawable.devartlink))
+        list.add(CardModel(5, "DevartLink", R.drawable.devartlink))
         list.add(CardModel(6, "4eShopping", R.drawable.e_shopping))
-//        list.add(CardModel(7, "DevartLab Team", R.drawable.ic_team))
+        list.add(CardModel(7, "DevartLab Team", R.drawable.ic_team))
 
         adapter = MenuListAdapter(this, list, this)
         val layoutManager = GridLayoutManager(this, 2)

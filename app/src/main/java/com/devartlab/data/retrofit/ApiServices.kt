@@ -36,6 +36,7 @@ import com.devartlab.ui.main.ui.devartlink.model.WelcomePostResponse
 import com.devartlab.ui.main.ui.eShopping.pharmacyBinding.uploadPharmacyFiles.model.pharmacydata.GetInfoPharmacyResponse
 import com.devartlab.ui.main.ui.eShopping.addProductsToThePharmacy.model.showCart.ShowCartResponse
 import com.devartlab.ui.main.ui.eShopping.main.model.login4EShopping.Login4EShoppingResponse
+import com.devartlab.ui.main.ui.eShopping.nearbyPharmacy.model.NearbyPharmacyResponse
 import com.devartlab.ui.main.ui.eShopping.orientationVideos.model.ResponseVideos
 import com.devartlab.ui.main.ui.eShopping.pharmacyBinding.allComments.model.AllCommentsResponse
 import com.devartlab.ui.main.ui.eShopping.pharmacyBinding.model.connectPharmacy.ConnectPharmacyResponse
@@ -994,4 +995,10 @@ interface ApiServices {
     fun getSeeMore(
         @Body request: SeeMoreRequest?
     ): Call<SeeMoreResponse?>?
+
+    @GET("getbehindadd")
+    fun getNearbyPharmacy(
+        @Header("Authorization") token: String?,
+        @Query("lat_lng") lat_lng: String?
+    ): Call<NearbyPharmacyResponse?>
 }
