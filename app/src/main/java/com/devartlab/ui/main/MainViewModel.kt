@@ -65,6 +65,7 @@ import retrofit2.Retrofit
 class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     // axasasasas
+    var login4EShoppingResponse: MutableLiveData<Login4EShoppingResponse?>
 
     val arrangedResponseLive: MutableLiveData<List<ArrangedEntity>>
     val randomLive: MutableLiveData<List<RandomEntity>>
@@ -127,6 +128,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         welcomePostResponse= MutableLiveData()//welcome post
 
         progress = MutableLiveData()
+        login4EShoppingResponse = MutableLiveData()
         progressGoogle = MutableLiveData()
         responseLiveRequests = MutableLiveData()
         syncOfflineData = MutableLiveData()
@@ -471,7 +473,6 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
                     if (response.isSuccessful) {
                         welcomePostResponse.postValue(response.body())
                     } else {
-                        Toast.makeText(getApplication(), "error in response data", Toast.LENGTH_SHORT).show()
                     }
                 }
 
@@ -480,4 +481,52 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
                 }
             })
     }
+
+    //function login 4EShopping
+    fun getUserModel(activity: AppCompatActivity, login4EShoppingRequest: Login4EShoppingRequest) {
+        progress.postValue(1)
+        val getToken = GetDeviceToken(activity)
+        getToken.getToken(object : GetDeviceToken.TokenResult() {
+            override fun success(token: String?) {
+                var myToken = ""
+                myToken = if (token.isNullOrBlank()) {
+                    dataManager.deviceToken!!
+                } else {
+                    token
+                }
+
+                login4EShoppingRequest.fcm = myToken
+                RetrofitClient.getApis4EShopping().LOGIN4ESHOPPING(login4EShoppingRequest)!!
+                    .enqueue(object : Callback<Login4EShoppingResponse?> {
+                        override fun onResponse(
+                            call: Call<Login4EShoppingResponse?>,
+                            response: Response<Login4EShoppingResponse?>
+                        ) {
+
+
+                            progress.postValue(0)
+
+                            if (response.isSuccessful) {
+                                login4EShoppingResponse.postValue(response.body())
+                            } else {
+
+                            }
+                        }
+
+                        override fun onFailure(call: Call<Login4EShoppingResponse?>, t: Throwable) {
+                            Toast.makeText(getApplication(), t.message, Toast.LENGTH_SHORT).show()
+                            progress.postValue(0)
+                        }
+                    })
+            }
+
+            override fun failure(msg: String?) {
+
+
+            }
+
+        })
+
+    }
+
 }

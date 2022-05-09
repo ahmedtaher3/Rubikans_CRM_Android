@@ -34,7 +34,6 @@ import com.devartlab.databinding.ActivityMainBinding
 import com.devartlab.databinding.NavHeaderMainBinding
 import com.devartlab.model.AdModel
 import com.devartlab.model.CardModel
-import com.devartlab.ui.auth.login.LoginActivity
 import com.devartlab.ui.main.ui.callmanagement.CallManagementActivity
 import com.devartlab.ui.main.ui.callmanagement.home.MenuListAdapter
 import com.devartlab.ui.main.ui.callmanagement.syncdata.SyncDataDialog
@@ -196,6 +195,20 @@ class MainActivity : BaseActivity<ActivityMainBinding?>(), View.OnClickListener,
         })
 
         viewModel!!.getAllPending("allPending", "")
+
+
+       val token = viewModel.dataManager.token
+        val login4EShoppingRequest =
+            Login4EShoppingRequest(
+                viewModel.dataManager.user.userName,
+                viewModel.dataManager.user.password,
+                "mr",
+                token!!,
+                AppConstants.DeviceType
+            )
+        viewModel.getUserModel(this@MainActivity, login4EShoppingRequest)
+
+
     }
 
     private fun setObservers() {
@@ -236,11 +249,13 @@ class MainActivity : BaseActivity<ActivityMainBinding?>(), View.OnClickListener,
             Observer { googleRequestResponse -> setupBadge(googleRequestResponse.hrRequests?.size!! + googleRequestResponse.penaltiesGoogle?.size!! + googleRequestResponse.workFromHomelist?.size!!) })
 
         viewModel!!.randomLive.observe(this, Observer {
-            Toast.makeText(this@MainActivity, it.size.toString(), Toast.LENGTH_SHORT).show()
-
+            //Toast.makeText(this@MainActivity, it.size.toString(), Toast.LENGTH_SHORT).show()
         })
 
-
+        viewModel.login4EShoppingResponse.observe(this, Observer {
+            UserPreferenceHelper.saveUserProfile(it)
+        })
+        
         viewModel!!.syncOfflineData.observe(this, Observer {
 
             if (it.isSuccesed) {
@@ -486,7 +501,13 @@ class MainActivity : BaseActivity<ActivityMainBinding?>(), View.OnClickListener,
 
             }
 
+
+
         }
+
+
+
+
         binding!!.navView.addHeaderView(headerMainBinding.root)
         headerMainBinding.viewModel = viewModel
 
