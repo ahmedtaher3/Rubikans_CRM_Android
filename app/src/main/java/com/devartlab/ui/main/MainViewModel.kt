@@ -65,6 +65,7 @@ import retrofit2.Retrofit
 class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     // axasasasas
+    var login4EShoppingResponse: MutableLiveData<Login4EShoppingResponse?>
 
     val arrangedResponseLive: MutableLiveData<List<ArrangedEntity>>
     val randomLive: MutableLiveData<List<RandomEntity>>
@@ -78,8 +79,6 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     var errorMessage: MutableLiveData<String>
         protected set
     var welcomePostResponse: MutableLiveData<WelcomePostResponse?>
-        protected set
-    var login4EShoppingResponse: MutableLiveData<Login4EShoppingResponse?>
         protected set
 
     var myAPI: ApiServices? = null
@@ -127,9 +126,9 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         myAPI2 = retrofit2!!.create(ApiServicesGoogle::class.java)
         errorMessage = MutableLiveData()//error message
         welcomePostResponse= MutableLiveData()//welcome post
-        login4EShoppingResponse = MutableLiveData()//login 4eshopping
 
         progress = MutableLiveData()
+        login4EShoppingResponse = MutableLiveData()
         progressGoogle = MutableLiveData()
         responseLiveRequests = MutableLiveData()
         syncOfflineData = MutableLiveData()
@@ -474,7 +473,6 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
                     if (response.isSuccessful) {
                         welcomePostResponse.postValue(response.body())
                     } else {
-                        Toast.makeText(getApplication(), "error in response data", Toast.LENGTH_SHORT).show()
                     }
                 }
 
@@ -483,7 +481,6 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
                 }
             })
     }
-
 
     //function login 4EShopping
     fun getUserModel(activity: AppCompatActivity, login4EShoppingRequest: Login4EShoppingRequest) {
@@ -505,18 +502,20 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
                             call: Call<Login4EShoppingResponse?>,
                             response: Response<Login4EShoppingResponse?>
                         ) {
+
+
+                            progress.postValue(0)
+
                             if (response.isSuccessful) {
-                                progress.postValue(0)
                                 login4EShoppingResponse.postValue(response.body())
                             } else {
-                                progress.postValue(0)
-                                Toast.makeText(getApplication(), "error in response data", Toast.LENGTH_SHORT).show()
+
                             }
                         }
 
                         override fun onFailure(call: Call<Login4EShoppingResponse?>, t: Throwable) {
+                            Toast.makeText(getApplication(), t.message, Toast.LENGTH_SHORT).show()
                             progress.postValue(0)
-                            errorMessage.postValue(t.localizedMessage)
                         }
                     })
             }
@@ -529,4 +528,5 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         })
 
     }
+
 }

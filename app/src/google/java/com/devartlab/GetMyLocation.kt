@@ -1,4 +1,4 @@
-package com.devartlab
+.package com.devartlab
 
 
 import android.annotation.SuppressLint

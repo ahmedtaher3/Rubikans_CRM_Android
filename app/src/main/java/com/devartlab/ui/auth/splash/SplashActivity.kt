@@ -23,7 +23,6 @@ import com.devartlab.ui.auth.login.LoginActivity
 import com.devartlab.ui.auth.login.LoginViewModel
 import com.devartlab.ui.main.MainActivity
 import com.devartlab.ui.main.ui.eShopping.main.model.login4EShopping.Login4EShoppingRequest
-import com.devartlab.ui.main.ui.eShopping.orientationVideos.VideoActivity
 import com.devartlab.ui.main.ui.eShopping.utils.UserPreferenceHelper
 import com.devartlab.utils.CommonUtilities
 import com.devartlab.utils.ProgressLoading
@@ -88,6 +87,16 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
 
         onlineButton.setOnClickListener(View.OnClickListener {
             viewModel.dataManager!!.saveOfflineMood(false)
+
+            name = viewModel.dataManager.user.userName
+            pass = viewModel.dataManager.user.password
+            token = viewModel.dataManager.token
+            login4EShoppingRequest =
+                Login4EShoppingRequest(name!!, pass!!, "mr", token!!, AppConstants.DeviceType)
+            viewModel.getUserModel(this@SplashActivity, login4EShoppingRequest)
+
+
+
             viewModel.login(
                 viewModel.dataManager?.user.userName!!,
                 viewModel.dataManager?.user.password!!
@@ -141,6 +150,16 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
 
 
         binding.tryAgainButton.setOnClickListener {
+
+            name = viewModel.dataManager.user.userName
+            pass = viewModel.dataManager.user.password
+            token = viewModel.dataManager.token
+            login4EShoppingRequest =
+                Login4EShoppingRequest(name!!, pass!!, "mr", token!!, AppConstants.DeviceType)
+            viewModel.getUserModel(this@SplashActivity, login4EShoppingRequest)
+
+
+
             viewModel.login(
                 viewModel.dataManager?.user.userName!!,
                 viewModel.dataManager?.user.password!!
@@ -461,6 +480,17 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
                                     }
 
                                 } else {
+
+
+                                        name = viewModel.dataManager.user.userName
+                                        pass = viewModel.dataManager.user.password
+                                        token = viewModel.dataManager.token
+                                        login4EShoppingRequest =
+                                            Login4EShoppingRequest(name!!, pass!!, "mr", token!!, AppConstants.DeviceType)
+                                        viewModel.getUserModel(this@SplashActivity, login4EShoppingRequest)
+
+
+
                                     viewModel.login(
                                         viewModel.dataManager?.user.userName!!,
                                         viewModel.dataManager?.user.password!!

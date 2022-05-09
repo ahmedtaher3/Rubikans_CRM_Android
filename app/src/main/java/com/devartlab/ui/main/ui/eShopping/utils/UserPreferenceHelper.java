@@ -24,8 +24,7 @@ public class UserPreferenceHelper {
 
     public static SharedPreferences getSharedPreferenceInstance(Context context) {
         if (sharedPreferences != null) return sharedPreferences;
-        return sharedPreferences = context.getSharedPreferences("savedData",
-                Context.MODE_PRIVATE);
+        return sharedPreferences = context.getSharedPreferences("savedData", Context.MODE_PRIVATE);
     }
 
     public static void saveUserProfile(Login4EShoppingResponse user) {

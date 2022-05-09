@@ -2,8 +2,8 @@ package com.devartlab
 
 object AppConstants {
 
-    const val BaseURL = "https://devartlabcrm.com/api/V1/"
-    const val ImageBaseURL = "https://devartlabcrm.com/"
+    const val BaseURL = "http://www.demo.devartlabcrm.com/api/V1/"
+    const val ImageBaseURL = "http://www.demo.devartlabcrm.com/"
     const val GoogleSheetApiKey = "AKfycbyplpNFJQZl8XCjIokxB95Eky6EKxqal_9aRnkmzhxYqyYfs028FOgEKEIhBX_O48D2"
     const val PlanPermissions = true
     const val ViewsPermissions = true
