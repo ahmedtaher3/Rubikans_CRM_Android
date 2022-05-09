@@ -7,7 +7,6 @@ import android.location.Geocoder
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
@@ -20,7 +19,6 @@ import com.devartlab.R
 import com.devartlab.base.BaseActivity
 import com.devartlab.databinding.ActivityNearbyPharmacyBinding
 import com.devartlab.ui.auth.login.LoginActivity
-import com.devartlab.ui.main.ui.eShopping.orientationVideos.VideosViewModel
 import com.devartlab.ui.main.ui.eShopping.utils.UserPreferenceHelper
 import com.mapbox.android.core.location.*
 import com.mapbox.android.core.permissions.PermissionsListener
@@ -108,7 +106,7 @@ class NearbyPharmacyActivity : BaseActivity<ActivityNearbyPharmacyBinding?>(),
                 }
                 it.data.data.isNullOrEmpty() -> {
                     //errorMessage if data coming is null;
-                    Toast.makeText(this, "not found pharmacies", Toast.LENGTH_SHORT)
+                    Toast.makeText(this, "not found nearby pharmacies", Toast.LENGTH_SHORT)
                         .show()
                 }
                 else -> {
