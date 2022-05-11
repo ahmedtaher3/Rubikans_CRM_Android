@@ -62,41 +62,47 @@ class DevartLabTeamActivity : AppCompatActivity() {
 
         viewModel!!.devartLabTeamResponse.observe(this) {
             binding.progressBar.visibility = View.GONE
-
-            Glide.with(this)
-                .load("https://devartlink.4eshopping.com/assets/images/" + it!!.image)
-                .fitCenter().into(binding.imageView)
-            supportActionBar!!.title = it.name
-            binding.decTeam.loadDataWithBaseURL(
-                null, it.description, "text/html", "utf-8", null
-            )
-            when {
-                it.sub.isNotEmpty() -> {
-                    //show data in recyclerView
-                    binding.progressBar.visibility = View.GONE
-                    adapter = DevartLabSubAdapter(it.sub)
-                    binding.recyclerListTeams.adapter = adapter
-                    adapter!!.setOnItemClickListener { _, dataItem ->
-                        val intent = Intent(this, DevartLabTeamActivity::class.java)
-                        intent.putExtra("_id", dataItem._id)
-                        startActivity(intent)
+            try {
+                Glide.with(this)
+                    .load("https://devartlink.4eshopping.com/assets/images/" + it!!.image)
+                    .fitCenter().into(binding.imageView)
+                supportActionBar!!.title = it.name
+                binding.decTeam.loadDataWithBaseURL(
+                    null, it.description, "text/html", "utf-8", null
+                )
+                when {
+                    it.sub.isNotEmpty() -> {
+                        //show data in recyclerView
+                        binding.progressBar.visibility = View.GONE
+                        adapter = DevartLabSubAdapter(it.sub)
+                        binding.recyclerListTeams.adapter = adapter
+                        adapter!!.setOnItemClickListener { _, dataItem ->
+                            val intent = Intent(this, DevartLabTeamActivity::class.java)
+                            intent.putExtra("_id", dataItem._id)
+                            startActivity(intent)
+                        }
+                    }
+                    it.team.isNotEmpty() -> {
+                        //show data in recyclerView
+                        binding.progressBar.visibility = View.GONE
+                        adapter2 = DevartLabTeamAdapter(it.team)
+                        binding.recyclerListTeams.adapter = adapter2
+                        adapter2!!.setOnItemClickListener { _, dataItem ->
+                            val intent = Intent(this, DevartLabTeamActivity::class.java)
+                            intent.putExtra("_id", dataItem._id)
+                            startActivity(intent)
+                        }
+                    }
+                    else -> {
+                        //errorMessage if data coming is null;
+                        binding.recyclerListTeams.visibility = View.GONE
                     }
                 }
-                it.team.isNotEmpty() -> {
-                    //show data in recyclerView
-                    binding.progressBar.visibility = View.GONE
-                    adapter2 = DevartLabTeamAdapter(it.team)
-                    binding.recyclerListTeams.adapter = adapter2
-                    adapter2!!.setOnItemClickListener { _, dataItem ->
-                        val intent = Intent(this, DevartLabTeamActivity::class.java)
-                        intent.putExtra("_id", dataItem._id)
-                        startActivity(intent)
-                    }
-                }
-                else -> {
-                    //errorMessage if data coming is null;
-                    binding.recyclerListTeams.visibility = View.GONE
-                }
+            }catch (e:Exception){
+                binding.constrAds.visibility = View.GONE
+                binding.btnHideShowAds.visibility = View.GONE
+                supportActionBar!!.title = getString(R.string.devarteam)
+                Toast.makeText(this, "Data is empty", Toast.LENGTH_SHORT).show()
             }
         }
     }

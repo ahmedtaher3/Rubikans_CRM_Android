@@ -628,6 +628,7 @@
     <string name="coding_inactive">Inactive</string>
     <string name="mr">MR</string>
     <string name="under_review">Unreviewed</string>
+    <string name="devarteam">Devarteam</string>
 
 
 </resources>

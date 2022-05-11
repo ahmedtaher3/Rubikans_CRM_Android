@@ -76,48 +76,56 @@ class DevartCommunityActivity : AppCompatActivity() {
         }
 
         viewModel!!.devartCommunityResponse.observe(this) {
-            supportActionBar!!.title = it!!.name
-            Glide.with(this)
-                .load("https://devartlink.4eshopping.com/assets/images/" + it.image)
-                .fitCenter().into(binding.imageView)
-            when {
-                it.sub.isNotEmpty() -> {
-                    //show data in recyclerView
-                    binding.recyclerListTeams.visibility = View.VISIBLE
-                    binding.decTeam.visibility = View.VISIBLE
-                    binding.decTeam.loadDataWithBaseURL(
-                        null, it.description, "text/html", "utf-8", null
-                    )
-                    binding.progressBar.visibility = View.GONE
-                    adapter = DevartCommunitySubAdapter(it.sub)
-                    binding.recyclerListTeams.adapter = adapter
-                    adapter!!.setOnItemClickListener { _, dataItem ->
-                        val intent = Intent(this, DevartCommunityActivity::class.java)
-                        intent.putExtra("_id", dataItem._id)
-                        startActivity(intent)
+            try {
+                supportActionBar!!.title = it!!.name
+                Glide.with(this)
+                    .load("https://devartlink.4eshopping.com/assets/images/" + it.image)
+                    .fitCenter().into(binding.imageView)
+                when {
+                    it.sub.isNotEmpty() -> {
+                        //show data in recyclerView
+                        binding.recyclerListTeams.visibility = View.VISIBLE
+                        binding.decTeam.visibility = View.VISIBLE
+                        binding.decTeam.loadDataWithBaseURL(
+                            null, it.description, "text/html", "utf-8", null
+                        )
+                        binding.progressBar.visibility = View.GONE
+                        adapter = DevartCommunitySubAdapter(it.sub)
+                        binding.recyclerListTeams.adapter = adapter
+                        adapter!!.setOnItemClickListener { _, dataItem ->
+                            val intent = Intent(this, DevartCommunityActivity::class.java)
+                            intent.putExtra("_id", dataItem._id)
+                            startActivity(intent)
+                        }
+                    }
+                    it.youtube.isNotEmpty() -> {
+                        //show data in recyclerView
+                        binding.recyclerListVideos.visibility = View.VISIBLE
+                        binding.searchBarVideo.visibility = View.VISIBLE
+                        binding.progressBar.visibility = View.GONE
+                        adapter2 = DevartCommunityAdapter(it.youtube)
+                        list.addAll(it.youtube)
+                        binding.recyclerListVideos.adapter = adapter2
+                        adapter2!!.setOnItemClickListener { _, dataItem ->
+                            val intent = Intent(this, DevartCommunityVideoActivity::class.java)
+                            intent.putExtra("_id", dataItem.video_id)
+                            intent.putExtra("_name", dataItem.title)
+                            intent.putExtra("_dec", dataItem.description)
+                            intent.putExtra("_name_channel", dataItem.sub_title)
+                            startActivity(intent)
+                        }
+                    }
+                    else -> {
+                        //errorMessage if data coming is null;
+                        binding.tvEmptyList.visibility = View.VISIBLE
                     }
                 }
-                it.youtube.isNotEmpty() -> {
-                    //show data in recyclerView
-                    binding.recyclerListVideos.visibility = View.VISIBLE
-                    binding.searchBarVideo.visibility = View.VISIBLE
-                    binding.progressBar.visibility = View.GONE
-                    adapter2 = DevartCommunityAdapter(it.youtube)
-                    list.addAll(it.youtube)
-                    binding.recyclerListVideos.adapter = adapter2
-                    adapter2!!.setOnItemClickListener { _, dataItem ->
-                        val intent = Intent(this, DevartCommunityVideoActivity::class.java)
-                        intent.putExtra("_id", dataItem.video_id)
-                        intent.putExtra("_name", dataItem.title)
-                        intent.putExtra("_dec", dataItem.description)
-                        intent.putExtra("_name_channel", dataItem.sub_title)
-                        startActivity(intent)
-                    }
-                }
-                else -> {
-                    //errorMessage if data coming is null;
-                    binding.tvEmptyList.visibility = View.VISIBLE
-                }
+            }catch (e:Exception){
+                binding.progressBar.visibility = View.GONE
+                binding.constrAds.visibility = View.GONE
+                binding.btnHideShowAds.visibility = View.GONE
+                supportActionBar!!.title = getString(R.string.community)
+                Toast.makeText(this, "Data is empty", Toast.LENGTH_SHORT).show()
             }
         }
     }

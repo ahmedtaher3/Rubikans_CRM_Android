@@ -135,7 +135,7 @@ class HandBookActivity : AppCompatActivity() {
         val window = dialog.window
         window!!.setLayout(
             WindowManager.LayoutParams.MATCH_PARENT,
-            WindowManager.LayoutParams.WRAP_CONTENT
+            WindowManager.LayoutParams.MATCH_PARENT
         )
         viewModel!!.getHandBook()
         val BtnCancel = dialog.findViewById<ImageView>(R.id.iv_cancel_dialog)

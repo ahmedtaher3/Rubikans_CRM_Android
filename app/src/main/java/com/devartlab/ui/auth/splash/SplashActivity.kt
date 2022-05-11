@@ -88,13 +88,6 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
         onlineButton.setOnClickListener(View.OnClickListener {
             viewModel.dataManager!!.saveOfflineMood(false)
 
-            name = viewModel.dataManager.user.userName
-            pass = viewModel.dataManager.user.password
-            token = viewModel.dataManager.token
-            login4EShoppingRequest =
-                Login4EShoppingRequest(name!!, pass!!, "mr", token!!, AppConstants.DeviceType)
-            viewModel.getUserModel(this@SplashActivity, login4EShoppingRequest)
-
 
 
             viewModel.login(
@@ -150,13 +143,6 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
 
 
         binding.tryAgainButton.setOnClickListener {
-
-            name = viewModel.dataManager.user.userName
-            pass = viewModel.dataManager.user.password
-            token = viewModel.dataManager.token
-            login4EShoppingRequest =
-                Login4EShoppingRequest(name!!, pass!!, "mr", token!!, AppConstants.DeviceType)
-            viewModel.getUserModel(this@SplashActivity, login4EShoppingRequest)
 
 
 
@@ -480,15 +466,6 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
                                     }
 
                                 } else {
-
-
-                                        name = viewModel.dataManager.user.userName
-                                        pass = viewModel.dataManager.user.password
-                                        token = viewModel.dataManager.token
-                                        login4EShoppingRequest =
-                                            Login4EShoppingRequest(name!!, pass!!, "mr", token!!, AppConstants.DeviceType)
-                                        viewModel.getUserModel(this@SplashActivity, login4EShoppingRequest)
-
 
 
                                     viewModel.login(
