@@ -52,7 +52,7 @@ class GeneralConfirmProductsFragment : BaseFragment<FragmentConfirmProductsBindi
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        binding = viewDataBinding
+        binding = viewDataBinding!!
         val list = arguments?.getParcelableArrayList<ContractEntity>("PRODUCTS")!!
         binding.order.setOnClickListener {
 

@@ -30,7 +30,7 @@ class AddNewCustomer : BaseActivity<ActivityAddNewCustomerBinding>(), AddNewList
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = viewDataBinding
+        binding = viewDataBinding!!
         viewModel = ViewModelProviders.of(this).get(AddNewListViewModel::class.java)
         adapter = AddNewListAdapter(this, this, viewModel.dataManager)
         selectedAdapter = SelectedNewListAdapter(this)

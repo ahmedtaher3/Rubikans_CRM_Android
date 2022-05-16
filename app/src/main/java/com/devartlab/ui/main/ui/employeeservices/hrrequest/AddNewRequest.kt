@@ -40,7 +40,7 @@ class AddNewRequest : BaseActivity<ActivityAddNewRequestBinding>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = viewDataBinding
+        binding = viewDataBinding!!
         viewModel = ViewModelProviders.of(this).get(EmployeeRequestsViewModel::class.java)
         val simpleDateFormat = SimpleDateFormat("yyyy-MM-dd' // 'hh:mm a", Locale.US)
         requestType = intent.getStringExtra("REQUEST_TYPE")!!

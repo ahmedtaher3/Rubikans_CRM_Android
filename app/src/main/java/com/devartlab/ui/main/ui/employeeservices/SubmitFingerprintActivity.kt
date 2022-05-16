@@ -32,7 +32,7 @@ class SubmitFingerprintActivity : BaseActivity<ActivityReportDailyBinding>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = viewDataBinding
+        binding = viewDataBinding!!
         viewModel = ViewModelProviders.of(this).get(TradeViewModel::class.java)
 
         setSupportActionBar(binding.toolbar)
@@ -56,7 +56,7 @@ class SubmitFingerprintActivity : BaseActivity<ActivityReportDailyBinding>() {
 
                 dialog.dismiss()
 
-                if (LocationUtils.checkPermission(this@SubmitFingerprintActivity)) {
+                if (LocationUtils.checkLocationPermission(this@SubmitFingerprintActivity)) {
                     ProgressLoading.showWithText(this@SubmitFingerprintActivity, resources.getString(R.string.fetching_your_location))
                     val getMyLocation = GetMyLocation(this@SubmitFingerprintActivity)
                     getMyLocation.getLocation(this@SubmitFingerprintActivity, object : GetMyLocation.LocationResult() {
@@ -115,7 +115,7 @@ class SubmitFingerprintActivity : BaseActivity<ActivityReportDailyBinding>() {
             builder.setPositiveButton("YES") { dialog, which ->
 
                 dialog.dismiss()
-                if (LocationUtils.checkPermission(this@SubmitFingerprintActivity)) {
+                if (LocationUtils.checkLocationPermission(this@SubmitFingerprintActivity)) {
                     ProgressLoading.showWithText(this@SubmitFingerprintActivity, resources.getString(R.string.fetching_your_location))
                     val getMyLocation = GetMyLocation(this@SubmitFingerprintActivity)
                     getMyLocation.getLocation(this@SubmitFingerprintActivity, object : GetMyLocation.LocationResult() {

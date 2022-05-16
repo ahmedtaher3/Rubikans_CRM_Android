@@ -42,7 +42,7 @@ class PlaceOrderActivity : BaseActivity<FragmentPlaceOrderBinding>(), CustomersA
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = viewDataBinding
+        binding = viewDataBinding!!
         viewModel = ViewModelProviders.of(this).get(TradeViewModel::class.java)
 
         adapter = CustomersAdapter(this, ArrayList(), this)

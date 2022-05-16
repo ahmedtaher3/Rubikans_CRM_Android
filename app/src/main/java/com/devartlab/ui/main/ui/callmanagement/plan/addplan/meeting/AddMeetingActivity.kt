@@ -13,12 +13,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.devartlab.R
 import com.devartlab.base.BaseActivity
 import com.devartlab.data.room.DatabaseClient
+import com.devartlab.data.room.activity.ActivityEntity
+import com.devartlab.data.room.filterdata.FilterDataEntity
 import com.devartlab.data.room.plan.PlanDao
 import com.devartlab.data.room.plan.PlanEntity
 import com.devartlab.databinding.ActivityAddMeetingBinding
-import com.devartlab.data.room.activity.ActivityEntity
 import com.devartlab.model.CustomerList
-import com.devartlab.data.room.filterdata.FilterDataEntity
 import com.devartlab.ui.main.ui.callmanagement.list.list.AddPlanViewModel
 import com.devartlab.ui.main.ui.callmanagement.plan.addplan.doublee.DoubleSearchAdapter
 import com.devartlab.ui.main.ui.callmanagement.plan.addplan.doublee.SelectedPlanAdapterMeeting
@@ -37,7 +37,7 @@ class AddMeetingActivity : BaseActivity<ActivityAddMeetingBinding>(),   MeetingA
     var activity: ActivityEntity? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        activityAddMeetingBinding = viewDataBinding
+        activityAddMeetingBinding = viewDataBinding!!
         viewModel = ViewModelProviders.of(this).get(AddPlanViewModel::class.java)
         activity = intent.getParcelableExtra("Activity")
         setSupportActionBar(activityAddMeetingBinding!!.toolbar)

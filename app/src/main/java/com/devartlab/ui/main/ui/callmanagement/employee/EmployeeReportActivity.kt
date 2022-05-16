@@ -75,7 +75,7 @@ class EmployeeReportActivity : BaseActivity<ActivityEmployeeReportBinding>(), Ch
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = viewDataBinding
+        binding = viewDataBinding!!
         queue = Volley.newRequestQueue(this)
 
         setSupportActionBar(binding!!.toolbar)

@@ -64,7 +64,7 @@ class PreviousMealsFragment : BaseFragment<FragmentPreviousMealsBinding>() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        binding = viewDataBinding
+        binding = viewDataBinding!!
 
         setEmpData()
         setObservers()

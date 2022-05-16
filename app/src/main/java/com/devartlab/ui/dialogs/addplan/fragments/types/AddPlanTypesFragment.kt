@@ -20,7 +20,7 @@ class AddPlanTypesFragment : BaseFragment<TypesFragmentBinding>() , AddPlanTypes
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        binding = viewDataBinding
+        binding = viewDataBinding!!
         viewModel = ViewModelProviders.of(this).get(AddPlanTypesViewModel::class.java)
         adapter = AddPlanTypesAdapter(baseActivity, this)
 

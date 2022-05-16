@@ -64,7 +64,7 @@ class DVReportFragment : BaseFragment<DvReportFragmentBinding>(), DVReportAdapte
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding = viewDataBinding
+        binding = viewDataBinding!!
 
         fromDate = viewModel.dataManager.newOldCycle.currentCycleFromDate?.take(10)!!
         toDate = viewModel.dataManager.newOldCycle.currentCycleToDate?.take(10)!!

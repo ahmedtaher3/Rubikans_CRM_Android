@@ -77,7 +77,7 @@ class EmployeeSalaryFragment : BaseFragment<FragmentEmployeeSalaryBinding>(),
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         setHasOptionsMenu(true)
-        binding = viewDataBinding
+        binding = viewDataBinding!!
         viewModel = ViewModelProviders.of(this).get(EmployeeSalaryViewModel::class.java)
         binding.name.setText(viewModel.dataManager?.user?.userName)
         binding.position.setText(viewModel.dataManager?.user?.title)

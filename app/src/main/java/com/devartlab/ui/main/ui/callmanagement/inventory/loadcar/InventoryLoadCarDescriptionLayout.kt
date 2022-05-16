@@ -44,7 +44,7 @@ class InventoryLoadCarDescriptionLayout :
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel = ViewModelProviders.of(this).get(InventoryViewModel::class.java)
-        binding = viewDataBinding
+        binding = viewDataBinding!!
 
 
         setSupportActionBar(binding.toolbar)

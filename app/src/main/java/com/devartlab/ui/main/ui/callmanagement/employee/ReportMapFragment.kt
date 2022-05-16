@@ -77,7 +77,7 @@ class ReportMapFragment : BaseFragment<FragmentReportMapBinding>(),
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding = viewDataBinding
+        binding = viewDataBinding!!
         viewModel = ViewModelProviders.of(this).get(EmployeeReportViewModel::class.java)
         queue = Volley.newRequestQueue(baseActivity)
 

@@ -38,7 +38,7 @@ class GetMyPenaltiesFragment : BaseFragment<FragmentGetMyPenaltiesBinding>() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        binding = viewDataBinding
+        binding = viewDataBinding!!
 
 
 

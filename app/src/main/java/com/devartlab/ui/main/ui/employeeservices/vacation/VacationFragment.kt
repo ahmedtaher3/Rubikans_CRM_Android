@@ -80,7 +80,7 @@ class VacationFragment : BaseFragment<FragmentVacationsBinding>(), ChooseEmploye
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         setHasOptionsMenu(true)
-        binding = viewDataBinding
+        binding = viewDataBinding!!
 
 
 

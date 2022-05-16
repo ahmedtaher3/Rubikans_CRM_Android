@@ -37,7 +37,7 @@ class ArrangeActivity : BaseActivity<ActivityArrangeBinding>(),  OnMassageSelect
     lateinit var editMassage: EditMassage
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = viewDataBinding
+        binding = viewDataBinding!!
         viewModel = ViewModelProviders.of(this).get(ArrangeViewModel::class.java)
         setSupportActionBar(binding!!.toolbar)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)

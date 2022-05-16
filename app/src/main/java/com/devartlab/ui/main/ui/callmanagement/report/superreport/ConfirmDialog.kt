@@ -11,8 +11,6 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.gson.Gson
-import com.google.gson.JsonArray
 import com.devartlab.R
 import com.devartlab.data.retrofit.ApiServices
 import com.devartlab.data.retrofit.ResponseModel
@@ -25,8 +23,7 @@ import com.devartlab.utils.CommonUtilities
 import com.devartlab.utils.ProgressLoading
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.storage.FirebaseStorage
-import com.google.firebase.storage.StorageReference
+import com.google.gson.Gson
 import io.reactivex.Completable
 import io.reactivex.Observer
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -74,7 +71,6 @@ class ConfirmDialog(private val activity: AppCompatActivity, context: Context, p
                 var database: FirebaseDatabase = FirebaseDatabase.getInstance()
                 var storageReference: DatabaseReference = database.getReference().child("Submit Double Report").child(dataManager.user.empId.toString()).child(Date)
                 storageReference.child(ShiftID.toString()).setValue(System.currentTimeMillis().toString())
-
 
                 uploadReport(Date, Shift , 0.0 , 0.0 , ShiftID)
 

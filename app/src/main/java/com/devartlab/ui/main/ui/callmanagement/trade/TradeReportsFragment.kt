@@ -31,7 +31,7 @@ class TradeReportsFragment : BaseFragment<FragmentTradeReportsBinding>(), TradeR
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding = viewDataBinding
+        binding = viewDataBinding!!
 
         val list = ArrayList<CardModel>()
         list.add(CardModel(1, getString(R.string.customer_invoice_report), R.drawable.report_general))

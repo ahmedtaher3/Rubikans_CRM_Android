@@ -200,7 +200,7 @@ class SyncDataDialog(
     fun getPlan() {
 
 
-        if (LocationUtils.checkSyncPlanPermissions(activity)) {
+        if (LocationUtils.checkLocationPermission(activity)) {
 
             ProgressLoading.show(activity)
             PlanUtlis.syncPlan(activity.application, object : PlanUtlis.OnSyncPlan {

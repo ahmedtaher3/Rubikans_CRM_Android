@@ -513,7 +513,7 @@ class PlanFragment : BaseFragment<FragmentPlanBinding?>(), ActivitiesAdapter.Cho
                     builder.setMessage("make sure from updating plan first")
                     builder.setPositiveButton("YES") { dialog, which ->
 
-                        if (LocationUtils.checkSyncPlanPermissions(baseActivity)) {
+                        if (LocationUtils.checkLocationPermission(baseActivity)) {
 
                             viewModel.syncPlan()
 

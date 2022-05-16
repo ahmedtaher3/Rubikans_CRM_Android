@@ -71,7 +71,7 @@ class InventoryBalanceDetailsLayout : BaseActivity<ActivityInventoryBalanceDetai
     private fun getData(requestObject: ReportsFilterModel) {
         val appraisalBuildsSchema = Gson().toJsonTree(requestObject).asJsonObject
         Log.d(TAG, "getData: " + appraisalBuildsSchema)
-        binding = viewDataBinding
+        binding = viewDataBinding!!
         recyclerViewAdapter =
             InventoryBalanceAdaptor(
                 this,

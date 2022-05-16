@@ -98,7 +98,7 @@ class AttendanceFragment : BaseFragment<FragmentAttendanceBinding>(), ChooseEmpl
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         setHasOptionsMenu(true)
-        binding = viewDataBinding
+        binding = viewDataBinding!!
         viewModel.getAttendance(empModel.empId.toString(), currentMonth, currentyear)
 
         setupRecyclerView()

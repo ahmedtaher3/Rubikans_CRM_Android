@@ -8,7 +8,6 @@ import com.devartlab.base.BaseActivity
 import com.devartlab.data.retrofit.ApiServices
 import com.devartlab.data.retrofit.ResponseModel
 import com.devartlab.databinding.ActivityUpdatePlanBinding
-import com.devartlab.model.Plan
 import com.devartlab.model.PlanJson
 import com.devartlab.model.PlanModel
 import com.devartlab.model.SyncPlanResponse
@@ -20,7 +19,6 @@ import io.reactivex.Observer
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
-import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -36,7 +34,7 @@ class UpdatePlan : BaseActivity<ActivityUpdatePlanBinding>() {
     var fmt: SimpleDateFormat? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = viewDataBinding
+        binding = viewDataBinding!!
         viewModel = ViewModelProviders.of(this).get(PlanViewModel::class.java)
 
         fmt = SimpleDateFormat("yyyy-MM-dd", Locale.US)

@@ -23,7 +23,7 @@ class AddPlanListFragment : BaseFragment<AddPlanListFragmentBinding>() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this).get(AddPlanListkViewModel::class.java)
-        binding = viewDataBinding
+        binding = viewDataBinding!!
         adapter = AddPlanListAdapter(baseActivity)
 
         binding.listRecyclerView.layoutManager = LinearLayoutManager(baseActivity)

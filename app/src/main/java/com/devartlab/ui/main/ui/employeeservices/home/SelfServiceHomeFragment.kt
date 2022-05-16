@@ -98,7 +98,7 @@ class SelfServiceHomeFragment : BaseFragment<FragmentSelfServiceHomeBinding>(),
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding = viewDataBinding
+        binding = viewDataBinding!!
         setHasOptionsMenu(true);
 
         Completable.fromAction(object : Action {

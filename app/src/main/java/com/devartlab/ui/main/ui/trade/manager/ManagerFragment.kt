@@ -53,7 +53,7 @@ class ManagerFragment : BaseFragment<FragmentManagerBinding>(), ChooseEmployeeIn
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        binding = viewDataBinding
+        binding = viewDataBinding!!
 
         binding.days.adapter = adapter
 

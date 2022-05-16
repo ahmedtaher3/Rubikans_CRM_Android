@@ -34,7 +34,7 @@ class NewCustomerActivity : BaseActivity<ActivityNewCustomerBinding>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = viewDataBinding
+        binding = viewDataBinding!!
         viewModel = ViewModelProviders.of(this).get(TradeViewModel::class.java)
 
         binding.newGovernment.setOnClickListener { showAddDialog(1) }

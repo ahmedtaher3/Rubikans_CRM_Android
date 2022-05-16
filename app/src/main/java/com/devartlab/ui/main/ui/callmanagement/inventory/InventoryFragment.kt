@@ -60,7 +60,7 @@ class InventoryFragment : BaseFragment<FragmentTradeReportsBinding>(),
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding = viewDataBinding
+        binding = viewDataBinding!!
 
         val list = ArrayList<CardModel>()
         list.add(CardModel(1, "حركات المخازن", R.drawable.report_general))

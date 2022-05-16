@@ -21,7 +21,7 @@ class DVDetailsActivity : BaseActivity<ActivityDoubleVisitReportDetailsBinding>(
     lateinit var adapter: DVDetailsAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = viewDataBinding
+        binding = viewDataBinding!!
         viewModel = ViewModelProviders.of(this).get(RanksViewModel::class.java)
         adapter = DVDetailsAdapter(this, ArrayList(), this)
         binding.recyclerView.adapter = adapter

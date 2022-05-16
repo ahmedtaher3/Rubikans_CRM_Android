@@ -50,7 +50,7 @@ class WorkFromHomeFragment : BaseFragment<FragmentWorkFromHomeBinding>() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        binding = viewDataBinding
+        binding = viewDataBinding!!
 
         setObservers()
 

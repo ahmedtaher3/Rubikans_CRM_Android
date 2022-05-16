@@ -74,7 +74,7 @@ class ApprovalRequestsFragment : BaseFragment<FragmentApprovalRequestsBinding>()
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        binding = viewDataBinding
+        binding = viewDataBinding!!
 
 
 

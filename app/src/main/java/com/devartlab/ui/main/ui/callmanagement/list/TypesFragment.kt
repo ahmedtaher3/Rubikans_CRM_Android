@@ -40,7 +40,7 @@ class TypesFragment : BaseFragment<TypesFragmentBinding>(), ChooseCustomerTypeIn
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         setHasOptionsMenu(true)
-        binding = viewDataBinding
+        binding = viewDataBinding!!
         viewModel = ViewModelProviders.of(this).get(TypesViewModel::class.java)
         adapter =
             TypesAdapter(baseActivity, baseActivity.getSupportFragmentManager().beginTransaction())

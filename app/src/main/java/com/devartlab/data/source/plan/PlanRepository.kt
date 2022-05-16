@@ -1,6 +1,5 @@
 package com.devartlab.data.source.plan
 
-import com.google.gson.Gson
 import com.devartlab.data.retrofit.ApiServices
 import com.devartlab.data.retrofit.ResponseModel
 import com.devartlab.data.room.plan.PlanDao
@@ -10,11 +9,9 @@ import com.devartlab.data.room.startPoint.StartPointEntity
 import com.devartlab.data.room.values.ValuesEntity
 import com.devartlab.data.shared.DataManager
 import com.devartlab.data.source.values.ValuesRepository
-import com.devartlab.model.*
+import com.devartlab.model.Shift
+import com.devartlab.model.SyncReportMassage
 import com.devartlab.utils.CommonUtilities
-import com.google.gson.GsonBuilder
-import com.google.gson.reflect.TypeToken
-import io.reactivex.Completable
 import io.reactivex.Flowable
 import io.reactivex.Observable
 import io.reactivex.Observer
@@ -181,30 +178,7 @@ class PlanRepository private constructor
                                 }
                                 planDao?.insertAllEntities(list)
 
-                                val text = CommonUtilities.getText()
-                                if (!text.isNullOrEmpty()) {
-                                    val gson = GsonBuilder().create()
 
-                                    try {
-                                        val theList = gson.fromJson<ArrayList<PlanEntity>>(
-                                            text,
-                                            object : TypeToken<ArrayList<PlanEntity>>() {}.type
-                                        )
-
-                                        for (i in theList) {
-                                            if (i.extraVisit!!) {
-                                                planDao?.insert(i)
-                                            } else {
-                                                planDao?.update(i)
-                                            }
-
-                                        }
-                                    } catch (e: Exception) {
-
-                                    }
-
-
-                                }
 
                                 if (!data.data.startPointData.isNullOrEmpty()) {
 

@@ -71,7 +71,7 @@ class CustomerInvoiceCollectReportActivity : BaseActivity<EmployeeInvoiceCollect
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = viewDataBinding
+        binding = viewDataBinding!!
         setSupportActionBar(binding!!.toolbar)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         supportActionBar!!.title = getString(R.string.collect_invoices)

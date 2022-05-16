@@ -38,7 +38,7 @@ class CustomerListFragment : BaseFragment<ListkFragmentBinding>(), EditCustomerI
         super.onActivityCreated(savedInstanceState)
         setHasOptionsMenu(true)
         viewModel = ViewModelProviders.of(this).get(TypesViewModel::class.java)
-        binding = viewDataBinding
+        binding = viewDataBinding!!
         adapter = CustomerListAdapter(baseActivity, viewModel.dataManager)
         listTypesEntity = arguments?.getSerializable("LIST_TYPE_MODEL") as ListTypesEntity
 

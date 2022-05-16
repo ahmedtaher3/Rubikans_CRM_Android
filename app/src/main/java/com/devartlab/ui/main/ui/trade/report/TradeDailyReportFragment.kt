@@ -38,7 +38,7 @@ class TradeDailyReportFragment : BaseFragment<FragmentReportDailyBinding>(), Tra
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding = viewDataBinding
+        binding = viewDataBinding!!
         viewModel.checkDay()
         binding.date.text = DATE?.take(10)
         binding.startDay.setOnClickListener {

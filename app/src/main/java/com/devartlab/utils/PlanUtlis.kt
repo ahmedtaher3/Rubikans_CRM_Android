@@ -14,6 +14,8 @@ import com.devartlab.model.PlanJson
 import com.devartlab.model.Shift
 import com.devartlab.model.SyncPlanResponse
 import com.google.gson.Gson
+import com.google.gson.GsonBuilder
+import com.google.gson.reflect.TypeToken
 import io.reactivex.Completable
 import io.reactivex.Observer
 import io.reactivex.disposables.Disposable
@@ -114,7 +116,7 @@ object PlanUtlis {
                     }
                     planDao?.insertAllEntities(list)
 
-            /*        val text = CommonUtilities.getText()
+                    val text = CommonUtilities.getText(application)
                     if (!text.isNullOrEmpty()) {
                         val gson = GsonBuilder().create()
 
@@ -220,7 +222,7 @@ object PlanUtlis {
                         }
 
 
-                    }*/
+                    }
 
                     if (!data.data.startPointData.isNullOrEmpty()) {
 

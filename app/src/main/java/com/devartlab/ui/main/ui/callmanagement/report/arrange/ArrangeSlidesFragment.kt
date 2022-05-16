@@ -3,7 +3,6 @@ package com.devartlab.ui.main.ui.callmanagement.report.arrange
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -11,7 +10,6 @@ import com.devartlab.R
 import com.devartlab.base.BaseFragment
 import com.devartlab.data.room.DatabaseClient
 import com.devartlab.data.room.arranged.ArrangedDao
-import com.devartlab.data.room.arranged.ArrangedEntity
 import com.devartlab.data.room.arrangedslides.ArrangedSlidesDao
 import com.devartlab.data.room.poduct.ProductEntity
 import com.devartlab.data.room.slides.SlideDao
@@ -38,7 +36,7 @@ class ArrangeSlidesFragment : BaseFragment<FragmentArrangeSlidesBinding>(), Slid
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        fragmentArrangeSlidesBinding = viewDataBinding
+        fragmentArrangeSlidesBinding = viewDataBinding!!
         slideDao = DatabaseClient.getInstance(baseActivity.application)?.appDatabase?.slideDao()
         arrangedSlidesDao = DatabaseClient.getInstance(baseActivity.application)?.appDatabase?.arrangedSlidesDao()
         arrangedDao = DatabaseClient.getInstance(baseActivity.application)?.appDatabase?.arrangedDao()

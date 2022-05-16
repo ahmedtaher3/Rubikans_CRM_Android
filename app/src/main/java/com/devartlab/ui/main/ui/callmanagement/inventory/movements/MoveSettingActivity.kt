@@ -63,7 +63,7 @@ class InventoryDetails : BaseActivity<ActivityInventoryDetailsBinding>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = viewDataBinding
+        binding = viewDataBinding!!
         viewModel = ViewModelProviders.of(this).get(InventoryViewModel::class.java)
 
         val simpleDateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.US)

@@ -23,8 +23,7 @@ import android.util.Log
 import android.widget.Toast
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.devartlab.data.room.plan.PlanEntity
-import com.devartlab.data.shared.DataManager
-import com.devartlab.model.*
+import com.devartlab.model.Detail
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException
@@ -550,23 +549,23 @@ object CommonUtilities {
     }
 
 
-    fun writeToSDFile(text: String): String {
+    fun writeToSDFile(text: String , context: Context): String {
 
-        // Find the root of the external storage.
-        // See http://developer.android.com/guide/topics/data/data-  storage.html#filesExternal
-        val root = Environment.getExternalStorageDirectory()
-        // See http://stackoverflow.com/questions/3551821/android-write-to-sd-card-folder
-        val dir = File(root.absolutePath + "/devartlab")
-        dir.mkdirs()
-        val file = File(dir, "myData.txt")
+
+        val name = "My Visits"
+        val cw = ContextWrapper(context)
+        // path to /data/data/yourapp/app_data/imageDir
+        val directory: File = cw.getDir("Visits", Context.MODE_PRIVATE)
+        // Create imageDir
+        val mypath = File(directory, name)
         try {
-            val f = FileOutputStream(file)
+            val f = FileOutputStream(mypath)
             val pw = PrintWriter(f)
             pw.println(text)
             pw.flush()
             pw.close()
             f.close()
-            return file.path
+            return mypath.path
         } catch (e: FileNotFoundException) {
             e.printStackTrace()
             Log.i(" writeToSDFile ", "******* File not found. Did you" +
@@ -580,22 +579,23 @@ object CommonUtilities {
 
     }
 
-    fun getText(): String? {
+    fun getText(  context: Context): String? {
 
 
-        val root = Environment.getExternalStorageDirectory()
-        // See http://stackoverflow.com/questions/3551821/android-write-to-sd-card-folder
-        val dir = File(root.absolutePath + "/devartlab")
-        dir.mkdirs()
-        val file = File(dir, "myData.txt")
+        val name = "My Visits"
+        val cw = ContextWrapper(context)
+        // path to /data/data/yourapp/app_data/imageDir
+        val directory: File = cw.getDir("Visits", Context.MODE_PRIVATE)
+        // Create imageDir
+        val mypath = File(directory, name)
 
-        if (!file.exists())
+        if (!mypath.exists())
         {
             Log.d(TAG, "getText: empty")
             return null
         }
 
-        val bufferedReader = BufferedReader(FileReader(file))
+        val bufferedReader = BufferedReader(FileReader(mypath))
         var read: String?
         val builder = java.lang.StringBuilder("")
 

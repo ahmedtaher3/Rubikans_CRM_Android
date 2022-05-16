@@ -46,7 +46,7 @@ class AddNewPenaltyActivity : BaseActivity<ActivityAddNewPenaltyBinding>(), Choo
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = viewDataBinding
+        binding = viewDataBinding!!
         PenaltyTypes = ArrayList()
         PenaltyTypesIdes = ArrayList()
         ReasonTypes = ArrayList()

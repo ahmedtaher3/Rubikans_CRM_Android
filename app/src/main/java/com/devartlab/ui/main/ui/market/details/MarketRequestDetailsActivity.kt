@@ -36,7 +36,7 @@ class MarketRequestDetailsActivity : BaseActivity<ActivityMarketRequestDetailsBi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = viewDataBinding
+        binding = viewDataBinding!!
         viewModel = ViewModelProviders.of(this).get(MarketRequestViewModel::class.java)
 
         setSupportActionBar(binding.toolbar)

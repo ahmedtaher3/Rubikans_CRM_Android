@@ -63,7 +63,7 @@ class MarketRequestsFragment : BaseFragment<FragmentMarketRequestsBinding>(), Ch
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        binding = viewDataBinding
+        binding = viewDataBinding!!
 
 
         binding.cost.text = arguments?.getString("TOTAL_COST")!!

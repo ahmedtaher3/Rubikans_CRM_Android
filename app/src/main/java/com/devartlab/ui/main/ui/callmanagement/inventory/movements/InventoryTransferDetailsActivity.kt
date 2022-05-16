@@ -38,7 +38,7 @@ class InventoryTransferDetailsActivity :
         super.onCreate(savedInstanceState)
         viewModel = ViewModelProviders.of(this).get(InventoryViewModel::class.java)
 
-        binding = viewDataBinding
+        binding = viewDataBinding!!
 
 
         accId = viewModel.dataManager.user.accId.toString()

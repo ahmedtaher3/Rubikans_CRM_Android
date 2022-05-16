@@ -1,16 +1,10 @@
 package com.devartlab.ui.main.ui.callmanagement.sync
 
-import android.R.attr.path
 import android.content.Context
-import android.content.ContextWrapper
 import android.content.Intent
-import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
-import android.os.Environment
-import android.text.Html
 import android.util.Base64
 import android.util.Log
 import android.view.View
@@ -38,7 +32,7 @@ import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.sync_fragment.*
 import ss.com.bannerslider.Slider
 import ss.com.bannerslider.event.OnSlideClickListener
-import java.io.*
+import java.io.File
 
 
 class SyncFragment : BaseFragment<SyncFragmentBinding>() {
@@ -62,7 +56,7 @@ class SyncFragment : BaseFragment<SyncFragmentBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding = viewDataBinding
+        binding = viewDataBinding!!
 
         viewModel = ViewModelProviders.of(this).get(SyncViewModel::class.java)
 
@@ -83,7 +77,7 @@ class SyncFragment : BaseFragment<SyncFragmentBinding>() {
 
             if (viewModel.dataManager?.syncAble) {
 
-                if (LocationUtils.checkSyncPlanPermissions(baseActivity)) {
+                if (LocationUtils.checkLocationPermission(baseActivity)) {
 
                     viewModel.getPlan()
 
@@ -173,7 +167,7 @@ class SyncFragment : BaseFragment<SyncFragmentBinding>() {
         replaceDataBase?.setOnClickListener(View.OnClickListener {
 
 
-            val text = CommonUtilities.getText()
+            val text = CommonUtilities.getText(baseActivity)
 
 
             Toast.makeText(baseActivity, text, Toast.LENGTH_SHORT).show()

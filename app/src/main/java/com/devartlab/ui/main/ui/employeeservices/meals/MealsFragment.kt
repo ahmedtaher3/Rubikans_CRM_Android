@@ -87,7 +87,7 @@ class MealsFragment : BaseFragment<FragmentMealsBinding>(), View.OnClickListener
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        binding = viewDataBinding
+        binding = viewDataBinding!!
         setHasOptionsMenu(true);
 
         setListeners()

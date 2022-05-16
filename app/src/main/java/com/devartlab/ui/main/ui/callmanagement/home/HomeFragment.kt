@@ -90,7 +90,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ChooseEmployeeInterFac
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding = viewDataBinding
+        binding = viewDataBinding!!
         setHasOptionsMenu(true)
 
         Completable.fromAction(object : io.reactivex.functions.Action {

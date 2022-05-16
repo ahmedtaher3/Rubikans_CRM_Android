@@ -14,6 +14,7 @@ import android.util.Log
 import android.view.*
 import android.webkit.WebView
 import android.widget.*
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
@@ -50,6 +51,8 @@ import com.devartlab.ui.main.ui.callmanagement.trade.printer.OrderPrintActivity
 import com.devartlab.ui.main.ui.callmanagement.trade.selectProductContract.SelectProductsActivity
 import com.devartlab.ui.main.ui.moreDetailsAds.MoreDetailsAdsActivity
 import com.devartlab.utils.*
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 import com.google.gson.Gson
 import com.jarvanmo.exoplayerview.media.SimpleMediaSource
 import com.jarvanmo.exoplayerview.ui.ExoVideoView
@@ -57,6 +60,7 @@ import devs.mulham.horizontalcalendar.HorizontalCalendar
 import devs.mulham.horizontalcalendar.utils.HorizontalCalendarListener
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
+import kotlinx.android.synthetic.main.activity_trade.*
 import ss.com.bannerslider.Slider
 import ss.com.bannerslider.event.OnSlideClickListener
 import java.text.SimpleDateFormat
@@ -115,7 +119,7 @@ class ReportFragment : BaseFragment<FragmentReportBinding>(), InvoiceTypsAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding = viewDataBinding
+        binding = viewDataBinding!!
 
         for (m in viewModel.dataManager.ads.ads!!) {
             if (m.pageCode?.toInt() == Constants.REPORT_RECYCLER) {
@@ -369,7 +373,7 @@ class ReportFragment : BaseFragment<FragmentReportBinding>(), InvoiceTypsAdapter
 
                 viewModel.getAllByDateAndShift(DATE, shift, "1");
 
-                CommonUtilities.writeToSDFile("")
+                CommonUtilities.writeToSDFile("" , baseActivity)
             }
             else {
                 Toast.makeText(baseActivity, it.rerurnMessage, Toast.LENGTH_SHORT).show()
@@ -454,11 +458,16 @@ class ReportFragment : BaseFragment<FragmentReportBinding>(), InvoiceTypsAdapter
                     builder.setIcon(R.drawable.ic_warning)
                     builder.setPositiveButton(getString(R.string.yes)) { dialog, which ->
 
+
+                        var database: FirebaseDatabase = FirebaseDatabase.getInstance()
+                        var storageReference: DatabaseReference = database.getReference().child("Submit Report").child(viewModel.dataManager.user.empId.toString()).child(DATE!!)
+                        storageReference.child(shift).setValue(adapter?.getSelected())
+
                         dialog.dismiss()
 
 
 
-                        if (LocationUtils.checkPermission(baseActivity)) {
+                        if (LocationUtils.checkLocationPermission(baseActivity)) {
                             ProgressLoading.showWithText(baseActivity, resources.getString(R.string.fetching_your_location))
                             val getMyLocation = GetMyLocation(baseActivity)
                             getMyLocation.getLocation(baseActivity, object : GetMyLocation.LocationResult() {
@@ -521,7 +530,7 @@ class ReportFragment : BaseFragment<FragmentReportBinding>(), InvoiceTypsAdapter
 
 
 
-                        if (LocationUtils.checkPermission(baseActivity)) {
+                        if (LocationUtils.checkLocationPermission(baseActivity)) {
                             ProgressLoading.showWithText(baseActivity, resources.getString(R.string.fetching_your_location))
                             val getMyLocation = GetMyLocation(baseActivity)
                             getMyLocation.getLocation(baseActivity, object : GetMyLocation.LocationResult() {
@@ -973,7 +982,7 @@ class ReportFragment : BaseFragment<FragmentReportBinding>(), InvoiceTypsAdapter
 
                 dialog.dismiss()
 
-                if (LocationUtils.checkPermission(baseActivity)) {
+                if (LocationUtils.checkLocationPermission(baseActivity)) {
                     ProgressLoading.showWithText(baseActivity, resources.getString(R.string.fetching_your_location))
                     val getMyLocation = GetMyLocation(baseActivity)
                     getMyLocation.getLocation(baseActivity, object : GetMyLocation.LocationResult() {
@@ -1012,7 +1021,6 @@ class ReportFragment : BaseFragment<FragmentReportBinding>(), InvoiceTypsAdapter
 
                 }
 
-
             }
             builder.setNegativeButton(getString(R.string.no)) { dialog, which -> // Do nothing
                 dialog.dismiss()
@@ -1020,10 +1028,11 @@ class ReportFragment : BaseFragment<FragmentReportBinding>(), InvoiceTypsAdapter
             val alert = builder.create()
             alert.show()
         }
-
+         
 
     }
 
+    
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater?.inflate(R.menu.main2, menu)
@@ -1405,7 +1414,10 @@ class ReportFragment : BaseFragment<FragmentReportBinding>(), InvoiceTypsAdapter
                 // replace_fragment(OrderPrintFragment(), "OrderPrintFragment", theList)
 
             }
-
+            else
+            {
+                Toast.makeText(baseActivity, "dddd", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 
@@ -1538,6 +1550,15 @@ class ReportFragment : BaseFragment<FragmentReportBinding>(), InvoiceTypsAdapter
                 }
             }
         }*/
+
+    var resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            // There are no request codes
+            val data: Intent? = result.data
+
+            Toast.makeText(baseActivity, "dffd", Toast.LENGTH_SHORT).show()
+        }
+    }
 
 }
 

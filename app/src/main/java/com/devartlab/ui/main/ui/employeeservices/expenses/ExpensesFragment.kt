@@ -73,7 +73,7 @@ class ExpensesFragment : BaseFragment<FragmentExpensesBinding>(), ChooseEmployee
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         setHasOptionsMenu(true)
-        binding = viewDataBinding
+        binding = viewDataBinding!!
         setupRecyclerView()
         setObservers()
 

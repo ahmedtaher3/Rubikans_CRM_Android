@@ -11,10 +11,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.devartlab.R
 import com.devartlab.base.BaseActivity
 import com.devartlab.data.room.DatabaseClient
+import com.devartlab.data.room.activity.ActivityEntity
 import com.devartlab.data.room.plan.PlanDao
 import com.devartlab.data.room.plan.PlanEntity
 import com.devartlab.databinding.ActivityAddExtraBinding
-import com.devartlab.data.room.activity.ActivityEntity
 import com.devartlab.ui.main.ui.callmanagement.list.list.AddPlanViewModel
 import com.devartlab.utils.CommonUtilities
 import io.reactivex.Completable
@@ -29,7 +29,7 @@ class AddOfficeActivity : BaseActivity<ActivityAddExtraBinding>() {
     lateinit var activity: ActivityEntity
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        activityAddExtraBinding = viewDataBinding
+        activityAddExtraBinding = viewDataBinding!!
         addPlanViewModel = ViewModelProviders.of(this).get(AddPlanViewModel::class.java)
         planDao = DatabaseClient.getInstance(getApplication())?.appDatabase?.planDao()
 

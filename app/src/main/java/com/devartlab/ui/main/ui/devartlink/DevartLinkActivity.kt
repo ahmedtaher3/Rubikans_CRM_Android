@@ -64,7 +64,7 @@ class DevartLinkActivity : BaseActivity<ActivityDevartLinkBinding>(),
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = viewDataBinding
+        binding = viewDataBinding!!
         setSupportActionBar(binding.toolbar)
         supportActionBar!!.title = "Devart Link"
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)

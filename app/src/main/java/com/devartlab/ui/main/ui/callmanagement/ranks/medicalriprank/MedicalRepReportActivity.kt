@@ -23,7 +23,7 @@ class MedicalRepReportActivity : BaseActivity<ActivityMedicalReportBinding>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = viewDataBinding
+        binding = viewDataBinding!!
         setSupportActionBar(binding.toolbar)
         supportActionBar!!.title = "Rank Details"
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)

@@ -54,7 +54,7 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = viewDataBinding
+        binding = viewDataBinding!!
         viewModel = ViewModelProviders.of(this).get(LoginViewModel::class.java)
 
 

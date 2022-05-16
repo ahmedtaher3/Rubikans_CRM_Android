@@ -200,7 +200,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
             val allConfirmed = planDao?.allConfirmed
             val json = Gson().toJson(allConfirmed)
-            CommonUtilities.writeToSDFile(json)
+            CommonUtilities.writeToSDFile(json , getApplication())
         }
             .subscribeOn(Schedulers.io())
             .subscribe()
@@ -484,7 +484,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     //function login 4EShopping
     fun getUserModel(activity: AppCompatActivity, login4EShoppingRequest: Login4EShoppingRequest) {
-        progress.postValue(1)
+
         val getToken = GetDeviceToken(activity)
         getToken.getToken(object : GetDeviceToken.TokenResult() {
             override fun success(token: String?) {
@@ -503,9 +503,6 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
                             response: Response<Login4EShoppingResponse?>
                         ) {
 
-
-                            progress.postValue(0)
-
                             if (response.isSuccessful) {
                                 login4EShoppingResponse.postValue(response.body())
                             } else {
@@ -515,7 +512,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
                         override fun onFailure(call: Call<Login4EShoppingResponse?>, t: Throwable) {
                             Toast.makeText(getApplication(), t.message, Toast.LENGTH_SHORT).show()
-                            progress.postValue(0)
+
                         }
                     })
             }

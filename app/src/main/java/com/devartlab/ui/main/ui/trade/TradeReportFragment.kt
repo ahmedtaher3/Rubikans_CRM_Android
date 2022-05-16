@@ -31,7 +31,7 @@ class TradeReportFragment : BaseFragment<FragmentTradeReportBinding>(), TradeRep
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        binding = viewDataBinding
+        binding = viewDataBinding!!
         binding.recyclerView.adapter = adapter
 
         viewModel.getBills()

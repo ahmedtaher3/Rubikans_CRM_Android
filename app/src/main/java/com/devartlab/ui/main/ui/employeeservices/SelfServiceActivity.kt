@@ -47,7 +47,7 @@ class SelfServiceActivity : BaseActivity<ActivitySelfServiceBinding?>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = viewDataBinding
+        binding = viewDataBinding!!
         viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
 
         setSupportActionBar(binding!!.toolbar)

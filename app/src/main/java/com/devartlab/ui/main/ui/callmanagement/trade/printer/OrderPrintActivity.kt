@@ -58,7 +58,7 @@ class OrderPrintActivity : BaseActivity<FragmentOrderPrintBinding>(), OrderPrint
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = viewDataBinding
+        binding = viewDataBinding!!
 
         setSupportActionBar(binding!!.toolbar)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)

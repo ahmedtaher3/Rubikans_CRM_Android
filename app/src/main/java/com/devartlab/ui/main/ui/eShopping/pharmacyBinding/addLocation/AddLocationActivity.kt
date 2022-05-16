@@ -69,7 +69,7 @@ class AddLocationActivity : AppCompatActivity() {
             viewModel!!.getDistricts(areaID.toString())
         }
         binding.tvLanLng.setOnClickListener {
-            if (LocationUtils.checkPermission(this)) {
+            if (LocationUtils.checkLocationPermission(this)) {
                 ProgressLoading.showWithText(
                     this,
                     resources.getString(R.string.fetching_your_location)

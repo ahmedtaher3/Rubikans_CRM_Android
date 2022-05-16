@@ -41,7 +41,7 @@ class InventoryLoadCarActivity : BaseActivity<ActivityInventoryMovesDetailsLayou
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = viewDataBinding
+        binding = viewDataBinding!!
         viewModel = ViewModelProviders.of(this).get(InventoryViewModel::class.java)
 
         setSupportActionBar(binding.toolbar)

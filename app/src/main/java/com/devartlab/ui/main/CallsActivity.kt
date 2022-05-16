@@ -2,9 +2,7 @@ package com.devartlab.ui.main
 
 import android.app.AlertDialog
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
-import android.text.Html
 import android.util.Log
 import android.view.*
 import android.widget.Button
@@ -14,7 +12,6 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.bumptech.glide.Glide
 import com.devartlab.R
 import com.devartlab.base.BaseActivity
 import com.devartlab.data.room.DatabaseClient
@@ -25,13 +22,11 @@ import com.devartlab.data.room.plan.PlanEntity
 import com.devartlab.data.room.poduct.ProductEntity
 import com.devartlab.data.room.slides.SlideEntity
 import com.devartlab.databinding.ActivityCallsBinding
-import com.devartlab.model.AdModel
 import com.devartlab.model.SlideModel
 import com.devartlab.ui.dialogs.massages.MassagesActivity
 import com.devartlab.ui.dialogs.massages.OnMassageSelect
 import com.devartlab.ui.main.ui.MainArrangedAdapter
 import com.devartlab.ui.main.ui.callmanagement.trade.printer.printerControl.BixolonPrinter
-import com.devartlab.ui.main.ui.moreDetailsAds.MoreDetailsAdsActivity
 import com.devartlab.ui.slider.ImagesSlider
 import com.devartlab.utils.*
 import com.google.gson.Gson
@@ -40,7 +35,6 @@ import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-import ss.com.bannerslider.Slider
 import java.util.*
 import java.util.concurrent.TimeUnit
 import kotlin.collections.ArrayList
@@ -278,7 +272,7 @@ class CallsActivity : BaseActivity<ActivityCallsBinding?>(), MainAdapter.OpenMas
 
                     val allConfirmed = mainViewModel?.planDao?.allConfirmed
                     val json = Gson().toJson(allConfirmed)
-                    CommonUtilities.writeToSDFile(json)
+                    CommonUtilities.writeToSDFile(json , this)
 
                     runOnUiThread { finish() }
                 }

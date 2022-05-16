@@ -16,7 +16,9 @@ import com.bumptech.glide.Glide
 import com.devartlab.R
 import com.devartlab.data.room.plan.PlanEntity
 import com.devartlab.data.shared.DataManager
-import com.devartlab.databinding.*
+import com.devartlab.databinding.RecyclerAdBinding
+import com.devartlab.databinding.ReportItemBinding
+import com.devartlab.databinding.ReportItemMobileBinding
 import com.devartlab.model.AdModel
 import com.devartlab.ui.main.ui.callmanagement.report.arrange.ArrangeActivity
 import com.google.gson.Gson
@@ -39,6 +41,16 @@ class ReportAdapter(context: Context, reportInterface: ReportInterface, dataMana
     fun setDatas(datas: List<PlanEntity>?) {
         myData.clear()
         myData.addAll(datas!!)
+    }
+
+    fun getSelected() : Int {
+
+        var count = 0
+        for (i in myData)
+        {
+            count++
+        }
+        return count
     }
 
     fun updateData(datas: List<PlanEntity>) {

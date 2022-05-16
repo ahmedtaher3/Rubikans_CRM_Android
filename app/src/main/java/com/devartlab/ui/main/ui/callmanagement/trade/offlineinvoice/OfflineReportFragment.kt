@@ -74,7 +74,7 @@ class OfflineReportFragment : BaseFragment<EmployeeInvoiceReportFragmentBinding>
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding = viewDataBinding
+        binding = viewDataBinding!!
 
         accId = viewModel.dataManager.user.accId.toString()
 

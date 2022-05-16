@@ -58,7 +58,7 @@ class MRRankFragment : BaseFragment<MrRankFragmentBinding>(), MRRankAdapter.OnIt
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding = viewDataBinding
+        binding = viewDataBinding!!
         binding.recyclerView.adapter = adapter
 
         fromDate = viewModel.dataManager.newOldCycle.currentCycleFromDate?.take(10)!!

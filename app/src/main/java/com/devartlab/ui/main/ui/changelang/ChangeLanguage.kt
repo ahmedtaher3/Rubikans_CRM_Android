@@ -35,7 +35,7 @@ class ChangeLanguage : BaseActivity<FragmentChangeLanguageBinding>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = viewDataBinding
+        binding = viewDataBinding!!
         dataManager = (getApplication() as BaseApplication).dataManager!!
 
         val language: String = dataManager.getLang()!!

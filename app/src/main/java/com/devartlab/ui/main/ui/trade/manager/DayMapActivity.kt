@@ -40,7 +40,7 @@ class DayMapActivity : BaseActivity<FragmentDayMapBinding>() {
         }
         viewModel = ViewModelProviders.of(this).get(TradeViewModel::class.java)
 
-        binding = viewDataBinding
+        binding = viewDataBinding!!
 
         setSupportActionBar(binding!!.toolbar)
         supportActionBar!!.title = "Trade Report"

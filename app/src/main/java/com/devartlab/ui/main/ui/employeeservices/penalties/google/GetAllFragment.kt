@@ -55,7 +55,7 @@ class GetAllFragment : BaseFragment<FragmentGetAllBinding>() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        binding = viewDataBinding
+        binding = viewDataBinding!!
 
 
         binding.addNew.setOnClickListener(View.OnClickListener {

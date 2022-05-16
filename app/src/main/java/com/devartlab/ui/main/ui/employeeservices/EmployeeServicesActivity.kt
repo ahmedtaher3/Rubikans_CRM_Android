@@ -36,7 +36,7 @@ class EmployeeServicesActivity : BaseActivity<ActivityEmploteeServicesBinding>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = viewDataBinding
+        binding = viewDataBinding!!
         setSupportActionBar(binding.toolbar)
         dataManager = (getApplication() as BaseApplication).dataManager!!
 

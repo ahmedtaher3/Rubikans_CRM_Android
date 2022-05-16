@@ -24,14 +24,14 @@ class EmployeeServicesFragment : BaseFragment<FragmentEmployeeServicesBinding>()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        fragmentEmployeeServicesBinding = viewDataBinding
+        fragmentEmployeeServicesBinding = viewDataBinding!!
         employeeAdapter = EmployeeAdapter(baseActivity)
         list = ArrayList<EmployeeServices>()
 
         fragmentEmployeeServicesBinding.employeesRecyclerView.layoutManager = LinearLayoutManager(baseActivity)
         fragmentEmployeeServicesBinding.employeesRecyclerView.adapter = employeeAdapter
 
-        if (getArguments()?.getBoolean("Requests")!!)
+        if (requireArguments().getBoolean("Requests"))
         {
             fragmentEmployeeServicesBinding.title.text = "Employee Requests"
             list.add(EmployeeServices("HR form (Request)" , "https://res.cloudinary.com/dn2hcmcqn/image/upload/v1589960052/money_zzmerw.png" , "https://docs.google.com/forms/d/e/1FAIpQLSc0-8iWuvGFjdSMVy_EJT0LqHy8rPa7Y1NbQxm2HZgDRLP-bA/viewform" ,""))

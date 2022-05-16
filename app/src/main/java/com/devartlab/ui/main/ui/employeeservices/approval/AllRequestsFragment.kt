@@ -58,7 +58,7 @@ class AllRequestsFragment : BaseFragment<FragmentAllRequestsBinding>(), ChooseEm
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        binding = viewDataBinding
+        binding = viewDataBinding!!
 
 
         val model = arguments?.getParcelable<FilterDataEntity?>("EMP_MODEL")

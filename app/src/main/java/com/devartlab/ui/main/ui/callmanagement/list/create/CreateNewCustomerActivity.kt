@@ -55,7 +55,7 @@ class CreateNewCustomerActivity : BaseActivity<ActivityCreateNewCustomerBinding>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = viewDataBinding
+        binding = viewDataBinding!!
         viewModel = ViewModelProviders.of(this).get(CreateNewCustomerViewModel::class.java)
 
 

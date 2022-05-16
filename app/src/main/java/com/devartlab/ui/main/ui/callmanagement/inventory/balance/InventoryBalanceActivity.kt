@@ -38,7 +38,7 @@ class InventoryBalanceActivity : BaseActivity<ActivityInventoryBalanceLayoutBind
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = viewDataBinding
+        binding = viewDataBinding!!
         InventoryStoreList = ArrayList()
 
 //        setContentView(R.layout.activity_inventory_balance_layout)

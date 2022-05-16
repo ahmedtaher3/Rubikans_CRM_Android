@@ -52,7 +52,7 @@ class GeneralSelectProductsFragment : BaseFragment<FragmentOrderProductsBinding>
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        binding = viewDataBinding
+        binding = viewDataBinding!!
         viewModel.getAllProducts()
         binding.order.setOnClickListener {
             replace_fragment(GeneralConfirmProductsFragment(), "ConfirmProductsFragment")

@@ -52,7 +52,7 @@ class TempReportFragment : BaseFragment<FragmentTempReportBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding = viewDataBinding
+        binding = viewDataBinding!!
 
         setupRecyclerView()
         setObservers()

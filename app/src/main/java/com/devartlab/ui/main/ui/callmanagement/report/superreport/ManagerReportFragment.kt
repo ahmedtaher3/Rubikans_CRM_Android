@@ -120,7 +120,7 @@ class ManagerReportFragment : BaseFragment<FragmentSuperReportBinding>(), Report
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding = viewDataBinding
+        binding = viewDataBinding!!
         setHasOptionsMenu(true);
 
         if (!AppConstants.ReportLimit) {
@@ -571,7 +571,7 @@ class ManagerReportFragment : BaseFragment<FragmentSuperReportBinding>(), Report
                     } else {
 
 
-                        if (LocationUtils.checkPermission(baseActivity)) {
+                        if (LocationUtils.checkLocationPermission(baseActivity)) {
                             ProgressLoading.showWithText(
                                 baseActivity,
                                 resources.getString(R.string.fetching_your_location)
@@ -654,7 +654,7 @@ class ManagerReportFragment : BaseFragment<FragmentSuperReportBinding>(), Report
 
                     dialog.dismiss()
 
-                    if (LocationUtils.checkPermission(baseActivity)) {
+                    if (LocationUtils.checkLocationPermission(baseActivity)) {
                         ProgressLoading.showWithText(
                             baseActivity,
                             resources.getString(R.string.fetching_your_location)
@@ -799,7 +799,7 @@ class ManagerReportFragment : BaseFragment<FragmentSuperReportBinding>(), Report
             builder.setPositiveButton(getString(R.string.yes)) { dialog, which ->
 
 
-                if (LocationUtils.checkPermission(baseActivity)) {
+                if (LocationUtils.checkLocationPermission(baseActivity)) {
                     ProgressLoading.showWithText(
                         baseActivity,
                         resources.getString(R.string.fetching_your_location)
@@ -1151,7 +1151,7 @@ class ManagerReportFragment : BaseFragment<FragmentSuperReportBinding>(), Report
 
     override fun updateData() {
 
-        CommonUtilities.writeToSDFile("")
+        CommonUtilities.writeToSDFile("", baseActivity)
         viewModel.reportShift(DATE, shift)
     }
 

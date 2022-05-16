@@ -77,7 +77,7 @@ class ProfileActivity : BaseActivity<FragmentProfileBinding>(), View.OnClickList
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = viewDataBinding
+        binding = viewDataBinding!!
         viewModel = ViewModelProviders.of(this).get(ProfileViewModel::class.java)
 
         setSupportActionBar(binding.toolbar)

@@ -57,7 +57,7 @@ class OrderProductsFragment : BaseFragment<FragmentOrderProductsBinding>() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        binding = viewDataBinding
+        binding = viewDataBinding!!
 
       val  filterModel = DevartLabReportsFilterDTO(
                 9,

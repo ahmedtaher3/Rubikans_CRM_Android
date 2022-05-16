@@ -40,7 +40,7 @@ class DoubleActivity : BaseActivity<ActivityDoubleBinding>(), ChooseEmployeeInte
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = viewDataBinding
+        binding = viewDataBinding!!
         viewModel = ViewModelProviders.of(this).get(AddPlanViewModel::class.java)
 
         doubleVisitAdapter = DoubleVisitAdapter(this, this, viewModel.dataManager)

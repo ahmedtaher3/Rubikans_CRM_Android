@@ -52,7 +52,7 @@ class RoomsReservationFragment : BaseFragment<FragmentRoomsReservationBinding>()
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        binding = viewDataBinding
+        binding = viewDataBinding!!
 
         binding.date.setOnClickListener(View.OnClickListener {
             val calendar = Calendar.getInstance()

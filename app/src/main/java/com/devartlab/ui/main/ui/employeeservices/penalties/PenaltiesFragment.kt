@@ -77,7 +77,7 @@ class PenaltiesFragment : BaseFragment<FragmentPenaltiesBinding>(), ChooseEmploy
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         setHasOptionsMenu(true)
-        binding = viewDataBinding
+        binding = viewDataBinding!!
 
 
         setupRecyclerView()

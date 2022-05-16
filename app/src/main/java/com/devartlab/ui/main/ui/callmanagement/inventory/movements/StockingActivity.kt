@@ -44,7 +44,7 @@ class StockingActivity : BaseActivity<ActivityInventoryInventoryBinding>(),
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = viewDataBinding
+        binding = viewDataBinding!!
 
         viewModell = ViewModelProviders.of(this).get(RanksViewModel::class.java)
         viewModel = ViewModelProviders.of(this).get(InventoryViewModel::class.java)
@@ -182,7 +182,7 @@ class StockingActivity : BaseActivity<ActivityInventoryInventoryBinding>(),
 
     private fun getData(requestObject: ReportsFilterModel) {
         val appraisalBuildsSchema = Gson().toJsonTree(requestObject).asJsonObject
-        binding = viewDataBinding
+        binding = viewDataBinding!!
         recyclerViewAdapter = InventoryInventoryAdapter(this, ArrayList(), this, this)
         binding.recyclerInventoryInventory.adapter = recyclerViewAdapter
         //setContentView(R.layout.activity_main)

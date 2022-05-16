@@ -53,7 +53,7 @@ class ShowAllWorkFromHomeFragment : BaseFragment<FragmentAllWorkFromHomeBinding>
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        binding = viewDataBinding
+        binding = viewDataBinding!!
         binding.recyclerView.adapter = adapter
         setObservers()
 
