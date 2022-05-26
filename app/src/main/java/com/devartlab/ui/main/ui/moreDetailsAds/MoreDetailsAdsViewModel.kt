@@ -6,9 +6,6 @@ import androidx.lifecycle.MutableLiveData
 import com.devartlab.base.BaseApplication
 import com.devartlab.data.retrofit.RetrofitClient
 import com.devartlab.data.shared.DataManager
-import com.devartlab.ui.main.ui.eShopping.requestVoucher.model.deliverVoucher.DeliverVoucherRequest
-import com.devartlab.ui.main.ui.eShopping.requestVoucher.model.deliverVoucher.DeliverVoucherResponse
-import com.devartlab.ui.main.ui.eShopping.utils.UserPreferenceHelper
 import com.devartlab.ui.main.ui.moreDetailsAds.model.SeeMoreRequest
 import com.devartlab.ui.main.ui.moreDetailsAds.model.SeeMoreResponse
 import retrofit2.Call
@@ -22,7 +19,7 @@ class MoreDetailsAdsViewModel (application: Application) : AndroidViewModel(appl
     var seeMoreResponse: MutableLiveData<SeeMoreResponse>
         protected set
     fun getSeeMore(seeMoreRequest: SeeMoreRequest) {
-        RetrofitClient.getApis().getSeeMore(seeMoreRequest)!!
+        RetrofitClient(dataManager).apis.getSeeMore(seeMoreRequest)!!
             .enqueue(object : Callback<SeeMoreResponse?> {
                 override fun onResponse(
                     call: Call<SeeMoreResponse?>,

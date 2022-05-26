@@ -70,7 +70,7 @@ class PlanAndCoverAdapter(private val context: Context, private var myData: Arra
         /*   if (model.imagePath != null)
            {
                Glide.with(context)
-                       .load(com.devartlab.AppConstants.ImageBaseURL + "ImageUpload/Employee/" + model.imagePath)
+                       .load(viewModel.dataManager.url + "ImageUpload/Employee/" + model.imagePath)
                        .placeholder(holder._binding?.empImage?.drawable)
                        .into(holder._binding?.empImage!!)
            }
@@ -78,7 +78,7 @@ class PlanAndCoverAdapter(private val context: Context, private var myData: Arra
 
            {
                Glide.with(context)
-                       .load(com.devartlab.AppConstants.ImageBaseURL + "ImageUpload/Employee/DefaultEmpImage.jpg")
+                       .load(viewModel.dataManager.url + "ImageUpload/Employee/DefaultEmpImage.jpg")
                        .placeholder(holder._binding?.empImage?.drawable)
                        .into(holder._binding?.empImage!!)
            }*/

@@ -11,7 +11,9 @@ import com.devartlab.a4eshopping.PharmacyBinding.addLocation.model.districts.Dis
 import com.devartlab.a4eshopping.PharmacyBinding.addLocation.model.getUserAddress.GetUserAddressResponse
 import com.devartlab.a4eshopping.PharmacyBinding.addLocation.model.updateAddress.UpdateAddressRequest
 import com.devartlab.a4eshopping.PharmacyBinding.addLocation.model.updateAddress.UpdateAddressResponse
+import com.devartlab.base.BaseApplication
 import com.devartlab.data.retrofit.RetrofitClient
+import com.devartlab.data.shared.DataManager
 import com.devartlab.ui.main.ui.eShopping.utils.UserPreferenceHelper
 import retrofit2.Call
 import retrofit2.Callback
@@ -31,10 +33,12 @@ class AddLocationViewModel(application: Application) : AndroidViewModel(applicat
     var UpdateAddressResponse: MutableLiveData<UpdateAddressResponse?>
         protected set
     var getUserAddressResponse: MutableLiveData<GetUserAddressResponse?>
-        protected set
+        protected
+
+        lateinit var dataManager: DataManager
 
     fun getCountry() {
-        RetrofitClient.getApis4EShopping().getCountry()!!
+        RetrofitClient(dataManager).apis4EShopping.getCountry()!!
             .enqueue(object : Callback<CountryResponse?> {
                 override fun onResponse(
                     call: Call<CountryResponse?>,
@@ -54,7 +58,7 @@ class AddLocationViewModel(application: Application) : AndroidViewModel(applicat
     }
 
     fun getCities(country_id: String) {
-        RetrofitClient.getApis4EShopping().getCities(country_id)!!
+        RetrofitClient(dataManager).apis4EShopping.getCities(country_id)!!
             .enqueue(object : Callback<CitiesResponse?> {
                 override fun onResponse(
                     call: Call<CitiesResponse?>,
@@ -74,7 +78,7 @@ class AddLocationViewModel(application: Application) : AndroidViewModel(applicat
     }
 
     fun getAreas(areas: String) {
-        RetrofitClient.getApis4EShopping().getAreas(areas)!!
+        RetrofitClient(dataManager).apis4EShopping.getAreas(areas)!!
             .enqueue(object : Callback<AreasResponse?> {
                 override fun onResponse(
                     call: Call<AreasResponse?>,
@@ -94,7 +98,7 @@ class AddLocationViewModel(application: Application) : AndroidViewModel(applicat
     }
 
     fun getDistricts(districts: String) {
-        RetrofitClient.getApis4EShopping().getDistricts(districts)!!
+        RetrofitClient(dataManager).apis4EShopping.getDistricts(districts)!!
             .enqueue(object : Callback<DistrictsResponse?> {
                 override fun onResponse(
                     call: Call<DistrictsResponse?>,
@@ -114,7 +118,7 @@ class AddLocationViewModel(application: Application) : AndroidViewModel(applicat
     }
 
     fun updateAddress(request: UpdateAddressRequest) {
-        RetrofitClient.getApis4EShopping().updateAddress("Bearer "+ UserPreferenceHelper.getUser().token, request)!!
+        RetrofitClient(dataManager).apis4EShopping.updateAddress("Bearer "+ UserPreferenceHelper.getUser().token, request)!!
             .enqueue(object : Callback<UpdateAddressResponse?> {
                 override fun onResponse(
                     call: Call<UpdateAddressResponse?>,
@@ -134,7 +138,7 @@ class AddLocationViewModel(application: Application) : AndroidViewModel(applicat
     }
 
     fun getUserAddress(id: String) {
-        RetrofitClient.getApis4EShopping().getUserAddress("Bearer "+UserPreferenceHelper.getUser().token, id)!!
+        RetrofitClient(dataManager).apis4EShopping.getUserAddress("Bearer "+UserPreferenceHelper.getUser().token, id)!!
             .enqueue(object : Callback<GetUserAddressResponse?> {
                 override fun onResponse(
                     call: Call<GetUserAddressResponse?>,
@@ -154,6 +158,8 @@ class AddLocationViewModel(application: Application) : AndroidViewModel(applicat
     }
 
     init {
+
+        dataManager = (getApplication() as BaseApplication).dataManager!!
         errorMessage = MutableLiveData()
         CountryResponse = MutableLiveData()
         citiesResponse = MutableLiveData()

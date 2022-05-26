@@ -19,7 +19,7 @@ class DevartCommunityViewModel(application: Application) : AndroidViewModel(appl
         protected set
     var dataManager: DataManager
     fun getDevartCommunity(_id: String) {
-        RetrofitClient.getApis().getDevartCommunity(_id)!!
+        RetrofitClient(dataManager).apis.getDevartCommunity(_id)!!
             .enqueue(object : Callback<DevartCommunityResponse?> {
                 override fun onResponse(
                     call: Call<DevartCommunityResponse?>,

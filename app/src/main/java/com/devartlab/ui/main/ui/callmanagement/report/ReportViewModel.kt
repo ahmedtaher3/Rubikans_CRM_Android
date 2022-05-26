@@ -78,7 +78,7 @@ class ReportViewModel(application: Application) : AndroidViewModel(application) 
 
 
         dataManager = (getApplication() as BaseApplication).dataManager!!
-        retrofit = RetrofitClient.getInstance()
+        retrofit = RetrofitClient(dataManager!!).instance!!
         myAPI = retrofit!!.create(ApiServices::class.java)
 
         planDao = DatabaseClient.getInstance(application)?.appDatabase?.planDao()

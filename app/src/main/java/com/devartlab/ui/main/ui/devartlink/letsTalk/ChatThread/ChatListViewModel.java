@@ -6,7 +6,9 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
 
+import com.devartlab.base.BaseApplication;
 import com.devartlab.data.retrofit.RetrofitClient;
+import com.devartlab.data.shared.DataManager;
 import com.devartlab.ui.main.ui.devartlink.letsTalk.ChatThread.model.ChatListResponse;
 import com.devartlab.ui.main.ui.devartlink.letsTalk.ChatThread.model.sendMessages.SendMessagesResponse;
 
@@ -23,9 +25,14 @@ public class ChatListViewModel extends AndroidViewModel {
     protected MutableLiveData<Integer> errorMessage;
     protected MutableLiveData<ChatListResponse> chatListResponseMutableLiveData;
     protected MutableLiveData<SendMessagesResponse> sendMessagesResponseMutableLiveData;
+    DataManager dataManager;
 
     public ChatListViewModel(@NonNull Application application) {
         super(application);
+
+        dataManager = ((BaseApplication) application).getDataManager();
+
+
         chatListResponseMutableLiveData = new MutableLiveData<>();
         sendMessagesResponseMutableLiveData = new MutableLiveData<>();
         errorMessage = new MutableLiveData<>();
@@ -44,7 +51,7 @@ public class ChatListViewModel extends AndroidViewModel {
     }
 
     public void getChatList(String id){
-        RetrofitClient.getApis().getChatList(id).enqueue(new Callback<ChatListResponse>() {
+        new RetrofitClient(dataManager).getApis().getChatList(id).enqueue(new Callback<ChatListResponse>() {
             @Override
             public void onResponse(Call<ChatListResponse> call, Response<ChatListResponse> response) {
                 if (response.isSuccessful()){
@@ -63,7 +70,7 @@ public class ChatListViewModel extends AndroidViewModel {
 
 
     public void sendMessages(MultipartBody.Part file, Map<String, RequestBody> send){
-        RetrofitClient.getApis().SEND_MESSAGES(file,send).enqueue(new Callback<SendMessagesResponse>() {
+        new RetrofitClient(dataManager).getApis().SEND_MESSAGES(file,send).enqueue(new Callback<SendMessagesResponse>() {
             @Override
             public void onResponse(Call<SendMessagesResponse> call, Response<SendMessagesResponse> response) {
                 if (response.isSuccessful()){

@@ -56,7 +56,7 @@ class TradeReportsViewModel(application: Application) : AndroidViewModel(applica
 
 
     init {
-        retrofit = RetrofitClient.getInstance()
+        retrofit = RetrofitClient(dataManager!!).instance!!
         myAPI = retrofit!!.create(ApiServices::class.java)
         dataManager = (getApplication<Application>() as BaseApplication).dataManager!!
         progress = MutableLiveData()

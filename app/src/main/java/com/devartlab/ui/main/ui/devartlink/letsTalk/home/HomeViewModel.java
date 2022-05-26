@@ -6,8 +6,9 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
 
-
+import com.devartlab.base.BaseApplication;
 import com.devartlab.data.retrofit.RetrofitClient;
+import com.devartlab.data.shared.DataManager;
 import com.devartlab.ui.main.ui.devartlink.letsTalk.home.model.ImageModel.ImageProfileResponse;
 import com.devartlab.ui.main.ui.devartlink.letsTalk.home.model.mareSeen.MarkSeenRequest;
 import com.devartlab.ui.main.ui.devartlink.letsTalk.home.model.mareSeen.MarkSeenResponse;
@@ -23,9 +24,13 @@ public class HomeViewModel extends AndroidViewModel {
     protected MutableLiveData<PeopleListResponse> peapleResponseMutableLiveData;
     protected MutableLiveData<ImageProfileResponse> imageProfileResponseMutableLiveData;
     protected MutableLiveData<MarkSeenResponse> markSeenRequestMutableLiveData;
+    DataManager dataManager;
 
     public HomeViewModel(@NonNull Application application) {
         super(application);
+
+        dataManager = ((BaseApplication) application).getDataManager();
+
 
         peapleResponseMutableLiveData = new MutableLiveData<>();
         peapleResponseMutableLiveData = new MutableLiveData<>();
@@ -51,7 +56,7 @@ public class HomeViewModel extends AndroidViewModel {
     }
 
     public void getListPeaple(String id){
-        RetrofitClient.getApis().getPeopleList(id).enqueue(new Callback<PeopleListResponse>() {
+        new RetrofitClient(dataManager).getApis().getPeopleList(id).enqueue(new Callback<PeopleListResponse>() {
             @Override
             public void onResponse(Call<PeopleListResponse> call, Response<PeopleListResponse> response) {
                 if (response.isSuccessful()){
@@ -68,7 +73,7 @@ public class HomeViewModel extends AndroidViewModel {
         });
     }
     public void getImageProfile(String id){
-        RetrofitClient.getApis().getImageProfile(id).enqueue(new Callback<ImageProfileResponse>() {
+        new RetrofitClient(dataManager).getApis().getImageProfile(id).enqueue(new Callback<ImageProfileResponse>() {
             @Override
             public void onResponse(Call<ImageProfileResponse> call, Response<ImageProfileResponse> response) {
                 if (response.isSuccessful()){
@@ -85,7 +90,7 @@ public class HomeViewModel extends AndroidViewModel {
         });
     }
     public void markSeen(MarkSeenRequest markSeenRequest){
-        RetrofitClient.getApis().MARK_SEEN(markSeenRequest).enqueue(new Callback<MarkSeenResponse>() {
+        new RetrofitClient(dataManager).getApis().MARK_SEEN(markSeenRequest).enqueue(new Callback<MarkSeenResponse>() {
             @Override
             public void onResponse(Call<MarkSeenResponse> call, Response<MarkSeenResponse> response) {
                 if (response.isSuccessful()){

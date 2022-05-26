@@ -7,14 +7,13 @@ import androidx.lifecycle.ViewModelProviders
 import com.bumptech.glide.Glide
 import com.devartlab.R
 import com.devartlab.base.BaseActivity
-import com.devartlab.data.retrofit.ApiServices
-import com.devartlab.databinding.ActivityListPermissionBinding
 import com.devartlab.data.room.filterdata.FilterDataEntity
+import com.devartlab.databinding.ActivityListPermissionBinding
 import com.devartlab.model.PlanDayPermissionData
 import com.devartlab.ui.dialogs.chooseemployee.ChooseEmployee
 import com.devartlab.ui.dialogs.chooseemployee.ChooseEmployeeInterFace
 import com.devartlab.utils.ProgressLoading
-import java.util.ArrayList
+import java.util.*
 
 class PlanPermissionActivity : BaseActivity<ActivityListPermissionBinding>(), PlanPermissionAdapter.OnShowPlanSelect, ChooseEmployeeInterFace {
     lateinit var binding: ActivityListPermissionBinding
@@ -60,12 +59,12 @@ class PlanPermissionActivity : BaseActivity<ActivityListPermissionBinding>(), Pl
 
         if (model?.fileImage != null) {
             Glide.with(this)
-                    .load(com.devartlab.AppConstants.ImageBaseURL + "ImageUpload/Employee/" + model.fileImage)
+                    .load(viewModel.dataManager.url + "ImageUpload/Employee/" + model.fileImage)
                     .placeholder(binding.empImage?.drawable)
                     .into(binding.empImage!!)
         } else {
             Glide.with(this)
-                    .load(com.devartlab.AppConstants.ImageBaseURL + "ImageUpload/Employee/DefaultEmpImage.jpg")
+                    .load(viewModel.dataManager.url + "ImageUpload/Employee/DefaultEmpImage.jpg")
                     .placeholder(binding.empImage?.drawable)
                     .into(binding.empImage!!)
         }
@@ -110,12 +109,12 @@ class PlanPermissionActivity : BaseActivity<ActivityListPermissionBinding>(), Pl
 
         if (employeeModel?.fileImage != null) {
             Glide.with(this)
-                    .load(com.devartlab.AppConstants.ImageBaseURL + "ImageUpload/Employee/" + employeeModel?.fileImage)
+                    .load(viewModel.dataManager.url + "ImageUpload/Employee/" + employeeModel?.fileImage)
                     .placeholder(binding.empImage?.drawable)
                     .into(binding.empImage!!)
         } else {
             Glide.with(this)
-                    .load(com.devartlab.AppConstants.ImageBaseURL + "ImageUpload/Employee/DefaultEmpImage.jpg")
+                    .load(viewModel.dataManager.url + "ImageUpload/Employee/DefaultEmpImage.jpg")
                     .placeholder(binding.empImage?.drawable)
                     .into(binding.empImage!!)
         }
@@ -130,7 +129,7 @@ class PlanPermissionActivity : BaseActivity<ActivityListPermissionBinding>(), Pl
     }
 
     override fun setOnShowPlanSelect(model: PlanDayPermissionData) {
-       val showPlan = ShowPlan(this,  model.accountId, model.date.take(10))
+       val showPlan = ShowPlan(this,  model.accountId, model.date.take(10) , viewModel.dataManager)
         showPlan.setCanceledOnTouchOutside(true)
         val window = showPlan.window
         window?.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT)

@@ -35,7 +35,7 @@ class SearchAllPharmacyViewModel(application: Application) : AndroidViewModel(ap
     var dataManager: DataManager
 
     fun getSearchAllPharmacy(q: String) {
-        RetrofitClient.getApis4EShopping()
+        RetrofitClient(dataManager).apis4EShopping
             .getSearchAllPharmacy("Bearer " + UserPreferenceHelper.getUser().token,q)!!
             .enqueue(object : Callback<SearchAllPharmacyResponse?> {
                 override fun onResponse(
@@ -56,7 +56,7 @@ class SearchAllPharmacyViewModel(application: Application) : AndroidViewModel(ap
     }
 
     fun getCategoryv2Pharmacy(type_code: String) {
-        RetrofitClient.getApis4EShopping()
+        RetrofitClient(dataManager).apis4EShopping
             .getCategoryv2Pharmacy("Bearer " + UserPreferenceHelper.getUser().token,type_code)!!
             .enqueue(object : Callback<CategoryPharmacyResponse?> {
                 override fun onResponse(
@@ -77,7 +77,7 @@ class SearchAllPharmacyViewModel(application: Application) : AndroidViewModel(ap
     }
 
     fun getAddOrderToCart(request: AddOrderToCartRequest) {
-        RetrofitClient.getApis4EShopping()
+        RetrofitClient(dataManager).apis4EShopping
             .getAddOrderToCart("Bearer " + UserPreferenceHelper.getUser().token,request)!!
             .enqueue(object : Callback<AddOrderToCartResponse?> {
                 override fun onResponse(
@@ -98,7 +98,7 @@ class SearchAllPharmacyViewModel(application: Application) : AndroidViewModel(ap
     }
 
     fun getShowCard(user_id: Int) {
-        RetrofitClient.getApis4EShopping()
+        RetrofitClient(dataManager).apis4EShopping
             .getShowCard("Bearer " + UserPreferenceHelper.getUser().token,user_id)!!
             .enqueue(object : Callback<ShowCartResponse?> {
                 override fun onResponse(

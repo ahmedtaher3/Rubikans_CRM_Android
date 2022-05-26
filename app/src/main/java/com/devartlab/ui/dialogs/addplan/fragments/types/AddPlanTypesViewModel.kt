@@ -28,7 +28,7 @@ class AddPlanTypesViewModel(application: Application) : AndroidViewModel(applica
     init {
 
         dataManager = (getApplication() as BaseApplication).dataManager!!
-        retrofit = RetrofitClient.getInstance()
+        retrofit = RetrofitClient(dataManager!!).instance!!
         myAPI = retrofit!!.create(ApiServices::class.java)
         responseLive = MutableLiveData<ArrayList<SpecialtyParentEntity>>()
         progress = MutableLiveData<Int>()

@@ -36,6 +36,9 @@ public class UserPreferenceHelper {
         prefsEditor.apply();
     }
 
+
+
+
     public static Login4EShoppingResponse getUser() {
         Gson gson = new Gson();
         String json = getSharedPreferenceInstance(BaseApplication.Companion.getInstance().getApplicationContext())

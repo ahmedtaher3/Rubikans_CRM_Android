@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.devartlab.R
 import com.devartlab.data.retrofit.ApiServices
 import com.devartlab.data.retrofit.RetrofitClient
+import com.devartlab.data.shared.DataManager
 import com.devartlab.model.DoubleVisitEmp
 import com.devartlab.utils.CommonUtilities
 import io.reactivex.Observer
@@ -20,7 +21,7 @@ import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import retrofit2.Retrofit
 
-class ShowPlan(context: Context , private val empId:Int, private val date:String)
+class ShowPlan(context: Context , private val empId:Int, private val date:String , private val dataManager: DataManager)
     : Dialog(context) {
 
     lateinit var recyclerView: RecyclerView
@@ -36,7 +37,7 @@ class ShowPlan(context: Context , private val empId:Int, private val date:String
         setContentView(R.layout.activity_show_plan)
 
 
-        retrofit = RetrofitClient.getInstance()
+        retrofit = RetrofitClient(dataManager!!).instance!!
         myAPI = retrofit!!.create(ApiServices::class.java)
         progressBar = findViewById(R.id.progressBar)
 

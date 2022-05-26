@@ -24,7 +24,7 @@ class PharmacySalesViewModel(application: Application) : AndroidViewModel(applic
     var dataManager: DataManager
 
     fun getPharmacySales(q: String) {
-        RetrofitClient.getApis4EShopping().getPharmacySales("Bearer "+ UserPreferenceHelper.getUser().token,q)!!
+        RetrofitClient(dataManager).apis4EShopping.getPharmacySales("Bearer "+ UserPreferenceHelper.getUser().token,q)!!
             .enqueue(object : Callback<PharmacySalesResponse?> {
                 override fun onResponse(
                     call: Call<PharmacySalesResponse?>,
@@ -44,7 +44,7 @@ class PharmacySalesViewModel(application: Application) : AndroidViewModel(applic
     }
 
     fun getDetailsPharmacySales(order_number:String) {
-        RetrofitClient.getApis4EShopping().getOrderDetails("Bearer "+UserPreferenceHelper.getUser().token,order_number)!!
+        RetrofitClient(dataManager).apis4EShopping.getOrderDetails("Bearer "+UserPreferenceHelper.getUser().token,order_number)!!
             .enqueue(object : Callback<DetailsPharmacySalesResponse?> {
                 override fun onResponse(
                     call: Call<DetailsPharmacySalesResponse?>,

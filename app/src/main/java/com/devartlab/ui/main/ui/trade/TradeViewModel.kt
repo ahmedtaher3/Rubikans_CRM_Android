@@ -72,8 +72,8 @@ class TradeViewModel(application: Application) : AndroidViewModel(application) {
         progress = MutableLiveData()
         progressInsertPlace = MutableLiveData()
         myProductLive = MutableLiveData()
-        retrofit = RetrofitClient.getInstance()
-        retrofitGoogle = RetrofitClient.getInstanceGoogleSheet()
+        retrofit = RetrofitClient(dataManager!!).instance!!
+        retrofitGoogle = RetrofitClient(dataManager!!).instanceGoogleSheet!!
         myAPI = retrofit!!.create(ApiServices::class.java)
         myAPIGoogle = retrofitGoogle!!.create(ApiServicesGoogle::class.java)
 

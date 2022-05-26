@@ -43,7 +43,7 @@ class TicketViewModel(application: Application) : AndroidViewModel(application) 
     var dataManager: DataManager
 
     fun getGetContacts(status: String,q: String) {
-        RetrofitClient.getApis4EShopping().getGetContacts("Bearer " + UserPreferenceHelper.getUser().token,status,q)!!
+        RetrofitClient(dataManager).apis4EShopping.getGetContacts("Bearer " + UserPreferenceHelper.getUser().token,status,q)!!
             .enqueue(object : Callback<GetContactsResponse?> {
                 override fun onResponse(
                     call: Call<GetContactsResponse?>,
@@ -63,7 +63,7 @@ class TicketViewModel(application: Application) : AndroidViewModel(application) 
     }
 
     fun getChatList(id: String) {
-        RetrofitClient.getApis4EShopping().getChatList("Bearer " + UserPreferenceHelper.getUser().token, id)!!
+        RetrofitClient(dataManager).apis4EShopping.getChatList("Bearer " + UserPreferenceHelper.getUser().token, id)!!
             .enqueue(object : Callback<FetchMessagesResponse?> {
                 override fun onResponse(
                     call: Call<FetchMessagesResponse?>,
@@ -83,7 +83,7 @@ class TicketViewModel(application: Application) : AndroidViewModel(application) 
     }
 
     fun addTicket(request: AddTicketRequest) {
-        RetrofitClient.getApis4EShopping()
+        RetrofitClient(dataManager).apis4EShopping
             .addTicket("Bearer " + UserPreferenceHelper.getUser().token, request)!!
             .enqueue(object : Callback<AddTicketRsponse?> {
                 override fun onResponse(
@@ -104,7 +104,7 @@ class TicketViewModel(application: Application) : AndroidViewModel(application) 
     }
 
     fun sendMessages(file: MultipartBody.Part, send: MutableMap<String, RequestBody>) {
-        RetrofitClient.getApis4EShopping().SEND_MESSAGES(
+        RetrofitClient(dataManager).apis4EShopping.SEND_MESSAGES(
             "Bearer " + UserPreferenceHelper.getUser().token, file, send)!!
             .enqueue(object : Callback<SendMessagesResponse?> {
                 override fun onResponse(
@@ -125,7 +125,7 @@ class TicketViewModel(application: Application) : AndroidViewModel(application) 
     }
 
     fun sendMessages( send: MutableMap<String, RequestBody>) {
-        RetrofitClient.getApis4EShopping().SEND_MESSAGES(
+        RetrofitClient(dataManager).apis4EShopping.SEND_MESSAGES(
             "Bearer " + UserPreferenceHelper.getUser().token, send)!!
             .enqueue(object : Callback<SendMessagesResponse?> {
                 override fun onResponse(
@@ -146,7 +146,7 @@ class TicketViewModel(application: Application) : AndroidViewModel(application) 
     }
 
     fun addRate(request: AddRateRequest) {
-        RetrofitClient.getApis4EShopping()
+        RetrofitClient(dataManager).apis4EShopping
             .addRate("Bearer " + UserPreferenceHelper.getUser().token, request)!!
             .enqueue(object : Callback<AddRateResponse?> {
                 override fun onResponse(
@@ -167,7 +167,7 @@ class TicketViewModel(application: Application) : AndroidViewModel(application) 
     }
 
     fun deleteTicket(id: String) {
-        RetrofitClient.getApis4EShopping().deleteTicket("Bearer " + UserPreferenceHelper.getUser().token, id)!!
+        RetrofitClient(dataManager).apis4EShopping.deleteTicket("Bearer " + UserPreferenceHelper.getUser().token, id)!!
             .enqueue(object : Callback<DeleteTicketsResponse?> {
                 override fun onResponse(
                     call: Call<DeleteTicketsResponse?>,
@@ -187,7 +187,7 @@ class TicketViewModel(application: Application) : AndroidViewModel(application) 
     }
 
     fun deleteMessages(id: String) {
-        RetrofitClient.getApis4EShopping().deleteMessages("Bearer " + UserPreferenceHelper.getUser().token, id)!!
+        RetrofitClient(dataManager).apis4EShopping.deleteMessages("Bearer " + UserPreferenceHelper.getUser().token, id)!!
             .enqueue(object : Callback<DeleteMessagesResponse?> {
                 override fun onResponse(
                     call: Call<DeleteMessagesResponse?>,

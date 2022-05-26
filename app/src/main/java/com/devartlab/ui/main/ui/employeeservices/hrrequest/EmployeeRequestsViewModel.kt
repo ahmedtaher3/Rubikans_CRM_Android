@@ -34,7 +34,7 @@ class EmployeeRequestsViewModel(application: Application) : AndroidViewModel(app
     init {
 
         dataManager = (getApplication() as BaseApplication).dataManager!!
-        retrofit = RetrofitClient.getInstanceGoogleSheet()
+        retrofit = RetrofitClient(dataManager!!).instanceGoogleSheet!!
         myAPI = retrofit!!.create(ApiServicesGoogle::class.java)
         responseLive = MutableLiveData<GoogleRequestResponse>()
         responseLiveRequests = MutableLiveData<GoogleRequestResponse>()

@@ -20,7 +20,7 @@ class NearbyPharmacyViewModel(application: Application) : AndroidViewModel(appli
         protected set
     var dataManager: DataManager
     fun getNearbyPharmacy(lat_lng: String) {
-        RetrofitClient.getApis4EShopping().getNearbyPharmacy("Bearer "+ UserPreferenceHelper.getUser().token,lat_lng)
+        RetrofitClient(dataManager).apis4EShopping.getNearbyPharmacy("Bearer "+ UserPreferenceHelper.getUser().token,lat_lng)
             .enqueue(object : Callback<NearbyPharmacyResponse?> {
                 override fun onResponse(
                     call: Call<NearbyPharmacyResponse?>,

@@ -20,10 +20,10 @@ import androidx.lifecycle.ViewModelProviders
 import com.bumptech.glide.Glide
 import com.devartlab.R
 import com.devartlab.base.BaseFragment
-import com.devartlab.data.retrofit.ApiServices
 import com.devartlab.data.room.filterdata.FilterDataEntity
 import com.devartlab.databinding.StartPointReportFragmentBinding
-import com.devartlab.model.*
+import com.devartlab.model.StartPointReport
+import com.devartlab.model.StartPointReportTitle
 import com.devartlab.ui.dialogs.chooseemployee.ChooseEmployee
 import com.devartlab.ui.dialogs.chooseemployee.ChooseEmployeeInterFace
 import com.devartlab.ui.main.ui.cycles.ChangeCycle
@@ -67,9 +67,9 @@ class StartPointReportFragment : BaseFragment<StartPointReportFragmentBinding>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel = ViewModelProviders.of(this).get(RanksViewModel::class.java)
-        adapterStart = StartPointReportAdapter(baseActivity, ArrayList(), this)
-        adapterLate = StartPointReportAdapter(baseActivity, ArrayList(), this)
-        adapterNot = StartPointReportAdapter(baseActivity, ArrayList(), this)
+        adapterStart = StartPointReportAdapter(baseActivity, ArrayList(), this , viewModel.dataManager)
+        adapterLate = StartPointReportAdapter(baseActivity, ArrayList(), this, viewModel.dataManager)
+        adapterNot = StartPointReportAdapter(baseActivity, ArrayList(), this, viewModel.dataManager)
 
 
         fmt = SimpleDateFormat("yyyy-MM-dd", Locale.US)
@@ -351,7 +351,7 @@ class StartPointReportFragment : BaseFragment<StartPointReportFragmentBinding>()
         if (model?.fileImage != null)
         {
             Glide.with(baseActivity)
-                    .load(com.devartlab.AppConstants.ImageBaseURL + "ImageUpload/Employee/" + model.fileImage)
+                    .load(viewModel.dataManager.url + "ImageUpload/Employee/" + model.fileImage)
                     .placeholder(binding.empImage?.drawable)
                     .into(binding.empImage!!)
         }
@@ -359,7 +359,7 @@ class StartPointReportFragment : BaseFragment<StartPointReportFragmentBinding>()
 
         {
             Glide.with(baseActivity)
-                    .load(com.devartlab.AppConstants.ImageBaseURL + "ImageUpload/Employee/DefaultEmpImage.jpg")
+                    .load(viewModel.dataManager.url + "ImageUpload/Employee/DefaultEmpImage.jpg")
                     .placeholder(binding.empImage?.drawable)
                     .into(binding.empImage!!)
         }

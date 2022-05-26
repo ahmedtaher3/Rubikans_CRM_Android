@@ -6,18 +6,16 @@ import android.os.Bundle
 import android.util.Base64
 import android.view.View
 import android.view.WindowManager
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.bumptech.glide.Glide
 import com.devartlab.R
 import com.devartlab.base.BaseFragment
-import com.devartlab.data.retrofit.ApiServices
 import com.devartlab.data.room.filterdata.FilterDataEntity
 import com.devartlab.data.room.invoicedetailes.CustomerInvoiceEntity
 import com.devartlab.databinding.EmployeeInvoiceReportFragmentBinding
-import com.devartlab.model.*
+import com.devartlab.model.DevartLabReportsFilterDTO
 import com.devartlab.ui.dialogs.chooseemployee.ChooseEmployee
 import com.devartlab.ui.dialogs.chooseemployee.ChooseEmployeeInterFace
 import com.devartlab.ui.main.ui.callmanagement.trade.TradeReportsViewModel
@@ -231,12 +229,12 @@ class CustomerInvoiceReportFragment : BaseFragment<EmployeeInvoiceReportFragment
         binding.empImage.setImageResource(R.drawable.user_logo);
         if (model?.fileImage != null) {
             Glide.with(baseActivity)
-                    .load(com.devartlab.AppConstants.ImageBaseURL + "ImageUpload/Employee/" + model.fileImage)
+                    .load(viewModel.dataManager.url + "ImageUpload/Employee/" + model.fileImage)
                     .placeholder(binding.empImage?.drawable)
                     .into(binding.empImage!!)
         } else {
             Glide.with(baseActivity)
-                    .load(com.devartlab.AppConstants.ImageBaseURL + "ImageUpload/Employee/DefaultEmpImage.jpg")
+                    .load(viewModel.dataManager.url + "ImageUpload/Employee/DefaultEmpImage.jpg")
                     .placeholder(binding.empImage?.drawable)
                     .into(binding.empImage!!)
         }

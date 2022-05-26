@@ -11,9 +11,8 @@ import androidx.lifecycle.ViewModelProviders
 import com.bumptech.glide.Glide
 import com.devartlab.R
 import com.devartlab.base.BaseActivity
-import com.devartlab.data.retrofit.ApiServices
-import com.devartlab.databinding.ActivityAddNewPenaltyBinding
 import com.devartlab.data.room.filterdata.FilterDataEntity
+import com.devartlab.databinding.ActivityAddNewPenaltyBinding
 import com.devartlab.ui.dialogs.chooseemployee.ChooseEmployee
 import com.devartlab.ui.dialogs.chooseemployee.ChooseEmployeeInterFace
 import com.devartlab.ui.main.ui.employeeservices.penalties.PenaltiesViewModel
@@ -172,12 +171,12 @@ class AddNewPenaltyActivity : BaseActivity<ActivityAddNewPenaltyBinding>(), Choo
         binding.empImage.setImageResource(R.drawable.user_logo)
         if (model?.fileImage != null) {
             Glide.with(this)
-                    .load(com.devartlab.AppConstants.ImageBaseURL + "ImageUpload/Employee/" + model.fileImage)
+                    .load(viewModel.dataManager?.url + "ImageUpload/Employee/" + model.fileImage)
                     .placeholder(binding.empImage?.drawable)
                     .into(binding.empImage!!)
         } else {
             Glide.with(this)
-                    .load(com.devartlab.AppConstants.ImageBaseURL + "ImageUpload/Employee/DefaultEmpImage.jpg")
+                    .load(viewModel.dataManager?.url + "ImageUpload/Employee/DefaultEmpImage.jpg")
                     .placeholder(binding.empImage?.drawable)
                     .into(binding.empImage!!)
         }

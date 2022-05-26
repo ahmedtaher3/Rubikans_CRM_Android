@@ -11,15 +11,16 @@ import androidx.recyclerview.widget.RecyclerView
 import com.amulyakhare.textdrawable.TextDrawable
 import com.bumptech.glide.Glide
 import com.devartlab.R
-import com.devartlab.data.retrofit.ApiServices
 import com.devartlab.data.room.filterdata.FilterDataEntity
+import com.devartlab.data.shared.DataManager
 import java.util.*
 
-class EmployeeSearchAdapter constructor(context: Context, chooseEmployeeInterFace: ChooseEmployeeInterFace, onEmployeeFilterClick: OnEmployeeFilterClick) : RecyclerView.Adapter<EmployeeSearchAdapter.MyViewHolder>() {
+class EmployeeSearchAdapter constructor(context: Context, chooseEmployeeInterFace: ChooseEmployeeInterFace, onEmployeeFilterClick: OnEmployeeFilterClick ,  private val dataManager: DataManager) : RecyclerView.Adapter<EmployeeSearchAdapter.MyViewHolder>() {
     internal var myData: MutableList<FilterDataEntity>
     private val context: Context
     private val chooseEmployeeInterFace: ChooseEmployeeInterFace
     private val onEmployeeFilterClick: OnEmployeeFilterClick
+
 
     interface OnEmployeeFilterClick {
         fun setOnEmployeeFilterClick(model: FilterDataEntity?)
@@ -54,7 +55,7 @@ class EmployeeSearchAdapter constructor(context: Context, chooseEmployeeInterFac
         if (model.fileImage != null)
         {
             Glide.with(context)
-                    .load(com.devartlab.AppConstants.ImageBaseURL + "ImageUpload/Employee/" + model.fileImage)
+                    .load(dataManager.url + "ImageUpload/Employee/" + model.fileImage)
                     .placeholder(holder.empImage?.drawable)
                     .into(holder.empImage!!)
         }
@@ -62,7 +63,7 @@ class EmployeeSearchAdapter constructor(context: Context, chooseEmployeeInterFac
 
         {
             Glide.with(context)
-                    .load(com.devartlab.AppConstants.ImageBaseURL + "ImageUpload/Employee/DefaultEmpImage.jpg")
+                    .load(dataManager.url + "ImageUpload/Employee/DefaultEmpImage.jpg")
                     .placeholder(holder.empImage?.drawable)
                     .into(holder.empImage!!)
         }

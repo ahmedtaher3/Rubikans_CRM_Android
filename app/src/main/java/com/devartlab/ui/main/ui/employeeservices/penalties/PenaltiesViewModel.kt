@@ -35,8 +35,8 @@ class PenaltiesViewModel(application: Application) : AndroidViewModel(applicatio
     init {
         dataManager = (getApplication() as BaseApplication).dataManager!!
         progress = MutableLiveData()
-        retrofit = RetrofitClient.getInstance()
-        retrofit2 = RetrofitClient.getInstanceGoogleSheet()
+        retrofit = RetrofitClient(dataManager!!).instance!!
+        retrofit2 = RetrofitClient(dataManager!!).instanceGoogleSheet!!
         myAPI = retrofit!!.create(ApiServices::class.java)
         myAPI2 = retrofit2!!.create(ApiServicesGoogle::class.java)
         responseLive = MutableLiveData<ResponseModel>()

@@ -4,10 +4,8 @@ import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import android.text.Editable
-import android.text.Html
 import android.text.TextUtils
 import android.text.TextWatcher
 import android.view.View
@@ -22,11 +20,10 @@ import com.bumptech.glide.Glide
 import com.devartlab.R
 import com.devartlab.data.retrofit.ApiServices
 import com.devartlab.data.retrofit.RetrofitClient
-import com.devartlab.data.shared.DataManager
-import com.devartlab.model.CustomerList
 import com.devartlab.data.room.filterdata.FilterDataEntity
+import com.devartlab.data.shared.DataManager
 import com.devartlab.model.AdModel
-import com.devartlab.ui.main.ui.callmanagement.plan.choosestartpoint.StartPointAdapter
+import com.devartlab.model.CustomerList
 import com.devartlab.ui.main.ui.moreDetailsAds.MoreDetailsAdsActivity
 import com.devartlab.utils.Constants
 import com.devartlab.utils.MainSliderAdapter
@@ -74,7 +71,7 @@ class ChooseEmployee(
         setContentView(R.layout.activity_choose_employee)
 
 
-        retrofit = RetrofitClient.getInstance()
+        retrofit = RetrofitClient(dataManager!!).instance!!
         myAPI = retrofit!!.create(ApiServices::class.java)
         progressBar = findViewById(R.id.progressBar)
         close = findViewById(R.id.close)
@@ -90,7 +87,7 @@ class ChooseEmployee(
         textView = findViewById(R.id.textView)
 
         recyclerView = findViewById(R.id.recyclerView)
-        adapter = EmployeeSearchAdapter(context, chooseEmployeeInterFace, this)
+        adapter = EmployeeSearchAdapter(context, chooseEmployeeInterFace, this , dataManager)
         recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.adapter = adapter
 

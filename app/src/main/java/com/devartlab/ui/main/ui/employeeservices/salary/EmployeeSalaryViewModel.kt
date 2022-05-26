@@ -28,7 +28,7 @@ class EmployeeSalaryViewModel(application: Application) : AndroidViewModel(appli
     init {
         dataManager = (getApplication() as BaseApplication).dataManager!!
         progress = MutableLiveData()
-        retrofit = RetrofitClient.getInstance()
+        retrofit = RetrofitClient(dataManager!!).instance!!
         myAPI = retrofit!!.create(ApiServices::class.java)
         responseLive = MutableLiveData<ResponseModel>()
         responseLiveDelete = MutableLiveData<ResponseModel>()

@@ -66,7 +66,7 @@ class SyncDataDialog(
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.sync_data_dialog)
-        retrofit = RetrofitClient.getInstance()
+        retrofit = RetrofitClient(dataManager!!).instance!!
         myAPI = retrofit!!.create(ApiServices::class.java)
 
         massagesDao = DatabaseClient.getInstance(context)?.appDatabase?.massagesDao()!!

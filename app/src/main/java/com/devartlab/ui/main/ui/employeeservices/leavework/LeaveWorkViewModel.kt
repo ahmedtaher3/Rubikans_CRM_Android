@@ -30,7 +30,7 @@ class LeaveWorkViewModel(application: Application) : AndroidViewModel(applicatio
     init {
 
         dataManager = (getApplication() as BaseApplication).dataManager!!
-        retrofit = RetrofitClient.getInstanceGoogleSheet()
+        retrofit = RetrofitClient(dataManager!!).instanceGoogleSheet!!
         myAPI = retrofit!!.create(ApiServicesGoogle::class.java)
         responseLive = MutableLiveData<GoogleRequestResponse>()
 

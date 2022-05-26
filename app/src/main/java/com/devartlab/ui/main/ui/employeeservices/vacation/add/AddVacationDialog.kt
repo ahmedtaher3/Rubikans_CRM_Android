@@ -49,7 +49,7 @@ class AddVacationDialog(private var activity: Context, var dataManager: DataMana
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.add_vacations_dialog)
-        retrofit = RetrofitClient.getInstance()
+        retrofit = RetrofitClient(dataManager!!).instance!!
         myAPI = retrofit!!.create(ApiServices::class.java)
         VacationTypes = ArrayList()
         VacationTypesIdes = ArrayList()

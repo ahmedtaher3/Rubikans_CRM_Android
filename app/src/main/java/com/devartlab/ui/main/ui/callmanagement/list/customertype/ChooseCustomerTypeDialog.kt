@@ -25,7 +25,7 @@ class ChooseCustomerTypeDialog (context: Context, private var chooseCustomerType
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_choose_customer_type)
-        retrofit = RetrofitClient.getInstance()
+        retrofit = RetrofitClient(dataManager!!).instance!!
         myAPI = retrofit!!.create(ApiServices::class.java)
         dapter = ChooseCustomerTypeAdapter(context, chooseCustomerTypeInterFace , dataManager)
 

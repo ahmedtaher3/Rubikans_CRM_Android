@@ -12,6 +12,7 @@ import android.widget.ArrayAdapter
 import com.devartlab.R
 import com.devartlab.data.retrofit.ApiServices
 import com.devartlab.data.retrofit.RetrofitClient
+import com.devartlab.data.shared.DataManager
 import com.devartlab.model.DTExperience
 import com.devartlab.model.JobsModel
 import com.devartlab.ui.main.ui.profile.experience.OnAddExperienceClick
@@ -24,7 +25,7 @@ import retrofit2.Retrofit
 import java.util.*
 import kotlin.collections.ArrayList
 
-class AddExperienceDialog(private var activity: Context, var onAddExperienceClick: OnAddExperienceClick) : Dialog(activity) {
+class AddExperienceDialog(private var activity: Context, var onAddExperienceClick: OnAddExperienceClick , private val dataManager: DataManager) : Dialog(activity) {
 
     var myAPI: ApiServices? = null
     var retrofit: Retrofit? = null
@@ -39,7 +40,7 @@ class AddExperienceDialog(private var activity: Context, var onAddExperienceClic
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.add_experirnce_dialog)
-        retrofit = RetrofitClient.getInstance()
+        retrofit = RetrofitClient(dataManager!!).instance!!
         myAPI = retrofit!!.create(ApiServices::class.java)
 
 

@@ -56,16 +56,29 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
     var retrofitDevartLink: Retrofit? = null
 
     var databaseReference: DatabaseReference? = null
+     init {
 
-    init {
         dataManager = (getApplication() as BaseApplication).dataManager!!
-
-
-        retrofit = RetrofitClient.getInstance()
+        retrofit = RetrofitClient(dataManager!!).instance!!
         myAPI = retrofit!!.create(ApiServices::class.java)
 
 
-        retrofitDevartLink = RetrofitClient.getInstanceDevartLink()
+         var database: FirebaseDatabase = FirebaseDatabase.getInstance()
+         var reference: DatabaseReference = database.reference
+
+        val referenceAppSetting = reference.child("AppSetting")
+        referenceAppSetting.get().addOnSuccessListener {
+            try {
+                dataManager.saveURL(it.child("URL").value as String)
+            } catch (e: Exception) {
+
+                dataManager.saveURL("https://devartlabcrm.com/")
+            }
+        }
+
+
+
+        retrofitDevartLink = RetrofitClient(dataManager).instanceDevartLink
         myAPIDevartLink = retrofitDevartLink!!.create(ApiServices::class.java)
 
         responseLive = MutableLiveData<ResponseModel>()

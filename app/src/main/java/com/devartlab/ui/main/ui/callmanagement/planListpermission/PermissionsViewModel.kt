@@ -32,7 +32,7 @@ class PermissionsViewModel(application: Application) : AndroidViewModel(applicat
 
         responseLive = MediatorLiveData()
         dataManager = (getApplication() as BaseApplication).dataManager!!
-        retrofit = RetrofitClient.getInstance()
+        retrofit = RetrofitClient(dataManager!!).instance!!
         myAPI = retrofit!!.create(ApiServices::class.java)
         progress = MutableLiveData()
 

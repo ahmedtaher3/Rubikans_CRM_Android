@@ -20,7 +20,7 @@ class VideosViewModel(application: Application) : AndroidViewModel(application) 
         protected set
     var dataManager: DataManager
     fun getVideos() {
-        RetrofitClient.getApis4EShopping().getVideos("Bearer "+ UserPreferenceHelper.getUser().token)!!
+        RetrofitClient(dataManager).apis4EShopping.getVideos("Bearer "+ UserPreferenceHelper.getUser().token)!!
             .enqueue(object : Callback<ResponseVideos?> {
                 override fun onResponse(
                     call: Call<ResponseVideos?>,

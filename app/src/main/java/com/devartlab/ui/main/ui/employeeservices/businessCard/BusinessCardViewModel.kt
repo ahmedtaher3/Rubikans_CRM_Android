@@ -30,7 +30,7 @@ class BusinessCardViewModel(application: Application) : AndroidViewModel(applica
     init {
 
         dataManager = (getApplication() as BaseApplication).dataManager!!
-        retrofit = RetrofitClient.getInstanceGoogleSheet()
+        retrofit = RetrofitClient(dataManager!!).instanceGoogleSheet!!
         myAPI = retrofit!!.create(ApiServicesGoogle::class.java)
         responseLive = MutableLiveData<GoogleRequestResponse>()
 

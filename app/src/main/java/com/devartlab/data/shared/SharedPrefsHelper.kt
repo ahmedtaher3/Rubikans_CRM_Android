@@ -76,11 +76,15 @@ class SharedPrefsHelper(context: Context) {
     }
 
     val deviceToken: String?
-        get() = mSharedPreferences!!.getString(DeviceToken , "")
+        get() = mSharedPreferences!!.getString(DeviceToken, "")
     //////////////////////////////////////////////////////////////////////////////////
 
     val googleService: Boolean
         get() = mSharedPreferences.getBoolean(GoogleService, false)
+
+
+    //////////////////////////////////////////////////////////////////////////////////
+
 
     fun putIsLogin(b: Boolean) {
         mSharedPreferences.edit().putBoolean(IS_LOGGED, b).apply()
@@ -88,6 +92,23 @@ class SharedPrefsHelper(context: Context) {
 
     val isLogin: Boolean
         get() = mSharedPreferences.getBoolean(IS_LOGGED, false)
+
+    //////////////////////////////////////////////////////////////////////////////////
+
+
+
+    fun putIsLogin4e(b: Boolean) {
+        mSharedPreferences.edit().putBoolean(IS_LOGGED_4E, b).apply()
+    }
+
+    val isLogin4e: Boolean
+        get() = mSharedPreferences.getBoolean(IS_LOGGED_4E, false)
+
+
+
+
+    //////////////////////////////////////////////////////////////////////////////////
+
 
     fun putSupervisor(b: Boolean) {
         mSharedPreferences.edit().putBoolean(Supervisor, b).apply()
@@ -225,7 +246,17 @@ class SharedPrefsHelper(context: Context) {
     val lang: String?
         get() = mSharedPreferences.getString(LANG, "en")
 
+    //////////////////////////////////////////////////////////////////////////////////////////////////
+    fun putURL(name: String?) {
+        mSharedPreferences.edit().putString(URL, name).apply()
+    }
+
+    val url: String?
+        get() = mSharedPreferences.getString(URL, "http://devartlabcrm.com/")
+
+
     companion object {
+        const val URL = "URL"
         const val CLevelName = "CLevelName"
         const val CYCLE = "CYCLE"
         const val ADS = "ADS"
@@ -235,6 +266,7 @@ class SharedPrefsHelper(context: Context) {
         const val EmpId = "EmpId"
         const val FIRST_TIME = "FIRST_TIME"
         const val IS_LOGGED = "IS_LOGGED"
+        const val IS_LOGGED_4E = "IS_LOGGED_4E"
         const val Supervisor = "Supervisor"
         const val MY_PREFS = "MY_PREFS"
         const val NewOldCycle = "NewOldCycle"

@@ -2,24 +2,16 @@ package com.devartlab.ui.main.ui.callmanagement.ranks
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.graphics.Color
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.devartlab.R
-import com.devartlab.data.retrofit.ApiServices
-import com.devartlab.databinding.MrRankItemBinding
+import com.devartlab.data.shared.DataManager
 import com.devartlab.databinding.SvRankReportBinding
-import com.devartlab.model.CustomerTrade
-import com.devartlab.model.MRRank
 import com.devartlab.model.SVRank
-import com.devartlab.model.TradeDay
 
 
-class SVRankAdapter(private val context: Context, private var myData: ArrayList<SVRank>, private val onItemSelect: OnItemSelect) : RecyclerView.Adapter<SVRankAdapter.ViewHolder>() {
+class SVRankAdapter(private val context: Context, private var myData: ArrayList<SVRank>, private val onItemSelect: OnItemSelect , private val dataManager: DataManager) : RecyclerView.Adapter<SVRankAdapter.ViewHolder>() {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -68,14 +60,14 @@ class SVRankAdapter(private val context: Context, private var myData: ArrayList<
         if (model.imagePath != null)
         {
             Glide.with(context)
-                    .load(com.devartlab.AppConstants.ImageBaseURL + "ImageUpload/Employee/" + model.imagePath)
+                    .load(dataManager.url + "ImageUpload/Employee/" + model.imagePath)
                     .placeholder(holder._binding?.empImage?.drawable)
                     .into(holder._binding?.empImage!!)
         }
         else
         {
             Glide.with(context)
-                    .load(com.devartlab.AppConstants.ImageBaseURL + "ImageUpload/Employee/DefaultEmpImage.jpg")
+                    .load(dataManager.url + "ImageUpload/Employee/DefaultEmpImage.jpg")
                     .placeholder(holder._binding?.empImage?.drawable)
                     .into(holder._binding?.empImage!!)
         }

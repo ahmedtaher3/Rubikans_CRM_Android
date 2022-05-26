@@ -11,10 +11,11 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.devartlab.R
+import com.devartlab.base.BaseApplication
 import com.devartlab.data.retrofit.ApiServices
 import com.devartlab.data.retrofit.RetrofitClient
-import com.devartlab.data.shared.DataManager
 import com.devartlab.data.room.specialty.SpecialtyParentEntity
+import com.devartlab.data.shared.DataManager
 import com.devartlab.ui.dialogs.addplan.fragments.types.AddPlanTypesAdapter
 import com.devartlab.ui.main.ui.callmanagement.list.list.AddPlanListFragment
 import com.devartlab.utils.ProgressLoading
@@ -22,7 +23,6 @@ import io.reactivex.Observer
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
-import com.devartlab.base.BaseApplication
 import retrofit2.Retrofit
 
 /**
@@ -39,7 +39,7 @@ class AddPlanFragment : DialogFragment(), AddPlanTypesAdapter.AddPlanGetList {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         dataManager = ((context as AppCompatActivity).getApplication() as BaseApplication).dataManager!!
-        retrofit = RetrofitClient.getInstance()
+        retrofit = RetrofitClient(dataManager!!).instance!!
         myAPI = retrofit!!.create(ApiServices::class.java)
     }
 

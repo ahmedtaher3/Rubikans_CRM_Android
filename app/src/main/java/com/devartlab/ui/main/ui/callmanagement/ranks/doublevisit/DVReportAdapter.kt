@@ -6,12 +6,12 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.devartlab.data.retrofit.ApiServices
+import com.devartlab.data.shared.DataManager
 import com.devartlab.databinding.DoubleVisitReportItemBinding
 import com.devartlab.model.DoubleVisitReport
 
 
-class DVReportAdapter(private val context: Context, private var myData: ArrayList<DoubleVisitReport>, private val onItemSelect: OnItemSelect) : RecyclerView.Adapter<DVReportAdapter.ViewHolder>() {
+class DVReportAdapter(private val context: Context, private var myData: ArrayList<DoubleVisitReport>, private val onItemSelect: OnItemSelect , private val dataManager: DataManager) : RecyclerView.Adapter<DVReportAdapter.ViewHolder>() {
 
     private var itemsCopy = java.util.ArrayList<DoubleVisitReport>()
 
@@ -79,7 +79,7 @@ class DVReportAdapter(private val context: Context, private var myData: ArrayLis
         if (model.employeeImage != null)
         {
             Glide.with(context)
-                    .load(com.devartlab.AppConstants.ImageBaseURL + "ImageUpload/Employee/" + model.employeeImage)
+                    .load(dataManager.url + "ImageUpload/Employee/" + model.employeeImage)
                     .placeholder(holder._binding?.empImage?.drawable)
                     .into(holder._binding?.empImage!!)
         }
@@ -87,7 +87,7 @@ class DVReportAdapter(private val context: Context, private var myData: ArrayLis
 
         {
             Glide.with(context)
-                    .load(com.devartlab.AppConstants.ImageBaseURL + "ImageUpload/Employee/DefaultEmpImage.jpg")
+                    .load(dataManager.url + "ImageUpload/Employee/DefaultEmpImage.jpg")
                     .placeholder(holder._binding?.empImage?.drawable)
                     .into(holder._binding?.empImage!!)
         }

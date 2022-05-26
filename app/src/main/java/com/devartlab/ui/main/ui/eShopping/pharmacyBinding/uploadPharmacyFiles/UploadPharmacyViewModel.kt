@@ -4,7 +4,9 @@ import android.app.Application
 import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
+import com.devartlab.base.BaseApplication
 import com.devartlab.data.retrofit.RetrofitClient
+import com.devartlab.data.shared.DataManager
 import com.devartlab.ui.main.ui.eShopping.pharmacyBinding.uploadPharmacyFiles.model.pharmacydata.GetInfoPharmacyResponse
 import com.devartlab.ui.main.ui.eShopping.pharmacyBinding.uploadPharmacyFiles.model.updatePharmacyDetails
 import com.devartlab.ui.main.ui.eShopping.utils.UserPreferenceHelper
@@ -22,10 +24,12 @@ class UploadPharmacyViewModel(application: Application) : AndroidViewModel(appli
     var getInfoPharmacyResponse: MutableLiveData<GetInfoPharmacyResponse?>
         protected set
 
+    lateinit var dataManager: DataManager
+
     fun getUpdatePharmacyDetails(file: MultipartBody.Part?,file2: MultipartBody.Part?
                                  ,file3: MultipartBody.Part?,
                                  send: MutableMap<String, RequestBody>) {
-        RetrofitClient.getApis4EShopping().updatePharmacyDetails("Bearer "+ UserPreferenceHelper.getUser().token
+        RetrofitClient(dataManager).apis4EShopping.updatePharmacyDetails("Bearer "+ UserPreferenceHelper.getUser().token
             ,file,file2,file3, send)!!
             .enqueue(object : Callback<updatePharmacyDetails?> {
                 override fun onResponse(
@@ -46,7 +50,7 @@ class UploadPharmacyViewModel(application: Application) : AndroidViewModel(appli
     }
 
     fun getInfoPharmacy(id:String) {
-        RetrofitClient.getApis4EShopping().getInfoPharmacy("Bearer "+ UserPreferenceHelper.getUser().token,id)!!
+        RetrofitClient(dataManager).apis4EShopping.getInfoPharmacy("Bearer "+ UserPreferenceHelper.getUser().token,id)!!
             .enqueue(object : Callback<GetInfoPharmacyResponse?> {
                 override fun onResponse(
                     call: Call<GetInfoPharmacyResponse?>,
@@ -65,6 +69,8 @@ class UploadPharmacyViewModel(application: Application) : AndroidViewModel(appli
             })
     }
     init {
+
+        dataManager = (getApplication() as BaseApplication).dataManager!!
         errorMessage = MutableLiveData()
         updatePharmacyDetails = MutableLiveData()
         getInfoPharmacyResponse= MutableLiveData()

@@ -58,7 +58,7 @@ class CyclesDialog : DialogFragment(), CyclesAdapter.CycleInterface {
         }
 
         dataManager = (activity?.getApplication() as BaseApplication).dataManager!!
-        retrofit = RetrofitClient.getInstance()
+        retrofit = RetrofitClient(dataManager!!).instance!!
         myAPI = retrofit!!.create(ApiServices::class.java)
         adapter = CyclesAdapter(requireActivity(), this, dataManager!!)
     }

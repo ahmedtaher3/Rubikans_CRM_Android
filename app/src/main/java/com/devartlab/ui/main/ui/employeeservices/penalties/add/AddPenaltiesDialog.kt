@@ -44,7 +44,7 @@ class AddPenaltiesDialog(private var activity: Context, var dataManager: DataMan
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.add_penalties_dialog)
-        retrofit = RetrofitClient.getInstance()
+        retrofit = RetrofitClient(dataManager!!).instance!!
         myAPI = retrofit!!.create(ApiServices::class.java)
         PenaltyTypes = ArrayList()
         PenaltyTypesIdes = ArrayList()

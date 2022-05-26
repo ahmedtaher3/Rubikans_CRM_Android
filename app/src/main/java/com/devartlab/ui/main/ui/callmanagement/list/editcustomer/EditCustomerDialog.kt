@@ -34,7 +34,7 @@ class EditCustomerDialog(context: Context, var dataManager: DataManager, var edi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.edit_customer_dialog)
-        retrofit = RetrofitClient.getInstance()
+        retrofit = RetrofitClient(dataManager!!).instance!!
         myAPI = retrofit!!.create(ApiServices::class.java)
         val list = ArrayList<String>()
 

@@ -27,7 +27,7 @@ class PharmacyBindingViewModel(application: Application) : AndroidViewModel(appl
     var dataManager: DataManager
 
     fun getConnetctedPharmacies(q: String) {
-        RetrofitClient.getApis4EShopping().getConnetctedPharmacies("Bearer "+ UserPreferenceHelper.getUser().token,q)!!
+        RetrofitClient(dataManager).apis4EShopping.getConnetctedPharmacies("Bearer "+ UserPreferenceHelper.getUser().token,q)!!
             .enqueue(object : Callback<ConnetctedPharmaciesResponse?> {
                 override fun onResponse(
                     call: Call<ConnetctedPharmaciesResponse?>,
@@ -46,7 +46,7 @@ class PharmacyBindingViewModel(application: Application) : AndroidViewModel(appl
             })
     }
     fun getSearchForPharmacy(q: String) {
-        RetrofitClient.getApis4EShopping().getSearchForPharmacy("Bearer "+UserPreferenceHelper.getUser().token,q)!!
+        RetrofitClient(dataManager).apis4EShopping.getSearchForPharmacy("Bearer "+UserPreferenceHelper.getUser().token,q)!!
             .enqueue(object : Callback<SearchForPharmacyResponse?> {
                 override fun onResponse(
                     call: Call<SearchForPharmacyResponse?>,
@@ -65,7 +65,7 @@ class PharmacyBindingViewModel(application: Application) : AndroidViewModel(appl
             })
     }
     fun connetctedPharmacies(request: SearchForPharmacyRequest) {
-        RetrofitClient.getApis4EShopping().connetctedPharmacies("Bearer "+UserPreferenceHelper.getUser().token,request)!!
+        RetrofitClient(dataManager).apis4EShopping.connetctedPharmacies("Bearer "+UserPreferenceHelper.getUser().token,request)!!
             .enqueue(object : Callback<ConnectPharmacyResponse?> {
                 override fun onResponse(
                     call: Call<ConnectPharmacyResponse?>,

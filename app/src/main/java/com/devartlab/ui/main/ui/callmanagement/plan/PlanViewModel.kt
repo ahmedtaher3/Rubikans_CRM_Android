@@ -10,6 +10,7 @@ import com.devartlab.data.retrofit.ResponseModel
 import com.devartlab.data.retrofit.RetrofitClient
 import com.devartlab.data.room.DatabaseClient
 import com.devartlab.data.room.activity.ActivityDao
+import com.devartlab.data.room.activity.ActivityEntity
 import com.devartlab.data.room.plan.PlanDao
 import com.devartlab.data.room.plan.PlanEntity
 import com.devartlab.data.room.slidetimer.SlideTimerDao
@@ -18,7 +19,6 @@ import com.devartlab.data.room.values.ValuesDao
 import com.devartlab.data.shared.DataManager
 import com.devartlab.data.source.plan.PlanRepository
 import com.devartlab.data.source.values.ValuesRepository
-import com.devartlab.data.room.activity.ActivityEntity
 import com.devartlab.model.Plan
 import com.devartlab.utils.CommonUtilities
 import com.devartlab.utils.PlanUtlis
@@ -71,7 +71,7 @@ class PlanViewModel(application: Application) : AndroidViewModel(application) {
         valuesDao = DatabaseClient.getInstance(application)?.appDatabase?.valuesDao()
         activityDao = DatabaseClient.getInstance(application)?.appDatabase?.activityDao()
         dataManager = (getApplication() as BaseApplication).dataManager!!
-        retrofit = RetrofitClient.getInstance()
+        retrofit = RetrofitClient(dataManager!!).instance!!
         myAPI = retrofit!!.create(ApiServices::class.java)
         responseLive = MutableLiveData<Plan>()
         responseActivitiesLive = MutableLiveData<ArrayList<ActivityEntity>>()
@@ -207,7 +207,7 @@ class PlanViewModel(application: Application) : AndroidViewModel(application) {
 
 
                 }
-            })
+            }, dataManager)
 
 
     }

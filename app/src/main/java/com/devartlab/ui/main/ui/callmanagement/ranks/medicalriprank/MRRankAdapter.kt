@@ -6,12 +6,12 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.devartlab.data.retrofit.ApiServices
+import com.devartlab.data.shared.DataManager
 import com.devartlab.databinding.MrRankItemBinding
 import com.devartlab.model.MRRank
 
 
-class MRRankAdapter(private val context: Context, private var myData: ArrayList<MRRank>, private val onItemSelect: OnItemSelect) : RecyclerView.Adapter<MRRankAdapter.ViewHolder>() {
+class MRRankAdapter(private val context: Context, private var myData: ArrayList<MRRank>, private val onItemSelect: OnItemSelect , private val dataManager: DataManager) : RecyclerView.Adapter<MRRankAdapter.ViewHolder>() {
 
     private var itemsCopy = java.util.ArrayList<MRRank>()
 
@@ -65,7 +65,7 @@ class MRRankAdapter(private val context: Context, private var myData: ArrayList<
         if (model.imagePath != null)
         {
             Glide.with(context)
-                    .load(com.devartlab.AppConstants.ImageBaseURL + "ImageUpload/Employee/" + model.imagePath)
+                    .load(dataManager.url + "ImageUpload/Employee/" + model.imagePath)
                     .placeholder(holder._binding?.empImage?.drawable)
                     .into(holder._binding?.empImage!!)
         }
@@ -73,7 +73,7 @@ class MRRankAdapter(private val context: Context, private var myData: ArrayList<
 
         {
             Glide.with(context)
-                    .load(com.devartlab.AppConstants.ImageBaseURL + "ImageUpload/Employee/DefaultEmpImage.jpg")
+                    .load(dataManager.url + "ImageUpload/Employee/DefaultEmpImage.jpg")
                     .placeholder(holder._binding?.empImage?.drawable)
                     .into(holder._binding?.empImage!!)
         }

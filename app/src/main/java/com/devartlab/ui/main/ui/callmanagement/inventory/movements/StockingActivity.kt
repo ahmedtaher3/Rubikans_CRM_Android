@@ -3,27 +3,26 @@ package com.devartlab.ui.main.ui.callmanagement.inventory.movements
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.devartlab.R
 import com.devartlab.base.BaseActivity
-import com.devartlab.databinding.ActivityInventoryInventoryBinding
-import com.devartlab.model.Summary
-import com.google.gson.Gson
-import kotlinx.android.synthetic.main.activity_inventory_inventory.*
-
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import androidx.lifecycle.Observer
 import com.devartlab.data.retrofit.ApiServices
 import com.devartlab.data.retrofit.ResponseModel
 import com.devartlab.data.retrofit.RetrofitClient
 import com.devartlab.data.retrofit.VanStoctaking
+import com.devartlab.databinding.ActivityInventoryInventoryBinding
+import com.devartlab.model.Summary
 import com.devartlab.ui.main.ui.callmanagement.inventory.InventoryViewModel
-import com.devartlab.ui.main.ui.callmanagement.ranks.RanksViewModel
 import com.devartlab.ui.main.ui.callmanagement.inventory.ReportsFilterModel
+import com.devartlab.ui.main.ui.callmanagement.ranks.RanksViewModel
 import com.devartlab.ui.trade.*
+import com.google.gson.Gson
+import kotlinx.android.synthetic.main.activity_inventory_inventory.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 
 class StockingActivity : BaseActivity<ActivityInventoryInventoryBinding>(),
@@ -210,7 +209,7 @@ class StockingActivity : BaseActivity<ActivityInventoryInventoryBinding>(),
         progressbarInv.visibility = View.VISIBLE
         val appraisalBuildsSchema = Gson().toJsonTree(requestObject).asJsonObject
         System.out.println(" InventoryTrxWarehouseTransActionModel " + appraisalBuildsSchema.toString())
-        val retroInstance = RetrofitClient.getInstance().create(ApiServices::class.java)
+        val retroInstance = RetrofitClient(viewModel.dataManager!!).instance!!.create(ApiServices::class.java)
         val call = retroInstance.inventoryInsertAndUbdate(appraisalBuildsSchema)
         call.enqueue(object : Callback<ResponseModel> {
 

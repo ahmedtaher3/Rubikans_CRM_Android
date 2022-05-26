@@ -47,7 +47,7 @@ class CreateNewCustomerViewModel(application: Application) : AndroidViewModel(ap
     init {
 
         dataManager = (getApplication() as BaseApplication).dataManager!!
-        retrofit = RetrofitClient.getInstance()
+        retrofit = RetrofitClient(dataManager!!).instance!!
         myAPI = retrofit!!.create(ApiServices::class.java)
         responseLiveTypes = MutableLiveData()
         filterSpecialityResponseLiveChild = MutableLiveData()

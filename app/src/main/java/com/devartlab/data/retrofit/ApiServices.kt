@@ -13,8 +13,6 @@ import com.devartlab.a4eshopping.addProductsToThePharmacy.model.addOrderToCart.A
 import com.devartlab.a4eshopping.addProductsToThePharmacy.model.addProduct.AddToCardRequest
 import com.devartlab.a4eshopping.addProductsToThePharmacy.model.addProduct.AddToCardResponse
 import com.devartlab.a4eshopping.addProductsToThePharmacy.model.searchAllPharmacy.SearchAllPharmacyResponse
-import com.devartlab.ui.main.ui.eShopping.main.model.login4EShopping.Login4EShoppingRequest
-import com.devartlab.ui.main.ui.eShopping.ticket.model.sendMessages.SendMessagesResponse
 import com.devartlab.data.room.activity.ActivityEntity
 import com.devartlab.data.room.filterdata.FilterDataEntity
 import com.devartlab.data.room.list.ListEntity
@@ -33,8 +31,8 @@ import com.devartlab.ui.main.ui.devartlink.letsTalk.model.searchPeople.SearchPea
 import com.devartlab.ui.main.ui.devartlink.letsTalk.model.user.UserResponse
 import com.devartlab.ui.main.ui.devartlink.letsTalk.model.userID.UserIDResponse
 import com.devartlab.ui.main.ui.devartlink.model.WelcomePostResponse
-import com.devartlab.ui.main.ui.eShopping.pharmacyBinding.uploadPharmacyFiles.model.pharmacydata.GetInfoPharmacyResponse
 import com.devartlab.ui.main.ui.eShopping.addProductsToThePharmacy.model.showCart.ShowCartResponse
+import com.devartlab.ui.main.ui.eShopping.main.model.login4EShopping.Login4EShoppingRequest
 import com.devartlab.ui.main.ui.eShopping.main.model.login4EShopping.Login4EShoppingResponse
 import com.devartlab.ui.main.ui.eShopping.nearbyPharmacy.model.NearbyPharmacyResponse
 import com.devartlab.ui.main.ui.eShopping.orientationVideos.model.ResponseVideos
@@ -43,6 +41,7 @@ import com.devartlab.ui.main.ui.eShopping.pharmacyBinding.model.connectPharmacy.
 import com.devartlab.ui.main.ui.eShopping.pharmacyBinding.model.searchForPharmacy.ConnetctedPharmaciesResponse
 import com.devartlab.ui.main.ui.eShopping.pharmacyBinding.model.searchForPharmacy.SearchForPharmacyRequest
 import com.devartlab.ui.main.ui.eShopping.pharmacyBinding.model.searchForPharmacy.SearchForPharmacyResponse
+import com.devartlab.ui.main.ui.eShopping.pharmacyBinding.uploadPharmacyFiles.model.pharmacydata.GetInfoPharmacyResponse
 import com.devartlab.ui.main.ui.eShopping.pharmacyBinding.uploadPharmacyFiles.model.updatePharmacyDetails
 import com.devartlab.ui.main.ui.eShopping.pharmacySales.model.PharmacySalesResponse
 import com.devartlab.ui.main.ui.eShopping.pharmacySales.model.detailsPharmacySales.DetailsPharmacySalesResponse
@@ -62,6 +61,7 @@ import com.devartlab.ui.main.ui.eShopping.ticket.model.deleteMessages.DeleteMess
 import com.devartlab.ui.main.ui.eShopping.ticket.model.deleteTickets.DeleteTicketsResponse
 import com.devartlab.ui.main.ui.eShopping.ticket.model.fetchMessages.FetchMessagesResponse
 import com.devartlab.ui.main.ui.eShopping.ticket.model.getContacts.GetContactsResponse
+import com.devartlab.ui.main.ui.eShopping.ticket.model.sendMessages.SendMessagesResponse
 import com.devartlab.ui.main.ui.moreDetailsAds.model.SeeMoreRequest
 import com.devartlab.ui.main.ui.moreDetailsAds.model.SeeMoreResponse
 import com.google.gson.JsonArray
@@ -75,7 +75,7 @@ import retrofit2.http.*
 import java.util.*
 
 interface ApiServices {
-    @POST("DailyReport/SubmitDailyReport")
+    @POST("api/V1/DailyReport/SubmitDailyReport")
     @Headers(
         "Content-Type: application/json;charset=utf-8",
         "Accept: application/json;charset=utf-8",
@@ -93,25 +93,25 @@ interface ApiServices {
         @Body array: JsonObject
     ): Observable<ResponseModel>
 
-    @POST("AuthUsersApi/UpdatePermission")
+    @POST("api/V1/AuthUsersApi/UpdatePermission")
     fun updatePermission(@Query("pUserId") pUserId: Int): Observable<ResponseModel>
 
-    @GET("CyclePlan/OpenPlanDayPlan")
+    @GET("api/V1/CyclePlan/OpenPlanDayPlan")
     fun updatePlanPermission(@Query("AccountId") AccountId: Int): Observable<ResponseModel>
 
-    @GET("CyclePlan/OpenPlanDayList")
+    @GET("api/V1/CyclePlan/OpenPlanDayList")
     fun updateListPermission(@Query("AccountId") AccountId: Int): Observable<ResponseModel>
 
-    @GET("CyclePlan/GetOpenCyclePlan")
+    @GET("api/V1/CyclePlan/GetOpenCyclePlan")
     fun getPlan(@Query("AccountId") id: Int): Observable<ResponseModel>
 
-    @GET("CustomerList/GetCustomerList")
+    @GET("api/V1/CustomerList/GetCustomerList")
     fun getCustomerList(@Query("AccountId") AccountId: Int): Observable<ArrayList<CustomerList>>
 
-    @GET("AuthUsersApi/GetUserActivity")
+    @GET("api/V1/AuthUsersApi/GetUserActivity")
     fun getUserActivity(@Query("AccountId") AccountId: Int): Observable<ArrayList<ActivityEntity>>
 
-    @GET("CustomerList/GetCustomer")
+    @GET("api/V1/CustomerList/GetCustomer")
     fun getFilterCustomerList(
         @Query("AccountId") AccountId: Int,
         @Query("TerrAssignIdStr") TerrAssignIdStr: String,
@@ -123,7 +123,7 @@ interface ApiServices {
         @Query("cusBranchIds") cusBranchIds: String
     ): Observable<ArrayList<CustomerList>>
 
-    @GET("CustomerList/SearchCustomer")
+    @GET("api/V1/CustomerList/SearchCustomer")
     fun SearchCustomer(
         @Query("AccountId") AccountId: Int,
         @Query("TerrAssignIdStr") TerrAssignIdStr: String,
@@ -135,10 +135,10 @@ interface ApiServices {
         @Query("cusBranchIds") cusBranchIds: String
     ): Observable<ArrayList<ListEntity>>
 
-    @GET("CustomerList/GetCustomerListType")
+    @GET("api/V1/CustomerList/GetCustomerListType")
     fun getCustomerListType(@Query("AccountId") id: Int): Observable<ArrayList<SpecialtyParentEntity>>
 
-    @POST("CyclePlan/UpdatePlan")
+    @POST("api/V1/CyclePlan/UpdatePlan")
     @Headers(
         "Content-Type: application/json;charset=utf-8",
         "Accept: application/json;charset=utf-8",
@@ -150,7 +150,7 @@ interface ApiServices {
         @Body array: JsonArray
     ): Observable<SyncPlanResponse>
 
-    @POST("CustomerList/UpdateCustomerList")
+    @POST("api/V1/CustomerList/UpdateCustomerList")
     @Headers(
         "Content-Type: application/json;charset=utf-8",
         "Accept: application/json;charset=utf-8",
@@ -162,13 +162,13 @@ interface ApiServices {
         @Body array: JsonArray
     ): Observable<ArrayList<Response>>
 
-    @GET("CyclePlan/GetYtdCyclePlan")
+    @GET("api/V1/CyclePlan/GetYtdCyclePlan")
     fun getYtdCyclePlan(@Query("AccountId") id: Int): Observable<ArrayList<Cycle>>
 
     @get:GET("CyclePlan/GetYtdCyclePlan")
     val ytdCyclePlanAll: Observable<ArrayList<Cycle>>
 
-    @GET("LookupUtility/GetbyTableName")
+    @GET("api/V1/LookupUtility/GetbyTableName")
     fun getFilterData(
         @Query("AccountId") id: Int,
         @Query("TableName") tableName: String,
@@ -177,7 +177,7 @@ interface ApiServices {
         @Query("FilterText") filterText: String
     ): Observable<ArrayList<FilterDataEntity>>
 
-    @GET("LookupUtility/GetbyTableName")
+    @GET("api/V1/LookupUtility/GetbyTableName")
     fun getJobs(
         @Query("AccountId") id: Int,
         @Query("TableName") tableName: String,
@@ -185,10 +185,10 @@ interface ApiServices {
         @Query("FilterText") filterTSyncAllProductext: String
     ): Observable<ArrayList<JobsModel>>
 
-    @GET("Product/MasterFile/SyncAllProduct")
+    @GET("api/V1/Product/MasterFile/SyncAllProduct")
     fun syncProducts(@Query("AccountId") id: Int): Observable<ProductTable>
 
-    @POST("DailyReport/SyncReportCustomers")
+    @POST("api/V1/DailyReport/SyncReportCustomers")
     @Headers(
         "Content-Type: application/json;charset=utf-8",
         "Accept: application/json;charset=utf-8",
@@ -205,7 +205,7 @@ interface ApiServices {
         @Body array: JsonArray
     ): Observable<ArrayList<SyncReportMassage>>
 
-    @GET("CallManagmentReport/MRRankDashboard")
+    @GET("api/V1/CallManagmentReport/MRRankDashboard")
     fun getMRRankReport(
         @Query("pAccountsIdStr") pAccountsIdStr: String,
         @Query("pFromDate") pFromDate: String,
@@ -219,7 +219,7 @@ interface ApiServices {
         @Query("pPageSize") pPageSize: Int
     ): Observable<ResponseModel>
 
-    @GET("CallManagmentReport/GetPLanAndCover")
+    @GET("api/V1/CallManagmentReport/GetPLanAndCover")
     fun getPLanAndCover(
         @Query("pCustomerTypeIdStr") pAccountsIdStr: String,
         @Query("pEmployeeIdStr") pEmployeeIdStr: String,
@@ -228,34 +228,34 @@ interface ApiServices {
         @Query("pCycleId") pCycleId: Int
     ): Observable<ResponseModel>
 
-    @GET("DailyReport/GetDailyReport")
+    @GET("api/V1/DailyReport/GetDailyReport")
     fun getStartPointReport(
         @Query("AccountId") AccountId: String,
         @Query("pDate") pDate: String,
         @Query("pShiftId") pShiftId: String
     ): Observable<ResponseModel>
 
-    @GET("CallManagmentReport/DoubleVisitReport")
+    @GET("api/V1/CallManagmentReport/DoubleVisitReport")
     fun getDVReport(
         @Query("pFromDate") pFromDate: String,
         @Query("pToDate") pToDate: String,
         @Query("pSvIdStr") pSvIdStr: String
     ): Observable<ResponseModel>
 
-    @GET("CallManagmentReport/DoubleVisitDetails")
+    @GET("api/V1/CallManagmentReport/DoubleVisitDetails")
     fun getDVDetails(
         @Query("pFromDate") pFromDate: String,
         @Query("pToDate") pToDate: String,
         @Query("pEmployeeId") pEmployeeId: String
     ): Observable<ResponseModel>
 
-    @GET("CallManagmentReport/SVRank")
+    @GET("api/V1/CallManagmentReport/SVRank")
     fun getSvRankReport(
         @Query("pAccountsIdStr") pAccountsIdStr: String,
         @Query("pCycleId") pCycleId: Int
     ): Observable<ResponseModel>
 
-    @GET("CallManagmentReport/MRRankDashboardDetails")
+    @GET("api/V1/CallManagmentReport/MRRankDashboardDetails")
     fun getMRRankReportDetails(
         @Query("pAccountsIdStr") pAccountsIdStr: String,
         @Query("pFromDate") pFromDate: String,
@@ -269,7 +269,7 @@ interface ApiServices {
         @Query("pEmpId") pEmpId: Int
     ): Observable<ResponseModel>
 
-    @POST("CyclePlan/OpenPlanList")
+    @POST("api/V1/CyclePlan/OpenPlanList")
     @Headers(
         "Content-Type: application/json;charset=utf-8",
         "Accept: application/json;charset=utf-8",
@@ -277,7 +277,7 @@ interface ApiServices {
     )
     fun openPlanList(@Body array: JsonArray): Observable<ResponseModel>
 
-    @POST("CyclePlan/OpenPlanDay")
+    @POST("api/V1/CyclePlan/OpenPlanDay")
     @Headers(
         "Content-Type: application/json;charset=utf-8",
         "Accept: application/json;charset=utf-8",
@@ -285,7 +285,7 @@ interface ApiServices {
     )
     fun openPlanDay(@Body array: JsonArray): Observable<ResponseModel>
 
-    @POST("DailyReport/SyncDoubleVisitReportCustomer")
+    @POST("api/V1/DailyReport/SyncDoubleVisitReportCustomer")
     @Headers(
         "Content-Type: application/json;charset=utf-8",
         "Accept: application/json;charset=utf-8",
@@ -297,7 +297,7 @@ interface ApiServices {
         @Body array: JsonArray
     ): Observable<ArrayList<SyncReportMassage>>
 
-    @POST("DailyReport/Test/SyncDoubleVisitReportCustomer")
+    @POST("api/V1/DailyReport/Test/SyncDoubleVisitReportCustomer")
     @Headers(
         "Content-Type: application/json;charset=utf-8",
         "Accept: application/json;charset=utf-8",
@@ -309,7 +309,7 @@ interface ApiServices {
         @Body array: JsonObject
     ): Observable<ArrayList<DailyReportModel>>
 
-    @POST("DailyReport/SyncReportSlids")
+    @POST("api/V1/DailyReport/SyncReportSlids")
     @Headers(
         "Content-Type: application/json;charset=utf-8",
         "Accept: application/json;charset=utf-8",
@@ -321,7 +321,7 @@ interface ApiServices {
         @Body array: JsonArray
     ): Observable<ArrayList<SyncReportMassage>>
 
-    @POST("DailyReport/SyncUpdateEvaluationReport")
+    @POST("api/V1/DailyReport/SyncUpdateEvaluationReport")
     @Headers(
         "Content-Type: application/json;charset=utf-8",
         "Accept: application/json;charset=utf-8",
@@ -333,7 +333,7 @@ interface ApiServices {
         @Body array: JsonArray
     ): Observable<ArrayList<SyncReportMassage>>
 
-    @GET("CustomerList/GetStartpoint")
+    @GET("api/V1/CustomerList/GetStartpoint")
     fun getStartPointList(
         @Query("AccountId") AccountId: Int,
         @Query("TerrAssignIdStr") TerrAssignIdStr: String,
@@ -343,17 +343,17 @@ interface ApiServices {
         @Query("FilterText") FilterText: String
     ): Observable<ArrayList<ListEntity>>
 
-    @GET("CyclePlan/GetMeetingMember")
+    @GET("api/V1/CyclePlan/GetMeetingMember")
     fun getMeetingMember(@Query("EMpId") eMpId: Int): Observable<ArrayList<FilterDataEntity>>
 
-    @GET("CyclePlan/GetEMployeePlan")
+    @GET("api/V1/CyclePlan/GetEMployeePlan")
     fun getEmployeePlan(
         @Query("selectedEmpAccountId") selectedEmpAccountId: String,
         @Query("DayDateInMsFormat") dayDateInMsFormat: String,
         @Query("ShiftId") shiftId: String
     ): Observable<ArrayList<DoubleVisitEmp>>
 
-    @POST("DailyReport/ConfirmStartPoint")
+    @POST("api/V1/DailyReport/ConfirmStartPoint")
     fun confirmStartPoint(
         @Query("AccountId") AccountId: Int,
         @Query("SalesRptDateInMsFormat") SalesRptDateInMsFormat: String,
@@ -367,7 +367,7 @@ interface ApiServices {
         @Query("StartTime") StartTime: String
     ): Observable<ResponseModel>
 
-    @GET("CustomerDataBase/GetTerriotryCustomer")
+    @GET("api/V1/CustomerDataBase/GetTerriotryCustomer")
     fun customerDataBase(
         @Query("AccountId") AccountId: Int,
         @Query("TerrAssignId") TerrAssignId: String,
@@ -381,7 +381,7 @@ interface ApiServices {
 
     //////////////////////////////////////////////////////////////////////////////////////////
     @Multipart
-    @POST("EmployeeSelfService/SaveUpdateExpense")
+    @POST("api/V1/EmployeeSelfService/SaveUpdateExpense")
     fun SaveUpdateExpense(
         @Query("IsInsert") IsInsert: String,
         @Query("AccountId") AccountId: Int,
@@ -399,20 +399,20 @@ interface ApiServices {
         @Part IMAGE: MultipartBody.Part
     ): Observable<ResponseModel>
 
-    @GET("EmployeeSelfService/GetExpensesType")
+    @GET("api/V1/EmployeeSelfService/GetExpensesType")
     fun GetExpensesType(
         @Query("AccountId") AccountId: Int,
         @Query("EMpid") EMpid: Int,
         @Query("EmpTitleId") EmpTitleId: String
     ): Observable<ResponseModel>
 
-    @GET("EmployeeSelfService/DeleteExpense")
+    @GET("api/V1/EmployeeSelfService/DeleteExpense")
     fun DeleteExpense(
         @Query("AccountId") AccountId: Int,
         @Query("ExpId") ExpId: Int
     ): Observable<ResponseModel>
 
-    @GET("EmployeeSelfService/GetMOnthExpensesList")
+    @GET("api/V1/EmployeeSelfService/GetMOnthExpensesList")
     fun getMonthExpensesList(
         @Query("AccountId") id: Int,
         @Query("EmpId") EmpId: Int,
@@ -427,14 +427,14 @@ interface ApiServices {
     @get:GET("EmployeeSelfService/GetPenaltiesReason")
     val penaltiesReason: Observable<ResponseModel>
 
-    @GET("EmployeeSelfService/GetEmployeePenalties")
+    @GET("api/V1/EmployeeSelfService/GetEmployeePenalties")
     fun getEmployeePenalties(
         @Query("EmpId") EmpId: Int,
         @Query("Month") Month: String,
         @Query("Year") Year: String
     ): Observable<ResponseModel>
 
-    @GET("EmployeeSelfService/SaveUpdatePenalty")
+    @GET("api/V1/EmployeeSelfService/SaveUpdatePenalty")
     fun saveUpdatePenalty(
         @Query("IsInsert") IsInsert: String,
         @Query("AccountId") id: Int,
@@ -449,7 +449,7 @@ interface ApiServices {
         @Query("AddMac") AddMac: String
     ): Observable<ResponseModel>
 
-    @GET("EmployeeSelfService/DeletePenalty")
+    @GET("api/V1/EmployeeSelfService/DeletePenalty")
     fun deletePenalty(
         @Query("AccountId") id: Int,
         @Query("PenaltyId") PenaltyId: Int
@@ -459,26 +459,26 @@ interface ApiServices {
     @get:GET("EmployeeSelfService/GetVacationType")
     val vacationType: Observable<ResponseModel>
 
-    @GET("EmployeeSelfService/GetVacationBallance")
+    @GET("api/V1/EmployeeSelfService/GetVacationBallance")
     fun getVacationBallance(
         @Query("AccountId") AccountId: Int,
         @Query("EmpId") EmpId: String
     ): Observable<ResponseModel>
 
-    @GET("EmployeeSelfService/GetEmployeeVacation")
+    @GET("api/V1/EmployeeSelfService/GetEmployeeVacation")
     fun getEmployeeVacation(
         @Query("EmpId") EmpId: String,
         @Query("FromDateInMsFormat") FromDateInMsFormat: String,
         @Query("ToDateInMsFormat") ToDateInMsFormat: String
     ): Observable<ResponseModel>
 
-    @GET("EmployeeSelfService/DeleteVacation")
+    @GET("api/V1/EmployeeSelfService/DeleteVacation")
     fun deleteVacation(
         @Query("AccountId") AccountId: Int,
         @Query("VacationId") VacationId: Int
     ): Observable<ResponseModel>
 
-    @GET("EmployeeSelfService/SaveUpdateVacation")
+    @GET("api/V1/EmployeeSelfService/SaveUpdateVacation")
     fun saveUpdateVacation(
         @Query("IsInsert") IsInsert: String,
         @Query("AccountId") id: Int,
@@ -495,7 +495,7 @@ interface ApiServices {
     ): Observable<ResponseModel>
 
     //////////////////////////////////////////////////////////////////////////////////////
-    @POST("HumanResource/GetEmployeeMonthlyPaySlip")
+    @POST("api/V1/HumanResource/GetEmployeeMonthlyPaySlip")
     fun getEmployeeMonthlyPaySlip(
         @Query("AccountId") AccountId: Int,
         @Query("EMpid") EMpid: Int,
@@ -504,7 +504,7 @@ interface ApiServices {
     ): Observable<ResponseModel>
 
     //////////////////////////////////////////////////////////////////////////////////////
-    @POST("TimeAttendance/GetEmployeeFingerPrint")
+    @POST("api/V1/TimeAttendance/GetEmployeeFingerPrint")
     fun getFingerprintList(
         @Query("AccountId") AccountId: Int,
         @Query("EMpid") EmpId: Int,
@@ -514,11 +514,11 @@ interface ApiServices {
 
     //////////////////////////////////////////////////////////////////////////////////////
     @Multipart
-    @POST("EmployeeSelfService/UPloadFile")
+    @POST("api/V1/EmployeeSelfService/UPloadFile")
     fun update_image(@Part IMAGE: MultipartBody.Part): Observable<ResponseBody>
 
     //////////////////////////////////////////////////////////////////////////////////////
-    @POST("DailyReport/GetEMployeeDailyReport")
+    @POST("api/V1/DailyReport/GetEMployeeDailyReport")
     fun GetEmployeeDailyReport(
         @Query("IsTempView") isTemp: Boolean,
         @Query("AccountId") AccountId: Int,
@@ -527,14 +527,14 @@ interface ApiServices {
         @Query("ShiftId") ShiftId: Int
     ): Observable<ResponseModel>
 
-    @POST("DailyReport/GetEMployeeDailyReportDashBoard")
+    @POST("api/V1/DailyReport/GetEMployeeDailyReportDashBoard")
     fun GetEMployeeDailyReportDashBoard(
         @Query("AccountId") AccountId: Int,
         @Query("EmployeeAccountId") EmployeeAccountId: String,
         @Query("CycleId") CycleId: String
     ): Observable<ResponseModel>
 
-    @POST("DailyReport/TempSyncReportCustomer")
+    @POST("api/V1/DailyReport/TempSyncReportCustomer")
     @Headers(
         "Content-Type: application/json;charset=utf-8",
         "Accept: application/json;charset=utf-8",
@@ -547,14 +547,14 @@ interface ApiServices {
     ): Observable<ResponseModel>
 
     ///////////////////////////////////////////////////////////
-    @POST("DailyReport/GetEMployeeDailyReportAppraisalItem")
+    @POST("api/V1/DailyReport/GetEMployeeDailyReportAppraisalItem")
     fun GetEMployeeDailyReportAppraisalItem(
         @Query("AccountId") AccountId: Int,
         @Query("EmployeeAccountIdStr") EmployeeAccountIdStr: String
     ): Observable<ResponseModel>
 
     /////////////////////////////////////////////////
-    @POST("CyclePlan/GetPLanEditPermition")
+    @POST("api/V1/CyclePlan/GetPLanEditPermition")
     fun GetPLanEditPermition(
         @Query("AccountId") AccountId: Int,
         @Query("PlanId") PlanId: Int,
@@ -563,19 +563,19 @@ interface ApiServices {
     ): Observable<ResponseModel>
 
     /////////////////////////////////////////////////////////
-    @GET("LookupUtility/SearchEmployee")
+    @GET("api/V1/LookupUtility/SearchEmployee")
     fun filterEmployees(
         @Query("EmpId") EmpId: Int,
         @Query("FilterText") FilterText: String
     ): Observable<ArrayList<FilterDataEntity>>
 
     /////////////////////////////////////////////////////
-    @GET("Employees/GetById")
+    @GET("api/V1/Employees/GetById")
     fun GetEmployeeById(
         @Query("pEmpId") user_id: Int
     ): Observable<ResponseModel>
 
-    @POST("Employees/InsertAndUpdate")
+    @POST("api/V1/Employees/InsertAndUpdate")
     @Headers(
         "Contpreliveent-Type: application/json;charset=utf-8",
         "Accept: application/json;charset=utf-8",
@@ -583,38 +583,38 @@ interface ApiServices {
     )
     fun InsertAndUpdateEmployee(@Body array: JsonObject): Observable<ResponseModel>
 
-    @GET("AuthUsersApi/Login")
+    @GET("api/V1/AuthUsersApi/Login")
     fun login(
         @Query("UserName") UserName: String,
         @Query("Password") Password: String
     ): Observable<ResponseModel>
 
-    @GET("AuthUsersApi/LoginData")
+    @GET("api/V1/AuthUsersApi/LoginData")
     fun loginData(
         @Query("UserName") UserName: String,
         @Query("Password") Password: String
     ): Observable<ResponseModel>
 
-    @GET("AuthUsersApi/cycleData")
+    @GET("api/V1/AuthUsersApi/cycleData")
     fun cycleData(
         @Query("UserId") UserId: Int
     ): Observable<ResponseModel>
 
     //////////////////////////////////////////////////////////////////////////////////////////
-    @GET("MarketRequest/GetPendingRequests")
+    @GET("api/V1/MarketRequest/GetPendingRequests")
     fun getPendingRequests(
         @Query("pAccountId") pAccountId: String,
         @Query("pMyAccountId") pMyAccountId: Int,
         @Query("pMarkReqTypeId") pMarkReqTypeId: Int
     ): Observable<ResponseModel>
 
-    @GET("MarketRequest/ShowRequestDetails")
+    @GET("api/V1/MarketRequest/ShowRequestDetails")
     fun showRequestDetails(
         @Query("pRequestId") pRequestId: Int,
         @Query("pRequestApprovedId") pRequestApprovedId: Int
     ): Observable<ResponseModel>
 
-    @GET("MarketRequest/RequestsApproval")
+    @GET("api/V1/MarketRequest/RequestsApproval")
     fun sendRequestsApproval(
         @Query("pCurrentFlowdetIdStr") pCurrentFlowdetIdStr: String,
         @Query("pApproved") pApproved: Boolean,
@@ -626,7 +626,7 @@ interface ApiServices {
     ): Observable<ResponseModel>
 
     /////////////////////////////////////////////////////////
-    @POST("Items/GetAllItemReportByOption")
+    @POST("api/V1/Items/GetAllItemReportByOption")
     @Headers(
         "Content-Type: application/json;charset=utf-8",
         "Accept: application/json;charset=utf-8",
@@ -634,7 +634,7 @@ interface ApiServices {
     )
     fun getProducts(@Body `object`: JsonObject): Observable<ResponseModel>
 
-    @GET("Items/GetAllFinishedProduct")
+    @GET("api/V1/Items/GetAllFinishedProduct")
     fun getAllProducts(
         @Query("pPageSize") pPageSize: Int,
         @Query("pPageNumber") pPageNumber: Int,
@@ -642,7 +642,7 @@ interface ApiServices {
     ): Observable<ResponseModel>
 
 
-    @GET("InvDefSalesPurchaseType/GetAllType")
+    @GET("api/V1/InvDefSalesPurchaseType/GetAllType")
     fun getAllType(
         @Query("AllowToTrade") allowToTrade: Boolean
     ): Observable<ResponseModel>
@@ -651,7 +651,7 @@ interface ApiServices {
     @get:GET("InvDefSalesPurchaseType/GetAllType")
     val allType: Observable<ResponseModel>
 
-    @POST("SalesPurchase/InsertAndUpdate")
+    @POST("api/V1/SalesPurchase/InsertAndUpdate")
     @Headers(
         "Content-Type: application/json;charset=utf-8",
         "Accept: application/json;charset=utf-8",
@@ -659,7 +659,7 @@ interface ApiServices {
     )
     fun insertAndUpdate(@Body array: JsonObject): Observable<ResponseBody>
 
-    @POST("SalesPurchase/InvoiceCashCollection")
+    @POST("api/V1/SalesPurchase/InvoiceCashCollection")
     @Headers(
         "Content-Type: application/json;charset=utf-8",
         "Accept: application/json;charset=utf-8",
@@ -667,7 +667,7 @@ interface ApiServices {
     )
     fun cashCollection(@Body array: JsonArray): Observable<ResponseModel>
 
-    @POST("SalesPurchase/GetAllSalesPurchaseReport")
+    @POST("api/V1/SalesPurchase/GetAllSalesPurchaseReport")
     @Headers(
         "Content-Type: application/json;charset=utf-8",
         "Accept: application/json;charset=utf-8",
@@ -676,34 +676,34 @@ interface ApiServices {
     fun GetAllSalesPurchaseReport(@Body `object`: JsonObject): Observable<ResponseModel>
 
 
-    @POST("InventoryDefTrxType/GetAllInventoryTrxTypeByOption")
+    @POST("api/V1/InventoryDefTrxType/GetAllInventoryTrxTypeByOption")
     fun getDataFromAPI(@Body `object`: JsonObject): Observable<ResponseModel>
 
-    @POST("InventoryTransaction/GetAllInvnetoryTrxByOption")
+    @POST("api/V1/InventoryTransaction/GetAllInvnetoryTrxByOption")
     fun getAllInvnetoryTrxByOption(@Body `object`: JsonObject): Observable<ResponseModel>
 
 
-    @POST("InventoryDefTrxType/GetAllInventoryTrxTypeByOption")
+    @POST("api/V1/InventoryDefTrxType/GetAllInventoryTrxTypeByOption")
     fun getDataFromAPI2(@Body objects: JsonObject): Call<ResponseModel>
 
 
-    @GET("DefStores/GetAll")
+    @GET("api/V1/DefStores/GetAll")
     fun getStoresDataFromAPI(): Call<ResponseModel>
 
 
-    @POST("InventoryTransaction/InsertAndUpdate")
+    @POST("api/V1/InventoryTransaction/InsertAndUpdate")
     fun inventoryInsertAndUbdate(@Body objects: JsonObject): Call<ResponseModel>
 
 
-    @POST("InventoryTransaction/GetAllInvnetoryTrxByOption")
+    @POST("api/V1/InventoryTransaction/GetAllInvnetoryTrxByOption")
     fun getInventoryMovesDetails(@Body objects: JsonObject): Call<ResponseModel>
 
 
-    @POST("InventoryTransaction/GetAllInvnetoryTrxByOption")
+    @POST("api/V1/InventoryTransaction/GetAllInvnetoryTrxByOption")
     fun getInventoryMovesDetailsDescription(@Body objects: JsonObject): Call<ResponseModel>
 
 
-    @POST("InventoryTransaction/INventoryTrxApprove")
+    @POST("api/V1/InventoryTransaction/INventoryTrxApprove")
     fun approveInventoryMovesDetailsDescription(
         @Query("LoginUserAccountId") loginUserAccId: Int,
         @Query("IsApproved") isApprove: Boolean,
@@ -711,15 +711,15 @@ interface ApiServices {
     ): Call<ResponseModel>
 
 
-    @POST("InventoryTransaction/GetAllInvnetoryTrxByOption")
+    @POST("api/V1/InventoryTransaction/GetAllInvnetoryTrxByOption")
     fun getInventoryInventory(@Body objects: JsonObject): Call<ResponseModel>
 
 
-    @POST("InventoryTransaction/GetAllInvnetoryTrxByOption")
+    @POST("api/V1/InventoryTransaction/GetAllInvnetoryTrxByOption")
     fun getInventoryStatues(@Body objects: JsonObject): Call<ResponseModel>
 
 
-    @GET("DevartLabUtilities/GetAccountOffLineData")
+    @GET("api/V1/DevartLabUtilities/GetAccountOffLineData")
     fun syncOfflineData(
         @Query("AccountId") AccountId: Int,
         @Query("StoreId") StoreId: Int
@@ -817,7 +817,7 @@ interface ApiServices {
     @GET("get_districts")
     fun getDistricts(@Query("area_id") area_id: String?): Call<DistrictsResponse?>?
 
-    @POST("updateAddress")
+    @POST("/updateAddress")
     fun updateAddress(
         @Header("Authorization") token: String?,
         @Body request: UpdateAddressRequest?
@@ -942,7 +942,7 @@ interface ApiServices {
         @Query("message_id") message_id: String?
     ): Call<DeleteMessagesResponse?>?
 
-    @GET("videos")
+    @GET("api/V1/videos")
     fun getVideos(
         @Header("Authorization") token: String?
     ): Call<ResponseVideos?>?
@@ -991,7 +991,7 @@ interface ApiServices {
     @GET("version")
     fun getWelcomePost(): Call<WelcomePostResponse?>?
 
-    @POST("ads/see_more")
+    @POST("api/V1/ads/see_more")
     fun getSeeMore(
         @Body request: SeeMoreRequest?
     ): Call<SeeMoreResponse?>?

@@ -41,7 +41,7 @@ class MealsViewModel(application: Application) : AndroidViewModel(application) {
     init {
 
         dataManager = (getApplication() as BaseApplication).dataManager!!
-        retrofit = RetrofitClient.getInstanceGoogleSheet()
+        retrofit = RetrofitClient(dataManager!!).instanceGoogleSheet!!
         myAPI = retrofit!!.create(ApiServicesGoogle::class.java)
         responseLive = MutableLiveData<GoogleRequestResponse>()
         responseLiveMeals = MutableLiveData<GoogleRequestResponse>()

@@ -169,12 +169,12 @@ class LeaveWorkActivity : BaseActivity<LeaveWorkActivityBinding>(), ChooseEmploy
 
         if (model?.fileImage != null) {
             Glide.with(this)
-                .load(com.devartlab.AppConstants.ImageBaseURL + "ImageUpload/Employee/" + model.fileImage)
+                .load(viewModel.dataManager.url + "ImageUpload/Employee/" + model.fileImage)
                 .placeholder(binding.empImage?.drawable)
                 .into(binding.empImage!!)
         } else {
             Glide.with(this)
-                .load(com.devartlab.AppConstants.ImageBaseURL + "ImageUpload/Employee/DefaultEmpImage.jpg")
+                .load(viewModel.dataManager.url + "ImageUpload/Employee/DefaultEmpImage.jpg")
                 .placeholder(binding.empImage?.drawable)
                 .into(binding.empImage!!)
         }

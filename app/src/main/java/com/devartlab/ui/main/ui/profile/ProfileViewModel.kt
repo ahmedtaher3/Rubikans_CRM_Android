@@ -32,7 +32,7 @@ class ProfileViewModel(application: Application) : AndroidViewModel(application)
     init {
 
         dataManager = (getApplication() as BaseApplication).dataManager!!
-        retrofit = RetrofitClient.getInstance()
+        retrofit = RetrofitClient(dataManager!!).instance!!
         myAPI = retrofit!!.create(ApiServices::class.java)
         responseLive = MutableLiveData<ResponseModel>()
         responseLiveUpdate = MutableLiveData<ResponseModel>()

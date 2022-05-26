@@ -15,10 +15,9 @@ import androidx.lifecycle.ViewModelProviders
 import com.bumptech.glide.Glide
 import com.devartlab.R
 import com.devartlab.base.BaseFragment
-import com.devartlab.data.retrofit.ApiServices
+import com.devartlab.data.room.filterdata.FilterDataEntity
 import com.devartlab.databinding.MrRankFragmentBinding
 import com.devartlab.model.Cycle
-import com.devartlab.data.room.filterdata.FilterDataEntity
 import com.devartlab.model.MRRank
 import com.devartlab.ui.dialogs.chooseemployee.ChooseEmployee
 import com.devartlab.ui.dialogs.chooseemployee.ChooseEmployeeInterFace
@@ -28,7 +27,6 @@ import com.devartlab.ui.main.ui.cycles.ChangeCycleInterface
 import com.devartlab.utils.CommonUtilities
 import com.devartlab.utils.ProgressLoading
 import com.devartlab.utils.RankBottomSheet
-import kotlin.collections.ArrayList
 
 
 class MRRankFragment : BaseFragment<MrRankFragmentBinding>(), MRRankAdapter.OnItemSelect, ChooseEmployeeInterFace, ChangeCycleInterface {
@@ -48,7 +46,7 @@ class MRRankFragment : BaseFragment<MrRankFragmentBinding>(), MRRankAdapter.OnIt
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel = ViewModelProviders.of(this).get(RanksViewModel::class.java)
-        adapter = MRRankAdapter(baseActivity, ArrayList(), this)
+        adapter = MRRankAdapter(baseActivity, ArrayList(), this , viewModel.dataManager)
     }
 
     override fun getLayoutId(): Int {
@@ -251,12 +249,12 @@ class MRRankFragment : BaseFragment<MrRankFragmentBinding>(), MRRankAdapter.OnIt
         binding.empImage.setImageResource(R.drawable.user_logo);
         if (model?.fileImage != null) {
             Glide.with(baseActivity)
-                    .load(com.devartlab.AppConstants.ImageBaseURL + "ImageUpload/Employee/" + model.fileImage)
+                    .load(viewModel.dataManager.url + "ImageUpload/Employee/" + model.fileImage)
                     .placeholder(binding.empImage?.drawable)
                     .into(binding.empImage!!)
         } else {
             Glide.with(baseActivity)
-                    .load(com.devartlab.AppConstants.ImageBaseURL + "ImageUpload/Employee/DefaultEmpImage.jpg")
+                    .load(viewModel.dataManager.url + "ImageUpload/Employee/DefaultEmpImage.jpg")
                     .placeholder(binding.empImage?.drawable)
                     .into(binding.empImage!!)
         }

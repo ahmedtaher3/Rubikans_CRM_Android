@@ -3,10 +3,8 @@ package com.devartlab.ui.main.ui.callmanagement.ranks.doublevisit
 import android.content.Context
 import android.content.Intent
 import android.graphics.BitmapFactory
-import android.os.Build
 import android.os.Bundle
 import android.text.Editable
-import android.text.Html
 import android.text.TextWatcher
 import android.util.Base64
 import android.view.View
@@ -17,12 +15,11 @@ import androidx.lifecycle.ViewModelProviders
 import com.bumptech.glide.Glide
 import com.devartlab.R
 import com.devartlab.base.BaseFragment
-import com.devartlab.data.retrofit.ApiServices
+import com.devartlab.data.room.filterdata.FilterDataEntity
 import com.devartlab.databinding.DvReportFragmentBinding
+import com.devartlab.model.AdModel
 import com.devartlab.model.Cycle
 import com.devartlab.model.DoubleVisitReport
-import com.devartlab.data.room.filterdata.FilterDataEntity
-import com.devartlab.model.AdModel
 import com.devartlab.ui.dialogs.chooseemployee.ChooseEmployee
 import com.devartlab.ui.dialogs.chooseemployee.ChooseEmployeeInterFace
 import com.devartlab.ui.main.ui.callmanagement.ranks.RanksViewModel
@@ -52,7 +49,7 @@ class DVReportFragment : BaseFragment<DvReportFragmentBinding>(), DVReportAdapte
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel = ViewModelProviders.of(this).get(RanksViewModel::class.java)
-        adapter = DVReportAdapter(baseActivity, ArrayList(), this)
+        adapter = DVReportAdapter(baseActivity, ArrayList(), this , viewModel.dataManager)
 
 
     }
@@ -168,7 +165,7 @@ class DVReportFragment : BaseFragment<DvReportFragmentBinding>(), DVReportAdapte
         if (model?.fileImage != null)
         {
             Glide.with(baseActivity)
-                    .load(com.devartlab.AppConstants.ImageBaseURL + "ImageUpload/Employee/" + model.fileImage)
+                    .load(viewModel.dataManager.url + "ImageUpload/Employee/" + model.fileImage)
                     .placeholder(binding.empImage?.drawable)
                     .into(binding.empImage!!)
         }
@@ -176,7 +173,7 @@ class DVReportFragment : BaseFragment<DvReportFragmentBinding>(), DVReportAdapte
 
         {
             Glide.with(baseActivity)
-                    .load(com.devartlab.AppConstants.ImageBaseURL + "ImageUpload/Employee/DefaultEmpImage.jpg")
+                    .load(viewModel.dataManager.url + "ImageUpload/Employee/DefaultEmpImage.jpg")
                     .placeholder(binding.empImage?.drawable)
                     .into(binding.empImage!!)
         }

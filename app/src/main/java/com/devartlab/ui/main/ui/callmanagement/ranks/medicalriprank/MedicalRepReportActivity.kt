@@ -33,12 +33,12 @@ class MedicalRepReportActivity : BaseActivity<ActivityMedicalReportBinding>() {
 
         if (intent.getStringExtra("IMAGE") != null) {
             Glide.with(this)
-                    .load(com.devartlab.AppConstants.ImageBaseURL + "ImageUpload/Employee/" + intent.getStringExtra("IMAGE"))
+                    .load(viewModel.dataManager.url + "ImageUpload/Employee/" + intent.getStringExtra("IMAGE"))
                     .placeholder(binding?.empImage?.drawable)
                     .into(binding?.empImage!!)
         } else {
             Glide.with(this)
-                    .load(com.devartlab.AppConstants.ImageBaseURL + "ImageUpload/Employee/DefaultEmpImage.jpg")
+                    .load(viewModel.dataManager.url + "ImageUpload/Employee/DefaultEmpImage.jpg")
                     .placeholder(binding?.empImage?.drawable)
                     .into(binding?.empImage!!)
         }

@@ -10,7 +10,6 @@ import com.devartlab.base.BaseApplication;
 import com.devartlab.data.retrofit.RetrofitClient;
 import com.devartlab.data.shared.DataManager;
 import com.devartlab.ui.main.ui.devartlink.letsTalk.model.searchPeople.SearchPeapleResponse;
-import com.devartlab.ui.main.ui.devartlink.letsTalk.model.user.UserResponse;
 import com.devartlab.ui.main.ui.devartlink.letsTalk.model.userID.UserIDResponse;
 import com.devartlab.ui.main.ui.eShopping.utils.UserPreferenceHelper;
 
@@ -46,7 +45,7 @@ public class LetsTalkViewModel extends AndroidViewModel {
         return peapleResponseMutableLiveData;
     }
     public void getpeapleSearchList(){
-        RetrofitClient.getApis().getSearchPeaple().enqueue(new Callback<SearchPeapleResponse>() {
+        new RetrofitClient(dataManager).getApis().getSearchPeaple().enqueue(new Callback<SearchPeapleResponse>() {
             @Override
             public void onResponse(Call<SearchPeapleResponse> call, Response<SearchPeapleResponse> response) {
                 if (response.isSuccessful()){
@@ -64,7 +63,7 @@ public class LetsTalkViewModel extends AndroidViewModel {
     }
 
     public void getUserID(String userID){
-        RetrofitClient.getApis().getUserID(UserPreferenceHelper.getUserChat()
+        new RetrofitClient(dataManager).getApis().getUserID(UserPreferenceHelper.getUserChat()
                 .getId(),userID).enqueue(new Callback<UserIDResponse>() {
             @Override
             public void onResponse(Call<UserIDResponse> call, Response<UserIDResponse> response) {
@@ -74,7 +73,6 @@ public class LetsTalkViewModel extends AndroidViewModel {
                     userIDResponseMutableLiveData.postValue(response.body());
                 }
             }
-
             @Override
             public void onFailure(Call<UserIDResponse> call, Throwable t) {
                 errorMessage.postValue(1);

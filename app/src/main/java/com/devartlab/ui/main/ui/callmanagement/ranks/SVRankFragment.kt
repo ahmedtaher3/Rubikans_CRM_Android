@@ -12,10 +12,9 @@ import androidx.lifecycle.ViewModelProviders
 import com.bumptech.glide.Glide
 import com.devartlab.R
 import com.devartlab.base.BaseFragment
-import com.devartlab.data.retrofit.ApiServices
+import com.devartlab.data.room.filterdata.FilterDataEntity
 import com.devartlab.databinding.SvRankFragmentBinding
 import com.devartlab.model.Cycle
-import com.devartlab.data.room.filterdata.FilterDataEntity
 import com.devartlab.model.SVRank
 import com.devartlab.ui.dialogs.chooseemployee.ChooseEmployee
 import com.devartlab.ui.dialogs.chooseemployee.ChooseEmployeeInterFace
@@ -39,7 +38,7 @@ class SVRankFragment : BaseFragment<SvRankFragmentBinding>(), SVRankAdapter.OnIt
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel = ViewModelProviders.of(this).get(RanksViewModel::class.java)
-        adapter = SVRankAdapter(baseActivity, ArrayList(), this)
+        adapter = SVRankAdapter(baseActivity, ArrayList(), this , viewModel.dataManager)
     }
 
     override fun getLayoutId(): Int {
@@ -149,12 +148,12 @@ class SVRankFragment : BaseFragment<SvRankFragmentBinding>(), SVRankAdapter.OnIt
         binding.empImage.setImageResource(R.drawable.user_logo);
         if (model?.fileImage != null) {
             Glide.with(baseActivity)
-                    .load(com.devartlab.AppConstants.ImageBaseURL + "ImageUpload/Employee/" + model.fileImage)
+                    .load(viewModel.dataManager.url + "ImageUpload/Employee/" + model.fileImage)
                     .placeholder(binding.empImage?.drawable)
                     .into(binding.empImage!!)
         } else {
             Glide.with(baseActivity)
-                    .load(com.devartlab.AppConstants.ImageBaseURL + "ImageUpload/Employee/DefaultEmpImage.jpg")
+                    .load(viewModel.dataManager.url + "ImageUpload/Employee/DefaultEmpImage.jpg")
                     .placeholder(binding.empImage?.drawable)
                     .into(binding.empImage!!)
         }

@@ -4,7 +4,9 @@ import android.app.Application
 import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
+import com.devartlab.base.BaseApplication
 import com.devartlab.data.retrofit.RetrofitClient
+import com.devartlab.data.shared.DataManager
 import com.devartlab.ui.main.ui.callmanagement.incentiveRule.model.DevartLabIncentiveResponse
 import com.devartlab.ui.main.ui.devartLabTeam.model.DevartLabTeamResponse
 import retrofit2.Call
@@ -19,8 +21,10 @@ class DevartLabTeamViewModel(application: Application) : AndroidViewModel(applic
     var devartLabIncentiveResponse: MutableLiveData<DevartLabIncentiveResponse?>
         protected set
 
+    lateinit var dataManager: DataManager
+
     fun getDevartLabTeam(_id: String) {
-        RetrofitClient.getApis().getDevartLabTeam(_id)!!
+        RetrofitClient(dataManager).apis.getDevartLabTeam(_id)!!
             .enqueue(object : Callback<DevartLabTeamResponse?> {
                 override fun onResponse(
                     call: Call<DevartLabTeamResponse?>,
@@ -40,7 +44,7 @@ class DevartLabTeamViewModel(application: Application) : AndroidViewModel(applic
     }
 
     fun getIncentive(_id: String) {
-        RetrofitClient.getApis().getIncentive(_id)!!
+        RetrofitClient(dataManager).apis.getIncentive(_id)!!
             .enqueue(object : Callback<DevartLabIncentiveResponse?> {
                 override fun onResponse(
                     call: Call<DevartLabIncentiveResponse?>,
@@ -60,6 +64,10 @@ class DevartLabTeamViewModel(application: Application) : AndroidViewModel(applic
     }
 
     init {
+
+        dataManager = (application as BaseApplication).dataManager!!
+
+
         devartLabTeamResponse = MutableLiveData()
         errorMessage = MutableLiveData()
         devartLabIncentiveResponse=MutableLiveData()

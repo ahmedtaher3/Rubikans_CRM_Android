@@ -35,7 +35,7 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
         dataManager = (getApplication<Application>() as BaseApplication).dataManager!!
         progressGoogle = MutableLiveData()
         responseLiveRequests = MutableLiveData()
-        retrofit2 = RetrofitClient.getInstanceGoogleSheet()
+        retrofit2 = RetrofitClient(dataManager!!).instanceGoogleSheet!!
         authorityDao = DatabaseClient.getInstance(getApplication())?.appDatabase?.authorityDao()!!
 
         myAPI2 = retrofit2!!.create(ApiServicesGoogle::class.java)

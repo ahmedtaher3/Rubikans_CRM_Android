@@ -38,7 +38,7 @@ class ApproveRequestsViewModel(application: Application) : AndroidViewModel(appl
     init {
 
         dataManager = (getApplication() as BaseApplication).dataManager!!
-        retrofit = RetrofitClient.getInstanceGoogleSheet()
+        retrofit = RetrofitClient(dataManager!!).instanceGoogleSheet!!
         myAPI = retrofit!!.create(ApiServicesGoogle::class.java)
         responseLive = MutableLiveData<GoogleRequestResponse>()
         responseLiveRequests = MutableLiveData<GoogleRequestResponse>()

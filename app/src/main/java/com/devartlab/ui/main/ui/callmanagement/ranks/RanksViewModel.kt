@@ -35,7 +35,7 @@ class RanksViewModel(application: Application) : AndroidViewModel(application) {
         responseLiveDetails = MediatorLiveData()
         filterSpecialityResponseLive = MediatorLiveData()
         dataManager = (getApplication() as BaseApplication).dataManager!!
-        retrofit = RetrofitClient.getInstance()
+        retrofit = RetrofitClient(dataManager!!).instance!!
         myAPI = retrofit!!.create(ApiServices::class.java)
         progress = MutableLiveData()
 

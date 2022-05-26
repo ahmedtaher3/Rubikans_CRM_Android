@@ -37,7 +37,7 @@ class RequestVoucherViewModel(application: Application) : AndroidViewModel(appli
         protected set
     var dataManager: DataManager
     fun getCompaignVouchers() {
-        RetrofitClient.getApis4EShopping().getCompaignVouchers("Bearer "+ UserPreferenceHelper.getUser().token,dataManager.getLang())!!
+        RetrofitClient(dataManager).apis4EShopping.getCompaignVouchers("Bearer "+ UserPreferenceHelper.getUser().token,dataManager.getLang())!!
             .enqueue(object : Callback<CompaignVouchersResponse?> {
                 override fun onResponse(
                     call: Call<CompaignVouchersResponse?>,
@@ -56,7 +56,7 @@ class RequestVoucherViewModel(application: Application) : AndroidViewModel(appli
             })
     }
     fun getDoctors(q:String) {
-        RetrofitClient.getApis4EShopping().getDoctors("Bearer "+ UserPreferenceHelper.getUser().token,q)!!
+        RetrofitClient(dataManager).apis4EShopping.getDoctors("Bearer "+ UserPreferenceHelper.getUser().token,q)!!
             .enqueue(object : Callback<GetDoctorsResponse?> {
                 override fun onResponse(
                     call: Call<GetDoctorsResponse?>,
@@ -75,7 +75,7 @@ class RequestVoucherViewModel(application: Application) : AndroidViewModel(appli
             })
     }
     fun getVoucherRequest(voucherRequestRequest:VoucherRequestRequest) {
-        RetrofitClient.getApis4EShopping().getVoucherRequest("Bearer "+ UserPreferenceHelper.getUser().token,voucherRequestRequest)!!
+        RetrofitClient(dataManager).apis4EShopping.getVoucherRequest("Bearer "+ UserPreferenceHelper.getUser().token,voucherRequestRequest)!!
             .enqueue(object : Callback<VoucherRequestResponse?> {
                 override fun onResponse(
                     call: Call<VoucherRequestResponse?>,
@@ -94,7 +94,7 @@ class RequestVoucherViewModel(application: Application) : AndroidViewModel(appli
             })
     }
     fun getMyVoucherRequest() {
-        RetrofitClient.getApis4EShopping().getMyVoucherRequest("Bearer "+ UserPreferenceHelper.getUser().token)!!
+        RetrofitClient(dataManager).apis4EShopping.getMyVoucherRequest("Bearer "+ UserPreferenceHelper.getUser().token)!!
             .enqueue(object : Callback<MyVoucherRequestResponse?> {
                 override fun onResponse(
                     call: Call<MyVoucherRequestResponse?>,
@@ -113,7 +113,7 @@ class RequestVoucherViewModel(application: Application) : AndroidViewModel(appli
             })
     }
     fun getVouchers(id:String) {
-        RetrofitClient.getApis4EShopping().getVouchers("Bearer "+ UserPreferenceHelper.getUser().token,id)!!
+        RetrofitClient(dataManager).apis4EShopping.getVouchers("Bearer "+ UserPreferenceHelper.getUser().token,id)!!
             .enqueue(object : Callback<GetVoucherResponse?> {
                 override fun onResponse(
                     call: Call<GetVoucherResponse?>,
@@ -132,7 +132,7 @@ class RequestVoucherViewModel(application: Application) : AndroidViewModel(appli
             })
     }
     fun getDeliverVoucher(voucherRequestRequest: DeliverVoucherRequest) {
-        RetrofitClient.getApis4EShopping().getDeliverVoucher("Bearer "+ UserPreferenceHelper.getUser().token,voucherRequestRequest)!!
+        RetrofitClient(dataManager).apis4EShopping.getDeliverVoucher("Bearer "+ UserPreferenceHelper.getUser().token,voucherRequestRequest)!!
             .enqueue(object : Callback<DeliverVoucherResponse?> {
                 override fun onResponse(
                     call: Call<DeliverVoucherResponse?>,

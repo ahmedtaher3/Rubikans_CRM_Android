@@ -32,7 +32,7 @@ class EmployeeReportViewModel(application: Application) : AndroidViewModel(appli
 
 
         dataManager = (getApplication() as BaseApplication).dataManager!!
-        retrofit = RetrofitClient.getInstance()
+        retrofit = RetrofitClient(dataManager!!).instance!!
         myAPI = retrofit!!.create(ApiServices::class.java)
         responseLiveDay = MutableLiveData<ResponseModel>()
         responseLiveCycle = MutableLiveData<ResponseModel>()

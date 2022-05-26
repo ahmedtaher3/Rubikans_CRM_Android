@@ -10,6 +10,7 @@ import com.devartlab.data.room.DatabaseClient
 import com.devartlab.data.room.plan.PlanEntity
 import com.devartlab.data.room.startPoint.StartPointEntity
 import com.devartlab.data.room.values.ValuesEntity
+import com.devartlab.data.shared.DataManager
 import com.devartlab.model.PlanJson
 import com.devartlab.model.Shift
 import com.devartlab.model.SyncPlanResponse
@@ -28,9 +29,10 @@ object PlanUtlis {
     fun syncPlan(application: Application, onPlanData: OnSyncPlan) {
 
 
-        val retrofit = RetrofitClient.getInstance()
-        val myAPI = retrofit!!.create(ApiServices::class.java)
+
         val dataManager = (application as BaseApplication).dataManager!!
+        val retrofit = RetrofitClient(dataManager!!).instance!!
+        val myAPI = retrofit!!.create(ApiServices::class.java)
         val planDao = DatabaseClient.getInstance(application)?.appDatabase?.planDao()
         val valuesDao = DatabaseClient.getInstance(application)?.appDatabase?.valuesDao()
         val startPointDao =
@@ -286,10 +288,10 @@ object PlanUtlis {
 
     }
 
-    fun updatePlan(application: Application, date: String, onPlanData: OnSyncPlan) {
+    fun updatePlan(application: Application, date: String, onPlanData: OnSyncPlan , dataManager: DataManager) {
 
 
-        val retrofit = RetrofitClient.getInstance()
+        val retrofit = RetrofitClient(dataManager!!).instance!!
         val myAPI = retrofit!!.create(ApiServices::class.java)
         val dataManager = (application as BaseApplication).dataManager!!
         val planDao = DatabaseClient.getInstance(application)?.appDatabase?.planDao()

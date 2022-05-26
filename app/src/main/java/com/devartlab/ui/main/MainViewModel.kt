@@ -120,12 +120,12 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     init {
         dataManager = (getApplication() as BaseApplication).dataManager!!
-        retrofit = RetrofitClient.getInstance()
-        retrofit2 = RetrofitClient.getInstanceGoogleSheet()
+        retrofit = RetrofitClient(dataManager!!).instance!!
+        retrofit2 = RetrofitClient(dataManager!!).instanceGoogleSheet!!
         myAPI = retrofit!!.create(ApiServices::class.java)
         myAPI2 = retrofit2!!.create(ApiServicesGoogle::class.java)
         errorMessage = MutableLiveData()//error message
-        welcomePostResponse= MutableLiveData()//welcome post
+        welcomePostResponse = MutableLiveData()//welcome post
 
         progress = MutableLiveData()
         login4EShoppingResponse = MutableLiveData()
@@ -200,7 +200,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
             val allConfirmed = planDao?.allConfirmed
             val json = Gson().toJson(allConfirmed)
-            CommonUtilities.writeToSDFile(json , getApplication())
+            CommonUtilities.writeToSDFile(json, getApplication())
         }
             .subscribeOn(Schedulers.io())
             .subscribe()
@@ -464,7 +464,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     //function welcome post
     fun getWelcomePost() {
-        RetrofitClient.getApis().getWelcomePost()!!
+        RetrofitClient(dataManager).apis.getWelcomePost()!!
             .enqueue(object : Callback<WelcomePostResponse?> {
                 override fun onResponse(
                     call: Call<WelcomePostResponse?>,
@@ -484,7 +484,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     //function login 4EShopping
     fun getUserModel(activity: AppCompatActivity, login4EShoppingRequest: Login4EShoppingRequest) {
-
+        progress.postValue(1)
         val getToken = GetDeviceToken(activity)
         getToken.getToken(object : GetDeviceToken.TokenResult() {
             override fun success(token: String?) {
@@ -496,29 +496,33 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
                 }
 
                 login4EShoppingRequest.fcm = myToken
-                RetrofitClient.getApis4EShopping().LOGIN4ESHOPPING(login4EShoppingRequest)!!
+                RetrofitClient(dataManager).apis4EShopping.LOGIN4ESHOPPING(login4EShoppingRequest)!!
                     .enqueue(object : Callback<Login4EShoppingResponse?> {
                         override fun onResponse(
                             call: Call<Login4EShoppingResponse?>,
                             response: Response<Login4EShoppingResponse?>
                         ) {
-
+                            progress.postValue(0)
                             if (response.isSuccessful) {
                                 login4EShoppingResponse.postValue(response.body())
                             } else {
+                                Toast.makeText(getApplication(),"error", Toast.LENGTH_SHORT).show()
 
                             }
                         }
 
                         override fun onFailure(call: Call<Login4EShoppingResponse?>, t: Throwable) {
                             Toast.makeText(getApplication(), t.message, Toast.LENGTH_SHORT).show()
+                            progress.postValue(0)
 
                         }
                     })
             }
 
             override fun failure(msg: String?) {
+                progress.postValue(0)
 
+                Toast.makeText(getApplication(), msg, Toast.LENGTH_SHORT).show()
 
             }
 

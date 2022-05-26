@@ -410,7 +410,7 @@ class ProfileActivity : BaseActivity<FragmentProfileBinding>(), View.OnClickList
 
 
             R.id.addExperience -> {
-                dialog = AddExperienceDialog(this@ProfileActivity, this);
+                dialog = AddExperienceDialog(this@ProfileActivity, this , viewModel.dataManager);
                 dialog.setCanceledOnTouchOutside(true);
                 val window = dialog.getWindow();
                 window?.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);

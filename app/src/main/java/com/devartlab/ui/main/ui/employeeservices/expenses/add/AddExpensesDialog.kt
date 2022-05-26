@@ -84,7 +84,7 @@ class AddExpensesDialog(private var activity: Context,
         StrictMode.setVmPolicy(builder.build());
 
 
-        retrofit = RetrofitClient.getInstance()
+        retrofit = RetrofitClient(dataManager!!).instance!!
         myAPI = retrofit!!.create(ApiServices::class.java)
         expensesTypes = ArrayList()
         expensesTypesIdes = ArrayList()

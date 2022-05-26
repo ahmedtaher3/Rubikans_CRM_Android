@@ -40,11 +40,11 @@ class InventoryViewModel(application: Application) : AndroidViewModel(applicatio
 
 
     init {
-        retrofit = RetrofitClient.getInstance()
+        retrofit = RetrofitClient(dataManager!!).instance!!
         myAPI = retrofit!!.create(ApiServices::class.java)
         dataManager = (getApplication<Application>() as BaseApplication).dataManager!!
 
-        retroInstance = RetrofitClient.getInstance().create(ApiServices::class.java)
+        retroInstance = RetrofitClient(dataManager!!).instance!!.create(ApiServices::class.java)
 
 
 

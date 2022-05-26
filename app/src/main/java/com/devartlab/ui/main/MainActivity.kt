@@ -185,10 +185,9 @@ class MainActivity : BaseActivity<ActivityMainBinding?>(), View.OnClickListener,
         name = viewModel.dataManager.user.userName
         pass = viewModel.dataManager.user.password
         token = viewModel.dataManager.token
-        login4EShoppingRequest =
-            Login4EShoppingRequest(name!!, pass!!, "mr", token!!, AppConstants.DeviceType)
-        viewModel.getUserModel(this@MainActivity, login4EShoppingRequest)
-        //welcome post dialog
+
+
+         //welcome post dialog
         viewModel.getWelcomePost()
         //login 4EShopping
         //change device_type in request
@@ -207,16 +206,6 @@ class MainActivity : BaseActivity<ActivityMainBinding?>(), View.OnClickListener,
         viewModel!!.getAllPending("allPending", "")
 
 
-       val token = viewModel.dataManager.token
-        val login4EShoppingRequest =
-            Login4EShoppingRequest(
-                viewModel.dataManager.user.userName,
-                viewModel.dataManager.user.password,
-                "mr",
-                token!!,
-                AppConstants.DeviceType
-            )
-        viewModel.getUserModel(this@MainActivity, login4EShoppingRequest)
 
 
     }
@@ -237,10 +226,9 @@ class MainActivity : BaseActivity<ActivityMainBinding?>(), View.OnClickListener,
                 }
             }
         })
-        //login 4EShopping
-        viewModel.login4EShoppingResponse.observe(this, Observer {
-            UserPreferenceHelper.saveUserProfile(it)
-        })
+
+
+
         viewModel.progress.observe(this, Observer { integer ->
             when (integer) {
                 0 -> {
@@ -267,7 +255,22 @@ class MainActivity : BaseActivity<ActivityMainBinding?>(), View.OnClickListener,
         })
 
         viewModel.login4EShoppingResponse.observe(this, Observer {
+            viewModel.dataManager.saveIsLogin4e(true)
             UserPreferenceHelper.saveUserProfile(it)
+
+            if (AppConstants.ShoppingPermission) {
+                if (UserPreferenceHelper.getUser().type_code == "pv#s7#w?x") {
+                    val intent = Intent(this@MainActivity, Home4EShoppingActivity::class.java)
+                    startActivity(intent)
+                } else {
+                    Toast.makeText(this@MainActivity, "You haven't permission", Toast.LENGTH_SHORT).show()
+                }
+            } else {
+                val intent = Intent(this@MainActivity, Home4EShoppingActivity::class.java)
+                startActivity(intent)
+            }
+
+
         })
         
         viewModel!!.syncOfflineData.observe(this, Observer {
@@ -656,17 +659,37 @@ class MainActivity : BaseActivity<ActivityMainBinding?>(), View.OnClickListener,
 
             }
             6 -> {
-                if (AppConstants.ShoppingPermission) {
-                    if (UserPreferenceHelper.getUser().type_code == "pv#s7#w?x") {
+
+                if (viewModel.dataManager.isLogin4e)
+                {
+                    if (AppConstants.ShoppingPermission) {
+                        if (UserPreferenceHelper.getUser().type_code == "pv#s7#w?x") {
+                            val intent = Intent(this@MainActivity, Home4EShoppingActivity::class.java)
+                            startActivity(intent)
+                        } else {
+                            Toast.makeText(this@MainActivity, "You haven't permission", Toast.LENGTH_SHORT).show()
+                        }
+                    } else {
                         val intent = Intent(this@MainActivity, Home4EShoppingActivity::class.java)
                         startActivity(intent)
-                    } else {
-                        Toast.makeText(this@MainActivity, "You haven't permission", Toast.LENGTH_SHORT).show()
                     }
-                } else {
-                    val intent = Intent(this@MainActivity, Home4EShoppingActivity::class.java)
-                    startActivity(intent)
                 }
+                else
+                {
+                    login4EShoppingRequest = Login4EShoppingRequest(name!!, pass!!, "mr", token!!, AppConstants.DeviceType)
+                    val token = viewModel.dataManager.token
+                    val login4EShoppingRequest =
+                        Login4EShoppingRequest(
+                            viewModel.dataManager.user.userName,
+                            viewModel.dataManager.user.password,
+                            "mr",
+                            token!!,
+                            AppConstants.DeviceType
+                        )
+                    viewModel.getUserModel(this@MainActivity, login4EShoppingRequest)
+                }
+
+
             }
             7 -> {
                 val intent = Intent(this@MainActivity, DevartLabTeamActivity::class.java)

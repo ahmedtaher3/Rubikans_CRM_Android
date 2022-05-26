@@ -30,7 +30,7 @@ class RoomsReservationViewModel(application: Application) : AndroidViewModel(app
     init {
         dataManager = (getApplication() as BaseApplication).dataManager!!
         progress = MutableLiveData()
-        retrofit = RetrofitClient.getInstanceGoogleSheet()
+        retrofit = RetrofitClient(dataManager!!).instanceGoogleSheet!!
         myAPI = retrofit!!.create(ApiServices::class.java)
         responseLive = MutableLiveData<GoogleRequestResponse>()
         reservationLive = MutableLiveData<GoogleRequestResponse>()

@@ -37,7 +37,7 @@ class ChangeCycleAll(context: Context, private var changeCycleInterface: ChangeC
         setContentView(R.layout.fragment_cycles_dialog)
 
 
-        retrofit = RetrofitClient.getInstance()
+        retrofit = RetrofitClient(dataManager!!).instance!!
         myAPI = retrofit!!.create(ApiServices::class.java)
         adapter = CyclesAdapterAll(context, this, dataManager)
 

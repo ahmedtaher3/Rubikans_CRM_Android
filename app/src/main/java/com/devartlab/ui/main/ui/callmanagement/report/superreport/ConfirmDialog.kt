@@ -50,7 +50,7 @@ class ConfirmDialog(private val activity: AppCompatActivity, context: Context, p
 
 
 
-        retrofit = RetrofitClient.getInstance()
+        retrofit = RetrofitClient(dataManager!!).instance!!
         myAPI = retrofit!!.create(ApiServices::class.java)
         adapter = ItemAdapter(context, ArrayList(), ArrayList(), ArrayList())
 

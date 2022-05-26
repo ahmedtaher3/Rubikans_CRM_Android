@@ -100,7 +100,7 @@ class DataManager(var mSharedPrefsHelper: SharedPrefsHelper) {
 
     val isTablet: Boolean
         get() = mSharedPrefsHelper.deviceType
-
+//////////////////////////////////////////////////////////////////////////////////////////////
     fun saveIsLogin(b: Boolean) {
         mSharedPrefsHelper.putIsLogin(b)
     }
@@ -108,6 +108,20 @@ class DataManager(var mSharedPrefsHelper: SharedPrefsHelper) {
     val isLogin: Boolean
         get() = mSharedPrefsHelper.isLogin
 
+//////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+    fun saveIsLogin4e(b: Boolean) {
+        mSharedPrefsHelper.putIsLogin4e(b)
+    }
+
+    val isLogin4e: Boolean
+        get() = mSharedPrefsHelper.isLogin4e
+
+
+
+    //////////////////////////////////////////////////////////////////////////////////////////////
 
     fun saveIsSupervisor(b: Boolean) {
         mSharedPrefsHelper.putSupervisor(b)
@@ -211,4 +225,15 @@ class DataManager(var mSharedPrefsHelper: SharedPrefsHelper) {
     fun getLang(): String? {
         return mSharedPrefsHelper.lang
     }
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////
+
+    fun saveURL(b: String) {
+        mSharedPrefsHelper.putURL(b)
+    }
+
+    val url: String
+        get() = mSharedPrefsHelper.url!!
+
+
 }

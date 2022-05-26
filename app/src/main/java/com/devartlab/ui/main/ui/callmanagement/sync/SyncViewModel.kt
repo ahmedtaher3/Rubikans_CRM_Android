@@ -79,7 +79,7 @@ class SyncViewModel(application: Application) : AndroidViewModel(application) {
         allSlides = MediatorLiveData()
         responseLive = MediatorLiveData()
         dataManager = (getApplication() as BaseApplication).dataManager!!
-        retrofit = RetrofitClient.getInstance()
+        retrofit = RetrofitClient(dataManager!!).instance!!
         myAPI = retrofit!!.create(ApiServices::class.java)
         progress = MutableLiveData()
         massagesDao = DatabaseClient.getInstance(application)?.appDatabase?.massagesDao()!!

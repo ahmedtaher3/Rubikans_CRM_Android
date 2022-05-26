@@ -76,7 +76,7 @@ class InventoryBalanceActivity : BaseActivity<ActivityInventoryBalanceLayoutBind
 
 
         ProgressLoading.show(this)
-        val retroInstance = RetrofitClient.getInstance().create(ApiServices::class.java)
+        val retroInstance = RetrofitClient(viewModel.dataManager!!).instance!!.create(ApiServices::class.java)
         val call = retroInstance.getStoresDataFromAPI()
         call.enqueue(object : Callback<ResponseModel> {
             override fun onFailure(call: Call<ResponseModel>, t: Throwable) {

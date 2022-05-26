@@ -1,7 +1,6 @@
 package com.devartlab.ui.main.ui.eShopping.addProductsToThePharmacy
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -9,22 +8,23 @@ import android.util.Log
 import android.view.View
 import android.widget.PopupMenu
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
+import com.devartlab.R
+import com.devartlab.a4eshopping.addProductsToThePharmacy.model.Pharmacy.Prod
 import com.devartlab.a4eshopping.addProductsToThePharmacy.model.addOrderToCart.AddOrderToCartRequest
 import com.devartlab.a4eshopping.addProductsToThePharmacy.model.addOrderToCart.Cart
 import com.devartlab.a4eshopping.addProductsToThePharmacy.model.addProduct.AddToCardRequest
 import com.devartlab.a4eshopping.addProductsToThePharmacy.model.addProduct.AddToCardResponse
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import com.devartlab.R
-import com.devartlab.a4eshopping.addProductsToThePharmacy.model.Pharmacy.Prod
 import com.devartlab.data.retrofit.RetrofitClient
 import com.devartlab.databinding.ActivityAddProductsPharmacyBinding
 import com.devartlab.ui.auth.login.LoginActivity
 import com.devartlab.ui.main.ui.eShopping.main.Home4EShoppingActivity
 import com.devartlab.ui.main.ui.eShopping.utils.UserPreferenceHelper
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.util.*
 
 
@@ -165,7 +165,7 @@ class AddProductsPharmacyActivity : AppCompatActivity() {
                 binding.recyclerDetailsPharmacies.adapter = adapter
                 list.addAll(it.data.prods)
                 adapter!!.setOnItemClickListener { _, id, amount ->
-                    RetrofitClient.getApis4EShopping().getAddToCard(
+                    RetrofitClient(viewModel?.dataManager!!).apis4EShopping.getAddToCard(
                         "Bearer " + UserPreferenceHelper.getUser().token,
                         id, amount,
                         addToCardRequest
@@ -193,7 +193,7 @@ class AddProductsPharmacyActivity : AppCompatActivity() {
                         })
                 }
                 adapter!!.setOnItemClickListener2 { _, id, amount ->
-                    RetrofitClient.getApis4EShopping().getRemoveToCard(
+                    RetrofitClient(viewModel?.dataManager!!).apis4EShopping.getRemoveToCard(
                         "Bearer " + UserPreferenceHelper.getUser().token,
                         id,
                         addToCardRequest

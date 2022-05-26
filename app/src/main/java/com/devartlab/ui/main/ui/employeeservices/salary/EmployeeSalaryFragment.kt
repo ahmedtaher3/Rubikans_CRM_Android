@@ -8,7 +8,6 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Base64
-import android.util.Log
 import android.util.TypedValue
 import android.view.Menu
 import android.view.MenuInflater
@@ -285,12 +284,12 @@ class EmployeeSalaryFragment : BaseFragment<FragmentEmployeeSalaryBinding>(),
         binding.empImage.setImageResource(R.drawable.user_logo)
         if (model?.fileImage != null) {
             Glide.with(baseActivity)
-                .load(com.devartlab.AppConstants.ImageBaseURL + "ImageUpload/Employee/" + model.fileImage)
+                .load(viewModel.dataManager?.url + "ImageUpload/Employee/" + model.fileImage)
                 .placeholder(binding.empImage?.drawable)
                 .into(binding.empImage!!)
         } else {
             Glide.with(baseActivity)
-                .load(com.devartlab.AppConstants.ImageBaseURL + "ImageUpload/Employee/DefaultEmpImage.jpg")
+                .load(viewModel.dataManager?.url + "ImageUpload/Employee/DefaultEmpImage.jpg")
                 .placeholder(binding.empImage?.drawable)
                 .into(binding.empImage!!)
         }

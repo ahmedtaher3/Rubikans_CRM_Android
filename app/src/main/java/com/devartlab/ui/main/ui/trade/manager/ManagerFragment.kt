@@ -10,15 +10,13 @@ import androidx.lifecycle.ViewModelProviders
 import com.bumptech.glide.Glide
 import com.devartlab.R
 import com.devartlab.base.BaseFragment
-import com.devartlab.data.retrofit.ApiServices
-import com.devartlab.databinding.FragmentManagerBinding
 import com.devartlab.data.room.filterdata.FilterDataEntity
+import com.devartlab.databinding.FragmentManagerBinding
 import com.devartlab.model.TradeDay
 import com.devartlab.ui.dialogs.chooseemployee.ChooseEmployee
 import com.devartlab.ui.dialogs.chooseemployee.ChooseEmployeeInterFace
 import com.devartlab.ui.main.ui.trade.TradeViewModel
 import com.devartlab.utils.ProgressLoading
-import kotlin.collections.ArrayList
 
 
 class ManagerFragment : BaseFragment<FragmentManagerBinding>(), ChooseEmployeeInterFace, CustomersAdapter.OnDaySelect {
@@ -116,12 +114,12 @@ class ManagerFragment : BaseFragment<FragmentManagerBinding>(), ChooseEmployeeIn
         binding.empImage?.setImageResource(R.drawable.user_logo)
         if (model?.fileImage != null) {
             Glide.with(baseActivity)
-                    .load(com.devartlab.AppConstants.ImageBaseURL + "ImageUpload/Employee/" + model.fileImage)
+                    .load(viewModel.dataManager?.url + "ImageUpload/Employee/" + model.fileImage)
                     .placeholder(binding.empImage?.drawable)
                     .into(binding.empImage!!)
         } else {
             Glide.with(baseActivity)
-                    .load(com.devartlab.AppConstants.ImageBaseURL + "ImageUpload/Employee/DefaultEmpImage.jpg")
+                    .load(viewModel.dataManager?.url + "ImageUpload/Employee/DefaultEmpImage.jpg")
                     .placeholder(binding.empImage?.drawable)
                     .into(binding.empImage!!)
         }
