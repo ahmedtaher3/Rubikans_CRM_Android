@@ -27,19 +27,16 @@ class RetrofitClient(private val dataManager: DataManager) {
     //alaa
     val instance: Retrofit?
         get() {
-            if (BuildConfig.DEBUG) {
-                loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
-            } else {
-                loggingInterceptor.level = HttpLoggingInterceptor.Level.NONE
-            }
+            val logging = HttpLoggingInterceptor { message -> Log.e("okHttpClientRetrofit", message) }
+            logging.setLevel(HttpLoggingInterceptor.Level.BODY)
             val okHttpClient: OkHttpClient = OkHttpClient.Builder()
                 .connectTimeout(20, TimeUnit.SECONDS)
                 .retryOnConnectionFailure(true)
                 .writeTimeout(5, TimeUnit.MINUTES)
                 .readTimeout(60, TimeUnit.SECONDS)
-                .addInterceptor(loggingInterceptor).build()
+                .addInterceptor(logging).build()
             if (ourInstance == null) ourInstance = Retrofit.Builder()
-                .baseUrl(dataManager.url) //alaa
+                .baseUrl("https://devartlabcrm.com/") //alaa
                 .client(okHttpClient)
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
@@ -73,17 +70,14 @@ class RetrofitClient(private val dataManager: DataManager) {
     // eslam
     val instanceDevartLink: Retrofit?
         get() {
-            if (BuildConfig.DEBUG) {
-                loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
-            } else {
-                loggingInterceptor.level = HttpLoggingInterceptor.Level.NONE
-            }
+            val logging = HttpLoggingInterceptor { message -> Log.e("okHttpClientRetrofit", message) }
+            logging.setLevel(HttpLoggingInterceptor.Level.BODY)
             val okHttpClient: OkHttpClient = OkHttpClient.Builder()
                 .connectTimeout(20, TimeUnit.SECONDS)
                 .retryOnConnectionFailure(true)
                 .writeTimeout(5, TimeUnit.MINUTES)
                 .readTimeout(60, TimeUnit.SECONDS)
-                .addInterceptor(loggingInterceptor).build()
+                .addInterceptor(logging).build()
             if (ourInstance3 == null) ourInstance3 = Retrofit.Builder()
                 .baseUrl("https://devartlink.4eshopping.com/") // eslam
                 .client(okHttpClient)

@@ -130,8 +130,6 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
                                 responseLive.postValue(data)
 
                                 if (data.isSuccesed) {
-
-
                                     dataManager.saveToken("token")
                                 }
 
@@ -154,8 +152,40 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
 
                 override fun onError(e: Throwable) {
 
-                    Toast.makeText(getApplication(), e.message, Toast.LENGTH_SHORT).show()
-                    progress.postValue(0)
+
+                    val ads = AdModelList(ArrayList())
+                    dataManager.saveAds(ads)
+
+                    myAPI?.login(userEmail, userPass)!!
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(object : Observer<ResponseModel> {
+                            override fun onSubscribe(d: Disposable) {}
+                            override fun onNext(data: ResponseModel) {
+
+                                progress.postValue(0)
+                                responseLive.postValue(data)
+
+                                if (data.isSuccesed) {
+
+
+                                    dataManager.saveToken("token")
+                                }
+
+                            }
+
+                            override fun onError(e: Throwable) {
+
+                                Toast.makeText(getApplication(), e.message, Toast.LENGTH_SHORT).show()
+                                progress.postValue(10)
+
+                            }
+
+                            override fun onComplete() {
+
+
+                            }
+                        })
 
                 }
 

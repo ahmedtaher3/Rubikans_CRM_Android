@@ -3,14 +3,12 @@ package com.devartlab.ui.auth.login
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import com.devartlab.AppConstants
 import com.devartlab.R
 import com.devartlab.base.BaseActivity
 import com.devartlab.databinding.ActivityLoginBinding
@@ -18,8 +16,6 @@ import com.devartlab.model.Cycle
 import com.devartlab.model.CycleDatum
 import com.devartlab.model.User
 import com.devartlab.ui.main.MainActivity
-import com.devartlab.ui.main.ui.eShopping.main.model.login4EShopping.Login4EShoppingRequest
-import com.devartlab.ui.main.ui.eShopping.utils.UserPreferenceHelper
 import com.devartlab.utils.CommonUtilities
 import com.devartlab.utils.ProgressLoading
 import com.google.firebase.database.DatabaseReference
@@ -71,6 +67,8 @@ class LoginActivity : BaseActivity<ActivityLoginBinding?>(), View.OnClickListene
 
 
     private fun setObservers() {
+
+
         viewModel?.responseLive?.observe(this, Observer { t ->
             if (t.isSuccesed) {
 
@@ -172,10 +170,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding?>(), View.OnClickListene
 
 
             } else {
-
                 Toast.makeText(this, t.rerurnMessage, Toast.LENGTH_SHORT).show()
-
-
             }
 
         })
@@ -305,13 +300,14 @@ class LoginActivity : BaseActivity<ActivityLoginBinding?>(), View.OnClickListene
 
 
 
-                    viewModel?.dataManager?.saveIsLogin(true)
 
-                    startActivity(Intent(this, MainActivity::class.java))
-                    this.finish()
 
                 }.addOnFailureListener {}
 
+
+                viewModel?.dataManager?.saveIsLogin(true)
+                startActivity(Intent(this, MainActivity::class.java))
+                this.finish()
 
             } else {
 
@@ -337,6 +333,8 @@ class LoginActivity : BaseActivity<ActivityLoginBinding?>(), View.OnClickListene
                 }
             }
         })
+
+
     }
 
 
