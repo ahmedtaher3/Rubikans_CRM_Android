@@ -25,11 +25,11 @@ import retrofit2.Retrofit
 class GooglePushNotificationService : FirebaseMessagingService() {
     lateinit var dataManager: DataManager
     lateinit var myAPI: ApiServices
-    var retrofit: Retrofit = RetrofitClient.getInstance()
-
+    lateinit var retrofit: Retrofit
     override fun onCreate() {
         super.onCreate()
         dataManager = (application as BaseApplication).dataManager!!
+        retrofit   = RetrofitClient(dataManager).instance!!
         myAPI = retrofit.create(ApiServices::class.java)
     }
 
