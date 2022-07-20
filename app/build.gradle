@@ -2,14 +2,23 @@ plugins {
     id 'com.android.application'
     id 'kotlin-android'
     id 'kotlin-android-extensions'
-    id 'com.google.gms.google-services'
-    id 'com.google.firebase.crashlytics'
     id 'org.jetbrains.kotlin.android.extensions'
-    id 'com.huawei.agconnect'
     id 'kotlin-kapt'
     id 'dagger.hilt.android.plugin'
 
 }
+
+if (taskNameContains("google")) {
+    apply plugin: 'com.google.gms.google-services'
+    apply plugin: 'com.google.firebase.crashlytics'
+} else {
+    apply plugin: 'com.huawei.agconnect'
+}
+
+def taskNameContains(String _name) {
+    return getGradle().getStartParameter().getTaskRequests().toString().toLowerCase().contains(_name)
+}
+
 
 android {
 
@@ -31,9 +40,9 @@ android {
         applicationId "com.devartlab"
         minSdkVersion 21
         targetSdkVersion 32
-        versionCode 64
+        versionCode 66
         versionName "1.1.6"
-        resConfigs "en" , "ar"
+        resConfigs "en", "ar"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
