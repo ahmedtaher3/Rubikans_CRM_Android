@@ -54,15 +54,7 @@ class DevartCommunityActivity : AppCompatActivity() {
         binding.swipeRefreshLayout.setOnRefreshListener {
             refresh()
         }
-        binding.btnHideShowAds.setOnClickListener {
-            if (binding.constrAds.visibility == View.VISIBLE) {
-                binding.constrAds.visibility = View.GONE
-                binding.btnHideShowAds.setImageResource(R.drawable.ic_show_hide_ads)
-            } else {
-                binding.constrAds.visibility = View.VISIBLE
-                binding.btnHideShowAds.setImageResource(R.drawable.ic_hide_show_ads)
-            }
-        }
+
     }
 
     private fun handleObserver() {
@@ -78,9 +70,7 @@ class DevartCommunityActivity : AppCompatActivity() {
         viewModel!!.devartCommunityResponse.observe(this) {
             try {
                 supportActionBar!!.title = it!!.name
-                Glide.with(this)
-                    .load("https://devartlink.4eshopping.com/assets/images/" + it.image)
-                    .fitCenter().into(binding.imageView)
+
                 when {
                     it.sub.isNotEmpty() -> {
                         //show data in recyclerView
@@ -123,8 +113,7 @@ class DevartCommunityActivity : AppCompatActivity() {
             }catch (e:Exception){
                 binding.progressBar.visibility = View.GONE
                 binding.constrAds.visibility = View.GONE
-                binding.btnHideShowAds.visibility = View.GONE
-                supportActionBar!!.title = getString(R.string.community)
+                 supportActionBar!!.title = getString(R.string.community)
                 Toast.makeText(this, "Data is empty", Toast.LENGTH_SHORT).show()
             }
         }

@@ -34,13 +34,21 @@
                 android:layout_margin="10dp"
                 tools:context=".ui.main.ui.moreDetailsAds.MoreDetailsAdsActivity">
 
-                <androidx.constraintlayout.widget.ConstraintLayout
+                <LinearLayout
                     android:id="@+id/constr_ads"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:orientation="vertical"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
+
+                    <TextView
+                        android:id="@+id/adText"
+                        android:text="Devart Ad"
+                        android:layout_margin="10dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
 
                     <androidx.cardview.widget.CardView
                         android:id="@+id/cardview_ads"
@@ -93,7 +101,7 @@
 
                     </androidx.cardview.widget.CardView>
 
-                </androidx.constraintlayout.widget.ConstraintLayout>
+                </LinearLayout>
 
                 <TextView
                     android:id="@+id/tv_data_create"

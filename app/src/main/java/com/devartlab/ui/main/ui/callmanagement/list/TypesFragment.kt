@@ -57,7 +57,7 @@ class TypesFragment : BaseFragment<TypesFragmentBinding>(), ChooseCustomerTypeIn
 
         viewModel.getAllTypes()
         setObservers()
-        ads()
+
     }
 
     private fun chooseType() {
@@ -158,112 +158,5 @@ class TypesFragment : BaseFragment<TypesFragmentBinding>(), ChooseCustomerTypeIn
 
     }
 
-    fun ads() {
-        var model = AdModel()
-        for (m in viewModel.dataManager.ads.ads!!) {
-            if (m.pageCode?.toInt() == Constants.MEDICAL_REP) {
-                model = m
-                binding.constrAds.setVisibility(View.VISIBLE)
-                if (model.resourceLink.equals(null)
-                    && model.paragraph.equals(null)
-                    && model.slideImages == null) {
-                    binding.constrAds.setVisibility(View.VISIBLE)
-                    binding.imageView.visibility = View.VISIBLE
-                    Glide.with(this).load(model.default_ad_image)
-                        .centerCrop().placeholder(R.drawable.dr_hussain).into(binding.imageView)
-                }
-                break
-            }
-        }
 
-        if (!model.webPageLink.isNullOrBlank()) {
-            if (model.is_external!!) {
-                binding.cardviewAds.setOnClickListener {
-                    openWebPage(model.webPageLink)
-                }
-            } else {
-                binding.cardviewAds.setOnClickListener {
-                    meuNav(model.webPageLink!!.toInt(), context)
-                }
-            }
-        }
-        when (model.type) {
-            "Video" -> {
-                binding.videoView.visibility = View.VISIBLE
-                mediaSource = SimpleMediaSource(model.resourceLink)
-                binding.videoView.play(mediaSource);
-            }
-            "Image" -> {
-
-                binding.imageView.visibility = View.VISIBLE
-                Glide.with(this).load(model.resourceLink)
-                    .centerCrop().placeholder(R.drawable.dr_hussain).into(binding.imageView)
-            }
-            "GIF" -> {
-                binding.imageView.visibility = View.VISIBLE
-                Glide.with(this).asGif().load(model.resourceLink)
-                    .centerCrop().placeholder(R.drawable.dr_hussain).into(binding.imageView);
-            }
-            "Paragraph" -> {
-                binding.textView.visibility = View.VISIBLE
-//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-//                    binding.textView.setText(
-//                        Html.fromHtml(
-//                            model.paragraph,
-//                            Html.FROM_HTML_MODE_LEGACY
-//                        )
-//                    );
-//                } else
-//                    binding.textView.setText(Html.fromHtml(model.paragraph))
-                binding.textView.loadDataWithBaseURL(
-                    null, model.paragraph!!, "text/html", "utf-8", null
-                )
-            }
-            "Slider" -> {
-                binding.bannerSlider.visibility = View.VISIBLE
-                Slider.init(PicassoImageLoadingService(baseActivity.applicationContext))
-                binding.bannerSlider?.setInterval(5000)
-
-                val list = ArrayList<String>()
-                for (i in model.slideImages!!) {
-                    list.add(i?.link!!)
-                }
-                binding.bannerSlider?.setAdapter(MainSliderAdapter(list))
-                binding.bannerSlider.setOnSlideClickListener {
-                    binding.bannerSlider.setOnSlideClickListener(OnSlideClickListener {
-                        if (!model.webPageLink.isNullOrBlank()) {
-                            when {
-                                model.is_external!! -> {
-                                    openWebPage(model.webPageLink)
-                                }
-                                else -> {
-                                    meuNav(model.webPageLink!!.toInt(),context)
-                                }
-                            }
-                        }
-                    })
-                }
-            }
-        }
-        if (model.show_ad == true) {
-            binding.btnHideShowAds.setVisibility(View.VISIBLE)
-            binding.btnHideShowAds.setOnClickListener {
-                if (binding.constrAds.visibility == View.VISIBLE) {
-                    binding.constrAds.setVisibility(View.GONE)
-                    binding.btnHideShowAds.setImageResource(R.drawable.ic_show_hide_ads)
-                } else {
-                    binding.constrAds.setVisibility(View.VISIBLE)
-                    binding.btnHideShowAds.setImageResource(R.drawable.ic_hide_show_ads)
-                }
-            }
-        }
-        if (model.show_more == true) {
-            binding.tvMoreThanAds.setVisibility(View.VISIBLE)
-            binding.tvMoreThanAds.setOnClickListener {
-                val intent = Intent(getActivity(), MoreDetailsAdsActivity::class.java)
-                intent.putExtra("pageCode", model.pageCode)
-                getActivity()?.startActivity(intent)
-            }
-        }
-    }
 }

@@ -37,32 +37,7 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@+id/back">
 
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/cardview_ads"
-                    android:layout_width="match_parent"
-                    android:layout_height="250dp"
-                    app:cardBackgroundColor="@android:color/white"
-                    app:cardCornerRadius="5dp"
-                    app:cardElevation="1dp"
-                    app:cardUseCompatPadding="true"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
 
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-
-                        <ImageView
-                            android:id="@+id/imageView"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:visibility="visible" />
-                    </RelativeLayout>
-
-
-                </androidx.cardview.widget.CardView>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -77,17 +52,6 @@
                 android:orientation="horizontal"
                 app:layout_constraintTop_toBottomOf="@+id/constr_ads">
 
-                <ImageView
-                    android:id="@+id/btn_hide_show_ads"
-                    android:layout_width="wrap_content"
-                    android:layout_height="26dp"
-                    android:layout_gravity="end"
-                    android:background="@drawable/custom_bg_btn_blue"
-                    android:gravity="center"
-                    android:src="@drawable/ic_hide_show_ads"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:contentDescription="@string/img" />
             </androidx.constraintlayout.widget.ConstraintLayout>
             <WebView
                 android:id="@+id/dec_team"

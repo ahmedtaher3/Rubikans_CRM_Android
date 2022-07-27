@@ -63,15 +63,7 @@ class DevartAcademyActivity : AppCompatActivity() {
         binding.swipeRefreshLayout.setOnRefreshListener {
             refresh()
         }
-        binding.btnHideShowAds.setOnClickListener {
-            if (binding.constrAds.visibility == View.VISIBLE) {
-                binding.constrAds.setVisibility(View.GONE)
-                binding.btnHideShowAds.setImageResource(R.drawable.ic_show_hide_ads)
-            } else {
-                binding.constrAds.setVisibility(View.VISIBLE)
-                binding.btnHideShowAds.setImageResource(R.drawable.ic_hide_show_ads)
-            }
-        }
+
     }
 
     private fun handleObserver() {
@@ -86,9 +78,7 @@ class DevartAcademyActivity : AppCompatActivity() {
 
         viewModel!!.devartCommunityResponse.observe(this, Observer {
             supportActionBar!!.title = it!!.name
-            Glide.with(this)
-                .load("https://devartlink.4eshopping.com/assets/images/" + it!!.image)
-                .fitCenter().into(binding.imageView)
+
             when {
                 it.sub.size != 0 -> {
                     //show data in recyclerView
