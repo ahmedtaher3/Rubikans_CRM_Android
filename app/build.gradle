@@ -40,134 +40,7 @@ android {
         applicationId "com.devartlab"
         minSdkVersion 21
         targetSdkVersion 32
-        versionCode 67
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        versionCode 69
         versionName "1.1.6"
         resConfigs "en", "ar"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -320,12 +193,12 @@ dependencies {
     implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.19'
 
 
-    implementation platform('com.google.firebase:firebase-bom:26.7.0')
-    implementation 'com.google.firebase:firebase-crashlytics-ktx'
-    implementation 'com.google.firebase:firebase-analytics-ktx'
-    implementation 'com.google.firebase:firebase-database-ktx'
-    implementation 'com.google.firebase:firebase-storage-ktx'
-    implementation 'com.google.firebase:firebase-messaging-ktx'
+    googleImplementation platform('com.google.firebase:firebase-bom:26.7.0')
+    googleImplementation 'com.google.firebase:firebase-crashlytics-ktx'
+    googleImplementation 'com.google.firebase:firebase-analytics-ktx'
+    googleImplementation 'com.google.firebase:firebase-database-ktx'
+    googleImplementation 'com.google.firebase:firebase-storage-ktx'
+    googleImplementation 'com.google.firebase:firebase-messaging-ktx'
 
 
     implementation 'com.ramijemli.percentagechartview:percentagechartview:0.3.0'
@@ -354,10 +227,9 @@ dependencies {
     implementation "com.mapbox.mapboxsdk:mapbox-android-sdk:$mapbox"
     implementation 'com.mapbox.mapboxsdk:mapbox-android-plugin-annotation-v9:0.9.0'
 
-    implementation 'com.huawei.hms:location:6.2.0.300'
+    huaweiImplementation 'com.huawei.hms:location:6.2.0.300'
+    huaweiImplementation 'com.huawei.hms:push:6.1.0.300'
 
-
-    implementation 'com.google.android.material:material:1.6.0-alpha01'
 
     implementation 'com.github.JarvanMo:ExoVideoView:2.1.6'
 
@@ -379,7 +251,7 @@ dependencies {
     //show video youtube
     implementation 'com.pierfrancescosoffritti.androidyoutubeplayer:core:10.0.5'
 
-    implementation 'com.huawei.hms:push:6.1.0.300'
+
 
 
     //Dagger - Hilt
@@ -398,6 +270,8 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.4.0"
     // Activity KTX for viewModels()
     implementation "androidx.activity:activity-ktx:1.4.0"
+    implementation 'androidx.fragment:fragment-ktx:1.4.0'
+
     //CalendarDateRangePicker
     implementation 'com.archit.calendar:awesome-calendar:2.0.0'
     //AnyChart for Android

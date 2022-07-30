@@ -10,7 +10,7 @@
     {
       "type": "SINGLE",
       "filters": [],
-      "versionCode": 67,
+      "versionCode": 69,
       "versionName": "1.1.6",
       "outputFile": "app-google-release.apk"
     }

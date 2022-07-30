@@ -52,15 +52,7 @@ class ContactsActivity : AppCompatActivity() {
     private var contactlistArrayList: ArrayList<Contactlist>? = null
     private var contactsRecyclerAdapter: GetContactsRecyclerAdapter? = null
     private var contactrecycler: RecyclerView? = null
-    lateinit var videoView: ExoVideoView
-    lateinit var imageView: ImageView
-    lateinit var bannerslider: Slider
-    lateinit var btnHideShowAds: ImageView
-    lateinit var constrAds: ConstraintLayout
-    lateinit var mediaSource: SimpleMediaSource
-    lateinit var cardviewAds: CardView
-    lateinit var moreThanAds: TextView
-    lateinit var textView: WebView
+
     var dataManager:DataManager? = null
     private var inputsearch: EditText? = null
     private var toolbar: Toolbar? = null
@@ -77,14 +69,8 @@ class ContactsActivity : AppCompatActivity() {
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         supportActionBar!!.title = "Contacts List"
         contactrecycler = findViewById(R.id.contact_recycler)
-        videoView = findViewById(R.id.videoView)
-        imageView = findViewById(R.id.imageView)
-        bannerslider = findViewById(R.id.bannerSlider)
-        btnHideShowAds = findViewById(R.id.btn_hide_show_ads)
-        moreThanAds = findViewById(R.id.tv_more_than_ads)
-        constrAds = findViewById(R.id.constr_ads)
-        cardviewAds = findViewById(R.id.cardview_ads)
-        textView = findViewById(R.id.textView)
+
+
         dataManager = (getApplication() as BaseApplication).dataManager!!
         spinnerfilteroftyperequest = findViewById(R.id.spinerr_of_filterdep)
         contactsRecyclerAdapter = GetContactsRecyclerAdapter(this@ContactsActivity)
@@ -114,7 +100,7 @@ class ContactsActivity : AppCompatActivity() {
 //
 //        lastCompletelyVisibleItemPosition = ((LinearLayoutManager) contactrecycler.getLayoutManager()).findLastVisibleItemPosition();
 //
-    ads()
+
     }
 
     private fun filter(text: String) {
@@ -202,117 +188,7 @@ class ContactsActivity : AppCompatActivity() {
             else -> super.onOptionsItemSelected(item)
         }
     }
-    fun ads(){
-        var model = AdModel()
-        for (m in dataManager!!.ads.ads!!) {
-            if (m.pageCode?.toInt() == Constants.CONTACTS_LIST) {
-                model = m
-                constrAds.setVisibility(View.VISIBLE)
-                if (model.resourceLink.equals(null)
-                    && model.paragraph.equals(null)
-                    && model.slideImages == null) {
-                    constrAds.setVisibility(View.VISIBLE)
-                    imageView.visibility = View.VISIBLE
-                    Glide.with(this).load(model.default_ad_image)
-                        .centerCrop().placeholder(R.drawable.dr_hussain).into(imageView)
-                }
-                break
-            }
-        }
 
-        if (!model.webPageLink.isNullOrBlank()) {
-            if(model.is_external!!){
-                cardviewAds.setOnClickListener {
-                    val uri = Uri.parse(model.webPageLink)
-                    val intent = Intent(Intent.ACTION_VIEW, uri)
-                    startActivity(intent)
-                }
-            }else{
-                cardviewAds.setOnClickListener {
-                    meuNav(model.webPageLink!!.toInt(),this@ContactsActivity)
-                }
-            }
-        }
-        when (model.type) {
-            "Video" -> {
-                videoView.visibility = View.VISIBLE
-                mediaSource = SimpleMediaSource(model.resourceLink)
-                videoView.play(mediaSource);
-            }
-            "Image" -> {
-
-                imageView.visibility = View.VISIBLE
-                Glide.with(this).load(model.resourceLink)
-                    .centerCrop().placeholder(R.drawable.dr_hussain).into(imageView)
-            }
-            "GIF" -> {
-                imageView.visibility = View.VISIBLE
-                Glide.with(this).asGif().load(model.resourceLink)
-                    .centerCrop().placeholder(R.drawable.dr_hussain).into(imageView);
-            }
-            "Paragraph" -> {
-                textView.visibility = View.VISIBLE
-//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-//                    textView.setText(
-//                        Html.fromHtml(
-//                            model.paragraph,
-//                            Html.FROM_HTML_MODE_LEGACY
-//                        )
-//                    );
-//                } else
-//                    textView.setText(Html.fromHtml(model.paragraph))
-                textView.loadDataWithBaseURL(null, model.paragraph!!
-                    ,  "text/html", "utf-8", null)
-            }
-            "Slider" -> {
-                bannerslider.visibility = View.VISIBLE
-                Slider.init(PicassoImageLoadingService(this))
-                bannerslider?.setInterval(5000)
-
-                val list = ArrayList<String>()
-                for (i in model.slideImages!!) {
-                    list.add(i?.link!!)
-                }
-                bannerslider?.setAdapter(MainSliderAdapter(list))
-                bannerslider.setOnSlideClickListener {
-                    bannerslider.setOnSlideClickListener(OnSlideClickListener {
-                        if (!model.webPageLink.isNullOrBlank()) {
-                            when {
-                                model.is_external!! -> {
-                                    val uri = Uri.parse(model.webPageLink)
-                                    val intent = Intent(Intent.ACTION_VIEW, uri)
-                                    startActivity(intent)
-                                }
-                                else -> {
-                                    meuNav(model.webPageLink!!.toInt(),this@ContactsActivity)
-                                }
-                            }
-                        }
-                    })
-                }
-            }
-        }
-        if (model.show_ad == true) {
-            btnHideShowAds.setVisibility(View.VISIBLE)
-            btnHideShowAds.setOnClickListener {
-                if (constrAds.visibility == View.VISIBLE) {
-                    constrAds.setVisibility(View.GONE)
-                    btnHideShowAds.setImageResource(R.drawable.ic_show_hide_ads)
-                } else {
-                    constrAds.setVisibility(View.VISIBLE)
-                    btnHideShowAds.setImageResource(R.drawable.ic_hide_show_ads)
-                }
-            }
-        }
-        if (model.show_more == true) {
-            moreThanAds.setVisibility(View.VISIBLE)
-            moreThanAds.setOnClickListener {
-                intent = Intent(this, MoreDetailsAdsActivity::class.java)
-                intent.putExtra("pageCode", model.pageCode)
-                startActivity(intent)
-            }
-        }
-    }
 
     fun meuNav(id: Int, context: Context) {
         when (id) {
