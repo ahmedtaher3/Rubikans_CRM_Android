@@ -282,4 +282,6 @@ dependencies {
     implementation 'com.jonaswanke.calendar:calendar:0.1.1'
     implementation 'com.mapbox.mapboxsdk:mapbox-android-telemetry:6.1.0'
     implementation 'com.mapbox.mapboxsdk:mapbox-android-plugin-locationlayer:0.5.0'
+
+    implementation 'com.github.kamrul3288:Expandable-Recyclerview-List-Android:1.0.2'
 }

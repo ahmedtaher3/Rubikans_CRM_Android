@@ -96,7 +96,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/search_bar_video">
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recycler_list_subjects"
+                    android:id="@+id/recycler"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     tools:listitem="@layout/hand_book_item"

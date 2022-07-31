@@ -301,6 +301,8 @@ class MainActivity : BaseActivity<ActivityMainBinding?>(), View.OnClickListener,
         list.add(CardModel(3, resources.getString(R.string.my_profile), R.drawable.employee))
         list.add(CardModel(4, resources.getString(R.string.market_request), R.drawable.money))
         list.add(CardModel(6, "4eShopping", R.drawable.e_shopping))
+        list.add(CardModel(5, "Devart Link", R.drawable.devart_logo))
+        list.add(CardModel(7, "Devart Team", R.drawable.devart_logo))
 
 
         adapter = MenuListAdapter(this, list, this)

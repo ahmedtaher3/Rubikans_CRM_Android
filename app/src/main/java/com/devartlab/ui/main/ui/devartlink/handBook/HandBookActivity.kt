@@ -2,17 +2,14 @@ package com.devartlab.ui.main.ui.devartlink.handBook
 
 import android.app.Dialog
 import android.graphics.Color
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
 import android.widget.Toast
-import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.devartlab.R
 import com.devartlab.databinding.ActivityHandBookBinding
-import com.devartlab.ui.main.ui.devartlink.handBook.model.Data
 import android.view.WindowManager
 
 import android.graphics.drawable.ColorDrawable
@@ -20,28 +17,37 @@ import android.view.Window
 import android.widget.EditText
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
+import com.devartlab.base.BaseActivity
+import com.iamkamrul.expandablerecyclerviewlist.listener.ExpandCollapseListener
 import java.util.*
 import kotlin.collections.ArrayList
 
-class HandBookActivity : AppCompatActivity() {
+class HandBookActivity : BaseActivity<ActivityHandBookBinding>() {
     lateinit var binding: ActivityHandBookBinding
     var viewModel: HandBookViewModel? = null
-    private var adapter: SubjectsAdapter? = null
-    private var adapter2: IndexHandBookAdapter? = null
-    val list = ArrayList<Data>()
-    private val list2 = ArrayList<Data>()
-    private var recViewIndex: RecyclerView? = null
+    private val adapter = HandBookAdapter()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(
-            this, R.layout.activity_hand_book
-        )
+        binding = viewDataBinding!!
+        viewModel = ViewModelProvider(this)[HandBookViewModel::class.java]
         setSupportActionBar(binding.toolbar)
         supportActionBar!!.title = getString(R.string.faq)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-        adapter = SubjectsAdapter(null)
-        adapter2 = IndexHandBookAdapter(null)
-        viewModel = ViewModelProvider(this)[HandBookViewModel::class.java]
+
+
+        adapter.setExpandCollapseListener(object : ExpandCollapseListener {
+            override fun onListItemExpanded(position: Int) {
+            }
+
+            override fun onListItemCollapsed(position: Int) {
+
+            }
+
+        })
+        binding.recycler.adapter = adapter
+
+
         onClickListener()
         handleObserver()
     }
@@ -51,7 +57,8 @@ class HandBookActivity : AppCompatActivity() {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
             override fun afterTextChanged(s: Editable) {
-                filter(s.toString())
+
+
             }
         })
         viewModel!!.getHandBook()
@@ -59,7 +66,7 @@ class HandBookActivity : AppCompatActivity() {
             refresh()
         }
         binding.tvIndexHandBook.setOnClickListener {
-            showIndexsDialog()
+           // showIndexsDialog()
         }
     }
 
@@ -75,18 +82,16 @@ class HandBookActivity : AppCompatActivity() {
 
         viewModel!!.handBookResponse.observe(this) {
             when {
-                it!!.data.isEmpty() -> {
+                it!!.data!!.isEmpty() -> {
                     //errorMessage if data coming is null;
                     binding.tvEmptyList.visibility = View.VISIBLE
                     binding.progressBar.visibility = View.GONE
                 }
                 else -> {
-                    //show data in recyclerView
-                    list.addAll(it.data)
+
                     binding.progressBar.visibility = View.GONE
-                    adapter = SubjectsAdapter(it.data)
-                    binding.recyclerListSubjects.adapter = adapter
-                }
+                    adapter.setExpandableParentItemList(it.data!!)
+                 }
             }
         }
     }
@@ -99,34 +104,14 @@ class HandBookActivity : AppCompatActivity() {
         }
     }
 
-    private fun filter(text: String) {
-        val filteredList: ArrayList<Data> = ArrayList()
 
-        for (item in list) {
-            if (item.title.lowercase(Locale.getDefault()).contains(text.lowercase(Locale.getDefault()))) {
-                filteredList.add(item)
-            }
-        }
-        adapter!!.filterData(filteredList)
-    }
-
-    private fun filter2(text: String) {
-        val filteredList: ArrayList<Data> = ArrayList()
-
-        for (item in list2) {
-            if (item.title.lowercase(Locale.getDefault()).contains(text.lowercase(Locale.getDefault()))) {
-                filteredList.add(item)
-            }
-        }
-        adapter2!!.filterData(filteredList)
-    }
 
     override fun onSupportNavigateUp(): Boolean {
         finish()
         return true
     }
 
-    private fun showIndexsDialog() {
+   /* private fun showIndexsDialog() {
         val dialog = Dialog(this)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setCancelable(false)
@@ -172,6 +157,10 @@ class HandBookActivity : AppCompatActivity() {
             dialog.dismiss()
         }
         dialog.show()
+    }*/
+
+    override fun getLayoutId(): Int {
+        return R.layout.activity_hand_book
     }
 
 }

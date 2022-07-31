@@ -775,7 +775,7 @@ interface ApiServices {
     fun getDevartCommunity(@Query("_id") _id: String?): Call<DevartCommunityResponse?>?
 
     @GET("handbook")
-    fun getHandBook(): Call<HandBookResponse?>?
+    fun getHandBook(): Call<HandBookResponse>?
 
     ///////////////////4eshopping//////////////
     @POST("login")
