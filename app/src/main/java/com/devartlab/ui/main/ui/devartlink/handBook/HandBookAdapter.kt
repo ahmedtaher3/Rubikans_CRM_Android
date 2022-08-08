@@ -24,7 +24,7 @@ class HandBookAdapter : ExpandableRecyclerAdapter<HandBookViewHolder, HandBookLi
 
     override fun onBindParentViewHolder(parentViewHolder: HandBookViewHolder, position: Int, parentListItem: ParentListItem) {
         val data = parentListItem as HandBookItem
-        parentViewHolder.bind(data)
+        parentViewHolder.bind(data, position)
     }
 
     override fun onBindChildViewHolder(childViewHolder: HandBookListViewHolder, position: Int, childListItem: Any) {
