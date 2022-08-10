@@ -1,32 +1,25 @@
 package com.devartlab.ui.main.ui.devartlink.handBook
 
-import android.app.Dialog
-import android.graphics.Color
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
 import android.widget.Toast
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModelProvider
 import com.devartlab.R
-import com.devartlab.databinding.ActivityHandBookBinding
-import android.view.WindowManager
-
-import android.graphics.drawable.ColorDrawable
-import android.view.Window
-import android.widget.EditText
-import android.widget.ImageView
-import androidx.recyclerview.widget.RecyclerView
 import com.devartlab.base.BaseActivity
+import com.devartlab.databinding.ActivityHandBookBinding
+import com.devartlab.ui.main.ui.devartlink.handBook.model.HandBookItem
+import com.devartlab.ui.main.ui.devartlink.handBook.model.HandBookSubs
 import com.iamkamrul.expandablerecyclerviewlist.listener.ExpandCollapseListener
-import java.util.*
-import kotlin.collections.ArrayList
 
-class HandBookActivity : BaseActivity<ActivityHandBookBinding>() {
+class HandBookActivity : BaseActivity<ActivityHandBookBinding>() , HandBookAdapter.OnItemSelect {
     lateinit var binding: ActivityHandBookBinding
     var viewModel: HandBookViewModel? = null
-    private val adapter = HandBookAdapter()
-
+    private val adapter = HandBookAdapter(this)
+    lateinit var fullList: ArrayList<HandBookItem>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = viewDataBinding!!
@@ -35,6 +28,13 @@ class HandBookActivity : BaseActivity<ActivityHandBookBinding>() {
         supportActionBar!!.title = getString(R.string.faq)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
 
+
+        binding.index.setOnClickListener {
+            if (fullList.isNullOrEmpty())
+                return@setOnClickListener
+            replace_fragment(BookFragment(fullList), "BookFragment")
+
+        }
 
         adapter.setExpandCollapseListener(object : ExpandCollapseListener {
             override fun onListItemExpanded(position: Int) {
@@ -65,9 +65,7 @@ class HandBookActivity : BaseActivity<ActivityHandBookBinding>() {
         binding.swipeRefreshLayout.setOnRefreshListener {
             refresh()
         }
-        binding.tvIndexHandBook.setOnClickListener {
-           // showIndexsDialog()
-        }
+
     }
 
     private fun handleObserver() {
@@ -88,10 +86,10 @@ class HandBookActivity : BaseActivity<ActivityHandBookBinding>() {
                     binding.progressBar.visibility = View.GONE
                 }
                 else -> {
-
+                    fullList = it.data!!
                     binding.progressBar.visibility = View.GONE
-                    adapter.setExpandableParentItemList(it.data!!)
-                 }
+                    adapter.setExpandableParentItemList(fullList)
+                }
             }
         }
     }
@@ -105,62 +103,38 @@ class HandBookActivity : BaseActivity<ActivityHandBookBinding>() {
     }
 
 
-
     override fun onSupportNavigateUp(): Boolean {
         finish()
         return true
     }
 
-   /* private fun showIndexsDialog() {
-        val dialog = Dialog(this)
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        dialog.setCancelable(false)
-        dialog.setContentView(R.layout.dialog_index_hand_book)
-        dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        val window = dialog.window
-        window!!.setLayout(
-            WindowManager.LayoutParams.MATCH_PARENT,
-            WindowManager.LayoutParams.MATCH_PARENT
-        )
-        viewModel!!.getHandBook()
-        val BtnCancel = dialog.findViewById<ImageView>(R.id.iv_cancel_dialog)
-        recViewIndex = dialog.findViewById(R.id.recycler_list_subjects)
-        val searchBarVideo = dialog.findViewById<EditText>(R.id.search_bar_video)
-        searchBarVideo.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
-            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
-            override fun afterTextChanged(s: Editable) {
-                filter2(s.toString())
-            }
-        })
-        viewModel!!.handBookResponse.observe(this) {
-            when {
-                it!!.data.isEmpty() -> {
-                    //errorMessage if data coming is null;
-                    Toast.makeText(this, "list empty", Toast.LENGTH_SHORT).show()
-                }
-                else -> {
-                    //show data in recyclerView
-                    adapter2 = IndexHandBookAdapter(it.data)
-                    recViewIndex!!.adapter = adapter2
-                    list2.addAll(it.data)
-                    adapter2!!.setOnItemClickListener {
-                        binding.recyclerListSubjects.post {
-                            binding.recyclerListSubjects.layoutManager?.scrollToPosition(it)
-                        }
-                        dialog.dismiss()
-                    }
-                }
-            }
-        }
-        BtnCancel.setOnClickListener {
-            dialog.dismiss()
-        }
-        dialog.show()
-    }*/
 
     override fun getLayoutId(): Int {
         return R.layout.activity_hand_book
+    }
+
+    fun replace_fragment(fragment: Fragment?, tag: String?) {
+        supportFragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
+        supportFragmentManager
+            .beginTransaction()
+            .setCustomAnimations(
+                R.anim.slide_in_left,
+                R.anim.slide_out_left,
+                R.anim.slide_in_left,
+                R.anim.slide_out_left
+            )
+            .add(
+                R.id.container,
+                fragment!!
+            )
+            .addToBackStack(tag)
+            .commit()
+    }
+
+    override fun setOnItemSelect(model: HandBookSubs) {
+
+        replace_fragment(BookFragment(fullList , model.title!!), "BookFragment")
+
     }
 
 }

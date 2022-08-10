@@ -629,6 +629,8 @@
     <string name="mr">MR</string>
     <string name="under_review">Unreviewed</string>
     <string name="devarteam">Devarteam</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 
 </resources>

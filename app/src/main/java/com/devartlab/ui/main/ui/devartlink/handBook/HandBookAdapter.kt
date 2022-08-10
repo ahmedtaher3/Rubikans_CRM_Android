@@ -9,26 +9,43 @@ import com.iamkamrul.expandablerecyclerviewlist.adapter.ExpandableRecyclerAdapte
 import com.iamkamrul.expandablerecyclerviewlist.model.ParentListItem
 
 
-class HandBookAdapter : ExpandableRecyclerAdapter<HandBookViewHolder, HandBookListViewHolder>(){
+class HandBookAdapter(private val listener: OnItemSelect) :
+    ExpandableRecyclerAdapter<HandBookViewHolder, HandBookListViewHolder>() {
 
-    override fun onCreateParentViewHolder(parentViewGroup: ViewGroup
+
+    interface OnItemSelect {
+        fun setOnItemSelect(model: HandBookSubs)
+    }
+
+    override fun onCreateParentViewHolder(
+        parentViewGroup: ViewGroup
     ): HandBookViewHolder {
-        val view = LayoutInflater.from(parentViewGroup.context).inflate(R.layout.hand_book_item, parentViewGroup, false)
+        val view = LayoutInflater.from(parentViewGroup.context)
+            .inflate(R.layout.hand_book_item, parentViewGroup, false)
         return HandBookViewHolder(view)
     }
 
     override fun onCreateChildViewHolder(parentViewGroup: ViewGroup): HandBookListViewHolder {
-        val view = LayoutInflater.from(parentViewGroup.context).inflate(R.layout.hand_book_subs_item, parentViewGroup, false)
+        val view = LayoutInflater.from(parentViewGroup.context)
+            .inflate(R.layout.hand_book_subs_item, parentViewGroup, false)
         return HandBookListViewHolder(view)
     }
 
-    override fun onBindParentViewHolder(parentViewHolder: HandBookViewHolder, position: Int, parentListItem: ParentListItem) {
+    override fun onBindParentViewHolder(
+        parentViewHolder: HandBookViewHolder,
+        position: Int,
+        parentListItem: ParentListItem
+    ) {
         val data = parentListItem as HandBookItem
         parentViewHolder.bind(data, position)
     }
 
-    override fun onBindChildViewHolder(childViewHolder: HandBookListViewHolder, position: Int, childListItem: Any) {
+    override fun onBindChildViewHolder(
+        childViewHolder: HandBookListViewHolder,
+        position: Int,
+        childListItem: Any
+    ) {
         val data = childListItem as HandBookSubs
-        childViewHolder.bind(data)
+        childViewHolder.bind(data , listener)
     }
 }

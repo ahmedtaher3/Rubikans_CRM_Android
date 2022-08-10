@@ -18,7 +18,7 @@ data class HandBookResponse(
     val perPage: Int? = null,
 
     @field:SerializedName("data")
-    val data: List<HandBookItem>? = null,
+    val data: ArrayList<HandBookItem>? = null,
 
     @field:SerializedName("next_page_url")
     val nextPageUrl: String? = null,
@@ -93,7 +93,7 @@ data class HandBookSubs(
     val title: String? = null,
 
     @field:SerializedName("sections")
-    val sections: List<SectionsItem?>? = null
+    val sections: ArrayList<SectionsItem> = ArrayList()
 ) : Parcelable
 
 @Parcelize

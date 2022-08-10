@@ -121,12 +121,51 @@
         <entry key="..\:/Users/Ahmed Taher/AndroidStudioProjects/DevartLabCRMproject/app/src/main/res/menu/plan_menu.xml" value="0.25025641025641027" />
         <entry key="..\:/Users/Ahmed Taher/AndroidStudioProjects/DevartLabCRMproject/app/src/main/res/menu/traffic_menu.xml" value="0.25025641025641027" />
         <entry key="..\:/Users/Ahmed Taher/AndroidStudioProjects/DevartLabCRMproject/app/src/main/res/xml/attrs.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/Ahmed Taher/StudioProjects2/DevartLabCRMproject/app/src/main/res/drawable/new_state.xml" value="0.1585" />
+        <entry key="..\:/Users/Ahmed Taher/StudioProjects2/DevartLabCRMproject/app/src/main/res/drawable/original_state.xml" value="0.1585" />
+        <entry key="..\:/Users/Ahmed Taher/StudioProjects2/DevartLabCRMproject/app/src/main/res/drawable/rounded_grey.xml" value="0.2075" />
+        <entry key="..\:/Users/Ahmed Taher/StudioProjects2/DevartLabCRMproject/app/src/main/res/drawable/searched_transition_view.xml" value="0.1585" />
+        <entry key="..\:/Users/Ahmed Taher/StudioProjects2/DevartLabCRMproject/app/src/main/res/layout/action_list.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Ahmed Taher/StudioProjects2/DevartLabCRMproject/app/src/main/res/layout/activity_chat_thread.xml" value="0.176" />
         <entry key="..\:/Users/Ahmed Taher/StudioProjects2/DevartLabCRMproject/app/src/main/res/layout/activity_choose_employee.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/Ahmed Taher/StudioProjects2/DevartLabCRMproject/app/src/main/res/layout/activity_container.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Ahmed Taher/StudioProjects2/DevartLabCRMproject/app/src/main/res/layout/activity_hand_book.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/Ahmed Taher/StudioProjects2/DevartLabCRMproject/app/src/main/res/layout/activity_insert_customer.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/Ahmed Taher/StudioProjects2/DevartLabCRMproject/app/src/main/res/layout/activity_invoice_details.xml" value="0.1962962962962963" />
+        <entry key="..\:/Users/Ahmed Taher/StudioProjects2/DevartLabCRMproject/app/src/main/res/layout/activity_login.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/Ahmed Taher/StudioProjects2/DevartLabCRMproject/app/src/main/res/layout/activity_trafic_list.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/Ahmed Taher/StudioProjects2/DevartLabCRMproject/app/src/main/res/layout/add_note_layout.xml" value="0.253125" />
+        <entry key="..\:/Users/Ahmed Taher/StudioProjects2/DevartLabCRMproject/app/src/main/res/layout/book_desc_item.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/Ahmed Taher/StudioProjects2/DevartLabCRMproject/app/src/main/res/layout/book_subs_item.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/Ahmed Taher/StudioProjects2/DevartLabCRMproject/app/src/main/res/layout/book_titles_item.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/Ahmed Taher/StudioProjects2/DevartLabCRMproject/app/src/main/res/layout/brick_view_item.xml" value="0.253125" />
+        <entry key="..\:/Users/Ahmed Taher/StudioProjects2/DevartLabCRMproject/app/src/main/res/layout/customer_list_item.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/Ahmed Taher/StudioProjects2/DevartLabCRMproject/app/src/main/res/layout/day_item_list.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/Ahmed Taher/StudioProjects2/DevartLabCRMproject/app/src/main/res/layout/edit_customer_dialog.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/Ahmed Taher/StudioProjects2/DevartLabCRMproject/app/src/main/res/layout/edit_day_item.xml" value="0.253125" />
+        <entry key="..\:/Users/Ahmed Taher/StudioProjects2/DevartLabCRMproject/app/src/main/res/layout/edit_days_layout.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/Ahmed Taher/StudioProjects2/DevartLabCRMproject/app/src/main/res/layout/edit_list_layout.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/Ahmed Taher/StudioProjects2/DevartLabCRMproject/app/src/main/res/layout/employee_invoice_item.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/Ahmed Taher/StudioProjects2/DevartLabCRMproject/app/src/main/res/layout/employee_report_item.xml" value="0.19444444444444445" />
+        <entry key="..\:/Users/Ahmed Taher/StudioProjects2/DevartLabCRMproject/app/src/main/res/layout/employee_report_item_mobile.xml" value="0.19444444444444445" />
+        <entry key="..\:/Users/Ahmed Taher/StudioProjects2/DevartLabCRMproject/app/src/main/res/layout/finish_visit.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/Ahmed Taher/StudioProjects2/DevartLabCRMproject/app/src/main/res/layout/fragment_book.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/Ahmed Taher/StudioProjects2/DevartLabCRMproject/app/src/main/res/layout/fragment_order_print.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/Ahmed Taher/StudioProjects2/DevartLabCRMproject/app/src/main/res/layout/fragment_report_map.xml" value="0.3515625" />
         <entry key="..\:/Users/Ahmed Taher/StudioProjects2/DevartLabCRMproject/app/src/main/res/layout/hand_book_item.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Ahmed Taher/StudioProjects2/DevartLabCRMproject/app/src/main/res/layout/hand_book_subs_item.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Ahmed Taher/StudioProjects2/DevartLabCRMproject/app/src/main/res/layout/index_hand_book_item.xml" value="0.2" />
+        <entry key="..\:/Users/Ahmed Taher/StudioProjects2/DevartLabCRMproject/app/src/main/res/layout/list_fragment.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/Ahmed Taher/StudioProjects2/DevartLabCRMproject/app/src/main/res/layout/list_item.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/Ahmed Taher/StudioProjects2/DevartLabCRMproject/app/src/main/res/layout/order_print_item.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/Ahmed Taher/StudioProjects2/DevartLabCRMproject/app/src/main/res/layout/order_product_item.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/Ahmed Taher/StudioProjects2/DevartLabCRMproject/app/src/main/res/layout/plan_brick_view_item.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/Ahmed Taher/StudioProjects2/DevartLabCRMproject/app/src/main/res/layout/search_list_layout.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/Ahmed Taher/StudioProjects2/DevartLabCRMproject/app/src/main/res/layout/trade_filter_bottom_sheet.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/Ahmed Taher/StudioProjects2/DevartLabCRMproject/app/src/main/res/layout/visit_options_layout.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/Ahmed Taher/StudioProjects2/DevartLabCRMproject/app/src/main/res/menu/list_menu.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/Ahmed Taher/StudioProjects2/DevartLabCRMproject/app/src/main/res/menu/plan_menu.xml" value="0.19444444444444445" />
+        <entry key="..\:/Users/Ahmed Taher/StudioProjects2/DevartLabCRMproject/app/src/main/res/menu/traffic_menu.xml" value="0.25416666666666665" />
         <entry key="..\:/work/DevartLab/DevartLabCRM/app/src/main/res/layout/activity_calls.xml" value="0.2421875" />
         <entry key="..\:/work/DevartLab/DevartLabCRM/app/src/main/res/layout/activity_choose_employee.xml" value="0.2421875" />
         <entry key="..\:/work/DevartLab/DevartLabCRM/app/src/main/res/layout/activity_choose_start_point.xml" value="0.1921875" />

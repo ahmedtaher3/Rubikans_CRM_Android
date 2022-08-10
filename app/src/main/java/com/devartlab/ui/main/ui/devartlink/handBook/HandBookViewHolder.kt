@@ -60,8 +60,12 @@ class HandBookViewHolder(itemView: View) : ParentViewHolder(itemView) {
 
 
 class HandBookListViewHolder(view: View) : ChildViewHolder(view) {
-    fun bind(item: HandBookSubs) {
+    fun bind(item: HandBookSubs ,  listener: HandBookAdapter.OnItemSelect) {
         itemView.findViewById<TextView>(R.id.handbook_sub_title).text =
             HtmlCompat.fromHtml(item.title!!, HtmlCompat.FROM_HTML_MODE_LEGACY)
+
+        itemView.setOnClickListener {
+            listener.setOnItemSelect(item)
+        }
     }
 }
