@@ -1,17 +1,20 @@
 package com.devartlab
 
+
 import android.annotation.SuppressLint
 import android.content.Context
 import android.location.Location
 import android.os.Looper
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import com.devartlab.base.BaseApplication
+import com.devartlab.data.shared.DataManager
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationServices
-
-
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 import java.util.*
 
 private const val TAG = "GetMyLocation"
@@ -21,6 +24,12 @@ class GetMyLocation(private val activity: AppCompatActivity) {
 
     var timer1: Timer? = null
     var locationResult: LocationResult? = null
+
+    val dataManager: DataManager = (activity.application as BaseApplication).dataManager!!
+
+    var database: FirebaseDatabase = FirebaseDatabase.getInstance()
+    var reference: DatabaseReference = database.reference.child("Locations")
+
 
     private var fusedLocationProviderClient: FusedLocationProviderClient? = null
     private var mLocationCallback: LocationCallback? = null
@@ -36,6 +45,7 @@ class GetMyLocation(private val activity: AppCompatActivity) {
             maxWaitTime = 0
         }
 
+        var i = 0
         mLocationCallback = object : LocationCallback() {
             override fun onLocationResult(locationResult: com.google.android.gms.location.LocationResult) {
                 super.onLocationResult(locationResult)
@@ -45,9 +55,19 @@ class GetMyLocation(private val activity: AppCompatActivity) {
                 var differenceMillis = System.currentTimeMillis() - location.time;
                 var minutes = (differenceMillis / 1000) / 60
                 Log.d(TAG, "Location time: $minutes")
-                if (checkLocation(locationResult.lastLocation)) {
-                    setLocation(locationResult.lastLocation)
+
+                reference.child(dataManager.user.empId.toString())
+                    .child("Location")
+                    .setValue("${location.latitude},${location.longitude}")
+
+                i++
+
+                if (i >= 2) {
+                    if (checkLocation(locationResult.lastLocation)) {
+                        setLocation(locationResult.lastLocation)
+                    }
                 }
+
 
             }
 
@@ -89,8 +109,6 @@ class GetMyLocation(private val activity: AppCompatActivity) {
                 val differenceMillis = System.currentTimeMillis() - location.time
                 val minutes = (differenceMillis / 1000) / 60
                 if (minutes > 3) {
-                    false
-                } else if (location.latitude < 2 || location.longitude < 2) {
                     false
                 } else location.latitude != location.longitude
 

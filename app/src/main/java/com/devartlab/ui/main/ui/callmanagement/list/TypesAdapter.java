@@ -24,7 +24,6 @@ import com.devartlab.R;
 import com.devartlab.data.room.listtypes.ListTypesEntity;
 import com.devartlab.ui.main.ui.callmanagement.list.list.CustomerListFragment;
 
-import static com.google.firebase.crashlytics.internal.Logger.TAG;
 
 public class TypesAdapter extends RecyclerView.Adapter<TypesAdapter.MyViewHolder> {
     private List<ListTypesEntity> myData;
@@ -54,7 +53,7 @@ public class TypesAdapter extends RecyclerView.Adapter<TypesAdapter.MyViewHolder
 
         holder.typeName.setText(model.listType);
         holder.count.setText("(" + model.totalCustomer +" customer)");
-        Log.d(TAG, "onBindViewHolder: " + model.iconImageUrl);
+        Log.d("TAG", "onBindViewHolder: " + model.iconImageUrl);
         System.out.println("onBindViewHolder: " + model.iconImageUrl);
        /*
         Glide.with(context)

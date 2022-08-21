@@ -23,12 +23,18 @@ class RetrofitClient(private val dataManager: DataManager) {
     private var retrofit1: Retrofit? = null //4eshopping
     private val loggingInterceptor = HttpLoggingInterceptor()
 
+    val logging = HttpLoggingInterceptor { message -> Log.e("okHttpClientRetrofit", message) }
 
+    init {
+
+        logging.setLevel(HttpLoggingInterceptor.Level.BODY)
+
+
+    }
     //alaa
     val instance: Retrofit?
         get() {
-            val logging = HttpLoggingInterceptor { message -> Log.e("okHttpClientRetrofit", message) }
-            logging.setLevel(HttpLoggingInterceptor.Level.BODY)
+
             val okHttpClient: OkHttpClient = OkHttpClient.Builder()
                 .connectTimeout(20, TimeUnit.SECONDS)
                 .retryOnConnectionFailure(true)
@@ -36,7 +42,7 @@ class RetrofitClient(private val dataManager: DataManager) {
                 .readTimeout(60, TimeUnit.SECONDS)
                 .addInterceptor(logging).build()
             if (ourInstance == null) ourInstance = Retrofit.Builder()
-                .baseUrl("https://devartlabcrm.com/") //alaa
+                .baseUrl(AppConstants.BaseURL) //alaa
                 .client(okHttpClient)
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
@@ -110,13 +116,9 @@ class RetrofitClient(private val dataManager: DataManager) {
     val client4EShopping: Retrofit?
         get() {
             if (retrofit1 == null) {
-                if (BuildConfig.DEBUG) {
-                    loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
-                } else {
-                    loggingInterceptor.level = HttpLoggingInterceptor.Level.NONE
-                }
+
                 val client: OkHttpClient = OkHttpClient.Builder()
-                    .addInterceptor(loggingInterceptor)
+                    .addInterceptor(logging)
                     .build()
                 retrofit1 = Retrofit.Builder()
                     .addConverterFactory(GsonConverterFactory.create())
